@@ -1,2 +1,2 @@
-# i5p-sec-netslice-mgr
-Development of the Secured Network Slice Manager enabler
+# i5p-netslice-mgr
+Development of the Secured and Trusted Network Slice Manager enabler
