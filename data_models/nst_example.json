@@ -1,0 +1,77 @@
+{
+    "id": "508ce7a3-5f81-4f9e-8928-697adcf7732c",
+    "name": "example_NST",
+    "description": "Description of the NetSlice Template (services, functions, etc.)",
+    "version": "2.1",
+    "author": "Name of the NST author/developer.",
+    "vendor": "CTTC",
+    "SNSSAI": {
+      "slice-service-type": "URLLC",
+      "slice-differentiator": "Check what exactly is this for..."
+    },
+    "usageState": "IN_USE",
+    "slice-subnets": [
+      {
+        "subnet-ref": "subnet_A",
+        "subnet-name": "ns_number_1",
+        "subnet-version": "2.3",
+        "subnet-vendor": "m2m",
+        "is-shared": "False",
+        "sla-name": "GOLD-SLA",
+        "sla-ref": "f9d8a9f6-04b7-4cdc-bed4-8c551b4ae5d3",
+        "ingresses": [
+          {
+            "location": "somewhere...",
+            "nap": "0.0.0.0/24"
+          }
+        ],
+        "egresses": [
+          {
+            "location": "somewhere...",
+            "nap": "0.0.0.0/24"
+          }
+        ],
+        
+      },
+      {
+        "subnet-ref": "subnet_B",
+        "subnet-name": "ns_number_2",
+        "subnet-version": "2.3",
+        "subnet-vendor": "m2m",
+        "is-shared": "False",
+        "sla-name": "GOLD-SLA",
+        "sla-ref": "0e8cb3f5-5df2-4f32-b7c9-f3a25d6d2aaf",
+        "ingresses": [
+          {
+            "location": "somewhere...",
+            "nap": "0.0.0.0/24"
+          }
+        ],
+        "egresses": [
+          {
+            "location": "somewhere...",
+            "nap": "0.0.0.0/24"
+          }
+        ]        
+      }
+    ],
+    "slice-vld": [
+      {
+        "id": "42817176-79f4-4489-92ec-d2acb97d1a6f",
+        "name": "vld_name",
+        "mgmt-network": "True",
+        "type": "E-LINE",
+        "external-access": "True",
+        "subnets-cp-ref": [
+          {
+            "subnet-ref": "subnet_A",
+            "subnet-cp-ref": "subnet_ns_1_ext"
+          },
+          {
+            "subnet-ref": "subnet_B",
+            "subnet-cp-ref": "subnet_ns_2_ext"
+          }
+        ]
+      }
+    ]
+  }

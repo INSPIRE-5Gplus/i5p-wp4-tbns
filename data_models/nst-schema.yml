@@ -1,0 +1,230 @@
+## Copyright (c) 2015 SONATA-NFV, 2018 5GTANGO. 2020 INSPIRE5G-plus
+## ALL RIGHTS RESERVED.
+##
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+## Neither the name of the SONATA-NFV, 5GTANGO
+## nor the names of its contributors may be used to endorse or promote
+## products derived from this software without specific prior written
+## permission.
+##
+## This work has been performed in the framework of the SONATA project,
+## funded by the European Commission under Grant number 671517 through
+## the Horizon 2020 and 5G-PPP programmes. The authors would like to
+## acknowledge the contributions of their colleagues of the SONATA
+## partner consortium (www.sonata-nfv.eu).
+##
+## This work has been performed in the framework of the 5GTANGO project,
+## funded by the European Commission under Grant number 761493 through
+## the Horizon 2020 and 5G-PPP programmes. The authors would like to
+## acknowledge the contributions of their colleagues of the 5GTANGO
+## partner consortium (www.5gtango.eu).
+
+
+---
+$schema: "http://json-schema.org/draft-04/schema#"
+#id: "http://www.sonata-nfv.eu/schema/nst-schema"
+title: "Network Slice Template Schema"
+version: 1.0
+#description: "The core scheme for network slice template (NST)"
+
+#There's is no ID field as it is given by the catalogues (tng-cat).
+type: "object"
+properties:
+  descriptor_schema:
+    description: "Reference to the schema corresponding to the descriptor (e.g., URL or local path)."
+    type: "string"
+  id:
+    description: "uuid of the slice template"
+    type: "string"
+  name:
+    description: "The name of the NST"
+    type: "string"
+  description:
+    description: "Description of the NetSlice Template (services, functions, etc.)"
+    type: "string"
+  version:
+    description: "The version of the service descriptor."
+    type: "string"
+    pattern: "^[a-zA-Z0-9\\-_.]+$"
+  author:
+    description: "Name of the NST author/developer."
+    type: string
+  vendor:
+    description: "Name of the NST vendor."
+    type: string
+  SNSSAI:
+    description: "Identifies the type of the slice"
+    type: "object"
+    properties:
+      slice-service-type:
+        description: "Identifier of the selected NSD"
+        type: "string"
+        enum:
+        - eMBB    # enhanced Mobile Broadband slice
+        - URLLC   # Ultra Reliable Low Latency Communications slice
+        - mMTC    # massive Machine Type Communications slice
+      slice-differentiator:
+        description: "Network slice differentiator"
+        type: "string"
+  usageState:
+    description: "Defines wether this NST is used or not (IN_USE, NOT_USED)."
+    type: string
+    enum:
+    - IN_USE
+    - NOT_USED
+  slice-subnets:
+    description: "The list of Network Services uuids composing the NST"
+    type: "array"
+    items:
+      description: "A service uuid with related parameters (i.e slaId)"
+      type: "object"
+      properties:
+        id:
+          description: "Identifier of the subnet element (not a uuid)"
+          type: "string"
+        subnet-ref:
+          description: "Identifier of the selected NSD"
+          type: "string"
+          pattern: "^[a-zA-Z0-9\\-_.]+$"
+        subnet-name:
+          description: "Name of the selected NSD"
+          type: "string"
+        subnet-version:
+          description: "Version of the selected NSD"
+          type: "string"
+        subnet-vendor:
+          description: "Vendor of the selected NSD"
+          type: "string"
+        is-shared:
+          description: "Specifies if that services is shared among multiple slices"
+          type: "boolean"
+        sla-name:
+          description: "The name of the associated SLA."
+          type: "string"
+        sla-ref:
+          description: "Uuid of the associated SLA."
+          type: "string"
+          pattern: "^[a-zA-Z0-9\\-_.]+$"
+        ingresses:
+          description: "List of ingress values"
+          type: "array"
+          items:
+            description: "Each element is composed by a pair parameters: location, nap."
+            type: "object"
+            properties:
+              location:
+                description: "Identifier of ingress location"
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+              nap:
+                description: "IP range for the ingress location"
+                type: "string"
+        egresses:
+          description: "List of egress values"
+          type: "array"
+          items:
+            description: "Each element is composed by a pair parameters: location, nap."
+            type: "object"
+            properties:
+              location:
+                description: "Identifier of egress location"
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+              nap:
+                description: "IP range for the egress location"
+                type: "string"
+      required:
+        - id
+        - subnet-ref
+        - subnet-name
+        - subnet-version
+        - subnet-vendor
+        - is-shared
+    minItems: 1
+  slice-vld:
+    description: "The list of VLD linking the multiple NS of the slice"
+    type: "array"
+    items:
+      description: "A Virtual Link Descriptor (VLD)"
+      type: "object"
+      properties:
+        id:
+          description: "Identifier of the VLD (might be equal to the name)."
+          type: "string"
+        name:
+          description: "The name of the selected VLD"
+          type: "string"
+        mgmt-network:
+          description: "Specifies if that VLD belongs to a mgmt network."
+          type: "boolean"
+        type:
+          description: "Type of vld"
+          type: "string"
+          enum:
+            - E-LINE
+            - E-TREE
+            - E-LAN
+        access-net:
+          description: "Defines either the slice-vld is externally (true) or internally (false) accessible."
+          type: "boolean"
+        physical-network:
+          description: "The name of the physical network to which this VLD is connected."
+          type: "string"
+        segmentation-id:
+          description: "Identifies to which segment of the pysical network is connected."
+          type: "integer"
+        subnets-cp-ref:
+          description: "List of CP references composing each VLD"
+          type: "array"
+          items:
+            description: "Each item is a CP reference."
+            type: "object"
+            properties:
+              subnet-ref:
+                description: "References to the slice-subnets.subnet-name"
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+              nsd-cp-ref:
+                description: "References to a cp among those within the descriptor of the subnet"
+                type: "string"
+              ip-address:
+                description: "Defines the IP address associated to the CP (if necessary)"
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+        root-bandwidth: #Not used
+          description: "Root Bw"
+          type: "integer"
+        root-bandwidth-unit: #Not used
+          description: "Root Bw units"
+          type: "string"
+        leaf-bandwidth: #Not used
+          description: "Leaf Bw"
+          type: "integer"
+        leaf-bandwidth-unit: #Not used
+          description: "leaf Bw units"
+          type: "string"
+      required:
+        - id
+        - name
+        - type
+        - subnets-cp-ref
+  #sliceConnPoints: # TODO: Future Work to interconnect slices with slices??
+required: 
+  - descriptor_schema
+  - name 
+  - description
+  - version
+  - vendor
+  - slice-subnets
+additionalProperties: true

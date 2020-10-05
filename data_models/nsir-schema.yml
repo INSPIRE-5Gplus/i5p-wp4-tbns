@@ -1,0 +1,313 @@
+## Copyright (c) 2015 SONATA-NFV, 2017 5GTANGO
+## ALL RIGHTS RESERVED.
+##
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+## Neither the name of the SONATA-NFV, 5GTANGO
+## nor the names of its contributors may be used to endorse or promote
+## products derived from this software without specific prior written
+## permission.
+##
+## This work has been performed in the framework of the SONATA project,
+## funded by the European Commission under Grant number 671517 through
+## the Horizon 2020 and 5G-PPP programmes. The authors would like to
+## acknowledge the contributions of their colleagues of the SONATA
+## partner consortium (www.sonata-nfv.eu).
+##
+## This work has been performed in the framework of the 5GTANGO project,
+## funded by the European Commission under Grant number 761493 through
+## the Horizon 2020 and 5G-PPP programmes. The authors would like to
+## acknowledge the contributions of their colleagues of the 5GTANGO
+## partner consortium (www.5gtango.eu).
+
+
+--- 
+$schema: "http://json-schema.org/draft-04/schema#"
+#id: "http://www.sonata-nfv.eu/schema/nst-schema"
+version: 0.9
+description: "The core scheme for network slice instance (NSI)"
+
+##
+## Network Slice Instance JSON SCHEMA
+##
+
+type: "object"
+properties:
+  id:
+    description: "Identifies the Network Slice Instance (NSI)"
+    type: "string"
+    pattern: "^[a-zA-Z0-9\\-_.]+$"
+  name:
+    description: "The name of the NSI"
+    type: "string"
+  description:
+    description: "Description of the NSI functionality"
+    type: "string"
+  vendor:
+    description: "Description of the NST vendor"
+    type: "string"
+  nst-ref:
+    description: "The uuid of the NST used to instantiate the NSI."
+    type: "string"
+    pattern: "^[a-zA-Z0-9\\-_.]+$"
+  nst-name:
+    description: "The name of the NST used to instantiate the NSI."
+    type: "string"
+  nst-version:
+    description: "The version of the NetSlice Template the instance is based on."
+    type: "string"
+    pattern: "^[a-zA-Z0-9\\-_.]+$"
+  nsi-status:
+    description: "State of the NSI (possible values INSTANTIATED, TERMINATED, ERROR)."
+    type: string
+    enum:
+    - INSTANTIATING
+    - INSTANTIATED
+    - TERMINATING
+    - TERMINATED
+    - READY
+    - ERROR
+  errorLog:
+    description: "Internal log msg with the error desription if status is ERROR."
+    type: string
+  datacenter:
+    description: "List of VIms where the diferent NSs composing the slice are deployed."
+    type: "array"
+    items:
+      type: "string"
+      pattern: "^[a-zA-Z0-9\\-_.]+$"
+  instantiateTime:
+    description: "Timestamp indicating when the instantiation was trigerred."
+    type: "string"
+  terminateTime:
+    description: "Timestamp indicating when the termination will be tigerred (0 means immediatly)."
+    type: "string"
+  scaleTime:
+    description: "Timestamp indicating when the scale is tigerred."
+    type: "string"
+  updateTime:
+    description: "Timestamp indicating when the update is tigerred."
+    type: "string"
+  sliceCallback:
+    description: "Contains the URL to call back the GK when slice instantiation/termination processes are done."
+    type: "string"
+  nsr-list:
+    description: "Network Services records list generated when the NSI is requested."
+    type: "array"
+    items:
+      description: "All the information parameters definning a netservice record."
+      type: "object"
+      properties:
+        nsrName:
+          description: "Name of the instantiation composed by the <slice_name-subnet_name-index>"
+          type: "string"
+        nsrId:
+          description: "UUID of a network service record (instance)."
+          type: "string"
+          pattern: "^[a-zA-Z0-9\\-_.]+$"
+        subnet-ref:
+          description: "References to the ID of the slice-subnet in NST.slice_ns_subnets list."
+          type: "string"
+        subnet-nsdId-ref:
+          description: "NSD uuid which this instance is based on."
+          type: "string"
+          pattern: "^[a-zA-Z0-9\\-_.]+$"
+        working-status:
+          description: "Status of the service instantiation."
+          type: "string"
+          enum:
+          - NEW
+          - INSTANTIATING
+          - INSTANTIATED
+          - TERMINATING
+          - TERMINATED
+          - READY
+          - ERROR
+          - NOT_INSTANTIATED
+        requestId:
+          description: "Last request (create/terminate) action uuid done by GTK related to this service."
+          type: "string"
+          pattern: "^[a-zA-Z0-9\\-_.]+$"
+        nsr-placement:
+          description: "List of NSD components and VIMs where they are deployed"
+          type: "array"
+          items:
+            description: "A dict composed by nsd-comp-ref and vim-id."
+            type: "object"
+            properties:
+              nsd-comp-ref:
+                description: "Id ref of the NSD component (either VNF or CNF)."
+                type: "string"
+              vim-id:
+                description: "VIM id where the NSD component is placed."
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+        isshared:
+          description: "Boolean definning if a service instance is shared."
+          type: "boolean"
+        sla-name:
+          description: "Associated SLA name (from NST unless user changes it with the instantiation parameters)"
+          type: "string"
+        sla-ref:
+          description: "Associated SLA Uuid (from NST unless user changes it with the instantiation parameters)"
+          type: "string"
+          pattern: "^[a-zA-Z0-9\\-_.]+$"
+        ingresses:
+          description: "List of ingress values"
+          type: "array"
+          items:
+            description: "Each element is composed by a pair parameters: location, nap."
+            type: "object"
+            properties:
+              location:
+                description: "Identifier of ingress location"
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+              nap:
+                description: "IP range for the ingress location"
+                type: "string"
+        egresses:
+          description: "List of egress values"
+          type: "array"
+          items:
+            description: "Each element is composed by a pair parameters: location, nap."
+            type: "object"
+            properties:
+              location:
+                description: "Identifier of egress location"
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+              nap:
+                description: "IP range for the egress location"
+                type: "string"
+        vld:
+          description: "The list of vld names where the nsr is conencted."
+          type: "array"
+          items:
+            description: "All the information parameters definning a netservice record."
+            type: "object"
+            properties:
+              vld-ref:
+                description: "Name of the vld connected to the nsr."
+                type: "string"
+    minItems: 1
+    required:
+      - nsrName
+      - subnet-ref
+      - subnet-nsdId-ref
+      - working-status
+  vldr-list:
+    description: "The list of VLD uuids generated due to the instantiation of the selected NST."
+    type: "array"
+    items:
+      description: "A service uuid with related parameters (i.e slaId)"
+      type: "object"
+      properties:
+        id:
+          description: "Id of the vld (should have the same value as the vld id in the nst)."
+          type: "string"
+        name:
+          description: "VLD name"
+          type: "string"
+        vim-net-stack:
+          description: "List of network stacks to create the VIM networks though the IA component."
+          type: "array"
+          items:
+            description: "A dict composed by id, vimAccountId (net_created, vim-id)."
+            type: "object"
+            properties:
+              id:
+                description: "The uuid of the IA stack that manages the network within each fo the VIMs."
+                type: "string"
+                pattern: "^[a-zA-Z0-9\\-_.]+$"
+              vimAccountId:
+                description: "List of VIMs and their IA stacks uuids for a better multi-deployment management"
+                type: "array"
+                items:
+                  description: "A dict composed by nsd-comp-ref and vim-id."
+                  type: "object"
+                  properties:
+                    vim-id:
+                      description: "VIM id where the NSD component is placed."
+                      type: "string"
+                      pattern: "^[a-zA-Z0-9\\-_.]+$"
+                    net-created:
+                      description: "Defines wether the network is created or not in the vim (for multiple-vim deployment)."
+                      type: "boolean"
+        vim-net-id:
+          description: "VIM network uuid"
+          type: "string"
+        mgmt-network:
+          description: "Defines if the vld is of management or not"
+          type: "boolean"
+        type:
+          description: "Type of vld"
+          type: "string"
+          enum:
+            - E-LINE
+            - E-TREE
+            - E-LAN
+        vld-status:
+          description: "Status of the vld (vim-net) instantiation."
+          type: "string"
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - ERROR
+        access_net:
+          description: "Defines if the vld is external (true) and so, gets a floating IP or internal (false)."
+          type: "boolean"
+        shared-nsrs-list:
+          description: "Uuid list of the shared nsr conected to this vld."
+          type: "array"
+          items:
+            type: "string"
+            pattern: "^[a-zA-Z0-9\\-_.]+$"
+        ns-conn-point-ref:
+          description: "List of the instances and their cps connected to each VLD."
+          type: "array"
+          items:
+            description: "Three elements nsrName-ref, nsd-cp-ref, nsr-vld-nsd-ref"
+            type: "object"
+            properties:
+              nsrName-ref:
+                description: "Reference to one of the nsi.nsr-list.nsrName items."
+                type: "string"
+              nsd-cp-ref:
+                description: "Reference to the nsd.connection-point within the NSD where to connect the VLD."
+                type: "string"
+              nsr-vld-nsd-ref:
+                description: "Reference to the internal network service vld in the NSD."
+                type: "string"
+      required:
+        - id
+        - name
+  _wim-connections:
+    description: "List of connections done to interconnect VIM belonging to the same WIM."
+    type: "array"
+    items:
+      description: "A list of dicts composed by multiple elements."
+      type: "object"
+  _instantiation_params:
+    description: "List of instantiation parameters for each of the subnets (NS) composing the slice."
+    type: "array"
+    items:
+      description: "A list of dicts composed by multiple elements."
+      type: "object"
+required: 
+  - id
+  - name 
+  - vendor
+  - nst-ref
+  - nsr-list
+additionalProperties: true
