@@ -40,12 +40,69 @@
 """
 
 import os, sys, logging, uuid, json, time, requests
+
+from slice_subnet_mgmt.nfvo_libs.tng_cli.src.tnglib import env as env
+from slice_subnet_mgmt.nfvo_libs.tng_cli.src.tnglib import services as sonata_services
+from slice_subnet_mgmt.nfvo_libs.tng_cli.src.tnglib import requests as sonata_requests
+from slice_subnet_mgmt.nfvo_libs.tng_cli.src.tnglib import infrastructure as sonata_infrastructure
 from database import database as db
 
-JSON_CONTENT_HEADER = {'Content-Type':'application/json'}
-timeout = 15.0
+# REQUESTS TO GET THE NFVO SERVICES/VIMS
+def get_services(nfvo_ip, header):
+    url_nfvo = "http://" + nfvo_ip
+    env.set_sp_path(url_nfvo)
+    env.set_return_header(header)
+    resp = sonata_services.get_service_descriptors()
 
-def request_ns_instantiation(ns_json):
+    if resp[0]:
+        response = json.dumps(resp[1])
+    else:
+        response = {"msg": "There are no services available."}
     
+    return response, 200
+
+def get_service(nfvo_ip, header, service_id):
+    url_nfvo = "http://" + nfvo_ip
+    env.set_sp_path(url_nfvo)
+    env.set_return_header(header)
+    resp = sonata_services.get_service_descriptor(service_id)
+
+    if resp[0]:
+        response = json.dumps(resp[1])
+    else:
+        response = {"msg": "There is NO service available with the requested ID."}
     
-    return return_text, return_code
+    return response, 200
+
+def get_vims(nfvo_ip, header):
+    url_nfvo = "http://" + nfvo_ip
+    env.set_sp_path(url_nfvo)
+    env.set_return_header(header)
+    resp = sonata_infrastructure.get_vims()
+
+    if resp[0]:
+        response = json.dumps(resp[1])
+    else:
+        response = {"msg": "There is NO VIM available with the requested ID."}
+    
+    return response, 200
+
+def get_vim(nfvo_ip, header, vim_id):
+    url_nfvo = "http://" + nfvo_ip
+    env.set_sp_path(url_nfvo)
+    env.set_return_header(header)
+    resp = sonata_infrastructure.get_vim(vim_id)
+
+    if resp[0]:
+        response = json.dumps(resp[1])
+    else:
+        response = {"msg": "There is NO VIM available with the requested ID."}
+    
+    return response, 200
+
+# REQUESTS TO DEPLOY NFVO SERVICES
+def deploy_service(nfvo_ip, header, service_id):
+    #sonata_requests.service_instantiate(service_uuid, sla_uuid=None, mapping=None, params=None, name=None)
+
+    #return {"msg": "There is NO service available with the requested ID."}, 200
+    pass

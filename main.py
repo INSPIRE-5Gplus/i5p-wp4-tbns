@@ -45,6 +45,7 @@ from configparser import ConfigParser
 
 from slice_mgmt import nst_management as nst_mgmt
 from slice_mgmt import nsi_management as nsi_mgmt
+from slice_subnet_mgmt import slice_mapper
 from database import database as db
 
 # TODO: improve logging
@@ -53,14 +54,15 @@ LOG = logging.getLogger(__name__)
 app = Flask(__name__)
 
 ######################################### SONATA NFVO CONFIGURATION ###########################################
+#url_nfvo = "http://" + NFVO_IP + ":32002/api/v3"
 NFVO_IP = '10.1.7.19'
-url_nfvo = "http://" + NFVO_IP + ":32002/api/v3"
 JSON_CONTENT_HEADER = {'Content-Type':'application/json'}
-timeout = 15.0
 
 #Variables with the API path sections
-API_ROOT="/slicing-api"
+API_ROOT="/slicing_api"
 API_VERSION="/v1"
+API_SERVICES="/services"
+API_VIMS="/vims"
 API_NST="/slice_template"
 API_NSI="/slice_instance"
 
@@ -72,58 +74,70 @@ def getPings():
 
   return jsonify(ping_response), 200
 
-########################################## NETWORK SERVICES Actions #########################################
-# GET all the available service descriptors available in the NFVO
-@app.route(API_ROOT+API_VERSION+'/services', methods=['GET'])
+########################################## NFVO INFORMATION (SERVICES/VIMS) #########################################
+""" PATH OPTIONS
+  "/slicing_api/v1/services(/<ns_id>)" --> GET
+  "/slicing_api/v1/vims(/<vim_id>)" --> GET
+"""
+# GET all the available service descriptors in the NFVO
+@app.route(API_ROOT+API_VERSION+API_SERVICES, methods=['GET'])
 def get_all_services():
-  """Returns info on all available service descriptors.
-  :returns: A tuple. [0] is a bool with the result. [1] is a 
-  list of dictionaries. Each dictionary contains an nsd.
-  """
   # get current list of service descriptors
-  resp = requests.get(url_nfvo + "/services", timeout=timeout, headers=JSON_CONTENT_HEADER)
-
-  if resp.status_code != 200:
-    LOG.debug("Request for service descriptors returned with " + (str(resp.status_code)))
-    return [], resp.status_code
-
-  services = json.loads(resp.text)
-
-  services_res = []
-  for service in services:
-    if service['platform'] != '5gtango':
-        continue
-    dic = {'descriptor_uuid': service['uuid'],
-            'name': service['nsd']['name'],
-            'version': service['nsd']['version'],
-            'created_at': service['created_at']}
-    LOG.debug(str(dic))
-    services_res.append(dic)
-  
-  LOG.debug("Request for service descriptors returned with " + (str(200)))
-  return jsonify(services_res), 200
+  resp = slice_mapper.get_services(NFVO_IP, JSON_CONTENT_HEADER)
+  if resp[1] == 200:
+    LOG.debug("Request for service descriptors returned with " + (str(200)))
+    json_resp = json.loads(resp[0])
+  else:
+    LOG.debug("There's a problem to request the services with error code:" + (str(resp[1])))
+  return jsonify(json_resp), resp[1]
 
 # GET specific service descriptor in the NFVO
-@app.route(API_ROOT+API_VERSION+'/services/<ns_id>', methods=['GET'])
+@app.route(API_ROOT+API_VERSION+API_SERVICES+'/<ns_id>', methods=['GET'])
 def get_service(ns_id):
-  resp = requests.get(url_nfvo + '/services/'+ str(ns_id), timeout=timeout, headers=JSON_CONTENT_HEADER)
-  if resp.status_code != 200:
-    LOG.debug("Request for service descriptor returned with " + (str(resp.status_code)))
-    return json.loads(resp.text), resp.status_code
-  
-  LOG.debug("Request for service descriptor returned with " + (str(200)))
-  return jsonify(resp.text), 200
+  #resp = requests.get(url_nfvo + '/services/'+ str(ns_id), timeout=timeout, headers=JSON_CONTENT_HEADER)
+  resp = slice_mapper.get_service(NFVO_IP, JSON_CONTENT_HEADER, ns_id)
+  if resp[1] == 200:
+    LOG.debug("Request for service descriptor returned with " + (str(200)))
+    json_resp = json.loads(resp[0])
+  else:
+    LOG.debug("There's a problem to request the services with error code:" + (str(resp[1])))
+  return jsonify(json_resp), resp[1]
+
+# GET all the available VIMs in the NFVO
+@app.route(API_ROOT+API_VERSION+API_VIMS, methods=['GET'])
+def get_all_vims():
+  # get current list of vims associated ot the nfvo
+  resp = slice_mapper.get_vims(NFVO_IP, JSON_CONTENT_HEADER)
+  if resp[1] == 200:
+    LOG.debug("Request for service descriptors returned with " + (str(200)))
+    json_resp = json.loads(resp[0])
+  else:
+    LOG.debug("There's a problem to request the services with error code:" + (str(resp[1])))
+  return jsonify(json_resp), resp[1]
+
+# GET specific service descriptor in the NFVO
+@app.route(API_ROOT+API_VERSION+API_VIMS+'/<vim_id>', methods=['GET'])
+def get_vim(vim_id):
+  #resp = requests.get(url_nfvo + '/services/'+ str(ns_id), timeout=timeout, headers=JSON_CONTENT_HEADER)
+  resp = slice_mapper.get_vim(NFVO_IP, JSON_CONTENT_HEADER, vim_id)
+  if resp[1] == 200:
+    LOG.debug("Request for service descriptor returned with " + (str(200)))
+    json_resp = json.loads(resp[0])
+  else:
+    LOG.debug("There's a problem to request the services with error code:" + (str(resp[1])))
+  return jsonify(json_resp), resp[1]
 
 ######################################### NETSLICE TEMPLATE Actions #########################################
 """ PATH OPTIONS
-  "/slicing-api/v1/slice_template" --> OPTIONS, GET, POST
-  "/slicing-api/v1/slice_template/<nst_id>" --> OPTIONS, GET, DELETE
+  "/slicing_api/v1/slice_template" --> GET, POST
+  "/slicing_api/v1/slice_template/<nst_id>" --> GET, DELETE
 """
 # CREATES a NetSlice template(NST)
 @app.route(API_ROOT+API_VERSION+API_NST, methods=['POST']) 
 def create_slice_template():
-  resp = nst_mgmt.add_nst(request.json)
-  return resp[0], resp[1]
+  resp = nst_mgmt.add_nst(request.json, NFVO_IP, JSON_CONTENT_HEADER)
+  json_resp = json.loads(resp[0])
+  return jsonify(json_resp), resp[1]
 
 # GETS for all the NetSlice Templates (NST) information
 @app.route(API_ROOT+API_VERSION+API_NST, methods=['GET'])
@@ -148,15 +162,19 @@ def delete_slice_template(nst_id):
 
 ######################################### NETSLICE INSTANCE Actions #########################################
 """ PATH OPTIONS
-  "/slicing-api/v1/slice_instance" --> OPTIONS, GET, POST
-  "/slicing-api/v1/slice_instance/<nsi_id>" --> OPTIONS, GET, DELETE
-  "/slicing-api/v1/slice_instance/<nsi_id>/terminate" --> OPTIONS, POST
+  "/slicing_api/v1/slice_instance" --> GET, POST
+  "/slicing-api/v1/slice_instance/<nsi_id>" --> GET, DELETE
+  "/slicing_api/v1/slice_instance/<nsi_id>/terminate" --> POST
 """
 # CREATES/INSTANTIATES a NetSlice instance (NSI)
 @app.route(API_ROOT+API_VERSION+API_NSI, methods=['POST'])
 def create_slice_instance():
-    pass
-    #return jsonify(instantiating_nsi[0]), instantiating_nsi[1]
+  resp = nsi_mgmt.create_nsi(request.json, NFVO_IP, JSON_CONTENT_HEADER)
+  if resp[1]==200:
+    print("DEPLOYMENT READY")
+  else:
+    print ("ERROR!!!")
+  return jsonify(resp[0]), resp[1]
 
 # GETS ALL the NetSlice instances (NSI) information
 @app.route(API_ROOT+API_VERSION+API_NSI, methods=['GET'])

@@ -40,40 +40,57 @@
 """
 
 import os, sys, logging, uuid, json, time
+from slice_subnet_mgmt import slice_mapper as slice_mapper
 from database import database as db
 
-def add_nst(nst_json):
+def add_nst(nst_json, host_ip, request_header):
+    #TODO: validate if NSD exist in any of hte NFVOs associated
     nst_json['id'] = str(uuid.uuid4())
-    db.nst_db.append(nst_json)
-        
-    if db.nst_db is not []:
-        return_text = "NST added correctly."
-        return_code = 200
-    else:
-        return_text = "NST NOT added correctly."
-        return_code = 400
     
-    return return_text, return_code
+    # Get the current services list to get the uuid for each slice-subnet (NSD) reference
+    #current_services_list = mapper.get_nsd_list()
+    nfvo_ip = host_ip
+    header = request_header
+    resp = slice_mapper.get_services(nfvo_ip, header)
+    current_services_list = json.loads(resp[0])
+    if current_services_list:
+        for subnet_item  in nst_json["slice-ns-subnets"]:
+            for service_item in current_services_list:
+                # Validates if NSDs exist in DDBB by comparing name/vendor/version
+                #if (subnet_item["nsd-name"] == service_item["name"] and subnet_item["nsd-vendor"] == service_item["vendor"] and subnet_item["nsd-version"] == service_item["version"]):
+                if (subnet_item["nsd-name"] == service_item["name"] and subnet_item["nsd-version"] == service_item["version"]):
+                    subnet_item["nsd-ref"] = service_item["descriptor_uuid"]
+    else:
+        LOG.info("No Network Service Descriptors in the DB.")
+        return_msg = {}
+        return_msg['error'] = "The list of NSDs is empty."
+        return return_msg, 400 
+    
+    db.nst_db.append(nst_json)
+    
+    return json.dumps(nst_json), 200
 
 def get_all_nst():
     list_nst = db.nst_db
     if not list_nst:
         return '{"msg":"No NST in the DB."}', 200
     #NOTE: be carefull when having the good db how is the info returned
-    return str(list_nst), 200
+    return json.dumps(list_nst), 200
 
 def get_nst(nst_id):
     list_nst = db.nst_db
     for nst_item in list_nst:
-      if nst_item['id'] == nst_id:
-        return str(nst_item), 200
+        print(type(nst_item))
+        if nst_item['id'] == nst_id:
+            return json.dumps(nst_item), 200
     
     return '{"msg":"No NST with thie ID available."}', 200
 
 def delete_nst(nst_id):
-    for nst_item in db.nst_db:
-      if nst_item['id'] == nst_id:
-        db.nst_db.remove(nst_item)
-        return '{"msg":"NST removed from the db."}', 200
+    list_nst = db.nst_db
+    for nst_item in list_nst:
+        if nst_item['id'] == nst_id:
+            db.nst_db.remove(nst_item)
+            return '{"msg":"NST removed from the db."}', 200
     
     return '{"msg":"No NST with this ID available."}', 200
