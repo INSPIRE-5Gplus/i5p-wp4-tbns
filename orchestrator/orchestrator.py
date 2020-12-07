@@ -10,6 +10,7 @@ from database import database as db
 #### LOCAL NETWORK SLICES FUNCTIONS
 def get_all_local_slice():
     response = slice_mapper.get_all_slice()
+    print(str(response[0]))
     return response[0], 200
 
 def get_local_slice(slice_ID):

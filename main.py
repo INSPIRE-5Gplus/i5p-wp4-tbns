@@ -24,11 +24,12 @@ def getPings():
 @app.route('/pdl_slicing/get_local_slice', methods=['GET'])
 def get_all_local_slice():
   response = orch.get_all_local_slice()
+  print(str(response[0]))
   return jsonify(response[0]), 200
 
 # GETS specific local slice-subnet
 @app.route('/pdl_slicing/get_local_slice/<slice_ID>', methods=['GET'])
-def get_local_slice():
+def get_local_slice(slice_ID):
   local_slice = orch.get_local_slice(slice_ID)
   return jsonify(local_slice), 200
 
@@ -64,4 +65,4 @@ if __name__ == '__main__':
   executor = ThreadPoolExecutor(max_workers=5)
 
   # RUN MAIN SERVER THREAD
-  app.run(debug=True, host='localhost', port=os.environ.get("PDL_SLICE_PORT"))
+  app.run(debug=False, host='localhost', port=os.environ.get("PDL_SLICE_PORT"))
