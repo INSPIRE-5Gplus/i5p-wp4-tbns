@@ -18,16 +18,25 @@ def get_local_slice(slice_ID):
     return response, 200
 
 #### BLOCKCHAIN NETWORK SLICES FUNCTIONS
+# adds a slice template into the blockchain to be shared
 def share_slice(slice_json):
-    db.nsi_db.append(slice_json)
+    #db.nsi_db.append(slice_json)
+    # Extracts the information to uplod to the blockchain
+    nst_json = slice_json
+    nst_json['id'] = str(uuid.uuid4())
+    
     return 200
 
-def get_all_shared_slice():
+def get_all_blockchain_slices():
     return 200
+
+def get_blockchain_slice(slice_ID):
+    return 200
+
 
 #### GLOBAL NETWORK SLICES FUNCTIONS
 def instantiate_e2e_slice(e2e_slice_json):
-    
+
     return 200
 
 def terminate_e2e_slice(e2e_slice_json):
