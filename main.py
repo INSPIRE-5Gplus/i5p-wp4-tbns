@@ -20,6 +20,18 @@ def getPings():
   ping_response  = {'code creation date': '2020-04-12 11:00:00 UTC', 'current_time': str(datetime.datetime.now().isoformat())}
   return jsonify(ping_response), 200
 
+# GETS all local slice-subnets
+@app.route('/pdl_slicing/get_local_slice', methods=['GET'])
+def get_all_local_slice():
+  response = orch.get_all_local_slice()
+  return jsonify(response[0]), 200
+
+# GETS specific local slice-subnet
+@app.route('/pdl_slicing/get_local_slice/<slice_ID>', methods=['GET'])
+def get_local_slice():
+  local_slice = orch.get_local_slice(slice_ID)
+  return jsonify(local_slice), 200
+
 # share a slice-subnet with the Blockchain peers
 @app.route('/pdl_slicing/share_slice', methods=['POST'])
 def add_slice():
@@ -27,7 +39,7 @@ def add_slice():
   executor.submit(orch.share_slice, request.json)
   return {"message":"Processing your request"}, 200
 
-# share a slice-subnet with the Blockchain peers
+# GETS the shared slice-subnet in the Blockchain system
 @app.route('/pdl_slicing/share_slice', methods=['GET'])
 def get_shared_slices():
   shared_slices_list = orch.get_all_shared_slice()
