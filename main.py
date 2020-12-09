@@ -15,7 +15,7 @@ LOG = logging.getLogger(__name__)
 app = Flask(__name__)
 
 ################################ ENVIRONMENT CONFIGURATION ##############################
-with open('config_env.env') as f:
+with open('config_files/config_env.env') as f:
   for line in f:
       if 'export' not in line:
           continue
@@ -45,32 +45,32 @@ def get_local_slice(slice_ID):
   response = orch.get_local_slice(slice_ID)
   return jsonify(response), 200
 
-# add a slice-subnet in the Blockchain system
+# TODO: add a slice-subnet in the Blockchain system
 @app.route('/pdl/slice/share_in_blockchain', methods=['POST'])
 def add_blockchain_slice():
   response = orch.share_slice(request.json)
   return response, 200
 
-# GETS the shared slice-subnet in the Blockchain system
+# TODO. GETS the shared slice-subnet in the Blockchain system
 @app.route('/pdl/slice/get_blockchain', methods=['GET'])
 def get_blockchain_slices():
   response = orch.get_all_blockchain_slices()
   return jsonify(response), 200
 
-# GETS the shared slice-subnet in the Blockchain system
+# TODO: GETS the shared slice-subnet in the Blockchain system
 @app.route('/pdl/slice/get_blockchain/<slice_ID>', methods=['GET'])
 def get_blockchain_slice(slice_ID):
   response = orch.get_blockchain_slice(slice_ID)
   return jsonify(response), 200
 
-# E2E Slice deployment request
+# TODO: E2E Slice deployment request
 @app.route('/pdl/deploy_slice', methods=['POST'])
 def deploy_e2e_slice():
   pass
   #executor.submit(orch.share_slice, request.json)
   return 200
 
-# E2E Slice termination request
+# TODO:E2E Slice termination request
 @app.route('/pdl/terminate_slice', methods=['POST'])
 def terminate_e2e_slice():
   pass

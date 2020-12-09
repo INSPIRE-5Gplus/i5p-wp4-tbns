@@ -13,7 +13,7 @@ web3 = Web3(Web3.HTTPProvider(ethereum_url))
 
 # ETHEREUM SMART CONTRACT ASSOCIATION
 # uses ABI and contract_address within config_file
-with open('config_blockchain.json', 'r') as config_file:
+with open('config_files/config_blockchain.json', 'r') as config_file:
     datastore = json.load(config_file)
     abi = datastore["abi"]
     contract_address = datastore["contract_address"]
