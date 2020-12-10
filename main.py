@@ -8,10 +8,11 @@ from concurrent.futures import ThreadPoolExecutor
 from web3 import Web3
 
 from orchestrator import orchestrator as orch
+from blockchain_node import blockchain_node as bl_node
 from database import database as db
 
 # Define inner applications
-LOG = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 
 ################################ ENVIRONMENT CONFIGURATION ##############################
@@ -79,8 +80,12 @@ def terminate_e2e_slice():
 
 ################################## MAIN SERVER FUNCTION #################################
 if __name__ == '__main__':
+  # triggers the blockchain configuration
+  logging.debug('Configuring Blockchain connection')
+  bl_node.configure_blockchain
+
   # RUN THREAD POOL TO MANAGE INCOMING TASKS
-  print('Thread pool created with 5 workers')
+  logging.debug('Thread pool created with 5 workers')
   executor = ThreadPoolExecutor(max_workers=5)
 
   # BLOCKCHAIN EVENT LISTENER (Thread)
