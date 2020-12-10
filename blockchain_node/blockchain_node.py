@@ -3,48 +3,38 @@
 import os, sys, logging, json, argparse, time, datetime, requests, uuid
 from web3 import Web3
 
+from config_files import settings
+
 logging.basicConfig(level=logging.DEBUG)
 
-###################################### BLOCKCHAIN CONFIGURATION #######################################
-def configure_blockchain():
-    global contract
-    global web3
-
-    # ETHEREUM (GANACHE) CHAIN CONNECTION
-    # web3.py instance
-    bl_ip = os.environ.get("BLOCKCHAIN_IP")
-    bl_port = os.environ.get("BLOCKCHAIN_PORT")
-    ethereum_url = "http://" + str(bl_ip) + ":" + str(bl_port)
-    logging.debug("Ethereum URL: " + ethereum_url)
-    web3 = Web3(Web3.HTTPProvider(ethereum_url))
-
-    # ETHEREUM SMART CONTRACT ASSOCIATION
-    # uses ABI and contract_address within config_file
-    with open('config_files/config_blockchain.json', 'r') as config_file:
-        datastore = json.load(config_file)
-        abi = datastore["abi"]
-        contract_address = datastore["contract_address"]
-
-    # checks connection and gets currentblockcnumber
-    logging.debug("Connection with te blockchain ready: " + str(web3.isConnected()))
-    logging.debug("Current Ethereum block number:" + str(web3.eth.blockNumber))
-
-    # ETHEREUM NODE CONFIGURATION
-    # defines peer account ID and selects smart contract to attack
-    web3.eth.defaultAccount = web3.eth.accounts[0]
-    contract = web3.eth.contract(address=contract_address, abi=abi)
-
 ###################################### BLOCKCHAIN MAPPER #######################################
+# adds slice-subnet template information into the blockchain
 def slice_to_blockchain(nst_json):
+    print("Before distributing...")
     # Add a slice template to make it available for other domains
-    tx_hash = contract.functions.addSliceTemplate(str(nst_json["id"]), nst_json["name"], nst_json["version"], nst_json["vendor"], nst_json["price"], nst_json["unit"]).transact()
-
+    tx_hash = settings.contract.functions.addSliceTemplate(str(nst_json["id"]), nst_json["name"], nst_json["version"], nst_json["vendor"], nst_json["price"], nst_json["unit"]).transact()
+    print("After distributing...")
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    web3.eth.waitForTransactionReceipt(tx_hash)
-    response = contract.functions.getSliceTemplate(str(nst_json["id"])).call()
+    settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    response = settings.contract.functions.getSliceTemplate(str(nst_json["id"])).call()
+    nst_json['blockchain_owner'] = response[5]
+    print("Sending response: " + str(nst_json))
+    return nst_json, 200
 
-    return response
+#TODO: return all slice-subnets template information from other domains
+def slices_from_blockchain():
+    pass 
 
+# returns a specific slice-subnet template information from another domain
+def slice_from_blockchain(slice_ID):
+    response = settings.contract.functions.getSliceTemplate(slice_ID).call()
+    nst_json['blockchain_owner'] = response[5]
+    print("Sending response: " + str(nst_json))
+    return nst_json, 200
+
+#TODO: requests the deployment of a slice-subnet from another domain
+def deploy_blockchain_slice():
+    pass
 ###################################### BLOCKCHAIN EVENTS MANAGER #######################################
 
 #TODO: create a class able to listen the events coming from the Bockchain and 

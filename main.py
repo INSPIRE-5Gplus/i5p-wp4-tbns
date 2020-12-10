@@ -7,6 +7,7 @@ from configparser import ConfigParser
 from concurrent.futures import ThreadPoolExecutor
 from web3 import Web3
 
+from config_files import settings
 from orchestrator import orchestrator as orch
 from blockchain_node import blockchain_node as bl_node
 from database import database as db
@@ -14,18 +15,6 @@ from database import database as db
 # Define inner applications
 logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
-
-################################ ENVIRONMENT CONFIGURATION ##############################
-with open('config_files/config_env.env') as f:
-  for line in f:
-      if 'export' not in line:
-          continue
-      if line.startswith('#'):
-          continue
-      # Remove leading `export `
-      # then, split name / value pair
-      key, value = line.replace('export ', '', 1).strip().split('=', 1)
-      os.environ[key] = value
 
 ########################################## API ##########################################
 # PING function to validate if the slice-docker is active
@@ -38,19 +27,28 @@ def getPings():
 @app.route('/pdl/slice/get_local', methods=['GET'])
 def get_all_local_slice():
   response = orch.get_all_local_slice()
-  return jsonify(response[0]), 200
+  if response[1] == 200:
+    return jsonify(response[0]), 200
+  else:
+    return response[0], response[1] 
 
 # GETS specific local slice-subnet
 @app.route('/pdl/slice/get_local/<slice_ID>', methods=['GET'])
 def get_local_slice(slice_ID):
   response = orch.get_local_slice(slice_ID)
-  return jsonify(response), 200
+  if response[1] == 200:
+    return jsonify(response[0]), 200
+  else:
+    return response[0], response[1] 
 
 # TODO: add a slice-subnet in the Blockchain system
-@app.route('/pdl/slice/share_in_blockchain', methods=['POST'])
-def add_blockchain_slice():
-  response = orch.share_slice(request.json)
-  return response, 200
+@app.route('/pdl/slice/share_in_blockchain/<slice_ID>', methods=['POST'])
+def add_blockchain_slice(slice_ID):
+  response = orch.share_slice(slice_ID)
+  if response[1] == 200:
+    return response[0], 200
+  else:
+    return response[0], response[1]
 
 # TODO. GETS the shared slice-subnet in the Blockchain system
 @app.route('/pdl/slice/get_blockchain', methods=['GET'])
@@ -80,9 +78,13 @@ def terminate_e2e_slice():
 
 ################################## MAIN SERVER FUNCTION #################################
 if __name__ == '__main__':
+  # initializes the environtment variables for this application.
+  logging.debug('Configuring environtment variables')
+  settings.init_environment_variables()
+
   # triggers the blockchain configuration
   logging.debug('Configuring Blockchain connection')
-  bl_node.configure_blockchain
+  settings.init_blockchain()
 
   # RUN THREAD POOL TO MANAGE INCOMING TASKS
   logging.debug('Thread pool created with 5 workers')

@@ -12,23 +12,29 @@ from database import database as db
 # returns the slices templates information in the local domain.
 def get_all_local_slice():
     response = slice_mapper.get_all_slice_templates()
-    print(str(response[0]))
     return response[0], 200
 
 # returns the slice template information placed in the local domain with a specific ID.
 def get_local_slice(slice_ID):
     response = slice_mapper.get_slice_template(slice_ID)
-    return response, 200
+    return response[0], 200
 
 #### BLOCKCHAIN NETWORK SLICES FUNCTIONS
-# TODO: adds a slice template into the blockchain to be shared
-def share_slice(request_json):
-    # gets NST from local NSM
+# adds a slice template into the blockchain to be shared            #TODO: a parameters selection to distribute must be done
+def share_slice(slice_ID):
+    # gets NST from local NSM and selects the necessary information
     response = slice_mapper.get_slice_template(slice_ID)
-    
+    local_nst_json = json.loads(response[0])
+    bl_nst_json = {}
+    bl_nst_json['id'] = local_nst_json['uuid']
+    bl_nst_json['name'] = local_nst_json['nstd']['name']
+    bl_nst_json['version'] = local_nst_json['nstd']['version']
+    bl_nst_json['vendor'] = local_nst_json['nstd']['vendor']
+    bl_nst_json['price'] = 1
+    bl_nst_json['unit'] = "eth"
     #give the nst to the Blockchain mapper to distribute it with the other peers.
-    response = bl_mapper.slice_to_blockchain(nst_json)
-    return 200
+    response = bl_mapper.slice_to_blockchain(bl_nst_json)
+    return response[0], 200
 
 # TODO: returns the slices templates information in the blockchain without those belonging to the local domain.
 def get_all_blockchain_slices():
