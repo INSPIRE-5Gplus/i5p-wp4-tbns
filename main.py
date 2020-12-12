@@ -16,67 +16,81 @@ from database import database as db
 logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 
-########################################## API ##########################################
+#####################################################################################################
+#####################                        API                          ###########################
+#####################################################################################################
 # PING function to validate if the slice-docker is active
 @app.route('/pdl/pings', methods=['GET'])
 def getPings():
   ping_response  = {'code creation date': '2020-04-12 11:00:00 UTC', 'current_time': str(datetime.datetime.now().isoformat())}
   return jsonify(ping_response), 200
 
-# GETS all local slice-subnets
+########################################## PDL-SLICING API ##########################################
+# GETS all local slice-subnets (NSTs)
 @app.route('/pdl/slice/get_local', methods=['GET'])
-def get_all_local_slice():
-  response = orch.get_all_local_slice()
+def get_local_subnet_templates():
+  response = orch.get_local_slicesubnet_templates()
   if response[1] == 200:
     return jsonify(response[0]), 200
   else:
     return response[0], response[1] 
 
-# GETS specific local slice-subnet
+# GETS specific local slice-subnet (NST)
 @app.route('/pdl/slice/get_local/<slice_ID>', methods=['GET'])
-def get_local_slice(slice_ID):
-  response = orch.get_local_slice(slice_ID)
+def get_local_subnet_template(slice_ID):
+  response = orch.get_local_slicesubnet_template(slice_ID)
   if response[1] == 200:
     return jsonify(response[0]), 200
   else:
     return response[0], response[1] 
 
-# TODO: add a slice-subnet in the Blockchain system
+# adds a slice-subnet in the Blockchain system
 @app.route('/pdl/slice/share_in_blockchain/<slice_ID>', methods=['POST'])
-def add_blockchain_slice(slice_ID):
-  response = orch.share_slice(slice_ID)
+def add_blockchain_subnet_template(slice_ID):
+  response = orch.slicesubnet_template_to_bl(slice_ID)
   if response[1] == 200:
     return response[0], 200
   else:
     return response[0], response[1]
 
-# TODO. GETS the shared slice-subnet in the Blockchain system
+# TODO. GETS the slice-subnets (NSTs) in the Blockchain system
 @app.route('/pdl/slice/get_blockchain', methods=['GET'])
-def get_blockchain_slices():
-  response = orch.get_all_blockchain_slices()
+def get_blockchain_subnets_templates():
+  response = orch.get_bl_slicesubnet_templates()
   return jsonify(response), 200
 
-# TODO: GETS the shared slice-subnet in the Blockchain system
+# GETS a shared slice-subnet (NST) in the Blockchain system
 @app.route('/pdl/slice/get_blockchain/<slice_ID>', methods=['GET'])
-def get_blockchain_slice(slice_ID):
-  response = orch.get_blockchain_slice(slice_ID)
+def get_blockchain_subnet_template(slice_ID):
+  response = orch.get_bl_slicesubnet_template(slice_ID)
+  return jsonify(response), 200
+
+# GETS all local and blockchain slice-subnets (NSTs)
+@app.route('/pdl/slice/get_all', methods=['GET'])
+def get_all_slice_subnets_templates():
+  response = orch.get_slicessubnets_templates()
   return jsonify(response), 200
 
 # TODO: E2E Slice deployment request
-@app.route('/pdl/deploy_slice', methods=['POST'])
+@app.route('/pdl/slice/deploy', methods=['POST'])
 def deploy_e2e_slice():
   pass
-  #executor.submit(orch.share_slice, request.json)
+  executor.submit(orch.instantiate_e2e_slice, request.json)
   return 200
 
 # TODO:E2E Slice termination request
-@app.route('/pdl/terminate_slice', methods=['POST'])
+@app.route('/pdl/slice/terminate', methods=['POST'])
 def terminate_e2e_slice():
   pass
-  #executor.submit(orch.share_slice, request.json)
+  #executor.submit(orch.terminate_e2e_slice, request.json)
   return 200
 
-################################## MAIN SERVER FUNCTION #################################
+######################################### PDL-TRANSPORT API #########################################
+#TODO: 
+
+#####################################################################################################
+#######################               MAIN SERVER FUNCTION                    #######################
+#####################################################################################################
 if __name__ == '__main__':
   # initializes the environtment variables for this application.
   logging.debug('Configuring environtment variables')

@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3.4
 
 import os, sys, logging, json, argparse, time, datetime, requests, uuid
+from threading import Lock
 
 from slice_subnet_mapper import slice_subnet_mapper as slice_mapper
 from blockchain_node import blockchain_node as bl_mapper
@@ -8,22 +9,26 @@ from sdn_mapper import sdn_mapper
 from database import database as db
 
 
+# mutex used to ensure one single access to DBs
+mutex_slice2db_access = Lock()
+mutex_slice2blockchaindb_access = Lock()
+
 #### LOCAL NETWORK SLICES FUNCTIONS
 # returns the slices templates information in the local domain.
-def get_all_local_slice():
-    response = slice_mapper.get_all_slice_templates()
+def get_local_slicesubnet_templates():
+    response = slice_mapper.get_all_slice_subnet_templates()
     return response[0], 200
 
 # returns the slice template information placed in the local domain with a specific ID.
-def get_local_slice(slice_ID):
-    response = slice_mapper.get_slice_template(slice_ID)
+def get_local_slicesubnet_template(slice_ID):
+    response = slice_mapper.get_slice_subnet_template(slice_ID)
     return response[0], 200
 
 #### BLOCKCHAIN NETWORK SLICES FUNCTIONS
 # adds a slice template into the blockchain to be shared            #TODO: a parameters selection to distribute must be done
-def share_slice(slice_ID):
+def slicesubnet_template_to_bl(slice_ID):
     # gets NST from local NSM and selects the necessary information
-    response = slice_mapper.get_slice_template(slice_ID)
+    response = slice_mapper.get_slice_subnet_template(slice_ID)
     local_nst_json = json.loads(response[0])
     bl_nst_json = {}
     bl_nst_json['id'] = local_nst_json['uuid']
@@ -36,20 +41,122 @@ def share_slice(slice_ID):
     response = bl_mapper.slice_to_blockchain(bl_nst_json)
     return response[0], 200
 
-# TODO: returns the slices templates information in the blockchain without those belonging to the local domain.
-def get_all_blockchain_slices():
+# TODO: returns the slice-subnet templates information in the blockchain without those belonging to the local domain.
+def get_bl_slicesubnet_templates():
     return 200
 
-# TODO: returns the slice template information placed in the blockchain with a specific ID.
-def get_blockchain_slice(slice_ID):
-    return 200
-
+# returns the slice-subnet template information placed in the blockchain with a specific ID.
+def get_bl_slicesubnet_template(slice_ID):
+    response = bl_mapper.slice_from_blockchain(slice_ID)
+    return response, 200
 
 #### GLOBAL NETWORK SLICES FUNCTIONS
+# returns all the slice-subnets (NSTs) availablae locally and in the blockchain peers.
+def get_slicessubnets_templates():
+    # gets local slice-subnets
+    response = slice_mapper.get_all_slice_subnet_templates()
+    local_slicesubnets_list = json.loads(response[0])
+
+    # gets blockchain slice-subnets
+    subnet_list_length = bl_mapper.get_slices_counter
+    blockchain_slicesubnets_list = []
+    index = 0
+    while index < subnet_list_length:
+        found = False
+        subnet_ID_item = bl_mapper.get_slice_id(index)
+        #if nst_db2:
+        if local_slicesubnets_list:
+            #for nst_item in nst_db2:
+            for subnet_item in local_slicesubnets_list:
+                if subnet_item['uuid'] == subnet_ID_item:
+                    found = True
+                    logging.debug ("NST already in local DB, no need to get it from BL.")
+                    break
+        
+        if found == False:
+            nst_element = bl_mapper.slice_from_blockchain(subnet_ID_item)            
+            blockchain_slicesubnets_list.append(nst_element)
+        index += 1
+    
+    slicesubnets_list = local_slicesubnets_list + blockchain_slicesubnets_list
+    available_slicesubnets = json.loads(slicesubnets_list)
+    return available_slicesubnets, 200
+
 # TODO: manages all the E2E slice instantiation process
 def instantiate_e2e_slice(e2e_slice_json):
+    # creates the NSI instance object based on the request
+    incoming_data = e2e_slice_json
+    nsi_element = {}
+    nsi_element["id"] = str(uuid.uuid4()) #ID for the E2E slice object
+    nsi_element["name"] = incoming_data["name"]
 
-    return 200
+    # gets local slice-subnets
+    response = slice_mapper.get_all_slice_subnet_templates()
+    local_slicesubnets_list = json.loads(response[0])
+    
+    # prepares e2e slice data object
+    slice_subnets_list = []
+    for subnet_item in incoming_data["slice_subnets"]:
+        subslice_element= {}
+        found_local = False
+        # gets the local slice-subnet information
+        for slicesubnet_element in local_slicesubnets_list:
+            if slicesubnet_element["uuid"] == subnet_item["nst_ref"]:
+                subslice_element["id"] = str(uuid.uuid4())          #id to find the slice subnet
+                subslice_element["nst_ref"] = slicesubnet_element["uuid"]     #nstId
+                subslice_element["name"] = slicesubnet_element["nstd"]["name"]
+                subslice_element["version"] = slicesubnet_element["nstd"]["version"]
+                subslice_element["vendor"] = slicesubnet_element["nstd"]["vendor"]
+                subslice_element["price"] = 4
+                subslice_element["unit"] = "ETH"
+                found_local = True
+                break
+        # gets hte blockchain slice-subnet information
+        if found_local == False:
+            blockchain_nst = bl_mapper.slice_from_blockchain(subnet_item["nst_ref"])
+            subslice_element["id"] = str(uuid.uuid4())  #nsiId
+            subslice_element["nst_ref"] = blockchain_nst[0]["id"]    #nstId
+            subslice_element["name"] = blockchain_nst[0]["name"]
+            subslice_element["version"] = blockchain_nst[0]["version"]
+            subslice_element["vendor"] = blockchain_nst[0]["vendor"]
+            subslice_element["price"] = blockchain_nst[0]["price"]
+            subslice_element["unit"] = blockchain_nst[0]["unit"]
+            subslice_element["blockchain_owner"] = blockchain_nst[0]["blockchain_owner"]
+        
+        slice_subnets_list.append(subslice_element)
+
+    nsi_element["slice_subnets"]=slice_subnets_list
+    nsi_element["status"] = "INSTANTIATING"
+
+    # starts the instantiation procedure
+    for slice_subnet_item in nsi_element["slice_subnets"]:
+        # if there's a blockchain owner, the request towards blockchain else, local domain
+        if "blockchain_owner" in slice_subnet_item.keys():
+            response = bl_mapper.deploy_blockchain_slice(slice_subnet_item)
+            slice_subnet_item["log"] = response[0]['log']
+            slice_subnet_item["status"] = response[0]['status']
+        else:
+            # LOCAL INSTANTIATION PROCESS IS CALLED
+            data_json = {}
+            data_json['nst_id'] = slice_subnet_item["nst_ref"]
+            data_json['name'] = subslice_element["name"]
+            data_json['request_type'] = 'CREATE_SLICE'
+            data_json['description'] = 'Slice-subnet instance based on the NST: ' + slice_subnet_item["nst_ref"]
+            response = slice_mapper.instantiate_slice_subnet(data_json)
+            jsonresponse = json.loads(response[0])
+
+            if (response[1] == 200) or (response[1] == 201):
+                slice_subnet_item['log'] = "This slice-subnet is being instantiated."
+                slice_subnet_item['status'] = "INSTANTIATING"
+                slice_subnet_item['request_id'] = jsonresponse['id']
+    
+    # saves the nsi object into the db
+    mutex_slice2db_access.acquire()
+    db.nsi_db.append(nsi_element)
+    mutex_slice2db_access.release()
+
+    #TODO: how does it follow???
+    #WHILE requests to all slice-mngrs status...
 
 # TODO: manages all the E2E Slice termination process
 def terminate_e2e_slice(e2e_slice_json):
