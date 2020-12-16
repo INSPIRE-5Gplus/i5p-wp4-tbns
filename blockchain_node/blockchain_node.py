@@ -38,8 +38,8 @@ def slice_from_blockchain(slice_ID):
 
 # returns the number of slice-subnets (NSTs) in the blockchain db
 def get_slices_counter():
-    counter = settings.contract.functions.getSliceTemplateCount().call()
-    return counter
+    response = settings.contract.functions.getSliceTemplateCount().call()
+    return response
 
 # returns the slice-subnet (NST) ID based on the index position within the slice_subnets list in the blockchain
 def get_slice_id(index):

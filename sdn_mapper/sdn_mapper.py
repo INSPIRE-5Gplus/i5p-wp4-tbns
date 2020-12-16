@@ -6,9 +6,9 @@ import os, sys, logging, json, argparse, time, datetime, requests, uuid
 #### NETWORK SLICE MANAGER/NFVO URL
 JSON_CONTENT_HEADER = {'Content-Type':'application/json'}
 def get_nsm_url():
-    nsm_ip = os.environ.get("SDN_CONTROLLER_IP")
-    nsm_port = os.environ.get("SDN_CONTROLLER_PORT")
-    nfvo_url = "http://"+ str(nsm_ip) +":"+ str(nsm_port)  #TODO: check the API
+    controller_ip = os.environ.get("SDN_CONTROLLER_IP")
+    controller_port = os.environ.get("SDN_CONTROLLER_PORT")
+    controller_url = "http://"+ str(controller_ip) +":"+ str(controller_port)  #TODO: check the API
     return nfvo_url
 
 

@@ -58,15 +58,13 @@ def get_slicessubnets_templates():
     local_slicesubnets_list = json.loads(response[0])
 
     # gets blockchain slice-subnets
-    subnet_list_length = bl_mapper.get_slices_counter
+    subnet_list_length = bl_mapper.get_slices_counter()
     blockchain_slicesubnets_list = []
-    index = 0
-    while index < subnet_list_length:
+    index_list = 0
+    while (index_list < subnet_list_length):
         found = False
-        subnet_ID_item = bl_mapper.get_slice_id(index)
-        #if nst_db2:
+        subnet_ID_item = bl_mapper.get_slice_id(index_list)
         if local_slicesubnets_list:
-            #for nst_item in nst_db2:
             for subnet_item in local_slicesubnets_list:
                 if subnet_item['uuid'] == subnet_ID_item:
                     found = True
@@ -75,12 +73,12 @@ def get_slicessubnets_templates():
         
         if found == False:
             nst_element = bl_mapper.slice_from_blockchain(subnet_ID_item)            
-            blockchain_slicesubnets_list.append(nst_element)
-        index += 1
+            blockchain_slicesubnets_list.append(nst_element[0])
+        index_list += 1
     
     slicesubnets_list = local_slicesubnets_list + blockchain_slicesubnets_list
-    available_slicesubnets = json.loads(slicesubnets_list)
-    return available_slicesubnets, 200
+    #available_slicesubnets = json.loads(slicesubnets_list)
+    return slicesubnets_list, 200
 
 # TODO: manages all the E2E slice instantiation process
 def instantiate_e2e_slice(e2e_slice_json):
