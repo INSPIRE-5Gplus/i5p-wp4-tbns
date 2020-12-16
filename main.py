@@ -107,6 +107,10 @@ if __name__ == '__main__':
   # BLOCKCHAIN EVENT LISTENER (Thread)
   #TODO: define the thread that must listen for Blockchain events (/blockchain_node/events_manager.py)
   #TODO: once defined, declare and start it
+  # Threads to handle requests (local and blockchain)
+  event_filter = contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
+  worker_blockchain_events = Thread(target=event_loop, args=(event_filter, 10), daemon=True)
+  worker_requests = thread_requests_control()
 
   # RUN MAIN SERVER THREAD
   app.run(debug=False, host='localhost', port=os.environ.get("PDL_SLICE_PORT"))
