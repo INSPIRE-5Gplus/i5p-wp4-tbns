@@ -51,7 +51,7 @@ def get_bl_slicesubnet_template(slice_ID):
     return response, 200
 
 #### GLOBAL NETWORK SLICES FUNCTIONS
-# returns all the slice-subnets (NSTs) availablae locally and in the blockchain peers.
+# returns all the slice-subnets (NSTs) available locally and in the blockchain peers.
 def get_slicessubnets_templates():
     # gets local slice-subnets
     response = slice_mapper.get_all_slice_subnet_templates()
@@ -79,6 +79,11 @@ def get_slicessubnets_templates():
     slicesubnets_list = local_slicesubnets_list + blockchain_slicesubnets_list
     #available_slicesubnets = json.loads(slicesubnets_list)
     return slicesubnets_list, 200
+
+# returns all the e2e slice instances (E2E NSI)
+def get_e2e_slice_instances():
+    response = db.nsi_db
+    return response, 200
 
 # TODO: manages all the E2E slice instantiation process
 def instantiate_e2e_slice(e2e_slice_json):
