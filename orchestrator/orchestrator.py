@@ -164,6 +164,7 @@ def instantiate_e2e_slice(e2e_slice_json):
     
     # awaits for all the slice-subnets to be instantiated
     settings.logger.info("ORCH: Waiting for al slice-subnets instantes to be deployed. E2E SLICE ID: " +str(nsi_element["id"]))
+    
     all_subnets_ready = False
     while(all_subnets_ready == False):
         #time.sleep(30)                  # sleep of 30s (maybe a minute?) to let all the process begin
@@ -187,14 +188,12 @@ def instantiate_e2e_slice(e2e_slice_json):
         
         # if the number of slice-subnets instantiated = total number in the e2e slice, finishes while
         if (subnets_instantiated == len(nsi_element['slice_subnets'])):
-            #nsi_element["status"] = "INSTANTIATED"
-            #nsi_element["log"] = "E2E Network Slice INSTANTIATED."
             all_subnets_ready = True
-    
+        
+    # TODO: uncomment once the while works
     # saves the nsi object into the db
-    # TODO: uncomment once the path computation procedure is done
     #mutex_slice2db_access.acquire()
-    #nsi_element["log"] = "Slice-subnets ready, applying path computation."
+    #nsi_element["log"] = "Slice-subnets ready, deploying virtual links between slice-subnets."
     #db.update_db(nsi_element["id"], nsi_element, "slices")
     #mutex_slice2db_access.release()
 
