@@ -10,11 +10,13 @@ from web3 import Web3
 from config_files import settings
 from orchestrator import orchestrator as orch
 from blockchain_node import blockchain_node as bl_node
-from database import database as db
 
 # Define inner applications
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)  #Trying setting.logger
 app = Flask(__name__)
+
+# initializes the logging
+settings.init_logging()
 
 #####################################################################################################
 #####################                        API                          ###########################
@@ -92,7 +94,6 @@ def get_all_e2e_slice_instances():
 # TODO: E2E Slice deployment request
 @app.route('/pdl/slice/deploy', methods=['POST'])
 def deploy_e2e_slice():
-  pass
   executor.submit(orch.instantiate_e2e_slice, request.json)
   response = {}
   response['log'] = "Request accepted, setting up the E2E Network Slice."
@@ -107,7 +108,6 @@ def terminate_e2e_slice():
   response['log'] = "Request accepted, terminating the selected E2E Network Slice."
   return response, 200
 
-
 ######################################### PDL-TRANSPORT API #########################################
 #TODO: 
 
@@ -115,16 +115,16 @@ def terminate_e2e_slice():
 #######################               MAIN SERVER FUNCTION                    #######################
 #####################################################################################################
 if __name__ == '__main__':
-  # initializes the environtment variables for this application.
-  logging.debug('Configuring environtment variables')
+  # initializes the environment variables for this application.
+  settings.logger.info('Configuring environtment variables')
   settings.init_environment_variables()
 
   # triggers the blockchain configuration
-  logging.debug('Configuring Blockchain connection')
+  settings.logger.info('Configuring Blockchain connection')
   settings.init_blockchain()
 
   # RUN THREAD POOL TO MANAGE INCOMING TASKS
-  logging.debug('Thread pool created with 5 workers')
+  #settings.logger.info('Thread pool created with 5 workers')
   executor = ThreadPoolExecutor(max_workers=5)
 
   # BLOCKCHAIN EVENT LISTENER (Thread)

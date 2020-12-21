@@ -5,11 +5,10 @@ from web3 import Web3
 
 from config_files import settings
 
-logging.basicConfig(level=logging.DEBUG)
-
 ###################################### BLOCKCHAIN MAPPER #######################################
 # adds slice-subnet (NST) information into the blockchain
 def slice_to_blockchain(nst_json):
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local slice-subnet template information with Blockchain peers.')
     # Add a slice template to make it available for other domains
     tx_hash = settings.contract.functions.addSliceTemplate(str(nst_json["id"]), nst_json["name"], nst_json["version"], nst_json["vendor"], nst_json["price"], nst_json["unit"]).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
@@ -20,11 +19,13 @@ def slice_to_blockchain(nst_json):
 
 #TODO: returns all slice-subnets (NSTs) information from other domains
 def slices_from_blockchain():
+    settings.logger.info('BLOCKCHAIN_MAPPER: Requests all blockahin slice-subnet template information.')
     pass 
 
 # returns a specific slice-subnet (NST) information from another domain
 def slice_from_blockchain(slice_ID):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
+    settings.logger.info('BLOCKCHAIN_MAPPER: Requests blockahin slice-subnet template information. ID: ' + str(slice_ID))
     response = settings.contract.functions.getSliceTemplate(slice_ID).call()
     nst_json = {}
     nst_json['id'] = slice_ID
@@ -48,6 +49,7 @@ def get_slice_id(index):
 
 # requests the deployment of a slice-subnet (NST) from another domain
 def deploy_blockchain_slice(ref_slice_subnet):
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to deploy slice-subnet in the Blockchain: ' + str(ref_slice_subnet))
     # instantiate slice
     tx_hash = settings.contract.functions.instantiateSlice(str(ref_slice_subnet["id"]), ref_slice_subnet["nst_ref"]).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)

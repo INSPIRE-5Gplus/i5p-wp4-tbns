@@ -7,6 +7,7 @@ from slice_subnet_mapper import slice_subnet_mapper as slice_mapper
 from blockchain_node import blockchain_node as bl_mapper
 from sdn_mapper import sdn_mapper
 from database import database as db
+from config_files import settings
 
 
 # mutex used to ensure one single access to DBs
@@ -68,7 +69,6 @@ def get_slicessubnets_templates():
             for subnet_item in local_slicesubnets_list:
                 if subnet_item['uuid'] == subnet_ID_item:
                     found = True
-                    logging.debug ("NST already in local DB, no need to get it from BL.")
                     break
         
         if found == False:
@@ -82,11 +82,12 @@ def get_slicessubnets_templates():
 
 # returns all the e2e slice instances (E2E NSI)
 def get_e2e_slice_instances():
-    response = db.nsi_db
+    response = db.get_elements("slices")
     return response, 200
 
 # TODO: manages all the E2E slice instantiation process
 def instantiate_e2e_slice(e2e_slice_json):
+    settings.logger.info("ORCH: Received request to deploy an E2E Network Slice.")
     # creates the NSI instance object based on the request
     incoming_data = e2e_slice_json
     nsi_element = {}
@@ -146,21 +147,23 @@ def instantiate_e2e_slice(e2e_slice_json):
             data_json['request_type'] = 'CREATE_SLICE'
             data_json['description'] = 'Slice-subnet instance based on the NST: ' + slice_subnet_item["nst_ref"]
             
-            response = slice_mapper.instantiate_slice_subnet(data_json)
-            jsonresponse = json.loads(response[0])
+            response = slice_mapper.instantiate_slice_subnet(data_json)                         # TODO: response is emulated while developing.
 
-            if (response[1] == 200) or (response[1] == 201):
+            if (response[1] == 200 or response[1] == 201):
                 slice_subnet_item['log'] = "This slice-subnet is being instantiated."
                 slice_subnet_item['status'] = "INSTANTIATING"
-                slice_subnet_item['request_id'] = jsonresponse['id']
-    
+                slice_subnet_item['request_id'] = response[0]['id']  #jsonresponse['id']   
+
     # saves the nsi object into the db
     mutex_slice2db_access.acquire()
     nsi_element["log"] = "E2E Slice instance designed, deploying slice-subnets."
-    db.nsi_db.append(nsi_element) 
+    response = db.add_element(nsi_element, "slices")
+    if response != 200:
+        pass                # TODO: trigger exception/error
     mutex_slice2db_access.release()
-
+    
     # awaits for all the slice-subnets to be instantiated
+    settings.logger.info("ORCH: Waiting for al slice-subnets instantes to be deployed. E2E SLICE ID: " +str(nsi_element["id"]))
     all_subnets_ready = False
     while(all_subnets_ready == False):
         #time.sleep(30)                  # sleep of 30s (maybe a minute?) to let all the process begin
@@ -206,7 +209,7 @@ def instantiate_e2e_slice(e2e_slice_json):
     mutex_slice2db_access.acquire()
     db.update_db(nsi_element["id"], nsi_element, "slices")
     mutex_slice2db_access.release()
-    logging.debug('E2E Network Slice INSTANTIATED. E2E Slice ID: ' + str(nsi_element["id"]))  
+    settings.logger.info('E2E Network Slice INSTANTIATED. E2E Slice ID: ' + str(nsi_element["id"]))  
 
 # TODO: manages a local slice-subnet instantiation process
 def instantiate_local_slicesubnet():
