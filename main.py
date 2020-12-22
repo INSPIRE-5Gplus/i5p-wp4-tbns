@@ -5,11 +5,13 @@ import os, sys, logging, json, argparse, time, datetime, requests, uuid
 from flask import Flask, request, jsonify
 from configparser import ConfigParser
 from concurrent.futures import ThreadPoolExecutor
+from threading import Thread, Lock
 from web3 import Web3
 
 from config_files import settings
 from orchestrator import orchestrator as orch
 from blockchain_node import blockchain_node as bl_node
+from blockchain_node import events_manager
 
 # Define inner applications
 #logging.basicConfig(level=logging.DEBUG)  #Trying setting.logger
@@ -94,7 +96,7 @@ def get_all_e2e_slice_instances():
 # TODO: E2E Slice deployment request
 @app.route('/pdl/slice/deploy', methods=['POST'])
 def deploy_e2e_slice():
-  executor.submit(orch.instantiate_e2e_slice, request.json)
+  settings.executor.submit(orch.instantiate_e2e_slice, request.json)
   response = {}
   response['log'] = "Request accepted, setting up the E2E Network Slice."
   return response, 200
@@ -103,13 +105,13 @@ def deploy_e2e_slice():
 @app.route('/pdl/slice/terminate', methods=['POST'])
 def terminate_e2e_slice():
   pass
-  #executor.submit(orch.terminate_e2e_slice, request.json)
+  #settings.executor.submit(orch.terminate_e2e_slice, request.json)
   response = {}
   response['log'] = "Request accepted, terminating the selected E2E Network Slice."
   return response, 200
 
 ######################################### PDL-TRANSPORT API #########################################
-#TODO: 
+# TODO: API FOR THE PDL-TRANSPORT NODES
 
 #####################################################################################################
 #######################               MAIN SERVER FUNCTION                    #######################
@@ -123,16 +125,14 @@ if __name__ == '__main__':
   settings.logger.info('Configuring Blockchain connection')
   settings.init_blockchain()
 
+  # BLOCKCHAIN EVENT LISTENER (Thread)
+  event_filter = settings.contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
+  worker_blockchain_events = Thread(target=events_manager.event_loop, args=(event_filter, 10), daemon=True)
+
   # RUN THREAD POOL TO MANAGE INCOMING TASKS
   #settings.logger.info('Thread pool created with 5 workers')
-  executor = ThreadPoolExecutor(max_workers=5)
-
-  # BLOCKCHAIN EVENT LISTENER (Thread)
-  #TODO: define the thread that must listen for Blockchain events (/blockchain_node/events_manager.py)
-  #TODO: once defined, declare and start it
-  # Threads to handle requests (local and blockchain)
-  #event_filter = settings.contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
-  #worker_blockchain_events = Thread(target=event_loop, args=(event_filter, 10), daemon=True)
+  workers = 5
+  settings.init_thread_pool(workers)
 
   # RUN MAIN SERVER THREAD
   app.run(debug=False, host='localhost', port=os.environ.get("PDL_SLICE_PORT"))

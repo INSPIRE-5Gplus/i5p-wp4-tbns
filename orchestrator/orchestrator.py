@@ -189,7 +189,7 @@ def instantiate_e2e_slice(e2e_slice_json):
         # if the number of slice-subnets instantiated = total number in the e2e slice, finishes while
         if (subnets_instantiated == len(nsi_element['slice_subnets'])):
             all_subnets_ready = True
-        
+    
     # TODO: uncomment once the while works
     # saves the nsi object into the db
     #mutex_slice2db_access.acquire()
@@ -211,8 +211,90 @@ def instantiate_e2e_slice(e2e_slice_json):
     settings.logger.info('E2E Network Slice INSTANTIATED. E2E Slice ID: ' + str(nsi_element["id"]))  
 
 # TODO: manages a local slice-subnet instantiation process
-def instantiate_local_slicesubnet():
-    pass
+def instantiate_local_slicesubnet(subnet_json):
+    #gets specific NST information
+    response = slice_mapper.get_slice_subnet_template(subnet_json['nst_ref'])
+    jsonresponse = json.loads(response[0])
+
+    # LOCAL INSTANTIATION PROCESS IS CALLED
+    data_json = {}
+    data_json['nst_id'] = subnet_json['nst_ref']
+    data_json['name'] = "BL_"+ jsonresponse['nstd']['name'] + jsonresponse['uuid']   # Default name
+    data_json['request_type'] = 'CREATE_SLICE'
+    data_json['description'] = 'Slice-subnet instance based on the NST: ' + jsonresponse['uuid'] # Default description
+    
+    response = slice_mapper.instantiate_slice_subnet(data_json)  # NOTE: response is emulated while developing.
+    if (response[1] != 200 or response[1] != 201):
+        # TODO: exception/error management
+        pass
+    
+    # creates the NSI instance object with mapping between the Blockchain element and the local element
+    subnet_element = {}
+    subnet_element["id"] = subnet_json['id']
+    subnet_element['log'] = "Slice-subnet being instantiated."
+    subnet_element['status'] = subnet_json['status']
+    subnet_element["nst_ref"] = subnet_json['nst_ref']
+    subnet_element['request_id'] = response[0]['id']
+    
+    # saves the nsi object into the db
+    mutex_slice2blockchaindb_access.acquire()
+    response = db.add_element(subnet_element, "blockchain_subnets")
+    if response[1] != 200:
+        # TODO: exception/error management
+        pass
+    mutex_slice2blockchaindb_access.release()
+
+    # Instantiation procedure control
+    subnet_ready = False
+    while(subnet_ready == False):
+        response = slice_mapper.get_slice_subnet_instance_request(subnet_element['request_id'])
+        jsonresponse = json.loads(response[0])
+        if (jsonresponse['status'] == "INSTANTIATED"):
+            subnet_ready = True
+        elif (jsonresponse['status'] == "INSTANTIATING"):
+            time.sleep(30)
+        else:
+            # TODO: exception/error management
+            pass
+    
+    # Once instantiation is done, updates Blockchain and local DB
+    subnet_element['instance_id'] = jsonresponse['instance_uuid']
+    subnet_element['status'] = jsonresponse['status']
+    subnet_element['log'] = "Slice-subnet instantiated."
+
+    response = bl_mapper.update_blockchain_slice(subnet_element)
+    if response[1] != 200:
+        # TODO: exception/error management
+        pass
+    
+    mutex_slice2blockchaindb_access.acquire()
+    response = db.update_db(subnet_element["id"], subnet_element, "blockchain_subnets")
+    if response[1] != 200:
+        # TODO: exception/error management
+        pass
+    mutex_slice2blockchaindb_access.release()
+
+# TODO: updates a slice-subnet information belonging to another domain (Blockchain)
+def update_slicesubnet_from_blockchain(subnet_json):
+    # look in the local nsi db which nsi has the updated slice subnet
+    found_nsi = False
+    response = db.get_elements("slices")
+
+    for nsi_item in response:
+        for slice_subnet_item in nsi_item["slice_subnets"]:
+            if slice_subnet_item["id"] == subnet_json['instanceId']:
+                slice_subnet_item["status"] = subnet_json['status']
+                slice_subnet_item["log"] = "Slice-subnet (from another domain) INSTANTIATED."
+                
+                # saves the nsi object into the db
+                mutex_slice2db_access.acquire()
+                db.update_db(nsi_item["id"], nsi_item, "slices")
+                mutex_slice2db_access.release()
+                
+                found_nsi = True
+                break
+        if found_nsi:
+            break
 
 # TODO: manages all the E2E Slice termination process
 def terminate_e2e_slice(e2e_slice_json):

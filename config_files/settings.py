@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3.4
  
 import os, sys, logging, json, argparse, time, datetime, requests, uuid
+from concurrent.futures import ThreadPoolExecutor
 from web3 import Web3
 
 def init_logging():
@@ -65,3 +66,7 @@ def init_blockchain():
     # defines peer account ID and selects smart contract to attack
     web3.eth.defaultAccount = web3.eth.accounts[0]
     contract = web3.eth.contract(address=contract_address, abi=abi)
+
+def init_thread_pool(workers):
+    global executor
+    executor = ThreadPoolExecutor(max_workers=workers)
