@@ -126,11 +126,13 @@ if __name__ == '__main__':
   settings.init_blockchain()
 
   # BLOCKCHAIN EVENT LISTENER (Thread)
+  settings.logger.info('Configuring permanent thread to manage Blockchain events')
   event_filter = settings.contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
   worker_blockchain_events = Thread(target=events_manager.event_loop, args=(event_filter, 10), daemon=True)
+  worker_blockchain_events.start()
 
   # RUN THREAD POOL TO MANAGE INCOMING TASKS
-  #settings.logger.info('Thread pool created with 5 workers')
+  settings.logger.info('Thread pool created with 5 workers')
   workers = 5
   settings.init_thread_pool(workers)
 

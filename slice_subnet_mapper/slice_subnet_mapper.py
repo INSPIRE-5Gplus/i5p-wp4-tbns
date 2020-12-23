@@ -64,7 +64,9 @@ def get_slice_subnet_instance_request(request_ID):
     sample_json = {}
     sample_json['instance_uuid'] = str(uuid.uuid4())
     sample_json['status'] = "INSTANTIATED"
-    return str(sample_json), 200
+    time.sleep(10)
+    settings.logger.info('SUBNET_MAPPER: THE ANSWER!!!! ' + str(sample_json))
+    return sample_json, 200
 
 #TODO: sends request to terminate a slice-subnet template (NST) to the NSM
 def terminate_slice_subnet(data_json):

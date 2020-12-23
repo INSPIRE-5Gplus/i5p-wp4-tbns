@@ -112,7 +112,7 @@ def instantiate_e2e_slice(e2e_slice_json):
                 subslice_element["version"] = slicesubnet_element["nstd"]["version"]
                 subslice_element["vendor"] = slicesubnet_element["nstd"]["vendor"]
                 subslice_element["price"] = 4
-                subslice_element["unit"] = "ETH"
+                subslice_element["unit"] = "eth"
                 found_local = True
                 break
         # gets hte blockchain slice-subnet information
@@ -136,6 +136,7 @@ def instantiate_e2e_slice(e2e_slice_json):
     for slice_subnet_item in nsi_element["slice_subnets"]:
         # if there's a blockchain owner, the request towards blockchain else, local domain
         if "blockchain_owner" in slice_subnet_item.keys():
+            settings.logger.info("ORCH: Request slice-subnte to BL NSM")
             response = bl_mapper.deploy_blockchain_slice(slice_subnet_item)
             slice_subnet_item["log"] = response[0]['log']
             slice_subnet_item["status"] = response[0]['status']
@@ -146,7 +147,7 @@ def instantiate_e2e_slice(e2e_slice_json):
             data_json['name'] = subslice_element["name"]
             data_json['request_type'] = 'CREATE_SLICE'
             data_json['description'] = 'Slice-subnet instance based on the NST: ' + slice_subnet_item["nst_ref"]
-            
+            settings.logger.info("ORCH: Request slice-subnte to local NSM")
             response = slice_mapper.instantiate_slice_subnet(data_json)                         # TODO: response is emulated while developing.
 
             if (response[1] == 200 or response[1] == 201):
@@ -164,7 +165,6 @@ def instantiate_e2e_slice(e2e_slice_json):
     
     # awaits for all the slice-subnets to be instantiated
     settings.logger.info("ORCH: Waiting for al slice-subnets instantes to be deployed. E2E SLICE ID: " +str(nsi_element["id"]))
-    
     all_subnets_ready = False
     while(all_subnets_ready == False):
         #time.sleep(30)                  # sleep of 30s (maybe a minute?) to let all the process begin
@@ -173,7 +173,7 @@ def instantiate_e2e_slice(e2e_slice_json):
             if (slice_subnet_item['status'] == 'INSTANTIATING'):
                 if ('blockchain_owner' not in slice_subnet_item):
                     response = slice_mapper.get_slice_subnet_instance_request(slice_subnet_item['request_id'])
-                    jsonresponse = json.loads(response[0])
+                    jsonresponse = response[0]
                     if (jsonresponse['status'] == "INSTANTIATED"):
                         slice_subnet_item['instance_id'] = jsonresponse['instance_uuid']
                         slice_subnet_item['status'] = jsonresponse['status']
@@ -188,14 +188,14 @@ def instantiate_e2e_slice(e2e_slice_json):
         
         # if the number of slice-subnets instantiated = total number in the e2e slice, finishes while
         if (subnets_instantiated == len(nsi_element['slice_subnets'])):
+            settings.logger.info("ORCH: ALL Slice-subnets ready composing E2E Slice ID:" +str(nsi_element["id"]))
             all_subnets_ready = True
     
-    # TODO: uncomment once the while works
     # saves the nsi object into the db
-    #mutex_slice2db_access.acquire()
-    #nsi_element["log"] = "Slice-subnets ready, deploying virtual links between slice-subnets."
-    #db.update_db(nsi_element["id"], nsi_element, "slices")
-    #mutex_slice2db_access.release()
+    mutex_slice2db_access.acquire()
+    nsi_element["log"] = "Slice-subnets ready, deploying virtual links between slice-subnets."
+    db.update_db(nsi_element["id"], nsi_element, "slices")
+    mutex_slice2db_access.release()
 
     # VL CREATION PROCEDURE
     # TODO: (future work) improve the code with a real path computation action
@@ -212,6 +212,8 @@ def instantiate_e2e_slice(e2e_slice_json):
 
 # TODO: manages a local slice-subnet instantiation process
 def instantiate_local_slicesubnet(subnet_json):
+    settings.logger.info("ORCH: Received slice-subnet from Blockchain request. NST Ref:: " +str(subnet_json['nst_ref']))
+    
     #gets specific NST information
     response = slice_mapper.get_slice_subnet_template(subnet_json['nst_ref'])
     jsonresponse = json.loads(response[0])
@@ -248,11 +250,11 @@ def instantiate_local_slicesubnet(subnet_json):
     subnet_ready = False
     while(subnet_ready == False):
         response = slice_mapper.get_slice_subnet_instance_request(subnet_element['request_id'])
-        jsonresponse = json.loads(response[0])
+        jsonresponse = response[0]
         if (jsonresponse['status'] == "INSTANTIATED"):
             subnet_ready = True
-        elif (jsonresponse['status'] == "INSTANTIATING"):
-            time.sleep(30)
+        #elif (jsonresponse['status'] == "INSTANTIATING"):
+            #time.sleep(30)
         else:
             # TODO: exception/error management
             pass
@@ -273,9 +275,12 @@ def instantiate_local_slicesubnet(subnet_json):
         # TODO: exception/error management
         pass
     mutex_slice2blockchaindb_access.release()
+    settings.logger.info("ORCH: Deployed slice-subnet from Blocckhain request. NST Ref:: " +str(subnet_json['nst_ref']))
 
 # TODO: updates a slice-subnet information belonging to another domain (Blockchain)
 def update_slicesubnet_from_blockchain(subnet_json):
+    settings.logger.info("ORCH: Updating slice-subnet information from another domain. Slice-Subnet ID: " +str(subnet_json['instanceId']))
+    
     # look in the local nsi db which nsi has the updated slice subnet
     found_nsi = False
     response = db.get_elements("slices")
