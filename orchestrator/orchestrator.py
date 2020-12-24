@@ -26,7 +26,7 @@ def get_local_slicesubnet_template(slice_ID):
     return response[0], 200
 
 #### BLOCKCHAIN NETWORK SLICES FUNCTIONS
-# adds a slice template into the blockchain to be shared            #TODO: a parameters selection to distribute must be done
+# adds a slice template into the blockchain to be shared
 def slicesubnet_template_to_bl(slice_ID):
     # gets NST from local NSM and selects the necessary information
     response = slice_mapper.get_slice_subnet_template(slice_ID)
@@ -85,7 +85,7 @@ def get_e2e_slice_instances():
     response = db.get_elements("slices")
     return response, 200
 
-# TODO: manages all the E2E slice instantiation process
+# manages all the E2E slice instantiation process  NOTE: missing VL creation (path computation)
 def instantiate_e2e_slice(e2e_slice_json):
     settings.logger.info("ORCH: Received request to deploy an E2E Network Slice.")
     # creates the NSI instance object based on the request
@@ -188,7 +188,6 @@ def instantiate_e2e_slice(e2e_slice_json):
         
         # if the number of slice-subnets instantiated = total number in the e2e slice, finishes while
         if (subnets_instantiated == len(nsi_element['slice_subnets'])):
-            settings.logger.info("ORCH: ALL Slice-subnets ready composing E2E Slice ID:" +str(nsi_element["id"]))
             all_subnets_ready = True
     
     # saves the nsi object into the db
@@ -210,7 +209,7 @@ def instantiate_e2e_slice(e2e_slice_json):
     mutex_slice2db_access.release()
     settings.logger.info('E2E Network Slice INSTANTIATED. E2E Slice ID: ' + str(nsi_element["id"]))  
 
-# TODO: manages a local slice-subnet instantiation process
+# manages a local slice-subnet instantiation process
 def instantiate_local_slicesubnet(subnet_json):
     settings.logger.info("ORCH: Received slice-subnet from Blockchain request. NST Ref:: " +str(subnet_json['nst_ref']))
     
@@ -277,7 +276,7 @@ def instantiate_local_slicesubnet(subnet_json):
     mutex_slice2blockchaindb_access.release()
     settings.logger.info("ORCH: Deployed slice-subnet from Blocckhain request. NST Ref:: " +str(subnet_json['nst_ref']))
 
-# TODO: updates a slice-subnet information belonging to another domain (Blockchain)
+# updates a slice-subnet information belonging to another domain (Blockchain)
 def update_slicesubnet_from_blockchain(subnet_json):
     settings.logger.info("ORCH: Updating slice-subnet information from another domain. Slice-Subnet ID: " +str(subnet_json['instanceId']))
     
@@ -289,7 +288,7 @@ def update_slicesubnet_from_blockchain(subnet_json):
         for slice_subnet_item in nsi_item["slice_subnets"]:
             if slice_subnet_item["id"] == subnet_json['instanceId']:
                 slice_subnet_item["status"] = subnet_json['status']
-                slice_subnet_item["log"] = "Slice-subnet (from another domain) INSTANTIATED."
+                slice_subnet_item["log"] = "Slice-subnet (from another domain)" + str(subnet_json['status'])
                 
                 # saves the nsi object into the db
                 mutex_slice2db_access.acquire()
@@ -301,10 +300,138 @@ def update_slicesubnet_from_blockchain(subnet_json):
         if found_nsi:
             break
 
-# TODO: manages all the E2E Slice termination process
+# manages all the E2E Slice termination process
 def terminate_e2e_slice(e2e_slice_json):
-    pass
+    # gets nsi based on an ID
+    nsi_element = db.get_element(e2e_slice_json['id'], "slices")
+    nsi_element["status"] = "TERMINATING"
+    #nsi_element["log"] = "Requesting to remove VLs."
+   
+    # TODO checks e2e_vl sections
+    #   FOR LOOP to request VL removal
+    #   WAITS until their are all removed
+    
+    # TODO: (once Vl removal works) updates nsi data object (log)
+    
+    
+    # checks slice-subnets
+    for slice_subnet_item in nsi_element["slice_subnets"]:
+        # if it has a blockchain owner, the request must be towards the blockchain environment
+        if "blockchain_owner" in slice_subnet_item.keys():
+            settings.logger.info("ORCH: Request slice-subnet termination to BL NSM")
+            response = bl_mapper.terminate_blockchain_slice(slice_subnet_item)
+            slice_subnet_item["log"] = response[0]['log']
+            slice_subnet_item["status"] = response[0]['status']
+        else:
+            #LOCAL TERMINATION PROCESS IS CALLED
+            data_json = {}
+            data_json['instance_uuid'] = slice_subnet_item["instance_id"]
+            data_json['request_type'] = 'TERMINATE_SLICE'
+            settings.logger.info("ORCH: Request slice-subnet termination to local NSM")
+            response = slice_mapper.terminate_slice_subnet(data_json)                         # TODO: response is emulated while developing.
+            
+            if (response[1] == 200 or response[1] == 201):
+                slice_subnet_item["log"] = "This slice subnet is being terminated."
+                slice_subnet_item["status"] = "TERMINATING"
+                slice_subnet_item['request_id'] = response[0]['id']   #jsonresponse['id']
+    
+    # saves the nsi object into the db
+    mutex_slice2db_access.acquire()
+    nsi_element["log"] = "VLs removed. Requesting to terminate slice-subnets."
+    response = db.add_element(nsi_element, "slices")
+    if response != 200:
+        pass                # TODO: trigger exception/error
+    mutex_slice2db_access.release()
+    
+    # awaits for all the slice-subnets to be instantiated
+    settings.logger.info("ORCH: Waiting for al slice-subnets instantes to be terminated. E2E SLICE ID: " +str(nsi_element["id"]))
+    all_subnets_ready = False
+    while(all_subnets_ready == False):
+        #time.sleep(30)                  # sleep of 30s (maybe a minute?) to let all the process begin
+        subnets_terminated = 0        # used to check how many subnets are in instantiated and change e2e slice status
+        for slice_subnet_item in nsi_element["slice_subnets"]:
+            if (slice_subnet_item['status'] == 'TERMINATING'):
+                if ('blockchain_owner' not in slice_subnet_item):
+                    response = slice_mapper.get_slice_subnet_instance(slice_subnet_item['instance_id'])
+                    jsonresponse = response[0]
+                    if (jsonresponse['status'] == "TERMINATED"):
+                        slice_subnet_item['status'] = jsonresponse['status']
+                        slice_subnet_item['log'] = "Slice_subnet terminated."
+                        subnets_terminated = subnets_terminated + 1
+            elif(slice_subnet_item['status'] == 'TERMINATED'):
+                # all slice-subnets deployed in other domains, are updated by the blockchain event thread.
+                subnets_terminated = subnets_terminated + 1
+            else:
+                #TODO: ERROR management
+                pass
+        
+        # if the number of slice-subnets instantiated = total number in the e2e slice, finishes while
+        if (subnets_terminated == len(nsi_element['slice_subnets'])):
+            all_subnets_ready = True
+    
+    nsi_element["status"] = "TERMINATED"
+    nsi_element["log"] = "E2E Network Slice TERMINATED."
+
+    # saves the nsi object into the db
+    mutex_slice2db_access.acquire()
+    db.update_db(nsi_element["id"], nsi_element, "slices")
+    mutex_slice2db_access.release()
+    settings.logger.info('E2E Network Slice INSTANTIATED. E2E Slice ID: ' + str(nsi_element["id"]))
 
 # TODO: manages a local slice-subnet termination process
-def terminate_local_slicesubnet():
-    pass
+def terminate_local_slicesubnet(subnet_json):
+    settings.logger.info("ORCH: Received slice-subnet termination request from Blockchain. NSI Ref:: " +str(subnet_json['nst_ref']))
+    
+    #gets specific NST information
+    blockchain_subnet = db.get_element(subnet_json['id'], "blockchain_subnets")
+
+    # LOCAL INSTANTIATION PROCESS IS CALLED
+    data_json = {}
+    data_json['instance_uuid'] = blockchain_subnet["instance_id"]
+    data_json['request_type'] = 'TERMINATE_SLICE'
+    settings.logger.info("ORCH: Request slice-subnet termination to local NSM")
+    response = slice_mapper.terminate_slice_subnet(data_json)                         # TODO: response is emulated while developing.
+    if (response[1] != 200 or response[1] != 201):
+        # TODO: exception/error management
+        pass
+    
+    blockchain_subnet['request_id'] = response[0]['id']
+    blockchain_subnet['status'] = subnet_json['status']
+    blockchain_subnet['log'] = "Terminating Slice-subnet."
+    
+    # saves the nsi object into the db
+    mutex_slice2blockchaindb_access.acquire()
+    response = db.add_element(blockchain_subnet, "blockchain_subnets")
+    if response[1] != 200:
+        # TODO: exception/error management
+        pass
+    mutex_slice2blockchaindb_access.release()
+
+    # Instantiation procedure control
+    subnet_ready = False
+    while(subnet_ready == False):
+        response = slice_mapper.get_slice_subnet_instance_request(blockchain_subnet['request_id'])
+        jsonresponse = response[0]
+        if (jsonresponse['status'] == "TERMINATED"):
+            subnet_ready = True
+        else:
+            # TODO: exception/error management
+            pass
+    
+    # Once termination is done, updates Blockchain and local DB
+    blockchain_subnet['instance_id'] = jsonresponse['instance_uuid']
+    blockchain_subnet['status'] = jsonresponse['status']
+    blockchain_subnet['log'] = "Slice-subnet terminated."
+
+    response = bl_mapper.update_blockchain_slice(blockchain_subnet)
+    if response[1] != 200:
+        # TODO: exception/error management
+        pass
+    
+    mutex_slice2blockchaindb_access.acquire()
+    response = db.update_db(blockchain_subnet["id"], blockchain_subnet, "blockchain_subnets")
+    if response[1] != 200:
+        # TODO: exception/error management
+        pass
+    mutex_slice2blockchaindb_access.release()
+    settings.logger.info("ORCH: Deployed slice-subnet from Blocckhain request. NSI Ref: " +str(blockchain_subnet['id']))

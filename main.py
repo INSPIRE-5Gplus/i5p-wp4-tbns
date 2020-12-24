@@ -93,7 +93,7 @@ def get_all_e2e_slice_instances():
   else:
     return response[0], response[1] 
 
-# TODO: E2E Slice deployment request
+# E2E Slice deployment request  # NOTE: MISSING VL CREATION (PATH COMPUTATION)
 @app.route('/pdl/slice/deploy', methods=['POST'])
 def deploy_e2e_slice():
   settings.executor.submit(orch.instantiate_e2e_slice, request.json)
@@ -101,11 +101,10 @@ def deploy_e2e_slice():
   response['log'] = "Request accepted, setting up the E2E Network Slice."
   return response, 200
 
-# TODO:E2E Slice termination request
+# TODO:E2E Slice termination request   # NOTE: MISSING VL REMOVAL
 @app.route('/pdl/slice/terminate', methods=['POST'])
 def terminate_e2e_slice():
-  pass
-  #settings.executor.submit(orch.terminate_e2e_slice, request.json)
+  settings.executor.submit(orch.terminate_e2e_slice, request.json)
   response = {}
   response['log'] = "Request accepted, terminating the selected E2E Network Slice."
   return response, 200

@@ -47,13 +47,32 @@ def get_slice_id(index):
     response = settings.contract.functions.getSliceTemplateId(index).call()
     return response
 
-# requests the deployment of a slice-subnet (NST) from another domain
+# requests the deployment of a slice-subnet template (NST) from another domain
 def deploy_blockchain_slice(ref_slice_subnet):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to deploy slice-subnet in the Blockchain: ' + str(ref_slice_subnet))
-    # instantiate slice
+    # instantiate slice-subnet
     tx_hash = settings.contract.functions.instantiateSlice(str(ref_slice_subnet["id"]), ref_slice_subnet["nst_ref"]).transact()
     
-    # Wait for transaction to be mined and check it's in the blockchain (get)
+    # Wait for transaction to be added and check it's in the blockchain (get)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    
+    #listen the event associated to the transaction receipt
+    rich_logs = settings.contract.events.slice_response().processReceipt(tx_receipt)
+    
+    #create json to send back to the user the initial instantiation request info.
+    deployment_response = {}
+    deployment_response["log"] = rich_logs[0]['args']['log']
+    deployment_response["status"] = rich_logs[0]['args']['status']
+    
+    return deployment_response, 200
+
+# requests the termination of a slice-subnet instance (NSI) from another domain
+def terminate_blockchain_slice(ref_slice_subnet):
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to terminate slice-subnet in the Blockchain: ' + str(ref_slice_subnet))
+    # terminate slice-subnet
+    tx_hash = settings.contract.functions.terminateSlice(ref_slice_subnet['id']).transact()
+    
+    # Wait for transaction to be added and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
     #listen the event associated to the transaction receipt
@@ -83,7 +102,3 @@ def update_blockchain_slice(subnet_json):
     deployment_response["status"] = rich_logs[0]['args']['status']
     
     return deployment_response, 200
-###################################### BLOCKCHAIN EVENTS MANAGER #######################################
-
-#TODO: create a class able to listen the events coming from the Bockchain and 
-# request the correct action to the rchestrator

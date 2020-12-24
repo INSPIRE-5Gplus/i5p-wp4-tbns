@@ -48,6 +48,8 @@ contract Slicing {
         sliceTemplateCount ++;
         return true;
     }
+    
+    //WRONG NAME AND WAY OF DOING!!!! AN ELEMENT CANNOT BE REMOVED!!!
     // remove specific slice template
     function removeSliceTemplate(string memory _templateId) public returns(bool){
         string memory _log;

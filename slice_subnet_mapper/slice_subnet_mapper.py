@@ -68,7 +68,14 @@ def get_slice_subnet_instance_request(request_ID):
     settings.logger.info('SUBNET_MAPPER: THE ANSWER!!!! ' + str(sample_json))
     return sample_json, 200
 
-#TODO: sends request to terminate a slice-subnet template (NST) to the NSM
+# sends request to terminate a slice-subnet template (NST) to the NSM
 def terminate_slice_subnet(data_json):
     settings.logger.info("SUBNET_MAPPER: Requests local slice-subnet termination.")
-    pass
+    data_dumps = json.dumps(data_json)  
+    #url = get_nsm_url() + "/requests"
+    #response = requests.post(url, headers=JSON_CONTENT_HEADER, data=data_dumps)
+    #return response.text, response.status_code
+    id_sample = str(uuid.uuid4())
+    response = {}
+    response['id'] = id_sample
+    return response, 200
