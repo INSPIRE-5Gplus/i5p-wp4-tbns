@@ -60,11 +60,12 @@ def add_blockchain_subnet_template(slice_ID):
 # TODO. GETS the slice-subnets (NSTs) in the Blockchain system
 @app.route('/pdl/slice/get_blockchain_template', methods=['GET'])
 def get_blockchain_subnets_templates():
-  response = orch.get_bl_slicesubnet_templates()
-  if response[1] == 200:
-    return jsonify(response[0]), 200
-  else:
-    return response[0], response[1] 
+  #response = orch.get_bl_slicesubnet_templates()
+  #if response[1] == 200:
+    #return jsonify(response[0]), 200
+  #else:
+    #return response[0], response[1] 
+  pass
 
 # GETS a shared slice-subnet (NST) in the Blockchain system
 @app.route('/pdl/slice/get_blockchain_template/<slice_ID>', methods=['GET'])
@@ -110,14 +111,39 @@ def terminate_e2e_slice():
   return response, 200
 
 ######################################### PDL-TRANSPORT API #########################################
-# TODO: API FOR THE PDL-TRANSPORT NODES
+# GETS the local context
+@app.route('/pdl/transport/get_local_context', methods=['GET'])
+def get_local_context():
+  response = orch.get_local_context()
+  if response[1] == 200:
+    return response[0], 200
+  else:
+    return response[0], response[1]
+
+# GETS all the contexts (local and blockchain)
+@app.route('/pdl/transport/get_all_contexts', methods=['GET'])
+def get_all_contexts():
+  response = orch.get_all_contexts()
+  if response[1] == 200:
+    return jsonify(response[0]), 200
+  else:
+    return response[0], response[1]
+
+# adds the connectivity services of a context to the Blockchain
+@app.route('/pdl/transport/add_context', methods=['POST'])
+def add_blockchain_context():
+  response = orch.context_to_bl()
+  if response[1] == 200:
+    return response[0], 200
+  else:
+    return response[0], response[1]
 
 #####################################################################################################
 #######################               MAIN SERVER FUNCTION                    #######################
 #####################################################################################################
 if __name__ == '__main__':
   # initializes the environment variables for this application.
-  settings.logger.info('Configuring environtment variables')
+  settings.logger.info('Configuring environment variables')
   settings.init_environment_variables()
 
   # triggers the blockchain configuration
@@ -126,7 +152,7 @@ if __name__ == '__main__':
 
   # BLOCKCHAIN EVENT LISTENER (Thread)
   settings.logger.info('Configuring permanent thread to manage Blockchain events')
-  event_filter = settings.contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
+  event_filter = settings.slice_contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
   worker_blockchain_events = Thread(target=events_manager.event_loop, args=(event_filter, 10), daemon=True)
   worker_blockchain_events.start()
 
@@ -136,4 +162,4 @@ if __name__ == '__main__':
   settings.init_thread_pool(workers)
 
   # RUN MAIN SERVER THREAD
-  app.run(debug=False, host='localhost', port=os.environ.get("PDL_SLICE_PORT"))
+  app.run(debug=False, host='localhost', port=os.environ.get("PDL_PORT"))

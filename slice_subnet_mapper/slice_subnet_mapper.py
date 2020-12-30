@@ -13,7 +13,6 @@ def get_nsm_url():
     nfvo_url = "http://"+ str(nsm_ip) +":"+ str(nsm_port) +"/api/v3"
     return nfvo_url
 
-
 #### REQUESTS
 # returns all the slice-subnets templates in the NSM
 def get_all_slice_subnet_templates():

@@ -40,7 +40,8 @@ def init_environment_variables():
             os.environ[key] = value
 
 def init_blockchain():
-    global contract
+    global slice_contract
+    global transport_contract
     global web3
 
     # ETHEREUM (GANACHE) CHAIN CONNECTION
@@ -50,22 +51,28 @@ def init_blockchain():
     print("Ethereum URL: " + ethereum_url)
     # web3.py instance
     web3 = Web3(Web3.HTTPProvider(ethereum_url))
-
-    # ETHEREUM SMART CONTRACT ASSOCIATION
-    # uses ABI and contract_address within config_file
-    with open('config_files/config_blockchain.json', 'r') as config_file:
-        datastore = json.load(config_file)
-        abi = datastore["abi"]
-        contract_address = datastore["contract_address"]
-
+    
     # checks connection and gets currentblockcnumber
     print("Connection with te blockchain ready: " + str(web3.isConnected()))
     print("Current Ethereum block number:" + str(web3.eth.blockNumber))
 
+    # ETHEREUM SMART CONTRACT ASSOCIATION
+    # uses ABI and contract_address within config_file
+    with open('config_files/slice_blockchain.json', 'r') as slice_config_file:
+        datastore = json.load(slice_config_file)
+        slice_abi = datastore["abi"]
+        slice_contract_address = datastore["contract_address"]
+    
+    with open('config_files/transport_blockchain.json', 'r') as transport_config_file:
+        datastore = json.load(transport_config_file)
+        transport_abi = datastore["abi"]
+        transport_contract_address = datastore["contract_address"]
+
     # ETHEREUM NODE CONFIGURATION
     # defines peer account ID and selects smart contract to attack
     web3.eth.defaultAccount = web3.eth.accounts[0]
-    contract = web3.eth.contract(address=contract_address, abi=abi)
+    slice_contract = web3.eth.contract(address=slice_contract_address, abi=slice_abi)
+    transport_contract = web3.eth.contract(address=transport_contract_address, abi=transport_abi)
 
 def init_thread_pool(workers):
     global executor

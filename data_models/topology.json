@@ -1,0 +1,23 @@
+{
+    "ControllerContext": {
+            "id": "edge",
+            "node_name": "edge",
+            "ports": "json ports list in string format",
+            "contextOwner": "bbbbbbbb-bbbb-bbbb-bbbbbbbbbbb"
+        }
+}
+
+{
+    "ConnServiceInstance":{
+        "sdn_instantiation_id": "bbb...",
+        "source_sip": "Edge:1",
+        "destionation_sip": "Packet:1",
+        "capacity": 10,
+        "capacity_unit": "Gbps",
+        "cidr_1":"10.120.0.0/24",
+        "cidr_2":"10.121.0.0/24",
+        "direction": "bidirectional",
+        "instantiationClinet": "Blockchain_address",
+        "contextOwner": "Blcokchain_address"
+    }
+}

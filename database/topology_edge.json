@@ -1,0 +1,17 @@
+{
+    "domain_id": "Edge",
+    "topology":{
+        "node_name": "Edge",
+        "ports":[
+            {
+                "port_id":"Edge:1",
+                "destination": "Packet:1"
+            },
+            {
+                "port_id":"Edge:2",
+                "destination": "Optical:1"
+            }
+        ]
+    },
+    "cs_list":[]
+}

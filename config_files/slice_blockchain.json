@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x6E21E3F5dfB85b2986e04430745aaC6293Ad5a5e",
+    "contract_address":"0xB4b2314BF33330f86beED3E8a47DC92a1C589eEb",
     "abi":[
         {
             "anonymous": false,
@@ -104,97 +104,6 @@
                 }
             ],
             "name": "addSliceTemplate",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_sliceInstanceId",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_sliceTemplateId",
-                    "type": "string"
-                }
-            ],
-            "name": "instantiateSlice",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_templateId",
-                    "type": "string"
-                }
-            ],
-            "name": "removeSliceTemplate",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_sliceInstanceId",
-                    "type": "string"
-                }
-            ],
-            "name": "terminateSlice",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_instanceId",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_status",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_log",
-                    "type": "string"
-                }
-            ],
-            "name": "updateInstance",
             "outputs": [
                 {
                     "internalType": "bool",
@@ -361,6 +270,68 @@
             "inputs": [
                 {
                     "internalType": "string",
+                    "name": "_sliceInstanceId",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_sliceTemplateId",
+                    "type": "string"
+                }
+            ],
+            "name": "instantiateSlice",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_templateId",
+                    "type": "string"
+                }
+            ],
+            "name": "removeSliceTemplate",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "sliceInstancesIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
                     "name": "",
                     "type": "string"
                 }
@@ -388,6 +359,16 @@
                     "type": "string"
                 },
                 {
+                    "internalType": "string",
+                    "name": "nfvicp_cidr",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "nfvicp_sip",
+                    "type": "string"
+                },
+                {
                     "internalType": "address",
                     "name": "instantiationClient",
                     "type": "address"
@@ -404,12 +385,41 @@
         {
             "inputs": [
                 {
+                    "internalType": "string",
+                    "name": "_name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_version",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_vendor",
+                    "type": "string"
+                }
+            ],
+            "name": "sliceTemplateExistance",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
                     "internalType": "uint256",
                     "name": "",
                     "type": "uint256"
                 }
             ],
-            "name": "sliceInstancesIds",
+            "name": "sliceTemplateIds",
             "outputs": [
                 {
                     "internalType": "string",
@@ -468,21 +478,11 @@
             "inputs": [
                 {
                     "internalType": "string",
-                    "name": "_name",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_version",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_vendor",
+                    "name": "_sliceInstanceId",
                     "type": "string"
                 }
             ],
-            "name": "sliceTemplateExistance",
+            "name": "terminateSlice",
             "outputs": [
                 {
                     "internalType": "bool",
@@ -490,26 +490,36 @@
                     "type": "bool"
                 }
             ],
-            "stateMutability": "view",
+            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
             "inputs": [
                 {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "sliceTemplateIds",
-            "outputs": [
+                    "internalType": "string",
+                    "name": "_instanceId",
+                    "type": "string"
+                },
                 {
                     "internalType": "string",
-                    "name": "",
+                    "name": "_status",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_log",
                     "type": "string"
                 }
             ],
-            "stateMutability": "view",
+            "name": "updateInstance",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
             "type": "function"
         }
     ]

@@ -1,0 +1,17 @@
+{
+    "domain_id": "Packet",
+    "topology":{
+        "node_name": "Packet",
+        "ports":[
+            {
+                "port_id":"Packet:1",
+                "destination": "Edge:1"
+            },
+            {
+                "port_id":"Packet:2",
+                "destination": "Core:1"
+            }
+        ]
+    },
+    "cs_list":[]
+}

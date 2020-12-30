@@ -1,44 +1,60 @@
 #!/usr/local/bin/python3.4
 
 import os, sys, logging, json, argparse, time, datetime, requests, uuid
+from config_files import settings
 
 
-#### NETWORK SLICE MANAGER/NFVO URL
+#### SDN TRANSPORT CONTROLLER URL
 JSON_CONTENT_HEADER = {'Content-Type':'application/json'}
 def get_nsm_url():
     controller_ip = os.environ.get("SDN_CONTROLLER_IP")
     controller_port = os.environ.get("SDN_CONTROLLER_PORT")
     controller_url = "http://"+ str(controller_ip) +":"+ str(controller_port)  #TODO: check the API
-    return nfvo_url
+    return controller_url
 
 
 #### REQUESTS
-# returns all the contexts
-def get_all_contexts():
-    url = get_nsm_url() #TODO: check the API
-    response = requests.get(url, headers=JSON_CONTENT_HEADER)
-    return response.text, response.status_code
+# returns the local context  #NOTE: currently the data is emulated
+def get_local_context():
+    #url = get_nsm_url() #TODO: check the API
+    #response = requests.get(url, headers=JSON_CONTENT_HEADER)
+    #return response.text, response.status_code
 
-# returns a specific context
-def get_context(context_ID):
-    url = get_nsm_url() #TODO: check the API
-    response = requests.get(url, headers=JSON_CONTENT_HEADER)
-    return response.text, response.status_code
+    # NOTE: while SDN controller is not available, its data is simulated
+    controller_domain = os.environ.get("SDN_DOMAIN")
+    file_name = 'database/topology_'+ str(controller_domain) +'.json'
+    with open(file_name) as json_file:
+        data = json.load(json_file)
+    if data:
+        return data, 200
+    else:
+        data = {'msg':'ERROR loading data'}
+        return data, 400
 
 #TODO: returns all connectivity_services
 def get_all_connectivity_services():
-    
-    return 200
+    #url = get_nsm_url() #TODO: check the API
+    #response = requests.get(url, headers=JSON_CONTENT_HEADER)
+    #return response.text, response.status_code
+    pass
 
 #TODO: returns specific connectivity services
 def get_connectivity_service(cs_ID):
-    
-    return 200
+    #url = get_nsm_url() #TODO: check the API
+    #response = requests.get(url, headers=JSON_CONTENT_HEADER)
+    #return response.text, response.status_code
+    pass
 
 #TODO: sends request to deploy a connectivity service
-def instantiate_connectivity_service():
-    return 200
+def instantiate_connectivity_service(cs_json):
+    #url = get_nsm_url() #TODO: check the API
+    #response = requests.get(url, headers=JSON_CONTENT_HEADER)
+    #return response.text, response.status_code
+    pass
 
 #TODO: sends request to terminate a connectivity service
 def terminate_connectivity_service():
-    return 200
+    #url = get_nsm_url() #TODO: check the API
+    #response = requests.get(url, headers=JSON_CONTENT_HEADER)
+    #return response.text, response.status_code
+    pass

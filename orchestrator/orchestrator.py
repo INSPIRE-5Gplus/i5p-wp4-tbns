@@ -14,7 +14,8 @@ from config_files import settings
 mutex_slice2db_access = Lock()
 mutex_slice2blockchaindb_access = Lock()
 
-#### LOCAL NETWORK SLICES FUNCTIONS
+####################################### NETWORK SLICE SUBNETS FUNCTIONS ########################################
+#### LOCAL DOMAIN
 # returns the slices templates information in the local domain.
 def get_local_slicesubnet_templates():
     response = slice_mapper.get_all_slice_subnet_templates()
@@ -25,7 +26,7 @@ def get_local_slicesubnet_template(slice_ID):
     response = slice_mapper.get_slice_subnet_template(slice_ID)
     return response[0], 200
 
-#### BLOCKCHAIN NETWORK SLICES FUNCTIONS
+#### BLOCKCHAIN DOMAIN
 # adds a slice template into the blockchain to be shared
 def slicesubnet_template_to_bl(slice_ID):
     # gets NST from local NSM and selects the necessary information
@@ -51,7 +52,58 @@ def get_bl_slicesubnet_template(slice_ID):
     response = bl_mapper.slice_from_blockchain(slice_ID)
     return response, 200
 
-#### GLOBAL NETWORK SLICES FUNCTIONS
+
+############################################ SDN TRANSPORT FUNCTIONS ############################################
+### LOCAL DOMAIN
+# returns the transport context information in the local domain
+def get_local_context():
+    response = sdn_mapper.get_local_context()
+    if response[1] == 200:
+        return response[0], 200
+    else:
+        return response[0], 400 
+
+### BLOCKCHAIN DOMAIN
+# shares all the CSs of a context in the blockchain
+def context_to_bl():
+    # get list of CS within a context to share in the blockchain
+    response = sdn_mapper.get_local_context()
+    sdn_context = response[0]
+    
+    context_json = {}
+    context_json['id'] = sdn_context['domain_id']
+    context_json['topology'] = json.dumps(sdn_context['topology'])
+    context_json['price'] = 1
+    context_json['unit'] = "eth"
+    #give the nst to the Blockchain mapper to distribute it with the other peers.
+    response = bl_mapper.topology_to_blockchain(context_json)
+    
+    return context_json, 200
+
+# returns all (local + blockchain) the contexts information
+def get_all_contexts():
+    context_list = []
+    
+    # gets local slice-subnets
+    response = sdn_mapper.get_local_context()
+    local_context = response[0]
+    context_list.append(local_context)
+
+    # gets blockchain slice-subnets
+    context_list_length = bl_mapper.get_context_counter()
+    index_list = 0
+    while (index_list < context_list_length):
+        context_ID_item = bl_mapper.get_context_id(index_list)
+
+        if local_context['domain_id'] != context_ID_item:
+            nst_element = bl_mapper.topology_from_blockchain(context_ID_item)            
+            context_list.append(nst_element[0])
+        index_list += 1
+    
+    return context_list, 200
+
+
+############################################ E2E / GLOBAL FUNCTIONS #############################################
 # returns all the slice-subnets (NSTs) available locally and in the blockchain peers.
 def get_slicessubnets_templates():
     # gets local slice-subnets
@@ -77,7 +129,6 @@ def get_slicessubnets_templates():
         index_list += 1
     
     slicesubnets_list = local_slicesubnets_list + blockchain_slicesubnets_list
-    #available_slicesubnets = json.loads(slicesubnets_list)
     return slicesubnets_list, 200
 
 # returns all the e2e slice instances (E2E NSI)

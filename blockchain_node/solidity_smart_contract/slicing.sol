@@ -1,7 +1,8 @@
 pragma solidity ^0.7.0;
+//SPDX-License-Identifier: UNLICENSED
 
 contract Slicing {
-    /*##### SLICE TEMPLATE DESCRIPTORS VARIABLES DECLARATION #####*/
+    /*##### SLICE TEMPLATE #####*/
     //TODO: add a new variable having all the nst_json as string.
     struct SliceTemplate {
         //string templateId;     //085a72f3-04d4-4cfd-86bf-cd0f66d38e75  //used as the mapping KEY
@@ -16,15 +17,17 @@ contract Slicing {
     string[] public sliceTemplateIds;
     uint sliceTemplateCount;
     
-    /*##### SLICE INSTANCES VARIABLES DECLARATION #####*/
+    /*##### SLICE INSTANCES #####*/
     //TODO: add a new variable having all the nsi_json as string.
     struct SliceInstance{
         string sliceInstanceId;         //instantiation uuid
         string sliceTemplateId;         //slice template uuid
         string status;                  //[INSTANTIATING, INSTANTIATED, TERMINATING, TERMINATED, ERROR]
         string log;                     //to inform in case of error
+        string nfvicp_cidr;             //data flow IP range
+        string nfvicp_sip;              //sip element to get in/out the data flow
         address instantiationClient;    //node address requesting the instantiation (only this should be able to terminate)
-        address templateOwner;    //node address deploying the instantiation
+        address templateOwner;          //node address deploying the instantiation
     }
     mapping(string => SliceInstance) public sliceInstances_list; //the key to each value is requestId given by the requester
     string[] public sliceInstancesIds;
@@ -34,7 +37,7 @@ contract Slicing {
     event templateRemoved (string log);
     event slice_response(address requester, string log, string status);
     event notifySliceInstanceActions(address owner, string templateId, string instanceId, string status);
-    
+
     /*##### SLICE TEMPLATE FUNCTIONS #####*/
     // add a new slice template
     function addSliceTemplate(string memory _templateId, string memory _name, string memory _version, string memory _vendor, uint _price, string memory _unit) public returns (bool){
@@ -48,8 +51,7 @@ contract Slicing {
         sliceTemplateCount ++;
         return true;
     }
-    
-    //WRONG NAME AND WAY OF DOING!!!! AN ELEMENT CANNOT BE REMOVED!!!
+    //WRONG NAME AND WAY OF DOING!!!! AN ELEMENT CANNOT BE REMOVED BUT IT MUST BE DEACTIVATED!!!
     // remove specific slice template
     function removeSliceTemplate(string memory _templateId) public returns(bool){
         string memory _log;
@@ -132,7 +134,7 @@ contract Slicing {
             _log = "Deploying Service Requested.";
             _status = "INSTANTIATING";
         
-            //missing sliceInstanceId, it must be added by the owner when ready.
+            //NOTE: the value sliceInstanceId is aaded by the owner when ready.
             sliceInstances_list[_sliceInstanceId].sliceInstanceId = _sliceInstanceId;
             sliceInstances_list[_sliceInstanceId].sliceTemplateId = _sliceTemplateId;
             sliceInstances_list[_sliceInstanceId].status = _status;

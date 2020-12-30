@@ -1,0 +1,17 @@
+{
+    "domain_id": "Optical",
+    "topology":{
+        "node_name": "Optical",
+        "ports":[
+            {
+                "port_id":"Optical:1",
+                "destination": "Edge:2"
+            },
+            {
+                "port_id":"Optical:2",
+                "destination": "Core:2"
+            }
+        ]
+    },
+    "cs_list":[]
+}

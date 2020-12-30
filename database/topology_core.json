@@ -1,0 +1,17 @@
+{
+    "domain_id": "Core",
+    "topology":{
+        "node_name": "Core",
+        "ports":[
+            {
+                "port_id":"Core:1",
+                "destination": "Packet:2"
+            },
+            {
+                "port_id":"Core:2",
+                "destination": "Optical:2"
+            }
+        ]
+    },
+    "cs_list":[]
+}
