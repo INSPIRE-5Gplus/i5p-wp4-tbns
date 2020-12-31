@@ -144,12 +144,13 @@ contract Slicing {
             sliceInstancesIds.push(_sliceInstanceId);
             sliceInstancesCount ++;
             
-            // sends back to the client the response and warns the template owner to instantiate
+            // warns all peers but only the template owner takes it to instantiate it
             emit notifySliceInstanceActions(_own, _sliceTemplateId, _sliceInstanceId, _status);
         } else {
             _log = "You are the owner of the template, use your local resources.";
             _status = "ERROR";
         }
+        //sends back to the client the response and 
         emit slice_response(_requester, _log, _status);
         return true;
     }

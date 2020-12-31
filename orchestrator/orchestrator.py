@@ -8,13 +8,14 @@ from blockchain_node import blockchain_node as bl_mapper
 from sdn_mapper import sdn_mapper
 from database import database as db
 from config_files import settings
+from vl_computation import vl_computation
 
 
 # mutex used to ensure one single access to DBs
 mutex_slice2db_access = Lock()
 mutex_slice2blockchaindb_access = Lock()
 
-####################################### NETWORK SLICE SUBNETS FUNCTIONS ########################################
+################################### NETWORK SLICE SUBNETS TEMPLATE FUNCTIONS ###################################
 #### LOCAL DOMAIN
 # returns the slices templates information in the local domain.
 def get_local_slicesubnet_templates():
@@ -52,58 +53,6 @@ def get_bl_slicesubnet_template(slice_ID):
     response = bl_mapper.slice_from_blockchain(slice_ID)
     return response, 200
 
-
-############################################ SDN TRANSPORT FUNCTIONS ############################################
-### LOCAL DOMAIN
-# returns the transport context information in the local domain
-def get_local_context():
-    response = sdn_mapper.get_local_context()
-    if response[1] == 200:
-        return response[0], 200
-    else:
-        return response[0], 400 
-
-### BLOCKCHAIN DOMAIN
-# shares all the CSs of a context in the blockchain
-def context_to_bl():
-    # get list of CS within a context to share in the blockchain
-    response = sdn_mapper.get_local_context()
-    sdn_context = response[0]
-    
-    context_json = {}
-    context_json['id'] = sdn_context['domain_id']
-    context_json['topology'] = json.dumps(sdn_context['topology'])
-    context_json['price'] = 1
-    context_json['unit'] = "eth"
-    #give the nst to the Blockchain mapper to distribute it with the other peers.
-    response = bl_mapper.topology_to_blockchain(context_json)
-    
-    return context_json, 200
-
-# returns all (local + blockchain) the contexts information
-def get_all_contexts():
-    context_list = []
-    
-    # gets local slice-subnets
-    response = sdn_mapper.get_local_context()
-    local_context = response[0]
-    context_list.append(local_context)
-
-    # gets blockchain slice-subnets
-    context_list_length = bl_mapper.get_context_counter()
-    index_list = 0
-    while (index_list < context_list_length):
-        context_ID_item = bl_mapper.get_context_id(index_list)
-
-        if local_context['domain_id'] != context_ID_item:
-            nst_element = bl_mapper.topology_from_blockchain(context_ID_item)            
-            context_list.append(nst_element[0])
-        index_list += 1
-    
-    return context_list, 200
-
-
-############################################ E2E / GLOBAL FUNCTIONS #############################################
 # returns all the slice-subnets (NSTs) available locally and in the blockchain peers.
 def get_slicessubnets_templates():
     # gets local slice-subnets
@@ -131,8 +80,71 @@ def get_slicessubnets_templates():
     slicesubnets_list = local_slicesubnets_list + blockchain_slicesubnets_list
     return slicesubnets_list, 200
 
+
+######################################## SDN TRANSPORT CONTEXT FUNCTIONS ########################################
+# returns the transport context information in the local domain
+def get_local_context():
+    response = sdn_mapper.get_local_context()
+    if response[1] == 200:
+        return response[0], 200
+    else:
+        return response[0], 400 
+
+# shares all the CSs of a context in the blockchain
+def context_to_bl():
+    # get list of CS within a context to share in the blockchain
+    response = sdn_mapper.get_local_context()
+    sdn_context = response[0]
+    
+    context_json = {}
+    context_json['id'] = sdn_context['domain_id']
+    context_json['topology'] = json.dumps(sdn_context['topology'])
+    context_json['price'] = 1
+    context_json['unit'] = "eth"
+    #give the nst to the Blockchain mapper to distribute it with the other peers.
+    response = bl_mapper.context_to_blockchain(context_json)
+    
+    return context_json, 200
+
+# returns all (local + blockchain) the contexts information
+def get_all_contexts():
+    context_list = []
+    
+    # gets local slice-subnets
+    response = sdn_mapper.get_local_context()
+    local_context = response[0]
+    context_list.append(local_context)
+
+    # gets blockchain slice-subnets
+    context_list_length = bl_mapper.get_context_counter()
+    index_list = 0
+    while (index_list < context_list_length):
+        context_ID_item = bl_mapper.get_context_id(index_list)
+
+        if local_context['domain_id'] != context_ID_item:
+            nst_element = bl_mapper.context_from_blockchain(context_ID_item)            
+            context_list.append(nst_element[0])
+        index_list += 1
+    
+    return context_list, 200
+
+# designs the graph information to be ready for the path computation requests
+def init_collaborative_topology():
+    settings.logger.info("ORCH: Initalizing SDN information for path computation.")
+    response = sdn_mapper.get_local_context()
+    if response[1]!= 200:
+        return response[0], 400 
+    
+    local_domain_json = response[0]
+    vl_computation.add_node(local_domain_json)
+
+def add_node_collaborative_topology(blockchain_domain_json):
+    settings.logger.info("ORCH: Adding external SDN domain information for path computation." + str(blockchain_domain_json))
+    vl_computation.add_node(blockchain_domain_json)
+################################### E2E NETWORK SLICE INSTANCES FUNCTIONS #######################################
 # returns all the e2e slice instances (E2E NSI)
 def get_e2e_slice_instances():
+    settings.logger.info("ORCH: Received request to get E2E Network Slices information.")
     response = db.get_elements("slices")
     return response, 200
 

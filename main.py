@@ -12,6 +12,7 @@ from config_files import settings
 from orchestrator import orchestrator as orch
 from blockchain_node import blockchain_node as bl_node
 from blockchain_node import events_manager
+from vl_computation import vl_computation
 
 # Define inner applications
 #logging.basicConfig(level=logging.DEBUG)  #Trying setting.logger
@@ -150,11 +151,19 @@ if __name__ == '__main__':
   settings.logger.info('Configuring Blockchain connection')
   settings.init_blockchain()
 
-  # BLOCKCHAIN EVENT LISTENER (Thread)
-  settings.logger.info('Configuring permanent thread to manage Blockchain events')
-  event_filter = settings.slice_contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
-  worker_blockchain_events = Thread(target=events_manager.event_loop, args=(event_filter, 10), daemon=True)
-  worker_blockchain_events.start()
+  # triggers the graph creation for the SDN path computation
+  orch.init_collaborative_topology()
+
+  # BLOCKCHAIN EVENT LISTENERS (Threads)
+  settings.logger.info('Configuring permanent threads to manage Blockchain events (slicing and transport)')
+  # event thread for slicing actions
+  slicing_event_filter = settings.slice_contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
+  worker_slicing_blockchain_events = Thread(target=events_manager.slice_event_loop, args=(slicing_event_filter, 10), daemon=True)
+  worker_slicing_blockchain_events.start()
+  #event thread for transport actions
+  transport_event_filter = settings.transport_contract.events.notifyTopologyActions.createFilter(fromBlock='latest')
+  worker_transport_blockchain_events = Thread(target=events_manager.transport_event_loop, args=(transport_event_filter, 10), daemon=True)
+  worker_transport_blockchain_events.start()
 
   # RUN THREAD POOL TO MANAGE INCOMING TASKS
   settings.logger.info('Thread pool created with 5 workers')

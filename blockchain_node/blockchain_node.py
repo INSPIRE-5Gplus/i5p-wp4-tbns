@@ -105,7 +105,7 @@ def update_blockchain_slice(subnet_json):
 
 ###################################### BLOCKCHAIN MAPPER FOR CONNECTIVITY SERVICES #######################################
 # adds a Connectivity Service (CS) information into the blockchain
-def topology_to_blockchain(context_json):
+def context_to_blockchain(context_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
     
     # Add a connectivity service template to make it available for other domains
@@ -119,7 +119,7 @@ def topology_to_blockchain(context_json):
     return context_json, 200
 
 # returns topology saved in the blockchain
-def topology_from_blockchain(context_ID):
+def context_from_blockchain(context_ID):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context template information. ID: ' + str(context_ID))
     response = settings.transport_contract.functions.getContextTemplate(context_ID).call()

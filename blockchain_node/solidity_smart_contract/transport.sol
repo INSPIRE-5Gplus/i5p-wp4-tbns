@@ -27,15 +27,29 @@ contract transport {
         address contextOwner;
     }
 
+    /*##### EVENTS #####*/
+    //event templateRemoved (string log);
+    event topology_response(address requester, string log, string status);
+    event notifyTopologyActions(address owner, string domain_id, string topology, string status);
+
     /*##### CONTEXT TEMPLATE FUNCTIONS #####*/
     // add a new context template
     function addContextTemplate(string memory _templateId, string memory _topology, uint _price, string memory _unit) public returns (bool){
+        string memory _log = "SDN domain added.";
+        string memory _status = "NEW_DOMAIN";
+
         ContextTemplate_list[_templateId].topology = _topology;
         ContextTemplate_list[_templateId].price = _price;
         ContextTemplate_list[_templateId].unit = _unit;
         ContextTemplate_list[_templateId].contextOwner = msg.sender;   //the nfvo uploading the template info is the owner
         ContextTemplateIds.push(_templateId);
         ContextTemplateCount ++;
+
+        // all the peers except the owner will take this event
+        emit notifyTopologyActions(msg.sender, _templateId, _topology, _status);
+        
+        //sends back to the client the response
+        emit topology_response(msg.sender, _log, _status);
         return true;
     }
     // TODO: remove specific context template
