@@ -8,7 +8,6 @@ from config_files import settings
 
 def slice_event_loop(slice_event_filter, poll_interval):
     while True:
-        settings.logger.info("SLICE_EVENT_MNGR: WAITING FOR SLICING EVENTS")
         for event in slice_event_filter.get_new_entries():
             if (event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
                 handle_sliceInstance_event(event)
@@ -16,7 +15,6 @@ def slice_event_loop(slice_event_filter, poll_interval):
 
 def handle_sliceInstance_event(event):
     event_json = {}
-    settings.logger.info("SLICE_EVENT_MNGR: A NEW EVENT ARRIVED: " +str(event))
     if (event['args']['status'] == "INSTANTIATING"):
         settings.logger.info("SLICE_EVENT_MNGR: INSTANTIATING EVENT")
         event_json['nst_ref'] = event['args']['templateId']
@@ -41,11 +39,10 @@ def handle_sliceInstance_event(event):
     else:
         # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
         # TODO: exception/error management
-        pass
+        settings.logger.info("TRANSPORT_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")
 
 def transport_event_loop(transport_event_filter, poll_interval):
     while True:
-        settings.logger.info("TRASPORT_EVENT_MNGR: WAITING FOR TRANSPORT EVENTS")
         for event in transport_event_filter.get_new_entries():
             handle_transport_event(event)
         
@@ -53,15 +50,31 @@ def transport_event_loop(transport_event_filter, poll_interval):
 
 def handle_transport_event(event):
     event_json = {}
-    settings.logger.info("TRANSPORT_EVENT_MNGR: A NEW EVENT ARRIVED: " +str(event))
-    if (event['args']['status'] == "NEW_DOMAIN"):
+    if (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         if (event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
             settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
-            event_json['domain_id'] = event['args']['domain_id']
-            event_json["topology"] = json.loads(event['args']['topology'])
+            topology = json.loads(event['args']['topology'])
+            event_json['domain_id'] = topology['node_name']
+            event_json["topology"] = topology
             settings.executor.submit(orch.add_node_collaborative_topology, event_json)
-    elif (event['args']['status'] == "UPDATED_DOMAIN"):
-        settings.logger.info("TRANSPORT_EVENT_MNGR: UPDATE TOPOLOGY EVENT")
+    elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
+        settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
+        event_json = json.loads(event['args']['config_params'])
+        event_json['id'] = event['args']['id']
+        event_json['vl_ref'] = event['args']['vl_ref']
+        settings.executor.submit(orch.instantiate_local_connectivity_service, event_json)
+    elif (event['args']['status'] == "READY" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
+        settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO UPDATE A CS")        
+        event_json['id'] = event['args']['id']
+        event_json['blockchain_owner'] = event['args']['owner']
+        event_json['vl_ref'] = event['args']['vl_ref']
+        event_json['status'] = event['args']['status']
+        settings.executor.submit(orch.update_connectivity_service_from_blockchain, event_json)
+    elif (event['args']['status'] == "REMOVE" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
+        pass
+    elif (event['args']['status'] == "REMOVED" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         pass
     else:
-        pass
+        # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
+        # TODO: exception/error management
+        settings.logger.info("TRANSPORT_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")

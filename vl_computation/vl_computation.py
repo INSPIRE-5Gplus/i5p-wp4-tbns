@@ -5,7 +5,8 @@ import networkx as nx
 
 from config_files import settings
 
-collaborative_topology_graph = nx.Graph()
+# NOTE: e2e_topology is the sum of all SDN topologies to create the E2E topology of the network
+e2e_topology = nx.Graph()
 
 '''
     {
@@ -29,21 +30,23 @@ collaborative_topology_graph = nx.Graph()
 # adds the local context in the graph
 def add_node(domain_json):
     node_item = domain_json['topology']['node_name']
-    collaborative_topology_graph.add_node(node_item)
+    e2e_topology.add_node(node_item)
 
     ports_list = domain_json['topology']['ports']
     for port_item in ports_list:
         parts = port_item['destination'].split(":")
-        collaborative_topology_graph.add_node(parts[0])
-        collaborative_topology_graph.add_edge(node_item,parts[0])
-    
-    settings.logger.info("VL_COMP: Nodes: " +str(list(collaborative_topology_graph.nodes)))
-    settings.logger.info("VL_COMP: Edges: " +str(list(collaborative_topology_graph.edges)))
+        e2e_topology.add_node(parts[0])
+        e2e_topology.add_edge(node_item,parts[0])
 
-# TODO: updates the graph with an external blockchain domain
+# TODO: updates the e2e topology
 def update_graph(new_domain_json):
     pass
 
 # TODO: computes the path between two compute domains
-def find_path():
-    pass
+def find_path(source, destination):
+    src = source.split(":")
+    dst = destination.split(":")
+
+    path_nodes_list = nx.shortest_path(e2e_topology, src[0], dst[0])
+    return path_nodes_list
+

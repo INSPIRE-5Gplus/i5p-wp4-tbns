@@ -22,7 +22,7 @@ def get_local_context():
 
     # NOTE: while SDN controller is not available, its data is simulated
     controller_domain = os.environ.get("SDN_DOMAIN")
-    file_name = 'database/topology_'+ str(controller_domain) +'.json'
+    file_name = 'database/topology_'+ str(controller_domain) +'_simple.json'
     with open(file_name) as json_file:
         data = json.load(json_file)
     if data:
@@ -38,19 +38,25 @@ def get_all_connectivity_services():
     #return response.text, response.status_code
     pass
 
-#TODO: returns specific connectivity services
+# returns specific connectivity services
 def get_connectivity_service(cs_ID):
     #url = get_nsm_url() #TODO: check the API
     #response = requests.get(url, headers=JSON_CONTENT_HEADER)
     #return response.text, response.status_code
-    pass
+    sample_json = {}
+    sample_json['status'] = "READY"
+    time.sleep(10)
+    return sample_json, 200
 
-#TODO: sends request to deploy a connectivity service
+#sends request to deploy a connectivity service
 def instantiate_connectivity_service(cs_json):
     #url = get_nsm_url() #TODO: check the API
     #response = requests.get(url, headers=JSON_CONTENT_HEADER)
     #return response.text, response.status_code
-    pass
+    return_json = {}
+    return_json['instance_id'] = str(uuid.uuid4())
+    return_json['status'] = "NEW"
+    return return_json, 200
 
 #TODO: sends request to terminate a connectivity service
 def terminate_connectivity_service():

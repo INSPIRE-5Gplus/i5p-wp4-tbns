@@ -21,7 +21,9 @@ def add_element(db_element, selected_db):
         settings.logger.info("%s", str(blockchain_subnets_db))
         return {'msg':'Element added and saved.'}, 200
     elif selected_db == "conn_services":
-        pass
+        cs_db.append(db_element)
+        settings.logger.info("%s", str(cs_db))
+        return {'msg':'Element added and saved.'}, 200
     else:
         # TODO:error management
         settings.logger.error("NO DB IS SELECTED")
@@ -42,7 +44,11 @@ def update_db(element_id, db_element, selected_db):
                 settings.logger.info("%s", str(blockchain_subnets_db))
                 return {'msg':'Element updated and saved.'}, 200
     elif selected_db == "conn_services":
-        pass
+        for cs_element in cs_db:
+            if cs_element['id'] == element_id:
+                cs_element = db_element
+                settings.logger.info("%s", str(cs_db))
+                return {'msg':'Element updated and saved.'}, 200
     else:
         # TODO:error management
         settings.logger.error("NO DB IS SELECTED")
@@ -60,7 +66,10 @@ def remove_element(element_id, selected_db):
                 blockchain_subnets_db.remove(subnet_element)
                 return {'msg':'Element removed from DB.'}, 200
     elif selected_db == "conn_services":
-        pass
+        for cs_element in cs_db:
+            if cs_element['id'] == element_id:
+                cs_db.remove(cs_element)
+                return {'msg':'Element removed from DB.'}, 200
     else:
         # TODO:error management
         pass
@@ -86,7 +95,9 @@ def get_element(element_id, selected_db):
             if subnet_element['id'] == element_id:
                 return subnet_element
     elif selected_db == "conn_services":
-        pass
+        for cs_element in cs_db:
+            if cs_element['id'] == element_id:
+                return cs_element
     else:
         # TODO:error management
         pass

@@ -11,9 +11,10 @@ from config_files import settings
 from vl_computation import vl_computation
 
 
-# mutex used to ensure one single access to DBs
+# mutex used to ensure a single access to each one of the three local DB (slices, blockchain_subnets, connectivity services)
 mutex_slice2db_access = Lock()
 mutex_slice2blockchaindb_access = Lock()
+mutex_local_csdb_access = Lock()
 
 ################################### NETWORK SLICE SUBNETS TEMPLATE FUNCTIONS ###################################
 #### LOCAL DOMAIN
@@ -122,10 +123,13 @@ def get_all_contexts():
         context_ID_item = bl_mapper.get_context_id(index_list)
 
         if local_context['domain_id'] != context_ID_item:
-            nst_element = bl_mapper.context_from_blockchain(context_ID_item)            
+            nst_element = bl_mapper.context_from_blockchain(context_ID_item)  
+            settings.logger.info('ORCH: Requests Blockchain context nst_element: ' + str(nst_element))          
             context_list.append(nst_element[0])
+            
         index_list += 1
     
+    settings.logger.info('ORCH: context_list: ' + str(context_list))     
     return context_list, 200
 
 # designs the graph information to be ready for the path computation requests
@@ -138,9 +142,73 @@ def init_collaborative_topology():
     local_domain_json = response[0]
     vl_computation.add_node(local_domain_json)
 
+# add the local sdn context and its topologies to the Blockchain network
 def add_node_collaborative_topology(blockchain_domain_json):
     settings.logger.info("ORCH: Adding external SDN domain information for path computation." + str(blockchain_domain_json))
     vl_computation.add_node(blockchain_domain_json)
+
+# manages a local connectivity service configuration process
+def instantiate_local_connectivity_service(cs_json):
+    settings.logger.info("ORCH: Received request to deploy a local CS: " +str(cs_json))
+    response = sdn_mapper.instantiate_connectivity_service(cs_json)
+    if response[1] != 200:
+        # manage epossible errors
+        pass
+    
+    cs_json['instance_id'] = response[0]['instance_id']
+    cs_json['status'] = response[0]['status']
+    
+    mutex_local_csdb_access.acquire()
+    db.add_element(cs_json, 'conn_services')
+    mutex_local_csdb_access.release()
+
+    cs_ready = False
+    while cs_ready == False:
+        response = sdn_mapper.get_connectivity_service(cs_json['instance_id'])
+        if response[0]['status'] == 'READY':
+            cs_json['status'] = response[0]['status']
+            cs_ready = True
+            break
+
+    if response[0]['status'] == "ERROR":
+        # ERROR/Exception management
+        pass
+
+    mutex_local_csdb_access.acquire()
+    db.update_db(cs_json['id'], cs_json, 'conn_services')
+    mutex_local_csdb_access.release()
+
+    response = bl_mapper.update_blockchain_cs(cs_json)
+
+# updates a slice-subnet information belonging to another domain (Blockchain)
+def update_connectivity_service_from_blockchain(cs_json):
+    settings.logger.info("ORCH: Updating connectivity services information from another domain.")
+    
+    # look in the local nsi db which nsi has the updated connectivity service of one of its virtual links.
+    found_nsi = False
+    response = db.get_elements("slices")
+
+    for nsi_item in response:
+        for slice_vl_item in nsi_item["slice_vls"]:
+            if slice_vl_item["vl_id"] == cs_json['vl_ref']:
+                for cs_item in slice_vl_item['cs_list']:
+                    if cs_item['id'] == cs_json['id']:
+                        cs_item['status'] = cs_json['status']
+                        cs_item['blockchain_owner'] = cs_json['blockchain_owner']
+                
+                        # saves the nsi object into the db
+                        mutex_slice2db_access.acquire()
+                        db.update_db(nsi_item["id"], nsi_item, "slices")
+                        mutex_slice2db_access.release()
+                        
+                        found_nsi = True
+                        break
+            if found_nsi:
+                break
+        if found_nsi:
+            break  
+
+
 ################################### E2E NETWORK SLICE INSTANCES FUNCTIONS #######################################
 # returns all the e2e slice instances (E2E NSI)
 def get_e2e_slice_instances():
@@ -149,13 +217,13 @@ def get_e2e_slice_instances():
     return response, 200
 
 # manages all the E2E slice instantiation process  NOTE: missing VL creation (path computation)
-def instantiate_e2e_slice(e2e_slice_json):
+def instantiate_e2e_slice(incoming_data):
     settings.logger.info("ORCH: Received request to deploy an E2E Network Slice.")
     # creates the NSI instance object based on the request
-    incoming_data = e2e_slice_json
     nsi_element = {}
     nsi_element["id"] = str(uuid.uuid4()) #ID for the E2E slice object
     nsi_element["name"] = incoming_data["name"]
+    nsi_element["instantiation_params"] = incoming_data["instantiation_params"]
 
     # gets local slice-subnets
     response = slice_mapper.get_all_slice_subnet_templates()
@@ -199,7 +267,6 @@ def instantiate_e2e_slice(e2e_slice_json):
     for slice_subnet_item in nsi_element["slice_subnets"]:
         # if there's a blockchain owner, the request towards blockchain else, local domain
         if "blockchain_owner" in slice_subnet_item.keys():
-            settings.logger.info("ORCH: Request slice-subnte to BL NSM")
             response = bl_mapper.deploy_blockchain_slice(slice_subnet_item)
             slice_subnet_item["log"] = response[0]['log']
             slice_subnet_item["status"] = response[0]['status']
@@ -210,7 +277,6 @@ def instantiate_e2e_slice(e2e_slice_json):
             data_json['name'] = subslice_element["name"]
             data_json['request_type'] = 'CREATE_SLICE'
             data_json['description'] = 'Slice-subnet instance based on the NST: ' + slice_subnet_item["nst_ref"]
-            settings.logger.info("ORCH: Request slice-subnte to local NSM")
             response = slice_mapper.instantiate_slice_subnet(data_json)                         # TODO: response is emulated while developing.
 
             if (response[1] == 200 or response[1] == 201):
@@ -227,10 +293,9 @@ def instantiate_e2e_slice(e2e_slice_json):
     mutex_slice2db_access.release()
     
     # awaits for all the slice-subnets to be instantiated
-    settings.logger.info("ORCH: Waiting for al slice-subnets instantes to be deployed. E2E SLICE ID: " +str(nsi_element["id"]))
+    settings.logger.info("ORCH: Waiting for all slice-subnets instantes to be deployed. E2E SLICE ID: " +str(nsi_element["id"]))
     all_subnets_ready = False
     while(all_subnets_ready == False):
-        #time.sleep(30)                  # sleep of 30s (maybe a minute?) to let all the process begin
         subnets_instantiated = 0        # used to check how many subnets are in instantiated and change e2e slice status
         for slice_subnet_item in nsi_element["slice_subnets"]:
             if (slice_subnet_item['status'] == 'INSTANTIATING'):
@@ -253,16 +318,199 @@ def instantiate_e2e_slice(e2e_slice_json):
         if (subnets_instantiated == len(nsi_element['slice_subnets'])):
             all_subnets_ready = True
     
+    # *************************
+    # NOTE: HARDCODED SIPS
+    # TODO: think how to get them in real deployments coming from the orchestrators (NFVO, SDN) below.
+    counter = 0
+    sip_edge = "Edge:1"
+    sip_core = "Core:1"
+    for subnet_item in nsi_element['slice_subnets']:
+        if ('blockchain_owner' in subnet_item):
+            ip_string = "10.121.0."+str(counter)+"/24"
+            subnet_item['nfvicp_cidr'] = ip_string
+            subnet_item['nfvicp_sip'] = sip_core
+        else:
+            ip_string = "10.121.0."+str(counter)+"/24"
+            subnet_item["nfvicp_cidr"] = ip_string
+            subnet_item["nfvicp_sip"] = sip_edge
+        counter = counter + 1
+    # *************************
+    
     # saves the nsi object into the db
     mutex_slice2db_access.acquire()
     nsi_element["log"] = "Slice-subnets ready, deploying virtual links between slice-subnets."
     db.update_db(nsi_element["id"], nsi_element, "slices")
     mutex_slice2db_access.release()
 
+    #------------------------------------------------------------------------------
     # VL CREATION PROCEDURE
-    # TODO: (future work) improve the code with a real path computation action
-    # TODO:  VL design, connectivity services composition
+    # TODO: once it works, create a new function with this piece of code
+    settings.logger.info("ORCH: Designing all the VLs. E2E SLICE ID: " +str(nsi_element["id"]))
+    slice_vl_list = []
+    response = get_all_contexts()
+    contexts_list = response[0]
+    for connection_item in incoming_data['instantiation_params']['slice_vl']:
+        nst_ref_src = connection_item['nst_ref_src']
+        nst_ref_dst = connection_item['nst_ref_dst']
 
+        # declares and defines a vl object
+        slice_vl_item = {}
+        slice_vl_item['vl_id'] = str(uuid.uuid4())
+        slice_vl_item['direction'] = connection_item['direction']
+        slice_vl_item['status'] = "NEW"
+
+        # gets source/destination sips from the instantiated subnets to interconnect them based on the instant_params
+        for subnet_item in nsi_element['slice_subnets']:
+            if subnet_item['nst_ref'] == nst_ref_src:
+                slice_vl_item["cidr_1"] = subnet_item['nfvicp_cidr']
+                slice_vl_item["source_sip"] = subnet_item["nfvicp_sip"]
+            elif subnet_item['nst_ref'] == nst_ref_dst:
+                slice_vl_item["cidr_2"] = subnet_item['nfvicp_cidr']
+                slice_vl_item["destination_sip"] = subnet_item["nfvicp_sip"]
+            else:
+                continue
+        # based on the two found sips, looks for the shortest path between their network nodes
+        path_nodes_list = vl_computation.find_path(slice_vl_item["source_sip"], slice_vl_item["destination_sip"])
+        
+        # creates a json with all the connectivity services to compose the VL between subnets
+        cs_list = []
+        for index_item, node_item in enumerate(path_nodes_list):
+            cs_element_json = {}
+            cs_element_json_bi = {}
+            
+            # access unless is the last element
+            if node_item != path_nodes_list[-1]:
+                for context_item in contexts_list:
+                    if node_item == context_item["topology"]["node_name"]:  # also context_item["domain_id"] could be used
+                        if index_item == 0:   # the first cs depends on the source sip
+                            for port_item in context_item["topology"]["ports"]:
+                                if port_item["port_id"] == slice_vl_item["source_sip"]:
+                                    cs_element_json['id'] = str(uuid.uuid4())
+                                    cs_element_json['domain_manager'] = node_item
+                                    cs_element_json['source_sip'] = port_item["port_id"]
+                                    cs_element_json['destination_sip'] = port_item['destination']
+                                    cs_element_json['destination_cidr'] = slice_vl_item["cidr_2"]
+                                    cs_list.append(cs_element_json)
+
+                                    if slice_vl_item['direction'] == "Bidirectional":
+                                        cs_element_json_bi['id'] = str(uuid.uuid4())
+                                        domain_manager = port_item['destination'].split(':')
+                                        cs_element_json_bi['domain_manager'] = domain_manager[0]
+                                        cs_element_json_bi['source_sip'] = port_item['destination']
+                                        cs_element_json_bi['destination_sip'] = port_item["port_id"]
+                                        cs_element_json_bi['destination_cidr'] = slice_vl_item["cidr_1"]
+                                        cs_list.append(cs_element_json_bi)
+                        
+                        elif (index_item == len(path_nodes_list) - 1):    # the cs depends on the destination_sip
+                            for port_item in context_item["topology"]["ports"]:
+                                if port_item["destination"] == slice_vl_item["destination_sip"]:
+                                    cs_element_json['id'] = str(uuid.uuid4())
+                                    cs_element_json['domain_manager'] = node_item
+                                    cs_element_json['source_sip'] = port_item["port_id"]
+                                    cs_element_json['destination_sip'] = port_item['destination']
+                                    cs_element_json['destination_cidr'] = slice_vl_item["cidr_2"]
+                                    cs_list.append(cs_element_json)
+
+                                    if slice_vl_item['direction'] == "Bidirectional":
+                                        cs_element_json_bi['id'] = str(uuid.uuid4())
+                                        domain_manager = port_item['destination'].split(':')
+                                        cs_element_json_bi['domain_manager'] = domain_manager[0]
+                                        cs_element_json_bi['source_sip'] = port_item['destination']
+                                        cs_element_json_bi['destination_sip'] = port_item["port_id"]
+                                        cs_element_json_bi['destination_cidr'] = slice_vl_item["cidr_1"]
+                                        cs_list.append(cs_element_json_bi)
+                        
+                        else:
+                            for port_item in context_item["topology"]["ports"]:
+                                dst_node = port_item["destination"].split(":")
+                                if dst_node == path_nodes_list[index_item + 1]:
+                                    cs_element_json['id'] = str(uuid.uuid4())
+                                    cs_element_json['domain_manager'] = node_item
+                                    cs_element_json['source_sip'] = port_item["port_id"]
+                                    cs_element_json['destination_sip'] = port_item['destination']
+                                    cs_element_json['destination_cidr'] = slice_vl_item["cidr_2"]
+                                    cs_list.append(cs_element_json)
+
+                                    if slice_vl_item['direction'] == "Bidirectional":
+                                        cs_element_json_bi['id'] = str(uuid.uuid4())
+                                        domain_manager = port_item['destination'].split(':')
+                                        cs_element_json_bi['domain_manager'] = domain_manager[0]
+                                        cs_element_json_bi['source_sip'] = port_item['destination']
+                                        cs_element_json_bi['destination_sip'] = port_item["port_id"]
+                                        cs_element_json_bi['destination_cidr'] = slice_vl_item["cidr_1"]
+                                        cs_list.append(cs_element_json_bi)
+                        
+                        break
+        
+        # adds the cs list composing the vl
+        slice_vl_item['cs_list'] = cs_list
+        slice_vl_list.append(slice_vl_item)
+    
+    nsi_element["slice_vls"] = slice_vl_list
+
+    # saves the nsi object into the db
+    mutex_slice2db_access.acquire()
+    db.update_db(nsi_element["id"], nsi_element, "slices")
+    mutex_slice2db_access.release()
+
+    # request each CS deployment
+    settings.logger.info("ORCH: Requesting all the VLs. E2E SLICE ID: " +str(nsi_element["id"]))
+    for vl_item in nsi_element["slice_vls"]:
+        vl_ref = vl_item['vl_id']
+        for cs_item in vl_item['cs_list']:
+            if cs_item['domain_manager'] == os.environ.get("SDN_DOMAIN"):
+                # call SDN MAPPER
+                response = sdn_mapper.instantiate_connectivity_service(cs_item)
+                cs_item['id'] = response[0]['instance_id']
+            else:
+                # call BLOCKCHAIN MAPPER
+                for context_item in contexts_list:
+                    # looks for the blokchain address of the context owner
+                    if context_item['domain_id'] == cs_item['domain_manager']:
+                        response = bl_mapper.instantiate_blockchain_cs(context_item['blockchain_owner'], vl_ref, cs_item)
+            if response[1] == 200:
+                cs_item['status'] = response[0]['status']
+            else:
+                #TODO: manage error
+                pass
+    
+    # saves the nsi object into the db
+    mutex_slice2db_access.acquire()
+    db.update_db(nsi_element["id"], nsi_element, "slices")
+    mutex_slice2db_access.release()
+
+    # awaits for all the slice-subnets to be instantiated
+    settings.logger.info("ORCH: Waiting for all VLs to be deployed. E2E SLICE ID: " +str(nsi_element["id"]))
+    all_vl_ready = False
+    while(all_vl_ready == False):
+        nsi_element = db.get_element(nsi_element["id"], "slices")
+
+        vl_ready = 0        # used to check how many VLs are ready
+        for vl_item in nsi_element["slice_vls"]:
+            if (vl_item['status'] == 'NEW'):
+                cs_ready = 0
+                for cs_item in vl_item['cs_list']:
+                    #NOTE: it checks only the local CS as those from the Blockchain are update by another thread (worker)
+                    if cs_item['domain_manager'] == os.environ.get("SDN_DOMAIN"):
+                        response = sdn_mapper.get_connectivity_service(cs_item['id'])
+                        if response[0]['status'] == 'READY':
+                            cs_item['status'] = response[0]['status']
+                    if cs_item['status'] == 'READY':
+                        cs_ready = cs_ready + 1
+                if cs_ready == len(vl_item['cs_list']):
+                    vl_item['status'] = 'READY'
+                    vl_ready = vl_ready + 1        
+            elif(vl_item['status'] == 'READY'):
+                # all slice-subnets deployed in other domains, are updated by the blockchain event thread.
+                vl_ready = vl_ready + 1
+            else:
+                #TODO: ERROR management
+                pass
+        # if the number of slice-subnets instantiated = total number in the e2e slice, finishes while
+        if vl_ready == len(nsi_element['slice_vls']):
+            all_vl_ready = True   
+    #------------------------------------------------------------------------------
+    
     nsi_element["status"] = "INSTANTIATED"
     nsi_element["log"] = "E2E Network Slice INSTANTIATED."
 
@@ -315,8 +563,8 @@ def instantiate_local_slicesubnet(subnet_json):
         jsonresponse = response[0]
         if (jsonresponse['status'] == "INSTANTIATED"):
             subnet_ready = True
-        #elif (jsonresponse['status'] == "INSTANTIATING"):
-            #time.sleep(30)
+        elif (jsonresponse['status'] == "INSTANTIATING"):
+            continue
         else:
             # TODO: exception/error management
             pass
@@ -337,7 +585,6 @@ def instantiate_local_slicesubnet(subnet_json):
         # TODO: exception/error management
         pass
     mutex_slice2blockchaindb_access.release()
-    settings.logger.info("ORCH: Deployed slice-subnet from Blocckhain request. NST Ref:: " +str(subnet_json['nst_ref']))
 
 # updates a slice-subnet information belonging to another domain (Blockchain)
 def update_slicesubnet_from_blockchain(subnet_json):
@@ -363,7 +610,7 @@ def update_slicesubnet_from_blockchain(subnet_json):
         if found_nsi:
             break
 
-# manages all the E2E Slice termination process
+# TODO: manages all the E2E Slice termination process
 def terminate_e2e_slice(e2e_slice_json):
     # gets nsi based on an ID
     nsi_element = db.get_element(e2e_slice_json['id'], "slices")

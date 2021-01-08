@@ -1,5 +1,5 @@
 {
-    "contract_address":"0xeCF1D43f0d7d2FdDDB419910BadB8a323B79Ee7e",
+    "contract_address":"0x14c8478033204AFdEdF252EdBacC702d92956a61",
     "abi":[
         {
             "anonymous": false,
@@ -13,7 +13,25 @@
                 {
                     "indexed": false,
                     "internalType": "string",
-                    "name": "domain_id",
+                    "name": "id",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "vl_ref",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "instance_id",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "status",
                     "type": "string"
                 },
                 {
@@ -25,7 +43,7 @@
                 {
                     "indexed": false,
                     "internalType": "string",
-                    "name": "status",
+                    "name": "config_params",
                     "type": "string"
                 }
             ],
@@ -56,6 +74,74 @@
             ],
             "name": "topology_response",
             "type": "event"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "CSInstanceIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "name": "CSInstance_list",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "instance_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "vl_ref",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "config_params",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "status",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "instantiationClient",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "contextOwner",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
         },
         {
             "inputs": [
@@ -114,7 +200,7 @@
             "inputs": [
                 {
                     "internalType": "string",
-                    "name": "_templateId",
+                    "name": "_id",
                     "type": "string"
                 },
                 {
@@ -227,6 +313,69 @@
                 }
             ],
             "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_contextOwner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_vl_ref",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_config_params",
+                    "type": "string"
+                }
+            ],
+            "name": "instantiateConnectivityService",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_instanceId",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_status",
+                    "type": "string"
+                }
+            ],
+            "name": "updateConnectivityService",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
             "type": "function"
         }
     ]
