@@ -371,20 +371,21 @@ def instantiate_e2e_slice(incoming_data):
                 continue
         # based on the two found sips, looks for the shortest path between their network nodes
         path_nodes_list = vl_computation.find_path(slice_vl_item["source_sip"], slice_vl_item["destination_sip"])
+        settings.logger.info("ORCH: THE PATH DESIGNED: " +str(path_nodes_list))
         
         # creates a json with all the connectivity services to compose the VL between subnets
         cs_list = []
         for index_item, node_item in enumerate(path_nodes_list):
-            cs_element_json = {}
-            cs_element_json_bi = {}
-            
+            settings.logger.info("ORCH: ******** node_item --> " +str(node_item))
             # access unless is the last element
             if node_item != path_nodes_list[-1]:
                 for context_item in contexts_list:
-                    if node_item == context_item["topology"]["node_name"]:  # also context_item["domain_id"] could be used
+                    if node_item == context_item["topology"]["node_name"]:
                         if index_item == 0:   # the first cs depends on the source sip
+                            settings.logger.info("ORCH: ******** FIRST NODE IN THE PATH ********")
                             for port_item in context_item["topology"]["ports"]:
                                 if port_item["port_id"] == slice_vl_item["source_sip"]:
+                                    cs_element_json = {}
                                     cs_element_json['id'] = str(uuid.uuid4())
                                     cs_element_json['domain_manager'] = node_item
                                     cs_element_json['source_sip'] = port_item["port_id"]
@@ -393,6 +394,7 @@ def instantiate_e2e_slice(incoming_data):
                                     cs_list.append(cs_element_json)
 
                                     if slice_vl_item['direction'] == "Bidirectional":
+                                        cs_element_json_bi = {}
                                         cs_element_json_bi['id'] = str(uuid.uuid4())
                                         domain_manager = port_item['destination'].split(':')
                                         cs_element_json_bi['domain_manager'] = domain_manager[0]
@@ -400,10 +402,14 @@ def instantiate_e2e_slice(incoming_data):
                                         cs_element_json_bi['destination_sip'] = port_item["port_id"]
                                         cs_element_json_bi['destination_cidr'] = slice_vl_item["cidr_1"]
                                         cs_list.append(cs_element_json_bi)
+                                    
+                                    settings.logger.info("ORCH: cs_list: " +str(cs_list))
                         
                         elif (index_item == len(path_nodes_list) - 1):    # the cs depends on the destination_sip
+                            settings.logger.info("ORCH: ******** LAST NODE IN THE PATH ********")
                             for port_item in context_item["topology"]["ports"]:
                                 if port_item["destination"] == slice_vl_item["destination_sip"]:
+                                    cs_element_json = {}
                                     cs_element_json['id'] = str(uuid.uuid4())
                                     cs_element_json['domain_manager'] = node_item
                                     cs_element_json['source_sip'] = port_item["port_id"]
@@ -412,6 +418,7 @@ def instantiate_e2e_slice(incoming_data):
                                     cs_list.append(cs_element_json)
 
                                     if slice_vl_item['direction'] == "Bidirectional":
+                                        cs_element_json_bi = {}
                                         cs_element_json_bi['id'] = str(uuid.uuid4())
                                         domain_manager = port_item['destination'].split(':')
                                         cs_element_json_bi['domain_manager'] = domain_manager[0]
@@ -419,11 +426,20 @@ def instantiate_e2e_slice(incoming_data):
                                         cs_element_json_bi['destination_sip'] = port_item["port_id"]
                                         cs_element_json_bi['destination_cidr'] = slice_vl_item["cidr_1"]
                                         cs_list.append(cs_element_json_bi)
+
+                                    settings.logger.info("ORCH: cs_list: " +str(cs_list))
                         
                         else:
+                            settings.logger.info("ORCH: ******** A MIDDLE NODE IN THE PATH ********")
                             for port_item in context_item["topology"]["ports"]:
+                                settings.logger.info("ORCH: cs_list: " +str(cs_list))
                                 dst_node = port_item["destination"].split(":")
-                                if dst_node == path_nodes_list[index_item + 1]:
+                                settings.logger.info("ORCH: port_item[destination]: " +str(port_item["destination"]))
+                                settings.logger.info("ORCH: dst_node: " +str(dst_node))
+                                settings.logger.info("ORCH: dst_node[0]: " +str(dst_node[0]))
+                                settings.logger.info("ORCH: path_nodes_list[index_item + 1]: " +str(path_nodes_list[index_item + 1]))
+                                if dst_node[0] == path_nodes_list[index_item + 1]:
+                                    cs_element_json = {}
                                     cs_element_json['id'] = str(uuid.uuid4())
                                     cs_element_json['domain_manager'] = node_item
                                     cs_element_json['source_sip'] = port_item["port_id"]
@@ -432,6 +448,7 @@ def instantiate_e2e_slice(incoming_data):
                                     cs_list.append(cs_element_json)
 
                                     if slice_vl_item['direction'] == "Bidirectional":
+                                        cs_element_json_bi = {}
                                         cs_element_json_bi['id'] = str(uuid.uuid4())
                                         domain_manager = port_item['destination'].split(':')
                                         cs_element_json_bi['domain_manager'] = domain_manager[0]
@@ -439,8 +456,11 @@ def instantiate_e2e_slice(incoming_data):
                                         cs_element_json_bi['destination_sip'] = port_item["port_id"]
                                         cs_element_json_bi['destination_cidr'] = slice_vl_item["cidr_1"]
                                         cs_list.append(cs_element_json_bi)
-                        
-                        break
+                                    
+                                    settings.logger.info("ORCH: cs_list: " +str(cs_list))
+            
+            else:
+                settings.logger.info("ORCH: ******** LAST node_item ********")
         
         # adds the cs list composing the vl
         slice_vl_item['cs_list'] = cs_list

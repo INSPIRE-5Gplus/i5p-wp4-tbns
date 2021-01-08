@@ -22,7 +22,7 @@ def get_local_context():
 
     # NOTE: while SDN controller is not available, its data is simulated
     controller_domain = os.environ.get("SDN_DOMAIN")
-    file_name = 'database/topology_'+ str(controller_domain) +'_simple.json'
+    file_name = 'database/topology_'+ str(controller_domain) +'.json'
     with open(file_name) as json_file:
         data = json.load(json_file)
     if data:

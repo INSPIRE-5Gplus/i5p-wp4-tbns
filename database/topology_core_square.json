@@ -5,6 +5,10 @@
         "ports":[
             {
                 "port_id":"Core:1",
+                "destination": "Packet:2"
+            },
+            {
+                "port_id":"Core:2",
                 "destination": "Optical:2"
             }
         ]

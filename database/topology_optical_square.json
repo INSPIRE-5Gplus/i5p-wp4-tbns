@@ -5,11 +5,11 @@
         "ports":[
             {
                 "port_id":"Optical:1",
-                "destination": "Packet:2"
+                "destination": "Edge:2"
             },
             {
                 "port_id":"Optical:2",
-                "destination": "Core:1"
+                "destination": "Core:2"
             }
         ]
     },
