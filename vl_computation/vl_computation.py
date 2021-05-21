@@ -7,180 +7,7 @@ from config_files import settings
 from blockchain_node import blockchain_node as bl_mapper
 
 # NOTE: e2e_topology is the sum of all SDN topologies to create the E2E topology of the network
-e2e_topology_graph = nx.Graph()
-
-""" Example of e2e_topology_json
-{
-  "e2e-topology": {
-    "domain-list": [
-      #same uuid than the one in ["tapi-common:context"]["uuid"](abstractedcontextjson)
-      "uuid_SDN1",
-      "uuid_SDN2",
-      "uuid_SDN3"
-    ],
-    "interdomain-links": [
-      {
-        "uuid": "uuid",
-        "name": "SDN1-SDN2",
-        "domain-1": "SDN1",
-        "domain-2": "SDN2",
-        "link_options": [
-          {
-            "uuid": "uuid_CD1",
-            "domain-1": {
-              "uuid": "uuid_SDN1",
-              # same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-              "nep_uuid": "nep_C1"
-            },
-            "domain-2": {
-              "uuid": "uuid_SDN2",
-              "nep-uuid": "nep_D1"
-            },
-            "link-direction": [
-              {
-                "domain-1": "uuid_SDN1",
-                "domain-2": "uuid_SDN2",
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "domain-1": "uuid_SDN2",
-                "domain-2": "uuid_SDN1",
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          },
-          {
-            "uuid": "uuid_CD2",
-            "domain-1": {
-              "uuid": "uuid_SDN1",
-              "nep_uuid": "nep_C2"
-            },
-            "domain-2": {
-              "uuid": "uuid_SDN2",
-              "nep-uuid": "nep_D2"
-            },
-            "link-direction": [
-              {
-                "domain-1": "uuid_SDN1",
-                "domain-2": "uuid_SDN2",
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "domain-1": "uuid_SDN2",
-                "domain-2": "uuid_SDN1",
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ]
-      },
-      {
-        "uuid": "uuid",
-        "name": "SDN2-SDN4",
-        "domain-1": "SDN2",
-        "domain-2": "SDN4",
-        "link_options": [
-          {
-            "uuid": "uuid_HM1",
-            "domain-1": {
-              "uuid": "uuid_SDN2",
-              # same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-              "nep_uuid": "nep_H1"
-            },
-            "domain-2": {
-              "uuid": "uuid_SDN4",
-              "nep-uuid": "nep_M1"
-            },
-            "link-direction": [
-              {
-                "domain-1": "uuid_SDN2",
-                "domain-2": "uuid_SDN4",
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "domain-1": "uuid_SDN4",
-                "domain-2": "uuid_SDN2",
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          },
-          {
-            "uuid": "uuid_HM2",
-            "domain-1": {
-              "uuid": "uuid_SDN2",
-              "nep_uuid": "nep_H2"
-            },
-            "domain-2": {
-              "uuid": "uuid_SDN4",
-              "nep-uuid": "nep_M2"
-            },
-            "link-direction": [
-              {
-                "domain-1": "uuid_SDN2",
-                "domain-2": "uuid_SDN4",
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "domain-1": "uuid_SDN4",
-                "domain-2": "uuid_SDN2",
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_75GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_75GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ]
-      }
-    ]
-  }
-}
-"""
+e2e_topology_graph = nx.MultiDiGraph()
 
 # Virtual Node abstraction procedure
 def vnode_abstraction(local_context):
@@ -270,9 +97,11 @@ def vlink_abstraction(local_context):
     # virtual links design among nodes with SIPs
     for link_item in topology_item["link"]:
       # adds all the existing links into de graph
-      node1 = link_item["node-edge-point"][0]["node-uuid"]
-      node2 = link_item["node-edge-point"][1]["node-uuid"]
-      G.add_edge(node1, node2, n1=node1, nep1= link_item["node-edge-point"][0]["node-edge-point-uuid"], n2=node2, nep2=link_item["node-edge-point"][1]["node-edge-point-uuid"])
+        node1 = link_item["node-edge-point"][0]["node-uuid"]
+        node_edge_point1 = link_item["node-edge-point"][0]["node-edge-point-uuid"]
+        node2 = link_item["node-edge-point"][1]["node-uuid"]
+        node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
+        e2e_topology_graph.add_edge(node1, node2, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
 
     # Creates the VLINKs based on shortest routes between nodes with SIPs
     for node_source_item in list(G.nodes):
@@ -331,22 +160,305 @@ def vlink_abstraction(local_context):
   abstracted_context["tapi-common:context"] = tapi_common_context
   return abstracted_context
 
-# creates the initial e2e graph with itself as a single node
+""" Example of e2e_topology_json
+{
+  "e2e-topology": {
+    "nodes-list": [
+      //it contains the uuids of those nodes with an inter-domain link
+      // for VNODE is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["uuid"]
+      // for VLINK is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
+      // for TRANSPARENT is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
+      "uuid_A",
+      "uuid_B",
+      "uuid_C"
+    ],
+    "interdomain-links": [
+      {
+        "name": "uuid_A-uuid_B",
+        // key values to identify the link are the two nodes in nodes-involved
+        "nodes-involved": [
+          "uuid_A",
+          "uuid_B,
+        ],
+        "link-options": [
+          //there will be only two unidirectional options, each with the different physical links for the trick.
+          {
+            "uuid": "uuid",
+            "direction": "UNIDIRECTIONAL",
+            "nodes-direction": {
+              "node-1": "uuid_A",
+              "node-2": "uuid_B"
+            },
+            "layer-protocol-name": [
+              "PHOTONIC_MEDIA"
+            ],
+            "physical-options": [
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_C1"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    "nep-uuid": "nep_D1"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              },
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_C2"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    "nep-uuid": "nep_D2"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "uuid",
+            "direction": "UNIDIRECTIONAL",
+            "layer-protocol-name": [
+              "PHOTONIC_MEDIA"
+            ],
+            "nodes-direction": {
+              "node-1": "uuid_B",
+              "node-2": "uuid_A"
+            },
+            "physical-options": [
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_D1"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    "nep-uuid": "nep_C1"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              },
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_D2"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    "nep-uuid": "nep_C2"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              }
+            ]
+          }
+        ],
+        "supportable_spectrum": [
+          {
+            "lower-frequency": 191700000,
+            "upper-frequency": 196100000,
+            "frequency-constraint": {
+              "adjustment-granularity": "G_50GHZ",
+              "grid-type": "DWDM"
+            }
+          }
+        ],
+        "available_spectrum": [
+          {
+            "lower-frequency": 191700000,
+            "upper-frequency": 196100000,
+            "frequency-constraint": {
+              "adjustment-granularity": "G_50GHZ",
+              "grid-type": "DWDM"
+            }
+          }
+        ]
+      },
+      {
+        "name": "uuid_A-uuid_B",
+        // key values to identify the link are node-1 and node-2 (always as pair)
+        "node-1": "uuid_A",
+        "node-2": "uuid_B",
+        "link_options": [
+          //there will be only two unidirectional options, each with the different physical links for the trick.
+          {
+            "uuid": "uuid",
+            "direction": "UNIDIRECTIONAL",
+            "layer-protocol-name": [
+              "PHOTONIC_MEDIA"
+            ],
+            "physical-options": [
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_C1"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    "nep-uuid": "nep_D1"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              },
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_C1"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    "nep-uuid": "nep_D1"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "uuid",
+            "direction": "UNIDIRECTIONAL",
+            "layer-protocol-name": [
+              "PHOTONIC_MEDIA"
+            ],
+            "physical-options": [
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_C1"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    "nep-uuid": "nep_D1"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              },
+              {
+                "node-edge-point":[
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_A",
+                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                    // this NEP is one of those with SIPs in the domain
+                    "nep_uuid": "nep_C1"
+                  },
+                  {
+                    "topology-uuid": "uuid",
+                    "node-uuid": "uuid_B",
+                    "nep-uuid": "nep_D1"
+                  }
+                ] ,
+                "occupied-spectrum": [
+                ]
+              }
+            ]
+          }
+        ],
+        "supportable_spectrum": [
+          {
+            "lower-frequency": 191700000,
+            "upper-frequency": 196100000,
+            "frequency-constraint": {
+              "adjustment-granularity": "G_50GHZ",
+              "grid-type": "DWDM"
+            }
+          }
+        ],
+        "available_spectrum": [
+          {
+            "lower-frequency": 191700000,
+            "upper-frequency": 196100000,
+            "frequency-constraint": {
+              "adjustment-granularity": "G_50GHZ",
+              "grid-type": "DWDM"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+"""
+
+# creates the initial e2e graph with its local domain information
 def init_e2e_graph(context_json):
   for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
-    e2e_topology_graph.add_node(topology_item["uuid"])
+    for node_item in topology_item["node"]:
+      e2e_topology_graph.add_node(node_item["uuid"])
+    
+    if topology_item["link"]:
+      for link_item in topology_item["link"]:
+        #e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid"])
+        node1 = link_item["node-edge-point"][0]["node-uuid"]
+        node_edge_point1 = link_item["node-edge-point"][0]["node-edge-point-uuid"]
+        node2 = link_item["node-edge-point"][1]["node-uuid"]
+        node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
+        e2e_topology_graph.add_edge(node1, node2, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
 
 # updates the e2e graph by adding new domains and itner-domains links.
-def add_node_e2e_graph(e2e_json):
+def add_e2e_links_graph(e2e_json):
     # adds all the SDN domains defined in the json
     for domain_item in e2e_json["e2e-topology"]["domain-list"]:
         e2e_topology_graph.add_node(domain_item)
     
     # add the links interconnecting the SDN domains defined in the json
     for interdomain_link_item in e2e_json["e2e-topology"]["interdomina-links"]:
-        node_1 = interdomain_link_item["node-1"]
-        node_2 = interdomain_link_item["node-2"]
-        e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid+"])
+      # adding both unidirectional links for the routing process in the E2E MultiDiGraph
+      node_1 = interdomain_link_item["nodes-involved"][0]
+      node_2 = interdomain_link_item["nodes-involved"][1]
+      uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
+      e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+
+      node_1 = interdomain_link_item["nodes-involved"][1]
+      node_2 = interdomain_link_item["nodes-involved"][0]
+      uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
+      e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
 
 # computes the path between two compute domains
 def find_path(src, dst):

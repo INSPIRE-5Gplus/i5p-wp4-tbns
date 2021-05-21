@@ -129,7 +129,8 @@ def get_context():
 # distributes the domain context in the Blockchain
 @app.route('/pdl-transport', methods=['POST'])
 def distribute_context_blockchain():
-  response = orch.context_to_bl()
+  # with this command we share the local context and the local view of the e2e topology (request.json)
+  response = orch.context_to_bl(request.json)
   if response[1] == 200:
     return response[0], 200
   else:
@@ -164,7 +165,7 @@ Example E2E_CS request
   }
 """
 @app.route('/pdl-transport/connectivity_service', method=['POST'])
-def request_cs():
+def request_e2e_cs():
   settings.executor.submit(orch.instantiate_e2e_connectivity_service, request.json)
   response = {}
   response['log'] = "Request accepted, creating the E2E CS."

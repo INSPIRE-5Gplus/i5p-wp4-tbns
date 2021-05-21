@@ -94,7 +94,16 @@ def get_context():
         return response[0], 400 
 
 # shares all the domain context in the blockchain
-def context_to_bl():
+def context_to_bl(e2e_topology_json):
+    # updates the local graph containning the e2e tpology
+    vl_computation.add_e2e_links_graph(e2e_topology_json)
+
+    # -----------------------------------------------------------
+    #TODO: PENSAR COM DISTRIBUÏM e2e_view a la resta de peers
+    # -----------------------------------------------------------
+    # distributes the local e2e topology (inter-domain links) view with the other peers
+    response = bl_mapper.e2e_view_to_blockchain(e2e_topology_json)
+
     # get list of CS within a context to share in the blockchain
     abstracted_sdn_context = db.get_element("", "context")
     
@@ -103,9 +112,10 @@ def context_to_bl():
     context_json["context"] = json.dumps(abstracted_sdn_context)
     context_json["price"] = 1
     context_json["unit"] = "eth"
-    #give the nst to the Blockchain mapper to distribute it with the other peers.
-    response = bl_mapper.context_to_blockchain(context_json)
     
+    # distributes the local sdn context with the other peers
+    response = bl_mapper.context_to_blockchain(context_json)
+
     return context_json, 200
 
 # returns all (local + blockchain) the contexts information
@@ -133,9 +143,9 @@ def get_all_contexts():
     return context_list, 200
 
 # add the local sdn context and its topologies to the Blockchain network
-def add_node_collaborative_topology(blockchain_domain_json):
+def add_node_e2e_topology(blockchain_domain_json):
     settings.logger.info("ORCH: Adding external SDN domain information for path computation." + str(blockchain_domain_json))
-    vl_computation.add_node(blockchain_domain_json)
+    vl_computation.add_node_e2e_graph(blockchain_domain_json)
 
 # manages a local connectivity service configuration process
 def instantiate_local_connectivity_service(cs_json):

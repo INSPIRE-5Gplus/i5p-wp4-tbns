@@ -52,14 +52,7 @@ def transport_event_loop(transport_event_filter, poll_interval):
 
 def handle_transport_event(event):
     event_json = {}
-    if (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
-        if (event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
-            settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
-            topology = json.loads(event['args']['topology'])
-            event_json['domain_id'] = topology['node_name']
-            event_json["topology"] = topology
-            settings.executor.submit(orch.add_node_collaborative_topology, event_json) #canviar nom a add_node_e2e_topology
-    elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
+    if (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
         cs_json = json.loads(event['args']['cs_dumps'])
         settings.executor.submit(orch.instantiate_local_connectivity_service, cs_json)
@@ -78,3 +71,28 @@ def handle_transport_event(event):
         # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
         # TODO: exception/error management
         settings.logger.info("TRANSPORT_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")
+
+
+#TODO: pensar si és realment necessari
+def e2e_event_loop(e2e_event_filter, poll_interval):
+    while True:
+        for event in e2e_event_filter.get_new_entries():
+            handle_e2e_event(event)
+        
+        time.sleep(poll_interval)
+
+def handle_e2e_event(event):
+    event_json = {}
+    if (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
+        if (event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
+            settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
+            event_json = json.loads(event['args']['context'])
+            settings.executor.submit(orch.add_node_e2e_topology, event_json)
+    elif (event['args']['status'] == "UPDATE_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
+        pass
+    elif (event['args']['status'] == "REMOVE_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
+        pass
+    else:
+        # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
+        # TODO: exception/error management
+        settings.logger.info("E2E_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")

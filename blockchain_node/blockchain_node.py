@@ -209,3 +209,20 @@ def update_blockchain_cs(cs_json):
     deployment_response["status"] = rich_logs[0]['args']['status']
     
     return deployment_response, 200
+
+# TODO: revisar i pensar si cal smart contrat nou (nou thread, nous events) o el mateix del transport (nous events)
+# distributes the e2e topology view of a domain to the others.
+def e2e_view_to_blockchain(e2e_topology_json):
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
+    
+    # Add a connectivity service template to make it available for other domains
+    tx_hash = settings.transport_contract.functions.addE2EView(e2e_topology_json["id"], e2e_topology_json).transact()
+    
+    # Wait for transaction to be mined and check it's in the blockchain (get)
+    settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    
+    response = settings.transport_contract.functions.getE2EView(str(e2e_topology_json["id"])).call()
+    e2e_json = {}
+    e2e_json['blockchain_owner'] = response[3]
+    
+    return e2e_json, 200
