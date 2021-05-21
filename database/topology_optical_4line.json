@@ -5,7 +5,7 @@
         "ports":[
             {
                 "port_id":"Optical:1",
-                "destination": "Edge:1"
+                "destination": "Packet:2"
             },
             {
                 "port_id":"Optical:2",

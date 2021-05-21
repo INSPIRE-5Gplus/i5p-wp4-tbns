@@ -3,6 +3,9 @@
 import os, sys, logging, json, argparse, time, datetime, requests, uuid
 from concurrent.futures import ThreadPoolExecutor
 from web3 import Web3
+from sdn_mapper import sdn_mapper
+from vl_computation import vl_computation
+from database import database as db
 
 def init_logging():
     global logger
@@ -13,7 +16,7 @@ def init_logging():
 
     # Create handlers
     c_handler = logging.StreamHandler()
-    f_handler = logging.FileHandler('file.log')
+    f_handler = logging.FileHandler('log_file.log')
     c_handler.setLevel(logging.INFO)
     f_handler.setLevel(logging.INFO)
 
@@ -77,3 +80,21 @@ def init_blockchain():
 def init_thread_pool(workers):
     global executor
     executor = ThreadPoolExecutor(max_workers=workers)
+
+def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
+    response = sdn_mapper.get_local_context(sdn_ctrl_ip, sdn_ctrl_port)
+    if (model == "vnode"):
+        abstracted_context = vl_computation.vnode_abstraction(response[0])
+        response = db.add_element("context", abstracted_context)
+    elif (model == "vlink"):
+        abstracted_context = vl_computation.vlink_abstraction(response[0])
+        response = db.add_element("context", abstracted_context)
+    elif (model == "absolute"):
+        #NOTE: no abstraction is necessary
+        pass
+    else:
+        pass
+
+def init_e2e_topology():
+    response = db.get_elements("context")
+    vl_computation.init_graph(response)

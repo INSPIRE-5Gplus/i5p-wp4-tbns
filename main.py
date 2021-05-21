@@ -13,6 +13,7 @@ from orchestrator import orchestrator as orch
 from blockchain_node import blockchain_node as bl_node
 from blockchain_node import events_manager
 from vl_computation import vl_computation
+from database import database as db
 
 # Define inner applications
 #logging.basicConfig(level=logging.DEBUG)  #Trying setting.logger
@@ -31,8 +32,56 @@ def getPings():
   return jsonify(ping_response), 200
 
 ########################################## PDL-SLICING API ##########################################
+# GETS all E2E Network Slices Instances
+@app.route('/pdl-slice', methods=['GET'])
+def get_all_e2e_slice_instances():
+  response = orch.get_e2e_slice_instances()
+  if response[1] == 200:
+    return jsonify(response[0]), 200
+  else:
+    return response[0], response[1] 
+
+# E2E Slice deployment request  # NOTE: MISSING VL CREATION (PATH COMPUTATION)
+@app.route('/pdl-slice', methods=['POST'])
+def deploy_e2e_slice():
+  settings.executor.submit(orch.instantiate_e2e_slice, request.json)
+  response = {}
+  response['log'] = "Request accepted, setting up the E2E Network Slice."
+  return response, 200
+
+#TODO: GET Specific Slice Instance
+#@app.route('/pdl-slice/<slice_id>', methods=['GET'])
+
+# NOTE: instead of POST, use /pdl-slice/<netslice_id> + DELETE. If not, update swagger
+# TODO: compelte the E2E Slice termination request as it misses the VL removal
+# TODO #@app.route('/pdl-slice/<slice_id>', methods=['DELETE'])
+@app.route('/pdl-slice/terminate', methods=['POST'])
+def terminate_e2e_slice():
+  settings.executor.submit(orch.terminate_e2e_slice, request.json)
+  response = {}
+  response['log'] = "Request accepted, terminating the selected E2E Network Slice."
+  return response, 200
+
+# GETS all local and blockchain slice-subnets (NSTs)
+@app.route('/pdl-slice/slice-subnets', methods=['GET'])
+def get_all_slice_subnets_templates():
+  response = orch.get_slicessubnets_templates()
+  if response[1] == 200:
+    return jsonify(response[0]), 200
+  else:
+    return response[0], response[1] 
+
+# adds a slice-subnet in the Blockchain system
+@app.route('/pdl-slice/slice-subnets/<subnet_id>', methods=['POST'])
+def add_blockchain_subnet_template(subnet_id):
+  response = orch.slicesubnet_template_to_bl(subnet_id)
+  if response[1] == 200:
+    return response[0], 200
+  else:
+    return response[0], response[1]
+
 # GETS all local slice-subnets (NSTs)
-@app.route('/pdl/slice/get_local_template', methods=['GET'])
+@app.route('/pdl-slice/slice-subnets/local', methods=['GET'])
 def get_local_subnet_templates():
   response = orch.get_local_slicesubnet_templates()
   if response[1] == 200:
@@ -41,25 +90,17 @@ def get_local_subnet_templates():
     return response[0], response[1] 
 
 # GETS specific local slice-subnet (NST)
-@app.route('/pdl/slice/get_local_template/<slice_ID>', methods=['GET'])
-def get_local_subnet_template(slice_ID):
-  response = orch.get_local_slicesubnet_template(slice_ID)
+@app.route('/pdl-slice/slice-subnets/local/<subnet_id>', methods=['GET'])
+def get_local_subnet_template(subnet_id):
+  response = orch.get_local_slicesubnet_template(subnet_id)
   if response[1] == 200:
     return jsonify(response[0]), 200
   else:
     return response[0], response[1] 
 
-# adds a slice-subnet in the Blockchain system
-@app.route('/pdl/slice/share_in_blockchain/<slice_ID>', methods=['POST'])
-def add_blockchain_subnet_template(slice_ID):
-  response = orch.slicesubnet_template_to_bl(slice_ID)
-  if response[1] == 200:
-    return response[0], 200
-  else:
-    return response[0], response[1]
 
 # TODO. GETS the slice-subnets (NSTs) in the Blockchain system
-@app.route('/pdl/slice/get_blockchain_template', methods=['GET'])
+@app.route('/pdl-slice/slice-subnets/blockchain', methods=['GET'])
 def get_blockchain_subnets_templates():
   #response = orch.get_bl_slicesubnet_templates()
   #if response[1] == 200:
@@ -69,60 +110,34 @@ def get_blockchain_subnets_templates():
   pass
 
 # GETS a shared slice-subnet (NST) in the Blockchain system
-@app.route('/pdl/slice/get_blockchain_template/<slice_ID>', methods=['GET'])
-def get_blockchain_subnet_template(slice_ID):
-  response = orch.get_bl_slicesubnet_template(slice_ID)
+@app.route('/pdl-slice/slice-subnets/blockchain/<subnet_id>', methods=['GET'])
+def get_blockchain_subnet_template(subnet_id):
+  response = orch.get_bl_slicesubnet_template(subnet_id)
   if response[1] == 200:
     return jsonify(response[0]), 200
   else:
     return response[0], response[1] 
 
-# GETS all local and blockchain slice-subnets (NSTs)
-@app.route('/pdl/slice/get_all_templates', methods=['GET'])
-def get_all_slice_subnets_templates():
-  response = orch.get_slicessubnets_templates()
-  if response[1] == 200:
-    return jsonify(response[0]), 200
-  else:
-    return response[0], response[1] 
-
-# GETS all E2E Network Slices Instances
-@app.route('/pdl/slice/get_all_instances', methods=['GET'])
-def get_all_e2e_slice_instances():
-  response = orch.get_e2e_slice_instances()
-  if response[1] == 200:
-    return jsonify(response[0]), 200
-  else:
-    return response[0], response[1] 
-
-# E2E Slice deployment request  # NOTE: MISSING VL CREATION (PATH COMPUTATION)
-@app.route('/pdl/slice/deploy', methods=['POST'])
-def deploy_e2e_slice():
-  settings.executor.submit(orch.instantiate_e2e_slice, request.json)
-  response = {}
-  response['log'] = "Request accepted, setting up the E2E Network Slice."
-  return response, 200
-
-# TODO:E2E Slice termination request   # NOTE: MISSING VL REMOVAL
-@app.route('/pdl/slice/terminate', methods=['POST'])
-def terminate_e2e_slice():
-  settings.executor.submit(orch.terminate_e2e_slice, request.json)
-  response = {}
-  response['log'] = "Request accepted, terminating the selected E2E Network Slice."
-  return response, 200
 
 ######################################### PDL-TRANSPORT API #########################################
 # GETS the local context
-@app.route('/pdl/transport/get_local_context', methods=['GET'])
-def get_local_context():
-  response = orch.get_local_context()
+@app.route('/pdl-transport', methods=['GET'])
+def get_context():
+  response = db.get_element("", "context")
+  return response, 200
+
+# distributes the domain context in the Blockchain
+@app.route('/pdl-transport', methods=['POST'])
+def distribute_context_blockchain():
+  response = orch.context_to_bl()
   if response[1] == 200:
     return response[0], 200
   else:
     return response[0], response[1]
 
-# GETS all the contexts (local and blockchain)
-@app.route('/pdl/transport/get_all_contexts', methods=['GET'])
+# GET all the contexts (local and blockchain)
+#TODO: repassar
+@app.route('/pdl-transport/all_contexts', methods=['GET'])
 def get_all_contexts():
   response = orch.get_all_contexts()
   if response[1] == 200:
@@ -130,14 +145,30 @@ def get_all_contexts():
   else:
     return response[0], response[1]
 
-# adds the connectivity services of a context to the Blockchain
-@app.route('/pdl/transport/add_context', methods=['POST'])
-def add_blockchain_context():
-  response = orch.context_to_bl()
-  if response[1] == 200:
-    return response[0], 200
-  else:
-    return response[0], response[1]
+# requests a CS based on a set of two SIPs and a capacity
+"""
+Example E2E_CS request 
+  {
+      "domain-source": {
+          "uuid": "SDN_domain_uuid",
+          "sip": "sip_uuid",
+      },
+      "domain-destination": {
+          "uuid": "SDN_domain_uuid",
+          "sip": "sip_destination_uuid",
+      },
+          "capacity": {
+          "value": 150,
+          "unit": "GHz"
+      }
+  }
+"""
+@app.route('/pdl-transport/connectivity_service', method=['POST'])
+def request_cs():
+  settings.executor.submit(orch.instantiate_e2e_connectivity_service, request.json)
+  response = {}
+  response['log'] = "Request accepted, creating the E2E CS."
+  return response, 200
 
 #####################################################################################################
 #######################               MAIN SERVER FUNCTION                    #######################
@@ -151,18 +182,27 @@ if __name__ == '__main__':
   settings.logger.info('Configuring Blockchain connection')
   settings.init_blockchain()
 
-  # triggers the graph creation for the SDN path computation
-  orch.init_collaborative_topology()
+  # triggers local context abstraction based on the model configured
+  settings.logger.info("Abstraction process of the SDN local context.")
+  sdn_ctrl_ip = os.environ.get("SDN_CONTROLLER_IP")
+  sdn_ctrl_port = os.environ.get("SDN_CONTROLLER_PORT")
+  abstraction_model = os.environ.get("ABSTRACION_MODEL")
+  settings.init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, abstraction_model)
+  
+  # triggers the initial E2E graph only with its own existence (not even the inter-domain-links)
+  # NOTE: at this point, nothing is distributed in the BL
+  settings.logger.info("Internal E2E graph initalization for path computation.")
+  settings.init_e2e_topology()
 
   # BLOCKCHAIN EVENT LISTENERS (Threads)
   settings.logger.info('Configuring permanent threads to manage Blockchain events (slicing and transport)')
   # event thread for slicing actions
   slicing_event_filter = settings.slice_contract.events.notifySliceInstanceActions.createFilter(fromBlock='latest')
-  worker_slicing_blockchain_events = Thread(target=events_manager.slice_event_loop, args=(slicing_event_filter, 10), daemon=True)
+  worker_slicing_blockchain_events = Thread(target=events_manager.slice_event_loop, args=(slicing_event_filter, 1), daemon=True)
   worker_slicing_blockchain_events.start()
   #event thread for transport actions
   transport_event_filter = settings.transport_contract.events.notifyTopologyActions.createFilter(fromBlock='latest')
-  worker_transport_blockchain_events = Thread(target=events_manager.transport_event_loop, args=(transport_event_filter, 10), daemon=True)
+  worker_transport_blockchain_events = Thread(target=events_manager.transport_event_loop, args=(transport_event_filter, 1), daemon=True)
   worker_transport_blockchain_events.start()
 
   # RUN THREAD POOL TO MANAGE INCOMING TASKS

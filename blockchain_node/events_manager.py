@@ -16,12 +16,14 @@ def slice_event_loop(slice_event_filter, poll_interval):
 def handle_sliceInstance_event(event):
     event_json = {}
     if (event['args']['status'] == "INSTANTIATING"):
+        settings.logger.info('SLICE_EVENT_MNGR: Received Blockchain event (TIME 3): ' + str(time.time_ns()))
         settings.logger.info("SLICE_EVENT_MNGR: INSTANTIATING EVENT")
         event_json['nst_ref'] = event['args']['templateId']
         event_json["id"] = event['args']['instanceId']
         event_json["status"] = event['args']['status']
         settings.executor.submit(orch.instantiate_local_slicesubnet, event_json)
     elif (event['args']['status'] == "INSTANTIATED"):
+        settings.logger.info('SLICE_EVENT_MNGR: Received Blockchain event (TIME 3): ' + str(time.time_ns()))
         settings.logger.info("SLICE_EVENT_MNGR: INSTANTIATED EVENT")
         event_json['instanceId'] = event['args']['instanceId']
         event_json['status'] = event['args']['status']
@@ -56,13 +58,11 @@ def handle_transport_event(event):
             topology = json.loads(event['args']['topology'])
             event_json['domain_id'] = topology['node_name']
             event_json["topology"] = topology
-            settings.executor.submit(orch.add_node_collaborative_topology, event_json)
+            settings.executor.submit(orch.add_node_collaborative_topology, event_json) #canviar nom a add_node_e2e_topology
     elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
-        event_json = json.loads(event['args']['config_params'])
-        event_json['id'] = event['args']['id']
-        event_json['vl_ref'] = event['args']['vl_ref']
-        settings.executor.submit(orch.instantiate_local_connectivity_service, event_json)
+        cs_json = json.loads(event['args']['cs_dumps'])
+        settings.executor.submit(orch.instantiate_local_connectivity_service, cs_json)
     elif (event['args']['status'] == "READY" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO UPDATE A CS")        
         event_json['id'] = event['args']['id']

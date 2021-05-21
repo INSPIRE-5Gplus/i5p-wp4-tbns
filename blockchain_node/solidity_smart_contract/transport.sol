@@ -5,7 +5,7 @@ contract transport {
     /*##### CONTEXT SERVICE TEMPLATES #####*/
     struct ContextTemplate{
         //string domain_id;
-        string topology;
+        string context;
         uint price;
         string unit;
         address contextOwner;
@@ -15,6 +15,7 @@ contract transport {
     uint ContextTemplateCount;
 
     /*##### CONNECTIVITY SERVICE INSTANCES #####*/
+    //TODO: update the structure to have an address, uuid and a status (this struct will be dynamic)
     struct CSInstance{
         string id;
         string instance_id;
@@ -36,15 +37,15 @@ contract transport {
     /*##### EVENTS #####*/
     //event templateRemoved (string log);
     event topology_response(address requester, string log, string status);
-    event notifyTopologyActions(address owner, string id, string vl_ref, string instance_id, string status, string topology, string config_params);
+    event notifyTopologyActions(address owner, string id, string vl_ref, string instance_id, string status, string context, string config_params);
 
     /*##### CONTEXT TEMPLATE FUNCTIONS #####*/
     // add a new context template
-    function addContextTemplate(string memory _id, string memory _topology, uint _price, string memory _unit) public returns (bool){
+    function addContextTemplate(string memory _id, string memory _context, uint _price, string memory _unit) public returns (bool){
         string memory _log = "SDN domain added.";
         string memory _status = "NEW_DOMAIN";
 
-        ContextTemplate_list[_id].topology = _topology;
+        ContextTemplate_list[_id].context = _context;
         ContextTemplate_list[_id].price = _price;
         ContextTemplate_list[_id].unit = _unit;
         ContextTemplate_list[_id].contextOwner = msg.sender;   //the nfvo uploading the template info is the owner
@@ -52,7 +53,7 @@ contract transport {
         ContextTemplateCount ++;
 
         // all the peers except the owner will take this event
-        emit notifyTopologyActions(msg.sender, _id, "", "", _status, _topology, "");
+        emit notifyTopologyActions(msg.sender, _id, "", "", _status, _context, "");
         
         //sends back to the client the response
         emit topology_response(msg.sender, _log, _status);
@@ -75,8 +76,8 @@ contract transport {
         return ContextTemplateCount;
     }
     // gets the uuid of the context template in position i (used when to get ALL context templates)
-    function getContextTemplateId(uint _id) public view returns (string memory){
-        return ContextTemplateIds[_id];
+    function getContextTemplateId(uint _index) public view returns (string memory){
+        return ContextTemplateIds[_index];
     }
 
     /*##### CONNECTIVITY SERVICE INSTANCES FUNCTIONS #####*/

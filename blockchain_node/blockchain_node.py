@@ -52,6 +52,7 @@ def get_slice_id(index):
 
 # requests the deployment of a slice-subnet template (NST) from another domain
 def deploy_blockchain_slice(ref_slice_subnet):
+    settings.logger.info('BLOCKCHAIN_MAPPER: Starts Blockchain deployment (TIME 3): ' + str(time.time_ns()))
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to deploy slice-subnet in the Blockchain: ' + str(ref_slice_subnet))
     # instantiate slice-subnet
     tx_hash = settings.slice_contract.functions.instantiateSlice(str(ref_slice_subnet["id"]), ref_slice_subnet["nst_ref"]).transact()
@@ -90,7 +91,8 @@ def terminate_blockchain_slice(ref_slice_subnet):
 
 # requests to update a slice-subnet element in the Blockchain
 def update_blockchain_slice(subnet_json):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Updates slice-subnet element within the Blockchain. Element ID: ' + str(subnet_json))
+    settings.logger.info("BLOCKCHAIN_MAPPER: Updating information about local deployment (TIME 3): " + str(time.time_ns()))
+    settings.logger.info('BLOCKCHAIN_MAPPER: Updates slice-subnet element inside Blockchain. Element ID: ' + str(subnet_json))
     # Add a service
     tx_hash = settings.slice_contract.functions.updateInstance(subnet_json['id'], subnet_json['status'], subnet_json['log']).transact()
 
@@ -112,7 +114,7 @@ def context_to_blockchain(context_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
     
     # Add a connectivity service template to make it available for other domains
-    tx_hash = settings.transport_contract.functions.addContextTemplate(context_json["id"], context_json["topology"], context_json["price"], context_json["unit"]).transact()
+    tx_hash = settings.transport_contract.functions.addContextTemplate(context_json["id"], context_json["context"], context_json["price"], context_json["unit"]).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     settings.web3.eth.waitForTransactionReceipt(tx_hash)
@@ -123,13 +125,13 @@ def context_to_blockchain(context_json):
     return context_json, 200
 
 # returns topology saved in the blockchain
-def context_from_blockchain(context_ID):
+def get_context_from_blockchain(context_ID):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context template information. ID: ' + str(context_ID))
     response = settings.transport_contract.functions.getContextTemplate(context_ID).call()
     context_json = {}
     context_json['domain_id'] = context_ID
-    context_json['topology'] = json.loads(response[0])
+    context_json['context'] = json.loads(response[0])
     context_json['price'] = response[1]
     context_json['unit'] = response[2]
     context_json['blockchain_owner'] = response[3]
@@ -145,17 +147,33 @@ def get_context_id(index):
     response = settings.transport_contract.functions.getContextTemplateId(index).call()
     return response
 
-# TODO: requests the deployment of a CS between domains
-def instantiate_blockchain_cs(address, vl_ref, cs_json):
+""" Example of e2e_topology_json
+{
+  "e2e-topology": {
+    "domain-list": [
+        ...
+    ],
+    "interdomain-links": [
+        ...
+    ]
+  }
+}
+"""
+# returns topology saved in the blockchain
+def get_e2etopology_from_blockchain():
+    settings.logger.info('BLOCKCHAIN_MAPPER: Requests e2e topology from the Blockchain.')
+    response = settings.transport_contract.functions.getE2ETopology().call()
+    e2e_topology_json = json.loads(response[0])
+    return e2e_topology_json, 200
+
+# requests the deployment of a CS between domains
+#TODO: update to manage the new incoming cs_json
+def instantiate_blockchain_cs(address, cs_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to configure connectivity service in the Blockchain')
-    conf_params_json = {}
-    conf_params_json['source_sip'] = cs_json['source_sip']
-    conf_params_json['destination_sip'] = cs_json['destination_sip']
-    conf_params_json['destination_cidr'] = cs_json['destination_cidr']
-    conf_params = json.dumps(conf_params_json)
+    cs_dumps = json.dumps(cs_json)
     
     # instantiate slice-subnet
-    tx_hash = settings.transport_contract.functions.instantiateConnectivityService(address, cs_json['id'], vl_ref, conf_params).transact()
+    tx_hash = settings.transport_contract.functions.instantiateConnectivityService(address,cs_dumps).transact()
     
     # Wait for transaction to be added and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
@@ -178,7 +196,7 @@ def terminate_blockchain_cs(ref_cs):
 def update_blockchain_cs(cs_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Updates connectivity service element within the Blockchain.')
     # Add a service
-    tx_hash = settings.transport_contract.functions.updateConnectivityService(cs_json['id'], cs_json['instance_id'], cs_json['status']).transact()
+    tx_hash = settings.transport_contract.functions.updateConnectivityService(cs_json['uuid'], cs_json).transact()
 
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
