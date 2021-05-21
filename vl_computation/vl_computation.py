@@ -181,22 +181,6 @@ e2e_topology_graph = nx.Graph()
   }
 }
 """
-# creates the initial e2e graph with itself as a single node
-def init_e2e_graph(context_json):
-  for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
-    e2e_topology_graph.add_node(topology_item["uuid"])
-
-# updates the e2e graph by adding new domains and itner-domains links.
-def add_node_e2e_graph(e2e_json):
-    # adds all the SDN domains defined in the json
-    for domain_item in e2e_json["e2e-topology"]["domain-list"]:
-        e2e_topology_graph.add_node(domain_item)
-    
-    # add the links interconnecting the SDN domains defined in the json
-    for interdomain_link_item in e2e_json["e2e-topology"]["interdomina-links"]:
-        node_1 = interdomain_link_item["node-1"]
-        node_2 = interdomain_link_item["node-2"]
-        e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid+"])
 
 # Virtual Node abstraction procedure
 def vnode_abstraction(local_context):
@@ -346,6 +330,23 @@ def vlink_abstraction(local_context):
 
   abstracted_context["tapi-common:context"] = tapi_common_context
   return abstracted_context
+
+# creates the initial e2e graph with itself as a single node
+def init_e2e_graph(context_json):
+  for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
+    e2e_topology_graph.add_node(topology_item["uuid"])
+
+# updates the e2e graph by adding new domains and itner-domains links.
+def add_node_e2e_graph(e2e_json):
+    # adds all the SDN domains defined in the json
+    for domain_item in e2e_json["e2e-topology"]["domain-list"]:
+        e2e_topology_graph.add_node(domain_item)
+    
+    # add the links interconnecting the SDN domains defined in the json
+    for interdomain_link_item in e2e_json["e2e-topology"]["interdomina-links"]:
+        node_1 = interdomain_link_item["node-1"]
+        node_2 = interdomain_link_item["node-2"]
+        e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid+"])
 
 # computes the path between two compute domains
 def find_path(src, dst):
