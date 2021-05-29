@@ -52,7 +52,15 @@ def transport_event_loop(transport_event_filter, poll_interval):
 
 def handle_transport_event(event):
     event_json = {}
-    if (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
+    if (event['args']['status'] == "NEW_IDL" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
+        settings.logger.info("TRANSPORT_EVENT_MNGR: NEW SET OF IDL")
+        event_json = json.loads(event['args']['context'])
+        settings.executor.submit(orch.add_idl_info, event_json)
+    elif (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
+        settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
+        event_json = json.loads(event['args']['context'])
+        settings.executor.submit(orch.add_context_info, event_json)
+    elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
         cs_json = json.loads(event['args']['cs_dumps'])
         settings.executor.submit(orch.instantiate_local_connectivity_service, cs_json)
@@ -60,7 +68,7 @@ def handle_transport_event(event):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO UPDATE A CS")        
         event_json['id'] = event['args']['id']
         event_json['blockchain_owner'] = event['args']['owner']
-        event_json['vl_ref'] = event['args']['vl_ref']
+        event_json['cs_info'] = event['args']['sdn_info']
         event_json['status'] = event['args']['status']
         settings.executor.submit(orch.update_connectivity_service_from_blockchain, event_json)
     elif (event['args']['status'] == "REMOVE" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
@@ -71,28 +79,3 @@ def handle_transport_event(event):
         # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
         # TODO: exception/error management
         settings.logger.info("TRANSPORT_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")
-
-
-#TODO: pensar si és realment necessari
-def e2e_event_loop(e2e_event_filter, poll_interval):
-    while True:
-        for event in e2e_event_filter.get_new_entries():
-            handle_e2e_event(event)
-        
-        time.sleep(poll_interval)
-
-def handle_e2e_event(event):
-    event_json = {}
-    if (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
-        if (event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
-            settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
-            event_json = json.loads(event['args']['context'])
-            settings.executor.submit(orch.add_node_e2e_topology, event_json)
-    elif (event['args']['status'] == "UPDATE_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
-        pass
-    elif (event['args']['status'] == "REMOVE_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
-        pass
-    else:
-        # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
-        # TODO: exception/error management
-        settings.logger.info("E2E_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")

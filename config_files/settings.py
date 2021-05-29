@@ -96,4 +96,4 @@ def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
 
 def init_e2e_topology():
     response = db.get_elements("context")
-    vl_computation.init_e2e_graph(response)
+    vl_computation.add_context_e2e_graph(response)

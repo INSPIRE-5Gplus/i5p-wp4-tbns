@@ -32,7 +32,7 @@ def getPings():
   return jsonify(ping_response), 200
 
 ########################################## PDL-SLICING API ##########################################
-# GETS all E2E Network Slices Instances
+# NOTE: GETS all E2E Network Slices Instances
 @app.route('/pdl-slice', methods=['GET'])
 def get_all_e2e_slice_instances():
   response = orch.get_e2e_slice_instances()
@@ -41,7 +41,7 @@ def get_all_e2e_slice_instances():
   else:
     return response[0], response[1] 
 
-# E2E Slice deployment request  # NOTE: MISSING VL CREATION (PATH COMPUTATION)
+# NOTE: E2E Slice deployment request  # NOTE: MISSING VL CREATION (PATH COMPUTATION)
 @app.route('/pdl-slice', methods=['POST'])
 def deploy_e2e_slice():
   settings.executor.submit(orch.instantiate_e2e_slice, request.json)
@@ -62,7 +62,7 @@ def terminate_e2e_slice():
   response['log'] = "Request accepted, terminating the selected E2E Network Slice."
   return response, 200
 
-# GETS all local and blockchain slice-subnets (NSTs)
+# NOTE: GETS all local and blockchain slice-subnets (NSTs)
 @app.route('/pdl-slice/slice-subnets', methods=['GET'])
 def get_all_slice_subnets_templates():
   response = orch.get_slicessubnets_templates()
@@ -71,7 +71,7 @@ def get_all_slice_subnets_templates():
   else:
     return response[0], response[1] 
 
-# adds a slice-subnet in the Blockchain system
+# NOTE: adds a slice-subnet in the Blockchain system
 @app.route('/pdl-slice/slice-subnets/<subnet_id>', methods=['POST'])
 def add_blockchain_subnet_template(subnet_id):
   response = orch.slicesubnet_template_to_bl(subnet_id)
@@ -80,7 +80,7 @@ def add_blockchain_subnet_template(subnet_id):
   else:
     return response[0], response[1]
 
-# GETS all local slice-subnets (NSTs)
+# NOTE: GETS all local slice-subnets (NSTs)
 @app.route('/pdl-slice/slice-subnets/local', methods=['GET'])
 def get_local_subnet_templates():
   response = orch.get_local_slicesubnet_templates()
@@ -89,7 +89,7 @@ def get_local_subnet_templates():
   else:
     return response[0], response[1] 
 
-# GETS specific local slice-subnet (NST)
+# NOTE: GETS specific local slice-subnet (NST)
 @app.route('/pdl-slice/slice-subnets/local/<subnet_id>', methods=['GET'])
 def get_local_subnet_template(subnet_id):
   response = orch.get_local_slicesubnet_template(subnet_id)
@@ -99,7 +99,7 @@ def get_local_subnet_template(subnet_id):
     return response[0], response[1] 
 
 
-# TODO. GETS the slice-subnets (NSTs) in the Blockchain system
+# TODO: GETS the slice-subnets (NSTs) in the Blockchain system
 @app.route('/pdl-slice/slice-subnets/blockchain', methods=['GET'])
 def get_blockchain_subnets_templates():
   #response = orch.get_bl_slicesubnet_templates()
@@ -109,7 +109,7 @@ def get_blockchain_subnets_templates():
     #return response[0], response[1] 
   pass
 
-# GETS a shared slice-subnet (NST) in the Blockchain system
+# NOTE: GETS a shared slice-subnet (NST) in the Blockchain system
 @app.route('/pdl-slice/slice-subnets/blockchain/<subnet_id>', methods=['GET'])
 def get_blockchain_subnet_template(subnet_id):
   response = orch.get_bl_slicesubnet_template(subnet_id)
@@ -136,8 +136,7 @@ def distribute_context_blockchain():
   else:
     return response[0], response[1]
 
-# GET all the contexts (local and blockchain)
-#TODO: repassar
+#  GET all the contexts (local and blockchain)
 @app.route('/pdl-transport/all_contexts', methods=['GET'])
 def get_all_contexts():
   response = orch.get_all_contexts()
@@ -146,7 +145,6 @@ def get_all_contexts():
   else:
     return response[0], response[1]
 
-# requests a CS based on a set of two SIPs and a capacity
 """
 Example E2E_CS request 
   {
@@ -164,6 +162,7 @@ Example E2E_CS request
       }
   }
 """
+# requests a CS based on a set of two SIPs and a capacity
 @app.route('/pdl-transport/connectivity_service', method=['POST'])
 def request_e2e_cs():
   settings.executor.submit(orch.instantiate_e2e_connectivity_service, request.json)

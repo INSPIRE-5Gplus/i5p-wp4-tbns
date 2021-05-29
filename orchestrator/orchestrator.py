@@ -15,21 +15,22 @@ from vl_computation import vl_computation
 mutex_slice2db_access = Lock()
 mutex_slice2blockchaindb_access = Lock()
 mutex_local_csdb_access = Lock()
+mutex_e2e_csdb_access = Lock()
 
 ################################### NETWORK SLICE SUBNETS TEMPLATE FUNCTIONS ###################################
 #### LOCAL DOMAIN
-# returns the slices templates information in the local domain.
+# NOTE: returns the slices templates information in the local domain.
 def get_local_slicesubnet_templates():
     response = slice_mapper.get_all_slice_subnet_templates()
     return response[0], 200
 
-# returns the slice template information placed in the local domain with a specific ID.
+# NOTE: returns the slice template information placed in the local domain with a specific ID.
 def get_local_slicesubnet_template(slice_ID):
     response = slice_mapper.get_slice_subnet_template(slice_ID)
     return response[0], 200
 
 #### BLOCKCHAIN DOMAIN
-# adds a slice template into the blockchain to be shared
+# NOTE: adds a slice template into the blockchain to be shared
 def slicesubnet_template_to_bl(slice_ID):
     # gets NST from local NSM and selects the necessary information
     response = slice_mapper.get_slice_subnet_template(slice_ID)
@@ -49,12 +50,12 @@ def slicesubnet_template_to_bl(slice_ID):
 def get_bl_slicesubnet_templates():
     return 200
 
-# returns the slice-subnet template information placed in the blockchain with a specific ID.
+# NOTE: returns the slice-subnet template information placed in the blockchain with a specific ID.
 def get_bl_slicesubnet_template(slice_ID):
     response = bl_mapper.slice_from_blockchain(slice_ID)
     return response, 200
 
-# returns all the slice-subnets (NSTs) available locally and in the blockchain peers.
+# NOTE: returns all the slice-subnets (NSTs) available locally and in the blockchain peers.
 def get_slicessubnets_templates():
     # gets local slice-subnets
     response = slice_mapper.get_all_slice_subnet_templates()
@@ -83,6 +84,52 @@ def get_slicessubnets_templates():
 
 
 ######################################## SDN TRANSPORT CONTEXT FUNCTIONS ########################################
+# shares all the domain context in the blockchain
+def context_to_bl(idl_json):
+    # updates the local graph containning the e2e tpology
+    vl_computation.add_idl_e2e_graph(idl_json)
+    
+    # gets current e2e_topology, adds new nodes & IDLs (if they are not already in there) and distributes both json to the blockchain peers  
+    response = bl_mapper.get_e2etopology_from_blockchain()
+    e2e_topology = response[0]
+    e2e_nodes_list = e2e_topology["e2e_topology"]["nodes-list"]
+    for node_item in idl_json["e2e_topology"]["nodes-list"]:
+        if node_item not in e2e_nodes_list:
+            e2e_nodes_list.append(node_item)
+    e2e_topology["e2e_topology"]["nodes-list"] = e2e_nodes_list
+    e2e_idl_list = e2e_topology["e2e_topology"]["interdomain-links"]
+    for idl_item in idl_json["e2e_topology"]["interdomain-links"]:
+        found_existing_idl = False
+        for ref_idl in e2e_idl_list:
+            if idl_item["name"] == ref_idl["name"]:
+                found_existing_idl = True
+                break
+        if found_existing_idl == False:
+            e2e_idl_list.append(idl_item)
+    e2e_topology["e2e_topology"]["interdomain-links"] = e2e_idl_list
+    response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
+    if response[1] != 200:
+        return ({"msg":"ERROR - Somthing went wrong when distributing IDL info."}, 400)
+
+    # get the local context & distributes the local sdn context with the other peers
+    abstracted_sdn_context = db.get_element("", "context")
+    context_json = {}
+    context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
+    context_json["context"] = json.dumps(abstracted_sdn_context) 
+    response = bl_mapper.context_to_blockchain(context_json)
+
+    return ({"msg":"Interdomain-Links and Domain SDN Context distributed."}, 200)
+
+# adds the inter-domain links information coming from another peer to the E2E local graph
+def add_idl_info(blockchain_domain_json):
+    settings.logger.info("ORCH: Adding inter-domain links to the E2E graph for path conmputation." + str(blockchain_domain_json))
+    vl_computation.add_idl_e2e_graph(blockchain_domain_json)
+
+# adds the SDN domain context information coming from another peer to the E2E local graph
+def add_context_info(blockchain_domain_json):
+    settings.logger.info("ORCH: Adding external SDN domain context information for path computation." + str(blockchain_domain_json))
+    vl_computation.add_context_e2e_graph(blockchain_domain_json)
+
 # returns the transport context information in the local domain
 def get_context():
     sdn_ctrl_ip = os.environ.get("SDN_CONTROLLER_IP")
@@ -93,32 +140,7 @@ def get_context():
     else:
         return response[0], 400 
 
-# shares all the domain context in the blockchain
-def context_to_bl(e2e_topology_json):
-    # updates the local graph containning the e2e tpology
-    vl_computation.add_e2e_links_graph(e2e_topology_json)
-
-    # -----------------------------------------------------------
-    #TODO: PENSAR COM DISTRIBUÏM e2e_view a la resta de peers
-    # -----------------------------------------------------------
-    # distributes the local e2e topology (inter-domain links) view with the other peers
-    response = bl_mapper.e2e_view_to_blockchain(e2e_topology_json)
-
-    # get list of CS within a context to share in the blockchain
-    abstracted_sdn_context = db.get_element("", "context")
-    
-    context_json = {}
-    context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
-    context_json["context"] = json.dumps(abstracted_sdn_context)
-    context_json["price"] = 1
-    context_json["unit"] = "eth"
-    
-    # distributes the local sdn context with the other peers
-    response = bl_mapper.context_to_blockchain(context_json)
-
-    return context_json, 200
-
-# returns all (local + blockchain) the contexts information
+# returns all (local + blockchain) the domain contexts information
 def get_all_contexts():
     context_list = []
     
@@ -133,7 +155,7 @@ def get_all_contexts():
         context_ID_item = bl_mapper.get_context_id(index_list)
 
         if local_sdn_context["tapi-common:context"]["uuid"] != context_ID_item:
-            nst_element = bl_mapper.context_from_blockchain(context_ID_item)  
+            nst_element = bl_mapper.get_context_from_blockchain(context_ID_item)  
             settings.logger.info('ORCH: Requests Blockchain context nst_element: ' + str(nst_element))          
             context_list.append(nst_element[0])
             
@@ -142,10 +164,7 @@ def get_all_contexts():
     settings.logger.info('ORCH: context_list: ' + str(context_list))     
     return context_list, 200
 
-# add the local sdn context and its topologies to the Blockchain network
-def add_node_e2e_topology(blockchain_domain_json):
-    settings.logger.info("ORCH: Adding external SDN domain information for path computation." + str(blockchain_domain_json))
-    vl_computation.add_node_e2e_graph(blockchain_domain_json)
+#TODO: get E2E topology function to show the E2E topology (draw with matplotlib)
 
 # manages a local connectivity service configuration process
 def instantiate_local_connectivity_service(cs_json):
@@ -162,10 +181,12 @@ def instantiate_local_connectivity_service(cs_json):
     cs_json['status'] = response[0]['status']
     response = bl_mapper.update_blockchain_cs(cs_json)
 
-# updates a slice-subnet information belonging to another domain (Blockchain)
+#TODO: pending the update of E2E CS with the updated domain CS info
+# NOTE: updates a CS information belonging to another domain (Blockchain)
 def update_connectivity_service_from_blockchain(cs_json):
     settings.logger.info("ORCH: Updating connectivity services information from another domain.")
     
+    """
     # look in the local nsi db which nsi has the updated connectivity service of one of its virtual links.
     found_nsi = False
     response = db.get_elements("slices")
@@ -188,17 +209,21 @@ def update_connectivity_service_from_blockchain(cs_json):
             if found_nsi:
                 break
         if found_nsi:
-            break  
+            break
+    """
+    mutex_e2e_csdb_access.acquire()
+    #db.add_element(e2e_cs_json, "e2e_cs")
+    mutex_e2e_csdb_access.release()
 
-# manages the creation of an E2E CS
+
 """
 Example E2E_CS request 
     {
-        "domain-source": {
+        "node-source": {
             "uuid": "SDN_domain_uuid",
             "sip": "sip_uuid",
         },
-        "domain-destination": {
+        "node-destination": {
             "uuid": "SDN_domain_uuid",
             "sip": "sip_destination_uuid",
         },
@@ -211,12 +236,12 @@ Example E2E_CS data object
     {
         "uuid": "uuid_e2e_cs",
         "status" : DEPLOYED/TERMINATED,
-        "domain-source": {
-            "uuid": "SDN_domain_uuid",
+        "node-source": {
+            "uuid": "node_uuid",
             "sip": "sip_uuid",
         },
-        "domain-destination": {
-            "uuid": "SDN_domain_uuid",
+        "node-destination": {
+            "uuid": "node_uuid",
             "sip": "sip_destination_uuid",
         },
         "capacity": {
@@ -229,9 +254,9 @@ Example E2E_CS data object
         },
         "route":[
             #info guardada amb el route_node_domain parameter
-            "SDN_domain_uuid",
-            "SDN_domain_uuid",
-            "SDN_domain_uuid
+            "node_uuid",
+            "node_uuid",
+            "node_uuid
         ],
         "domain-CS":[
             {
@@ -241,16 +266,18 @@ Example E2E_CS data object
         ]
     }
 """
+# manages the creation of an E2E CS
 def instantiate_e2e_connectivity_service(e2e_cs_request):
     # defines e2e CS data object parameters
     e2e_cs_json = {}
-    spectrum = {}
+    spectrum_list = []
     domain_CS = []
+    e2e_topology_json = bl_mapper.get_e2etopology_from_blockchain()
 
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = uuid.uuid4()
-    e2e_cs_json["domain-source"] = e2e_cs_request["domain-source"]
-    e2e_cs_json["domain-destination"] = e2e_cs_request["domain-destination"]
+    e2e_cs_json["node-source"] = e2e_cs_request["node-source"]
+    e2e_cs_json["node-destination"] = e2e_cs_request["node-destination"]
     e2e_cs_json["capacity"] = e2e_cs_request["capacity"]
     if e2e_cs_request["capacity"]["unit"] == "GHz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000
@@ -261,13 +288,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         capacity = e2e_cs_request["capacity"]["value"]
     
     # ROUTING PATH COMPUTATION options based based on source and destination domains
-    src = e2e_cs_request["domain-source"]["uuid"]
-    dst = e2e_cs_request["domain-destination"]["uuid"]
+    src = e2e_cs_request["node-source"]["uuid"]
+    dst = e2e_cs_request["node-destination"]["uuid"]
     route_nodes_list = vl_computation.find_path(src, dst)
 
-    #SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
-    e2e_topology_json = bl_mapper.get_e2etopology_from_blockchain()
-    
+    # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)    
     # if one route does not have a slot, passes to the next one
     for route_item in route_nodes_list:
         # idetifies the NEPs between inter-domain links
@@ -276,23 +301,48 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             # identifies the SIP used for each NEP in the route
             route_sips = vl_computation.nep2sip_route_mapping(response_nep_mapped[0], e2e_cs_request)
             
-            # with the route of SIPS, it checks if they all share a common spectrum  an example [191700000,196100000]
-            rsa_response = vl_computation.spectrum_assignment(response_nep_mapped[1],capacity)
+            # generates available spectrums list from interdomain links & internal neps
+            for interdomainlink_item in response_nep_mapped[1]:
+                spectrum_list.append(interdomainlink_item["available_spectrum"])
+            # it will access only when working in transparent abstraction mode
+            if route_sips[2]: 
+                for internal_nep_item in route_sips[2]:
+                    # get specific domain topology to discover the correct SIP to use
+                    response = bl_mapper.get_context_from_blockchain(internal_nep_item["topology"])
+                    domain_context = response['context']
+                    # look inot all the nodes of the incoming context
+                    for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
+                        for owned_nep_item in node_item["owned-node-edge-point"]:
+                            if owned_nep_item["uuid"] == internal_nep_item["nep_uuid"]:
+                                available_slots = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
+                                for available_item in available_slots:
+                                    spectrum_slot = []
+                                    spectrum_slot.append(available_item["lower-frequency"])
+                                    spectrum_slot.append(available_item["upper-frequency"])
+                                    spectrum_list.append(spectrum_slot)
+            
+            # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
+            selected_spectrum = vl_computation.spectrum_assignment(spectrum_list, capacity)
         
-        # rsa done is compelte: routing path computed and spectrum slot selected
-        if rsa_response:
+        # rsa done is complete: routing path computed and spectrum slot selected
+        if selected_spectrum:
             break
 
-    # CSs requests procedure
+    # generates the domain CSs requests [{sip_info, "topology", "blockchain_owner"},{...},...]]
+    # route_sips[0] -> route of SIPs 
+    # route_sips[1] -> list of context links per each CS (only transparent abstraction) [{link_uuid, topology},{}...]
+    # capacity
+    # selected_spectrum --> frequency slots
     spectrum = {}
-    spectrum["low-freq"] = rsa_response[0]
-    spectrum["high-freq"] = rsa_response[1]
+    spectrum["low-freq"] = selected_spectrum[0]
+    spectrum["high-freq"] = selected_spectrum[1]
     cs_list = []
-    iter_sips = iter(route_sips)
+    iter_sips = iter(route_sips[0]) #iter is used to work using pairs of elements
     for sip_item in iter_sips:
         # checks that each pair of sips belongs to the same owner, otherwise does not generate the cs_info
-        if sip_item["address_owner"] == next(iter_sips["address_owner"]):
+        if sip_item["topology"] == next(iter_sips["topology"]):
             cs_info = {}
+            constrained_links = []
             cs_uuid = uuid.uuid4()
             cs_info["uuid"] = cs_uuid
             cs_info["address_owner"] = sip_item["address_owner"]
@@ -303,6 +353,16 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             cs_info["sips"] = sip_list
             cs_info["capacity"] = e2e_cs_request["capacity"]
             cs_info["spectrum_slot"] = spectrum
+            
+            # adds the list of constrained links for the current domain CS
+            # NOTE: this IF will be accessed only in transparent abstarction mode
+            if route_sips[1]:
+                for link_item in route_sips[1]:
+                    if link_item["topology"] == sip_item["topology"]:
+                        constrained_links.append(link_item["topology"])
+            cs_info["constrained_links"] = constrained_links
+            
+            # decide whether the CS is for the local domain SDN controller or another domain
             if sip_item["address_owner"] == str(settings.web3.eth.defaultAccount):
                 response = sdn_mapper.instantiate_connectivity_service(cs_info)
                 if response[1] == 200:
@@ -310,7 +370,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                     db.add_cs(response[1])
                     mutex_local_csdb_access.release()
             else:
-                response = bl_mapper.instantiate_blockchain_cs(sip_item["address_owner"], cs_info)
+                response = bl_mapper.instantiate_blockchain_cs(sip_item["address_owner"], cs_info, cs_uuid)
         else:
             # if the two sips belong to two different domains, it passes to the next item.
             continue
@@ -325,17 +385,19 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     e2e_cs_json["route"] = route_nodes_list
     e2e_cs_json["domain-CS"] = cs_list
     e2e_cs_json["status"]  = "DEPLOYED"
+    mutex_e2e_csdb_access.acquire()
     db.add_element(e2e_cs_json, "e2e_cs")
+    mutex_e2e_csdb_access.release()
     return e2e_cs_json,200
 
 ################################### E2E NETWORK SLICE INSTANCES FUNCTIONS #######################################
-# returns all the e2e slice instances (E2E NSI)
+# NOTE: returns all the e2e slice instances (E2E NSI)
 def get_e2e_slice_instances():
     settings.logger.info("ORCH: Received request to get E2E Network Slices information.")
     response = db.get_elements("slices")
     return response, 200
 
-# manages all the E2E slice instantiation process  NOTE: missing VL creation (path computation)
+# NOTE: manages all the E2E slice instantiation process  NOTE: missing VL creation (path computation)
 def instantiate_e2e_slice(incoming_data):
     settings.logger.info("ORCH: Received request to deploy an E2E Network Slice (TIME 1): " + str(time.time_ns()))
     # creates the NSI instance object based on the request
@@ -664,7 +726,7 @@ def instantiate_e2e_slice(incoming_data):
     settings.logger.info('E2E Network Slice INSTANTIATED. E2E Slice ID: ' + str(nsi_element["id"]))
     settings.logger.info("ORCH: E2E READY (TIME 1): " + str(time.time_ns()))
 
-# manages a local slice-subnet instantiation process
+# NOTE: manages a local slice-subnet instantiation process
 def instantiate_local_slicesubnet(subnet_json):
     settings.logger.info("ORCH: STARTTING LOCAL DEPLOYMENT (TIME 2): " + str(time.time_ns()))
     settings.logger.info("ORCH: Received slice-subnet from Blockchain request. NST Ref:: " +str(subnet_json['nst_ref']))
@@ -732,7 +794,7 @@ def instantiate_local_slicesubnet(subnet_json):
         pass
     mutex_slice2blockchaindb_access.release()
 
-# updates a slice-subnet information belonging to another domain (Blockchain)
+# NOTE: updates a slice-subnet information belonging to another domain (Blockchain)
 def update_slicesubnet_from_blockchain(subnet_json):
     settings.logger.info("ORCH: Updating slice-subnet information from another domain. Slice-Subnet ID: " +str(subnet_json['instanceId']))
     

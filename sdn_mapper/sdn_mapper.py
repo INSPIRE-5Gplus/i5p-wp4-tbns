@@ -52,20 +52,24 @@ def get_connectivity_service(cs_ID):
 """
 Incoming CS information
 {
-    "uuid": "uuid_CS",
-    "address_owner": "address_owner",
-    "sips": [
-        "uuid_sip",
-        "uuid_sip"
-    ],
-    "capacity": {
-        "value": 150,
-        "unit": "GHz"
-    },
-    "spectrum_slot": {
-        "low-freq": 191700000,
-        "high-freq": 196100000
-    }
+  "uuid": "uuid_CS",
+  "address_owner": "address_owner",
+  "sips": [
+      "uuid_sip",
+      "uuid_sip"
+  ],
+  "capacity": {
+      "value": 150,
+      "unit": "GHz"
+  },
+  "spectrum_slot": {
+      "low-freq": 191700000,
+      "high-freq": 196100000
+  },
+  "constrained_links": [
+    "uuid",
+    "uuid
+  ]
 }
 Generated CS request
 {
@@ -116,20 +120,28 @@ Generated CS request
   }
 }
 """
+# assegurar que el json a enviar és el que comença amb "tapi-connectivity:input"
 def instantiate_connectivity_service(cs_info_json):
     #var with the json to add into the request
-    cs_req_json = {}
-    tapi_connectivity_cs = []
-    cs_item = {}
-    cs_item["uuid"] = cs_info_json["uuid"]
-
-    # generating the key_json "connectivity-constraint"
+    cs_json = {}
+    tapi_connectivity_cs = {}
+    connectivity_constraint = {}
+    topology_constraint = {}
+    included_links = []
     req_capacity = {}
-    connec_constrain = {}
+    tapi_connectivity_cs["uuid"] = cs_info_json["uuid"]
+
+    # generating the key_json "connectivity-constraint"  
     req_capacity["total-size"] = cs_info_json["capacity"]
-    connec_constrain["requested-capacity"] = req_capacity
-    connec_constrain["connectivity-direction"] = "UNIDIRECTIONAL"
-    cs_item["connectivity-constraint"] = connec_constrain
+    connectivity_constraint["requested-capacity"] = req_capacity
+    connectivity_constraint["connectivity-direction"] = "UNIDIRECTIONAL"
+    tapi_connectivity_cs["connectivity-constraint"] = connectivity_constraint
+
+    # generating the key_json "topology-constraint"
+    for link_item in cs_info_json["constrained_links"]:
+      included_links.append(link_item)
+    topology_constraint["inslude-link"] = included_links
+    tapi_connectivity_cs["topology-constraint"] = topology_constraint
 
     # generating the key_json "end-point"
     endpoint_list = []
@@ -158,16 +170,16 @@ def instantiate_connectivity_service(cs_info_json):
         endpoint_item["tapi-photonic-media:media-channel-connectivity-service-end-point-spec"] = mc_config
 
         endpoint_list.append(endpoint_item)
+    cs_json["end-point"] = endpoint_list
     
-    cs_item["end-point"] = endpoint_list
-    tapi_connectivity_cs.append(cs_item)
-    cs_req_json["tapi-connectivity:connectivity-service"] = tapi_connectivity_cs
+    # all data is in the json
+    cs_json["tapi-connectivity:input"] = tapi_connectivity_cs
 
     # sending request
     #url = "http://10.1.7.80:8182/restconf/config/context/connectivity-service/6e0abcf9-037c-4b0a-b444-fe37a09f46ea/"
     #data_dumps = '{"uuid":"6e0abcf9-037c-4b0a-b444-fe37a09f46ea","end-point":[{"service-interface-point":{"service-interface-point-uuid":"fdd57f63-cc36-5a75-97f8-6968c1a39cac"},"layer-protocol-name":"DSR","layer-protocol-qualifier":"tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"},{"service-interface-point":{"service-interface-point-uuid":"ff6fefd6-25c3-556a-8337-edda612bfbd6"},"layer-protocol-name":"DSR","layer-protocol-qualifier":"tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"}],"connectivity-constraint":{"connectivity-direction":"UNIDIRECTIONAL","requested-capacity":{"total-size":{"value":5,"unit":"GBPS"}}}}'
     url = get_nsm_url() + "/restconf/data/tapi-common:context/tapi-connectivity:connectivity-context"
-    data_dumps = json.dumps(cs_req_json)
+    data_dumps = json.dumps(cs_json)
     response = requests.post(url, headers=JSON_CONTENT_HEADER, data=data_dumps)
     """
     if response.status_code == 200:
