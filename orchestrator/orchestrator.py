@@ -178,11 +178,10 @@ def instantiate_local_connectivity_service(cs_json):
     db.add_cs(cs_json)
     mutex_local_csdb_access.release()
 
-    cs_json['status'] = response[0]['status']
+    cs_json['status'] = "READY"
     response = bl_mapper.update_blockchain_cs(cs_json)
 
-#TODO: pending the update of E2E CS with the updated domain CS info
-# NOTE: updates a CS information belonging to another domain (Blockchain)
+# updates a CS information belonging to another domain (Blockchain)
 def update_connectivity_service_from_blockchain(cs_json):
     settings.logger.info("ORCH: Updating connectivity services information from another domain.")
     
@@ -213,6 +212,16 @@ def update_connectivity_service_from_blockchain(cs_json):
     """
     mutex_e2e_csdb_access.acquire()
     #db.add_element(e2e_cs_json, "e2e_cs")
+    e2ecs_list = db.get_elements("e2e_cs")
+    for e2ecs_item in e2ecs_list:
+        for domaincs_item in e2ecs_item["domain-CS"]:
+            if domaincs_item["uuid"] == cs_json["id"]:
+                domaincs_item["status"] = "READY"
+                found_cs = True
+                break
+        if found_cs == True:
+            db.update_db(e2ecs_item["uuid"], e2ecs_item, "e2e_cs")
+            break
     mutex_e2e_csdb_access.release()
 
 
@@ -278,6 +287,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     e2e_cs_json["uuid"] = uuid.uuid4()
     e2e_cs_json["node-source"] = e2e_cs_request["node-source"]
     e2e_cs_json["node-destination"] = e2e_cs_request["node-destination"]
+    e2e_cs_json["status"]  = "INSTANTIATING"
     e2e_cs_json["capacity"] = e2e_cs_request["capacity"]
     if e2e_cs_request["capacity"]["unit"] == "GHz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000
@@ -291,6 +301,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     src = e2e_cs_request["node-source"]["uuid"]
     dst = e2e_cs_request["node-destination"]["uuid"]
     route_nodes_list = vl_computation.find_path(src, dst)
+    e2e_cs_json["route"] = route_nodes_list
 
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)    
     # if one route does not have a slot, passes to the next one
@@ -336,6 +347,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     spectrum = {}
     spectrum["low-freq"] = selected_spectrum[0]
     spectrum["high-freq"] = selected_spectrum[1]
+    e2e_cs_json["spectrum"] = spectrum    
+    
     cs_list = []
     iter_sips = iter(route_sips[0]) #iter is used to work using pairs of elements
     for sip_item in iter_sips:
@@ -346,7 +359,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             cs_uuid = uuid.uuid4()
             cs_info["uuid"] = cs_uuid
             cs_info["address_owner"] = sip_item["address_owner"]
-            cs_list.append(cs_info)         # we don't need to save locally the rest of the info as it would be duplicated.
+            cs_info["topology-uuid"] = sip_item["topology"]
             sip_list = []
             sip_list.append(sip_item["uuid"])
             sip_list.append(next(iter_sips["uuid"]))
@@ -355,39 +368,55 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             cs_info["spectrum_slot"] = spectrum
             
             # adds the list of constrained links for the current domain CS
-            # NOTE: this IF will be accessed only in transparent abstarction mode
+            # NOTE: this IF will be accessed only in transparent abstraction mode
             if route_sips[1]:
                 for link_item in route_sips[1]:
                     if link_item["topology"] == sip_item["topology"]:
                         constrained_links.append(link_item["topology"])
             cs_info["constrained_links"] = constrained_links
-            
-            # decide whether the CS is for the local domain SDN controller or another domain
-            if sip_item["address_owner"] == str(settings.web3.eth.defaultAccount):
-                response = sdn_mapper.instantiate_connectivity_service(cs_info)
-                if response[1] == 200:
-                    mutex_local_csdb_access.acquire()
-                    db.add_cs(response[1])
-                    mutex_local_csdb_access.release()
-            else:
-                response = bl_mapper.instantiate_blockchain_cs(sip_item["address_owner"], cs_info, cs_uuid)
+            cs_list.append(cs_info)
         else:
             # if the two sips belong to two different domains, it passes to the next item.
             continue
-  
-        if response[1] == 200:
-            pass
-        else:
-            break
     
-    # TODO: Procedure to finish the E2E CS data object, only misses domain-CS
-    e2e_cs_json["spectrum"] = spectrum
-    e2e_cs_json["route"] = route_nodes_list
     e2e_cs_json["domain-CS"] = cs_list
-    e2e_cs_json["status"]  = "DEPLOYED"
     mutex_e2e_csdb_access.acquire()
-    db.add_element(e2e_cs_json, "e2e_cs")
+    db.add_elemente_db(e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
+    
+    # FOR loop to send domain CSs requests
+    for cs_item in cs_list:
+        # decide whether the CS is for the local domain SDN controller or another domain
+        if cs_item["address_owner"] == str(settings.web3.eth.defaultAccount):
+            response = sdn_mapper.instantiate_connectivity_service(cs_item)
+            if response[1] == 200:
+                mutex_local_csdb_access.acquire()
+                db.add_cs(response[1])
+                mutex_local_csdb_access.release()
+        else:
+            response = bl_mapper.instantiate_blockchain_cs(cs_item["address_owner"], cs_item, cs_item["uuid"])
+    
+        if response[1] != 200:
+            # ERROR!! NOTE: think how to manage it
+            break
+
+    # WHILE LOOP to validate all domain CSs composing the E2E CS are READY
+    while  e2e_cs_ready == False:
+        e2e_cs_ready = True
+        mutex_e2e_csdb_access.acquire()
+        e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+        for domainCS_item in e2e_cs["domain-CS"]:
+            if domainCS_item["status"] != "READY":
+                e2e_cs_ready = False
+                break
+        mutex_e2e_csdb_access.release()
+        time.sleep(10)  # awaits 10 seconds before it checks again
+
+    e2e_cs_json["status"]  = "READY"
+    mutex_e2e_csdb_access.acquire()
+    db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
+    mutex_e2e_csdb_access.release()
+    
     return e2e_cs_json,200
 
 ################################### E2E NETWORK SLICE INSTANCES FUNCTIONS #######################################
@@ -397,7 +426,8 @@ def get_e2e_slice_instances():
     response = db.get_elements("slices")
     return response, 200
 
-# NOTE: manages all the E2E slice instantiation process  NOTE: missing VL creation (path computation)
+# NOTE: manages all the E2E slice instantiation process
+# NOTE: add the E2E CS process using the already working process.
 def instantiate_e2e_slice(incoming_data):
     settings.logger.info("ORCH: Received request to deploy an E2E Network Slice (TIME 1): " + str(time.time_ns()))
     # creates the NSI instance object based on the request

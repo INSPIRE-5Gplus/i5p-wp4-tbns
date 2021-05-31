@@ -127,7 +127,7 @@ def get_element(element_id, selected_db):
         # TODO:error management
         pass
 
-#TODO: add domain_CS info into the context_db
+# add domain_CS info into the context_db
 def add_cs(cs_response):
     cs_list = context_db["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"]
     cs_list.append(cs_response)
