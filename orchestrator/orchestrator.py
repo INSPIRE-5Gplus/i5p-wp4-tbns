@@ -224,7 +224,6 @@ def update_connectivity_service_from_blockchain(cs_json):
             break
     mutex_e2e_csdb_access.release()
 
-
 """
 Example E2E_CS request 
     {

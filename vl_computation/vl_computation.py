@@ -213,8 +213,8 @@ def find_path(src, dst):
      
   return path_nodes_list
 
-""" Example of interdomain_links_json
-{
+""" 
+Example of interdomain_links_json = {
   "e2e-topology": {
     "nodes-list": [
       //it contains the uuids of those nodes with an inter-domain link
@@ -483,91 +483,75 @@ def domain2nep_route_mapping(route, e2e_topology):
   route_neps = []
   route_interdominlinks = []
 
-  """
-    if os.environ.get("ABSTRACION_MODEL") == "vlink":
-      pass
-    elif os.environ.get("ABSTRACION_MODEL") == "transparent":
-      pass
-    else:
-      pass
-  """
   # it gets the list of neps involved for each link (two ndoes) in the route
   for idx, route_item  in enumerate(route):
     link_found = False
     if route[idx] != len(route-1):
       #response = get link information (node1,node2) from graph
-      #if link is an idl --> check key "uuid_idl" in response
-        #for idl_item in e2e_topology["interdomain-links"]:
-          #if node1 in idl_item["nodes-involved"] and node2 in idl_item["nodes-involved"]:
-            #check the available spectrum, no need to wait until the end to discard this route.
-            #for link_option_item in idl_item["link-options"]:
-              #if link_option_item["uuid"] == uuid_idl
-                # for physical_option_item in link_option_item["physical-options"]:
-                  # if physical_option_item["occupied-spectrum"] is empty
+      response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])
+      if "interdomain_link_uuid" in response:
+        # link belongs to an interdomain link
+        for idl_item in e2e_topology["interdomain-links"]:
+          if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
+            for link_option_item in idl_item["link-options"]:
+              if link_option_item["uuid"] == response["interdomain_link_uuid"]:
+                for physical_option_item in link_option_item["physical-options"]:
+                  if not physical_option_item["occupied-spectrum"]:
                     # get the topology, node, NEPs and direction (OUTPUT/INPUT) from the graph and add into the route-neps
-      #else: #link belong to a context
-        # get the link_uuid, topology, node, NEPs and direction (OUTPUT/INPUT) from the graph and add it into the route-neps
+                    new_nep = {}
+                    new_nep["link_uuid"] = link_option_item["uuid"]
+                    new_nep["topology"] = physical_option_item["node-edge-point"][0]["topology-uuid"]
+                    new_nep["node_uuid"] = physical_option_item["node-edge-point"][0]["node-uuid"]
+                    new_nep["nep_uuid"] = physical_option_item["node-edge-point"][0]["nep-uuid"]
+                    new_nep["direction"] = "OUTPUT"
+                    route_neps.append(new_nep)
+                    new_nep["link_uuid"] = link_option_item["uuid"]
+                    new_nep["topology"] = physical_option_item["node-edge-point"][1]["topology-uuid"]
+                    new_nep["node_uuid"] = physical_option_item["node-edge-point"][1]["node-uuid"]
+                    new_nep["nep_uuid"] = physical_option_item["node-edge-point"][1]["nep-uuid"]
+                    new_nep["direction"] = "INPUT"
+                    route_neps.append(new_nep)
 
-      for inter_link_item in e2e_topology["interdomain-links"]:
-        if ((route_item == inter_link_item["domain-1"] and route[idx+1] == inter_link_item["domain-2"]) or \
-          (route_item == inter_link_item["domain-2"] and route_item[idx+1] == inter_link_item["domain-1"])):
-          # this FOR loop is to manage a set of physical links that share the spectrum as if they would be a single one with different SIPs
-          for link_option_item in inter_link_item["link-options"]:
-            # checks the directionality of the route.
-            for option_direction_item in link_option_item["link-direction"]:
-              if (route_item == option_direction_item["domain-1"] and \
-                route[idx+1] == option_direction_item["domain-2"] and not option_direction_item["occupied-spectrum"]):
-                link_found = True
-                
-                # prepares the list of interdomins links for the spectrum assignemt.
-                route_element = {}
-                spectrum_slot_list = []
-                route_element["uuid"] = inter_link_item["uuid"]
-                route_element["link-option-uuid"] = link_option_item["uuid"]
-                if not inter_link_item["available_spectrum"]:
-                  spectrum_slot = []
-                  spectrum_slot.append(inter_link_item["supportable_spectrum"][0]["lower-frequency"])
-                  spectrum_slot.append(inter_link_item["supportable_spectrum"][0]["upper-frequency"])
-                  spectrum_slot_list.append(spectrum_slot)
-                else:
-                  for available_item in inter_link_item["available_spectrum"]:
-                    spectrum_slot = []
-                    spectrum_slot.append(available_item["lower-frequency"])
-                    spectrum_slot.append(available_item["upper-frequency"])
-                    spectrum_slot_list.append(spectrum_slot)
-                route_element["available_spectrum"] = spectrum_slot_list
-                route_interdominlinks.append(route_element)
-                
-                # selects the NEPs involved and defines their SIP directionality based on their position in the route.
-                if route_item == link_option_item["domain-1"]["uuid"]:
-                  route_nep = link_option_item["domain-1"]
-                  route_nep["direction"] = "OUTPUT"
-                  route_neps.append(route_nep)
-                  route_nep = link_option_item["domain-2"]
-                  route_nep["direction"] = "INPUT"
-                  route_neps.append(route_nep)
-                else:
-                  route_nep = link_option_item["domain-2"]
-                  route_nep["direction"] = "OUTPUT"
-                  route_neps.append(route_nep)
-                  route_nep = link_option_item["domain-1"]
-                  route_nep["direction"] = "INPUT"
-                  route_neps.append(route_nep)
+                    new_idl = {}
+                    new_idl["link-option-uuid"] = link_option_item["uuid"]
+                    new_idl["available-spectrum"] = link_option_item["available-spectrum"]
+                    route_interdominlinks.append
+                    neps_found = True
+                    break
+              if neps_found:
                 break
-            if link_found == True:
-              break
-            else:
-              print("Link-option not available, looking the next one to check if it is free to be used.")
-        if link_found == True:
-          break
-        else:
-          print("Looking if the next link is the good one and if it has available spectrum.")
-      if link_found == False:
-        print("Link blocked as the link has no options with spectrum available.")
-        return [], []
+              else:
+                print("Link-option not available, looking the next one to check if it is free to be used.")
+          if neps_found:
+            break
+          else:
+            print("Looking if the next link is the good one and if it has available spectrum.")
+        if neps_found == False:
+          print("Link blocked as the link has no options with spectrum available.")
+          return [], []
+      else:
+        # link belongs to a context
+        new_nep = {}
+        new_nep["link_uuid"] = response["link_uuid"]
+        new_nep["topology"] = response["topology"]
+        new_nep["node_uuid"] = response["n1"]
+        new_nep["nep_uuid"] = response["nep1"]
+        new_nep["direction"] = "OUTPUT"
+        route_neps.append(new_nep)
+        new_nep["link_uuid"] = response["link_uuid"]
+        new_nep["topology"] = response["topology"]
+        new_nep["node_uuid"] = response["n2"]
+        new_nep["nep_uuid"] = response["nep2"]
+        new_nep["direction"] = "INPUT"
+        route_neps.append(new_nep)
+  
   return route_neps, route_interdominlinks
 
 """
+Example of route_interdominlinks = [
+    {"link-option-uuid", "available_spectrum":[YYY, YYY]},
+    {"link-option-uuid", "available_spectrum"}
+  ]
 Example of route_neps = [
     {link_uuid, topology, node_uuid, nep_uuid, direction},
     {link_uuid, topology, node_uuid, nep_uuid, direction},
@@ -644,10 +628,6 @@ Example of route_sips = [
   {sip_info, "topology", "blockchain_owner"},
   {sip_info, "topology", "blockchain_owner"}
 ]
-Example of route_interdominlinks = [
-    {"uuid", "link-option-uuid", "available_spectrum":[YYY, YYY]},
-    {"uuid", "link-option-uuid", "available_spectrum"}
-  ]
 Example of internal_neps = [
     {link_uuid, topology, node_uuid, nep_uuid, direction},
     {link_uuid, topology, node_uuid, nep_uuid, direction},
