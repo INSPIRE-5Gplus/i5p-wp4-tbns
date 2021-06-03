@@ -117,7 +117,6 @@ def vlink_abstraction(local_context):
               # prepares the basic information definning the virtual link to be added
               vlink["uuid"] = str(uuid.uuid4())
               name.append({"value-name": "local-name", "value": node_source_item +"_"+ node_destination_item})
-              vlink["name"] = name
               vlink["direction"] = "UNIDIRECTIONAL"
               lpn = []
               lpn.append("PHOTONIC_MEDIA")
@@ -126,6 +125,9 @@ def vlink_abstraction(local_context):
               # generates the route between nodes with SIPs definning the virtual link to be added
               route = nx.shortest_path(G, source=node_source_item, target=node_destination_item)
               length_route = len(route)
+              hops_number = len(route) - 1
+              name.append({"value-name": "weight", "value": hops_number})
+              vlink["name"] = name
               
               # extract information of first and last links in the route
               first_link = G.get_edge_data(route[0], route[1])
@@ -137,11 +139,11 @@ def vlink_abstraction(local_context):
               neps.append(first_node)
 
               last_link = G.get_edge_data(route [length_route-2], route[length_route-1])
-              last_link_info = first_link[0]
+              last_link_info = last_link[0]
               second_node = {}
               second_node["topology-uuid"] = topology_item["uuid"]
-              second_node["node-uuid"] = first_link_info["n2"]
-              second_node["node-edge-point-uuid"] = first_link_info["nep2"]
+              second_node["node-uuid"] = last_link_info["n2"]
+              second_node["node-edge-point-uuid"] = last_link_info["nep2"]
               neps.append(second_node)
 
               vlink["node-edge-point"] = neps
@@ -172,14 +174,22 @@ def add_context_e2e_graph(context_json):
     # adds all the (unidirectional) links in the abstracted topology
     if topology_item["link"]:
       for link_item in topology_item["link"]:
-        #e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid"])
+        # e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid"])
         l_uuid = link_item["uuid"]
         topo = link_item["node-edge-point"][0]["topology-uuid"]
         node1 = link_item["node-edge-point"][0]["node-uuid"]
         node_edge_point1 = link_item["node-edge-point"][0]["node-edge-point-uuid"]
         node2 = link_item["node-edge-point"][1]["node-uuid"]
         node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
-        e2e_topology_graph.add_edge(node1, node2, link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+
+        # add edge with weight only for VLINK mode
+        if os.environ.get("ABSTRACION_MODEL") == "vlink":
+          for link_info in link_item["name"]:
+            if link_info["value-name"] == "weight":
+              weight_info = link_info["value"]
+              e2e_topology_graph.add_edge(node1, node2, weight = weight_info,  link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+        else:
+          e2e_topology_graph.add_edge(node1, node2, link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
 
 # updates the e2e graph by adding new domains and itner-domains links.
 def add_idl_e2e_graph(e2e_json):
@@ -193,21 +203,33 @@ def add_idl_e2e_graph(e2e_json):
       node_1 = interdomain_link_item["nodes-involved"][0]
       node_2 = interdomain_link_item["nodes-involved"][1]
       uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
-      e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+      
+      # add edge with weight only for VLINK mode
+      if os.environ.get("ABSTRACION_MODEL") == "vlink":
+        e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
+      else:
+        e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
 
       node_1 = interdomain_link_item["nodes-involved"][1]
       node_2 = interdomain_link_item["nodes-involved"][0]
       uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
-      e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+      
+      # add edge with weight only for VLINK mode
+      if os.environ.get("ABSTRACION_MODEL") == "vlink":
+        e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
+      else:
+        e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
 
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
   path_nodes_list = []
-  K = 7 # we will keep the 5 shortest paths generated
-  #path_nodes_list = nx.shortest_path(e2e_topology_graph, src, dst)
-  #simple_path_list = nx.all_simple_paths(e2e_topology_graph, src, dst, cutoff=8)
-  #path_nodes_list = list(sorted(simple_path_list, key = len))
-  simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst)
+  K = 7 # we will keep the 7 shortest paths generated
+
+  # calculates the route based on the virtual link weights. For the other abstraction models, the edges weight is 1.
+  if os.environ.get("ABSTRACION_MODEL") == "vlink":
+    simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst, "weight")
+  else:
+    simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst)
   for path in islice(simple_path_list, K):
     path_nodes_list.append(path)
      
