@@ -196,29 +196,40 @@ def add_idl_e2e_graph(e2e_json):
     # adds all the SDN domains defined in the json
     for domain_item in e2e_json["e2e-topology"]["nodes-list"]:
         e2e_topology_graph.add_node(domain_item)
-    
-    # add the links interconnecting the SDN domains defined in the json
+
+    # add the links interconnecting the SDN domains defined in the json IF 
     for interdomain_link_item in e2e_json["e2e-topology"]["interdomina-links"]:
+
       # adding both unidirectional links for the routing process in the E2E MultiDiGraph
       node_1 = interdomain_link_item["nodes-involved"][0]
       node_2 = interdomain_link_item["nodes-involved"][1]
       uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
       
-      # add edge with weight only for VLINK mode
-      if os.environ.get("ABSTRACION_MODEL") == "vlink":
-        e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
+      response = e2e_topology_graph.get_edge_data(node_1, node_2)
+      # as we work with a MultiDiGraph, a check the existing links to not add them again.     
+      if response["interdomain_link_uuid"] == uuid_idl:
+        pass
       else:
-        e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+        # add edge with weight only for VLINK mode
+        if os.environ.get("ABSTRACION_MODEL") == "vlink":
+          e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
+        else:
+          e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
 
       node_1 = interdomain_link_item["nodes-involved"][1]
       node_2 = interdomain_link_item["nodes-involved"][0]
       uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
       
-      # add edge with weight only for VLINK mode
-      if os.environ.get("ABSTRACION_MODEL") == "vlink":
-        e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
+      response = e2e_topology_graph.get_edge_data(node_1, node_2)
+      # as we work with a MultiDiGraph, a check the existing links to not add them again.     
+      if response["interdomain_link_uuid"] == uuid_idl:
+        pass
       else:
-        e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+        # add edge with weight only for VLINK mode
+        if os.environ.get("ABSTRACION_MODEL") == "vlink":
+          e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
+        else:
+          e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
 
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
@@ -235,271 +246,6 @@ def find_path(src, dst):
      
   return path_nodes_list
 
-""" 
-Example of interdomain_links_json = {
-  "e2e-topology": {
-    "nodes-list": [
-      //it contains the uuids of those nodes with an inter-domain link
-      // for VNODE is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["uuid"]
-      // for VLINK is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
-      // for TRANSPARENT is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
-      "uuid_A",
-      "uuid_B",
-      "uuid_C"
-    ],
-    "interdomain-links": [
-      {
-        "name": "uuid_A-uuid_B",
-        // key values to identify the link are the two nodes in nodes-involved
-        "nodes-involved": [
-          "uuid_A",
-          "uuid_B,
-        ],
-        "link-options": [
-          //there will be only two unidirectional options, each with the different physical links for the trick.
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "nodes-direction": {
-              "node-1": "uuid_A",
-              "node-2": "uuid_B"
-            },
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep-uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C2"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D2"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          },
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "nodes-direction": {
-              "node-1": "uuid_B",
-              "node-2": "uuid_A"
-            },
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_D1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    "nep-uuid": "nep_C1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_D2"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    "nep-uuid": "nep_C2"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ]
-      },
-      {
-        "name": "uuid_A-uuid_B",
-        // key values to identify the link are node-1 and node-2 (always as pair)
-        "node-1": "uuid_A",
-        "node-2": "uuid_B",
-        "link_options": [
-          //there will be only two unidirectional options, each with the different physical links for the trick.
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          },
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ]
-      }
-    ]
-  }
-}
-"""
 # Based on a given route, looks for the specific NEPs involved in the inter-domain links
 def domain2nep_route_mapping(route, e2e_topology):
   route_neps = []

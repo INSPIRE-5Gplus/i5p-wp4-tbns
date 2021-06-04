@@ -1,0 +1,442 @@
+{
+    "e2e-topology": {
+      "nodes-list": [
+        "node_MoraEbre_uuid",
+        "node_Lleida_uuid",
+        "node_Tarragona_uuid",
+        "node_Vilanova_uuid"
+      ],
+      "interdomain-links": [
+        {
+          "name": "Lleida-MoraEbre",
+          "nodes-involved": [
+            "node_Lleida_uuid",
+            "node_MoraEbre_uuid"
+          ],
+          "link-options": [
+            {
+              "uuid": "37babd47-df99-4386-b107-d379b32e674d",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Lleida_uuid",
+                "node-2": "node_MoraEbre_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            },
+            {
+              "uuid": "2104536d-7730-451a-b344-6c8dc435fba9",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_MoraEbre_uuid",
+                "node-2": "node_Lleida_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_MoraEbre_uuid",
+                      "nep-uuid": "node_MoraEbre_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Lleida_uuid",
+                      "nep-uuid": "nep_Lleida_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Vilanova-Tarragona",
+          "nodes-involved": [
+            "node_Vilanova_uuid",
+            "node_Tarragona_uuid"
+          ],
+          "link-options": [
+            {
+              "uuid": "98a55366-1d57-42d5-9216-8012160acdc4",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Vilanova_uuid",
+                "node-2": "node_Tarragona_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep-uuid": "nep_Vilanova_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            },
+            {
+              "uuid": "8bd4f029-51dc-40fd-878d-aca432f0376c",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Tarragona_uuid",
+                "node-2": "node_Vilanova_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                       "node-uuid": "node_Tarragona_uuid",
+                       "nep-uuid": "node_Tarragona_15"
+                     },
+                     {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep-uuid": "nep_Vilanova_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }

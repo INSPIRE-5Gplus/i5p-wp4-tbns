@@ -113,8 +113,8 @@ def update_blockchain_slice(subnet_json):
 def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
     
-    response = settings.transport_contract.functions.getIDLContext(settings.web3.eth.defaultAccount).call()
-    idl_json = json.loads(response[0])
+    #response = settings.transport_contract.functions.getE2EContext(settings.web3.eth.defaultAccount).call()
+    #idl_json = json.loads(response[0])
 
     # Add a connectivity service template to make it available for other domains
     tx_hash = settings.transport_contract.functions.addIDLContext(idl_json, e2e_topology).transact()

@@ -1,0 +1,442 @@
+{
+    "e2e-topology": {
+      "nodes-list": [
+        "node_Blanes_uuid",
+        "node_Vic_uuid",
+        "node_Ripoll_uuid",
+        "node_SeuUrgell_uuid"
+      ],
+      "interdomain-links": [
+        {
+          "name": "Blanes-VIC",
+          "nodes-involved": [
+            "node_Blanes_uuid",
+            "node_Vic_uuid"
+          ],
+          "link-options": [
+            {
+              "uuid": "f7f5cdef-8bb0-42c4-a315-bbc852b0a193",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Blanes_uuid",
+                "node-2": "node_Vic_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "nep_Blanes_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep_uuid": "nep_Blanes_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep_uuid": "nep_Blanes_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep_uuid": "nep_Blanes_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep_uuid": "nep_Blanes_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            },
+            {
+              "uuid": "c5174040-26df-4950-8cf3-47ac8115f2ae",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Vic_uuid",
+                "node-2": "node_Blanes_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "nep_Blanes_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "nep_Blanes_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "nep_Blanes_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "nep_Blanes_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vic_uuid",
+                      "nep-uuid": "node_Vic_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "nep_Blanes_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Ripoll-SeuUrgell",
+          "nodes-involved": [
+            "node_Ripoll_uuid",
+            "node_Seuurgell_uuid"
+          ],
+          "link-options": [
+            {
+              "uuid": "278c061e-b8c1-4379-9161-99ec4b8e9ace",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Ripoll_uuid",
+                "node-2": "node_SeuUrgell_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep-uuid": "nep_Ripoll_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep_uuid": "nep_Ripoll_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep_uuid": "nep_Ripoll_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep_uuid": "nep_Ripoll_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep_uuid": "nep_Ripoll_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            },
+            {
+              "uuid": "14bdd482-7ebb-40f6-b15e-33ea62ef6d24",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_SeuUrgell_uuid",
+                "node-2": "node_Ripoll_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep-uuid": "nep_Ripoll_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep-uuid": "nep_Ripoll_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep-uuid": "nep_Ripoll_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep-uuid": "nep_Ripoll_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_SeuUrgell_uuid",
+                      "nep-uuid": "node_SeuUrgell_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Ripoll_uuid",
+                      "nep-uuid": "nep_Ripoll_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }

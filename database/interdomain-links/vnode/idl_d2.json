@@ -1,0 +1,380 @@
+{
+    "e2e-topology": {
+      "nodes-list": [
+        "node_Vic_uuid",
+        "node_Blanes_uuid",
+        "node_Manresa_uuid",
+        "node_Solsona_uuid",
+        "node_Vilanova_uuid",
+        "node_Tarragona_uuid"
+      ],
+      "interdomain-links": [
+        {
+          "name": "node_VIC_uuid-node_Blanes_uuid",
+          "nodes-involved": [
+            "node_VIC_uuid",
+            "node_Blanes_uuid"
+          ],
+          "link-options": [
+            {
+              "uuid": "f7f5cdef-8bb0-42c4-a315-bbc852b0a193",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_VIC_uuid",
+                "node-2": "node_Blanes_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_VIC_uuid",
+                      "nep-uuid": "nep_VIC_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "node_Blanes_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_VIC_uuid",
+                      "nep_uuid": "nep_VIC_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "node_Blanes_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_VIC_uuid",
+                      "nep_uuid": "nep_VIC_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "node_Blanes_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_VIC_uuid",
+                      "nep_uuid": "nep_VIC_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "node_Blanes_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_VIC_uuid",
+                      "nep_uuid": "nep_VIC_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Blanes_uuid",
+                      "nep-uuid": "node_Blanes_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        },
+        {
+          "name": "node_Manresa_uuid-node_Solsona_uuid",
+          "nodes-involved": [
+            "node_Manresa_uuid",
+            "node_Solsona_uuid"
+          ],
+          "link-options": [
+            {
+              "uuid": "c5174040-26df-4950-8cf3-47ac8115f2ae",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Manresa_uuid",
+                "node-2": "node_Solsona_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Manresa_uuid",
+                      "nep-uuid": "nep_Manresa_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Solsona_uuid",
+                      "nep-uuid": "node_Solsona_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Manresa_uuid",
+                      "nep_uuid": "nep_Manresa_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Solsona_uuid",
+                      "nep-uuid": "node_Solsona_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Manresa_uuid",
+                      "nep_uuid": "nep_Manresa_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Solsona_uuid",
+                      "nep-uuid": "node_Solsona_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Manresa_uuid",
+                      "nep_uuid": "nep_Manresa_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Solsona_uuid",
+                      "nep-uuid": "node_Solsona_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Manresa_uuid",
+                      "nep_uuid": "nep_Manresa_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Solsona_uuid",
+                      "nep-uuid": "node_Solsona_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        },
+        {
+          "name": "node_Vilanova_uuid-node_Tarragona_uuid",
+          "nodes-involved": [
+            "node_Vilanova_uuid",
+            "node_Tarragona_uuid"
+          ],
+          "link-options": [
+            {
+              "uuid": "278c061e-b8c1-4379-9161-99ec4b8e9ace",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "node_Vilanova_uuid",
+                "node-2": "node_Tarragona_uuid"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep-uuid": "nep_Vilanova_15"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_15"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_16"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_16"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_17"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_17"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_18"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_18"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Vilanova_uuid",
+                      "nep_uuid": "nep_Vilanova_19"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "node_Tarragona_uuid",
+                      "nep-uuid": "node_Tarragona_19"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }

@@ -84,12 +84,12 @@ def get_slicessubnets_templates():
 
 
 ######################################## SDN TRANSPORT CONTEXT FUNCTIONS ########################################
-# shares all the domain context in the blockchain
+# adds the Inter-domin links and distributes them and the domain context in the blockchain
 def context_to_bl(idl_json):
-    # updates the local graph containning the e2e tpology
+    # FIRST: updates the local graph containning the e2e tpology
     vl_computation.add_idl_e2e_graph(idl_json)
     
-    # gets current e2e_topology, adds new nodes & IDLs (if they are not already in there) and distributes both json to the blockchain peers  
+    # SECOND: gets current e2e_topology, adds new nodes & IDLs (if they are not already in there) and distributes both json to the blockchain peers  
     response = bl_mapper.get_e2etopology_from_blockchain()
     e2e_topology = response[0]
     e2e_nodes_list = e2e_topology["e2e_topology"]["nodes-list"]
@@ -111,7 +111,7 @@ def context_to_bl(idl_json):
     if response[1] != 200:
         return ({"msg":"ERROR - Somthing went wrong when distributing IDL info."}, 400)
 
-    # get the local context & distributes the local sdn context with the other peers
+    # THIRD: get the local context & distributes the local sdn context with the other peers
     abstracted_sdn_context = db.get_element("", "context")
     context_json = {}
     context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]

@@ -54,11 +54,11 @@ def handle_transport_event(event):
     event_json = {}
     if (event['args']['status'] == "NEW_IDL" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW SET OF IDL")
-        event_json = json.loads(event['args']['context'])
+        event_json = json.loads(event['args']['sdn_info'])
         settings.executor.submit(orch.add_idl_info, event_json)
     elif (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
-        event_json = json.loads(event['args']['context'])
+        event_json = json.loads(event['args']['sdn_info'])
         settings.executor.submit(orch.add_context_info, event_json)
     elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
