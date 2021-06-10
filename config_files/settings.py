@@ -73,7 +73,7 @@ def init_blockchain():
 
     # ETHEREUM NODE CONFIGURATION
     # defines peer account ID and selects smart contract to attack
-    web3.eth.defaultAccount = web3.eth.accounts[0]
+    web3.eth.defaultAccount = web3.eth.accounts[os.environ.get("BL_ID")]
     slice_contract = web3.eth.contract(address=slice_contract_address, abi=slice_abi)
     transport_contract = web3.eth.contract(address=transport_contract_address, abi=transport_abi)
 

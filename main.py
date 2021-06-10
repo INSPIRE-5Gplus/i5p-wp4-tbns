@@ -128,269 +128,269 @@ def get_context():
 
 """
 Example of the json to pass:
-{
-  "e2e-topology": {
-    "nodes-list": [
-      //it contains the uuids of those nodes with an inter-domain link
-      // for VNODE is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["uuid"]
-      // for VLINK is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
-      // for TRANSPARENT is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
-      "uuid_A",
-      "uuid_B",
-      "uuid_C"
-    ],
-    "interdomain-links": [
-      {
-        "name": "uuid_A-uuid_B",
-        // key values to identify the link are the two nodes in nodes-involved
-        "nodes-involved": [
-          "uuid_A",
-          "uuid_B,
-        ],
-        "link-options": [
-          //there will be only two unidirectional options, each with the different physical links for the trick.
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "nodes-direction": {
-              "node-1": "uuid_A",
-              "node-2": "uuid_B"
+  {
+    "e2e-topology": {
+      "nodes-list": [
+        //it contains the uuids of those nodes with an inter-domain link
+        // for VNODE is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["uuid"]
+        // for VLINK is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
+        // for TRANSPARENT is the ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"]["uuid"]
+        "uuid_A",
+        "uuid_B",
+        "uuid_C"
+      ],
+      "interdomain-links": [
+        {
+          "name": "uuid_A-uuid_B",
+          // key values to identify the link are the two nodes in nodes-involved
+          "nodes-involved": [
+            "uuid_A",
+            "uuid_B,
+          ],
+          "link-options": [
+            //there will be only two unidirectional options, each with the different physical links for the trick.
+            {
+              "uuid": "uuid",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "uuid_A",
+                "node-2": "uuid_B"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep-uuid": "nep_C1"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      "nep-uuid": "nep_D1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep_uuid": "nep_C2"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      "nep-uuid": "nep_D2"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
             },
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep-uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
+            {
+              "uuid": "uuid",
+              "direction": "UNIDIRECTIONAL",
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "nodes-direction": {
+                "node-1": "uuid_B",
+                "node-2": "uuid_A"
               },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C2"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D2"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep_uuid": "nep_D1"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      "nep-uuid": "nep_C1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep_uuid": "nep_D2"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      "nep-uuid": "nep_C2"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
               }
-            ]
-          },
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "nodes-direction": {
-              "node-1": "uuid_B",
-              "node-2": "uuid_A"
+            }
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
+              }
+            }
+          ]
+        },
+        {
+          "name": "uuid_A-uuid_B",
+          // key values to identify the link are node-1 and node-2 (always as pair)
+          "node-1": "uuid_A",
+          "node-2": "uuid_B",
+          "link_options": [
+            //there will be only two unidirectional options, each with the different physical links for the trick.
+            {
+              "uuid": "uuid",
+              "direction": "UNIDIRECTIONAL",
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep_uuid": "nep_C1"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      "nep-uuid": "nep_D1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep_uuid": "nep_C1"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      "nep-uuid": "nep_D1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
             },
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_D1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    "nep-uuid": "nep_C1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_D2"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    "nep-uuid": "nep_C2"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
+            {
+              "uuid": "uuid",
+              "direction": "UNIDIRECTIONAL",
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep_uuid": "nep_C1"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      "nep-uuid": "nep_D1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_A",
+                      // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
+                      // this NEP is one of those with SIPs in the domain
+                      "nep_uuid": "nep_C1"
+                    },
+                    {
+                      "topology-uuid": "uuid",
+                      "node-uuid": "uuid_B",
+                      "nep-uuid": "nep_D1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ]
+            }
+          ],
+          "supportable_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
               }
-            ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
             }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ]
-      },
-      {
-        "name": "uuid_A-uuid_B",
-        // key values to identify the link are node-1 and node-2 (always as pair)
-        "node-1": "uuid_A",
-        "node-2": "uuid_B",
-        "link_options": [
-          //there will be only two unidirectional options, each with the different physical links for the trick.
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
+          ],
+          "available_spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_50GHZ",
+                "grid-type": "DWDM"
               }
-            ]
-          },
-          {
-            "uuid": "uuid",
-            "direction": "UNIDIRECTIONAL",
-            "layer-protocol-name": [
-              "PHOTONIC_MEDIA"
-            ],
-            "physical-options": [
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              },
-              {
-                "node-edge-point":[
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_A",
-                    // same uuid than the one in ["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"][“owned-node-edge-point"][“uuid”]
-                    // this NEP is one of those with SIPs in the domain
-                    "nep_uuid": "nep_C1"
-                  },
-                  {
-                    "topology-uuid": "uuid",
-                    "node-uuid": "uuid_B",
-                    "nep-uuid": "nep_D1"
-                  }
-                ] ,
-                "occupied-spectrum": [
-                ]
-              }
-            ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
             }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ]
-      }
-    ]
+          ]
+        }
+      ]
+    }
   }
-}
 """
 # distributes the domain context in the Blockchain
 @app.route('/pdl-transport', methods=['POST'])
