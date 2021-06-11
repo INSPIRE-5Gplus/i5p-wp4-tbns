@@ -429,7 +429,7 @@ Example E2E_CS request
   }
 """
 # requests a CS based on a set of two SIPs and a capacity
-@app.route('/pdl-transport/connectivity_service', method=['POST'])
+@app.route('/pdl-transport/connectivity_service', methods=['POST'])
 def request_e2e_cs():
   settings.executor.submit(orch.instantiate_e2e_connectivity_service(request.json), request.json)
   response = {}
