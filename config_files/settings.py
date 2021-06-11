@@ -94,7 +94,7 @@ def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
         print("Wrong abstraction model selected. Validate [ABSTRACION_MODEL] in the configuration file to be one of these: vnode, vlink, transparent.")
         abstracted_context = {"msg": "Wrong abstraction model selected. It is not programmed."}
         pass
-    response = db.add_element("context", abstracted_context)
+    response = db.add_element(abstracted_context, "context")
 
 def init_e2e_topology():
     response = db.get_elements("context")
