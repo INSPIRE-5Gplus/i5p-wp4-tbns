@@ -98,7 +98,6 @@ def get_local_subnet_template(subnet_id):
   else:
     return response[0], response[1] 
 
-
 # TODO: GETS the slice-subnets (NSTs) in the Blockchain system
 @app.route('/pdl-slice/slice-subnets/blockchain', methods=['GET'])
 def get_blockchain_subnets_templates():
@@ -125,6 +124,11 @@ def get_blockchain_subnet_template(subnet_id):
 def get_context():
   response = db.get_element("", "context")
   return response, 200
+
+#prints local E2E graph
+@app.route('/print_e2econtext', methods=['GET'])
+def draw_graph():
+  vl_computation.paint_graph()
 
 """
 Example of the json to pass:

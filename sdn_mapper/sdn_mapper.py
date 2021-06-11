@@ -17,7 +17,6 @@ def get_nsm_url():
 # returns the local context
 def get_local_context(sdn_ctrl_ip, sdn_ctrl_port):
     url = "http://"+ str(sdn_ctrl_ip) + ":" + str(sdn_ctrl_port) +"/restconf/data/tapi-common:context"
-    print ("THE URL TO GET THE CONTEXT IS: " + url)
     response = requests.get(url, headers=JSON_CONTENT_HEADER)
     return response.text, response.status_code
 

@@ -2,6 +2,7 @@
 
 import os, sys, logging, json, argparse, time, datetime, requests, uuid
 import networkx as nx
+import matplotlib.pyplot as plt
 from itertools import islice
 
 from config_files import settings
@@ -166,7 +167,6 @@ def vlink_abstraction(local_context):
 
 # creates the initial e2e graph with its local domain information
 def add_context_e2e_graph(context_json):
-  print("This is a: " + str(type(context_json)))
   for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
     # adds all the nodes in the abstracted topology
     for node_item in topology_item["node"]:
@@ -231,6 +231,13 @@ def add_idl_e2e_graph(e2e_json):
           e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
         else:
           e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+
+# paints the graph
+def paint_graph():
+  nx.draw_networkx(e2e_topology_graph)
+  plt.show()
+  return {"msg":"Graph painted"}, 200
+  
 
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
