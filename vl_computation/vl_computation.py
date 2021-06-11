@@ -106,49 +106,52 @@ def vlink_abstraction(local_context):
         node2 = link_item["node-edge-point"][1]["node-uuid"]
         node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
         e2e_topology_graph.add_edge(node1, node2, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+     
+    nx.draw_networkx(e2e_topology_graph)
+    plt.show()
 
     # Creates the VLINKs based on shortest routes between nodes with SIPs
     for node_source_item in list(G.nodes):
       for node_destination_item in list(G.nodes):
-          if (node_source_item != node_destination_item) and (node_source_item in nodes_sips_list) and (node_destination_item in nodes_sips_list):
-              vlink = {}
-              name = []
-              neps = []
-              
-              # prepares the basic information definning the virtual link to be added
-              vlink["uuid"] = str(uuid.uuid4())
-              name.append({"value-name": "local-name", "value": node_source_item +"_"+ node_destination_item})
-              vlink["direction"] = "UNIDIRECTIONAL"
-              lpn = []
-              lpn.append("PHOTONIC_MEDIA")
-              vlink["layer-protocol-name"] = lpn
+        if (node_source_item != node_destination_item) and (node_source_item in nodes_sips_list) and (node_destination_item in nodes_sips_list):
+          vlink = {}
+          name = []
+          neps = []
+          
+          # prepares the basic information definning the virtual link to be added
+          vlink["uuid"] = str(uuid.uuid4())
+          name.append({"value-name": "local-name", "value": node_source_item +"_"+ node_destination_item})
+          vlink["direction"] = "UNIDIRECTIONAL"
+          lpn = []
+          lpn.append("PHOTONIC_MEDIA")
+          vlink["layer-protocol-name"] = lpn
 
-              # generates the route between nodes with SIPs definning the virtual link to be added
-              route = nx.shortest_path(G, source=node_source_item, target=node_destination_item)
-              length_route = len(route)
-              hops_number = len(route) - 1
-              name.append({"value-name": "weight", "value": hops_number})
-              vlink["name"] = name
-              
-              # extract information of first and last links in the route
-              first_link = G.get_edge_data(route[0], route[1])
-              first_link_info = first_link[0]
-              first_node = {}
-              first_node["topology-uuid"] = topology_item["uuid"]
-              first_node["node-uuid"] = first_link_info["n1"]
-              first_node["node-edge-point-uuid"] = first_link_info["nep1"]
-              neps.append(first_node)
+          # generates the route between nodes with SIPs definning the virtual link to be added
+          route = nx.shortest_path(G, source=node_source_item, target=node_destination_item)
+          length_route = len(route)
+          hops_number = len(route) - 1
+          name.append({"value-name": "weight", "value": hops_number})
+          vlink["name"] = name
+          
+          # extract information of first and last links in the route
+          first_link = G.get_edge_data(route[0], route[1])
+          first_link_info = first_link[0]
+          first_node = {}
+          first_node["topology-uuid"] = topology_item["uuid"]
+          first_node["node-uuid"] = first_link_info["n1"]
+          first_node["node-edge-point-uuid"] = first_link_info["nep1"]
+          neps.append(first_node)
 
-              last_link = G.get_edge_data(route [length_route-2], route[length_route-1])
-              last_link_info = last_link[0]
-              second_node = {}
-              second_node["topology-uuid"] = topology_item["uuid"]
-              second_node["node-uuid"] = last_link_info["n2"]
-              second_node["node-edge-point-uuid"] = last_link_info["nep2"]
-              neps.append(second_node)
+          last_link = G.get_edge_data(route [length_route-2], route[length_route-1])
+          last_link_info = last_link[0]
+          second_node = {}
+          second_node["topology-uuid"] = topology_item["uuid"]
+          second_node["node-uuid"] = last_link_info["n2"]
+          second_node["node-edge-point-uuid"] = last_link_info["nep2"]
+          neps.append(second_node)
 
-              vlink["node-edge-point"] = neps
-              link_list.append(vlink)
+          vlink["node-edge-point"] = neps
+          link_list.append(vlink)
 
     topology_element["link"] = link_list
     topology.append(topology_element)

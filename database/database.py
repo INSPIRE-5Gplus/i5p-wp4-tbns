@@ -21,7 +21,6 @@ def add_element(db_element, selected_db):
         blockchain_subnets_db.append(db_element)
         return {'msg':'Element added and saved.'}, 200
     elif selected_db == "context":
-        db_element = json.loads(db_element)
         context_db.append(db_element)
         return {'msg':'Element added and saved.'}, 200
     elif selected_db == "e2e_cs":

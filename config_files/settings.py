@@ -83,16 +83,18 @@ def init_thread_pool(workers):
 
 def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
     response = sdn_mapper.get_local_context(sdn_ctrl_ip, sdn_ctrl_port)
+    context = json.loads(response[0])
     if (model == "vnode"):
-        abstracted_context = vl_computation.vnode_abstraction(response[0])
+        abstracted_context = vl_computation.vnode_abstraction(context)
     elif (model == "vlink"):
-        abstracted_context = vl_computation.vlink_abstraction(response[0])
+        abstracted_context = vl_computation.vlink_abstraction(context)
     elif (model == "transparent"):
-        abstracted_context = response[0]
+        abstracted_context = context
     else:
         print("Wrong abstraction model selected. Validate [ABSTRACION_MODEL] in the configuration file to be one of these: vnode, vlink, transparent.")
         abstracted_context = {"msg": "Wrong abstraction model selected. It is not programmed."}
         pass
+    
     response = db.add_element(abstracted_context, "context")
 
 def init_e2e_topology():
