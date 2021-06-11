@@ -83,6 +83,7 @@ def init_thread_pool(workers):
 
 def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
     response = sdn_mapper.get_local_context(sdn_ctrl_ip, sdn_ctrl_port)
+    print(model)
     print("**********************************************")
     print (response)
     if (model == "vnode"):
@@ -94,7 +95,7 @@ def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
         print("**********************************************")
         print(abstracted_context)
     else:
-        print("Wrong abstraction model selected. Validate [ABSTRACION_MODEL] in the configuration file to be one of these: vnode, vlink, absolute.")
+        print("Wrong abstraction model selected. Validate [ABSTRACION_MODEL] in the configuration file to be one of these: vnode, vlink, transparent.")
         pass
     response = db.add_element("context", abstracted_context)
 
