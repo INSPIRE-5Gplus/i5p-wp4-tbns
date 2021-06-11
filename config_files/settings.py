@@ -83,7 +83,6 @@ def init_thread_pool(workers):
 
 def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
     response = sdn_mapper.get_local_context(sdn_ctrl_ip, sdn_ctrl_port)
-    print(model)
     if (model == "vnode"):
         abstracted_context = vl_computation.vnode_abstraction(response[0])
     elif (model == "vlink"):

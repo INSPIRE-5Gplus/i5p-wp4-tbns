@@ -166,12 +166,13 @@ def vlink_abstraction(local_context):
 
 # creates the initial e2e graph with its local domain information
 def add_context_e2e_graph(context_json):
+  print("This is a: " + str(type(context_json)))
   for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
     # adds all the nodes in the abstracted topology
     for node_item in topology_item["node"]:
       e2e_topology_graph.add_node(node_item["uuid"])
     
-    # adds all the (unidirectional) links in the abstracted topology
+    # adds all the (unidirectional) topology links in the abstracted VLINK and TRANSPARENT
     if topology_item["link"]:
       for link_item in topology_item["link"]:
         # e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid"])
