@@ -80,9 +80,20 @@ def vlink_abstraction(local_context):
     nodes_sips_list = []
     link_list = []
     G = nx.MultiDiGraph()       #graph used to define the virtual links
-    #G = nx.Graph()
 
-    # copies basic topology information
+    for node_item in topology_item["node"]:
+      G.add_node(node_item["uuid"])
+
+    # virtual links design among nodes with SIPs
+    for link_item in topology_item["link"]:
+      # adds all the existing links into de graph
+        node1 = link_item["node-edge-point"][0]["node-uuid"]
+        node_edge_point1 = link_item["node-edge-point"][0]["node-edge-point-uuid"]
+        node2 = link_item["node-edge-point"][1]["node-uuid"]
+        node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
+        G.add_edge(node1, node2, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+
+    # Create abstracted vlink topology based on the transparent model
     topology_element["uuid"] = topology_item["uuid"]
     topology_element["layer-protocol-name"] = topology_item["layer-protocol-name"]
     topology_element["name"] = topology_item["name"]
@@ -93,24 +104,10 @@ def vlink_abstraction(local_context):
           if "mapped-service-interface-point" in owned_nep_item:
               node_list.append(node_item)
               nodes_sips_list.append(node_item["uuid"])
-              G.add_node(node_item["uuid"])
               break
-
     topology_element["node"] = node_list
 
-    # virtual links design among nodes with SIPs
-    for link_item in topology_item["link"]:
-      # adds all the existing links into de graph
-        node1 = link_item["node-edge-point"][0]["node-uuid"]
-        node_edge_point1 = link_item["node-edge-point"][0]["node-edge-point-uuid"]
-        node2 = link_item["node-edge-point"][1]["node-uuid"]
-        node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
-        e2e_topology_graph.add_edge(node1, node2, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
-     
-    nx.draw_networkx(e2e_topology_graph)
-    plt.show()
-
-    # Creates the VLINKs based on shortest routes between nodes with SIPs
+    # vlinks creation based on shortest routes between nodes with SIPs
     for node_source_item in list(G.nodes):
       for node_destination_item in list(G.nodes):
         if (node_source_item != node_destination_item) and (node_source_item in nodes_sips_list) and (node_destination_item in nodes_sips_list):
@@ -152,7 +149,6 @@ def vlink_abstraction(local_context):
 
           vlink["node-edge-point"] = neps
           link_list.append(vlink)
-
     topology_element["link"] = link_list
     topology.append(topology_element)
 

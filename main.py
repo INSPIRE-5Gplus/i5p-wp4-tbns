@@ -129,6 +129,7 @@ def get_context():
 @app.route('/print_e2econtext', methods=['GET'])
 def draw_graph():
   vl_computation.paint_graph()
+  return {"msg":"Abstracted topology using " + os.environ.get("ABSTRACION_MODEL") + " model."}, 200
 
 """
 Example of the json to pass:

@@ -6,6 +6,7 @@ from web3 import Web3
 from sdn_mapper import sdn_mapper
 from vl_computation import vl_computation
 from database import database as db
+from config_files import settings
 
 def init_logging():
     global logger
@@ -51,13 +52,12 @@ def init_blockchain():
     bl_ip = os.environ.get("BLOCKCHAIN_IP")
     bl_port = os.environ.get("BLOCKCHAIN_PORT")
     ethereum_url = "http://" + str(bl_ip) + ":" + str(bl_port)
-    print("Ethereum URL: " + ethereum_url)
     # web3.py instance
     web3 = Web3(Web3.HTTPProvider(ethereum_url))
     
     # checks connection and gets currentblockcnumber
-    print("Connection with te blockchain ready: " + str(web3.isConnected()))
-    print("Current Ethereum block number:" + str(web3.eth.blockNumber))
+    logger.info("Connection with te blockchain ready: %s", str(web3.isConnected()))
+    logger.info("Current Ethereum block number: %s", str(web3.eth.blockNumber))
 
     # ETHEREUM SMART CONTRACT ASSOCIATION
     # uses ABI and contract_address within config_file
@@ -82,6 +82,7 @@ def init_thread_pool(workers):
     executor = ThreadPoolExecutor(max_workers=workers)
 
 def init_abstract_context(sdn_ctrl_ip, sdn_ctrl_port, model):
+    settings.logger.info("Topology abstraction using the %s model.", model)
     response = sdn_mapper.get_local_context(sdn_ctrl_ip, sdn_ctrl_port)
     context = json.loads(response[0])
     if (model == "vnode"):
