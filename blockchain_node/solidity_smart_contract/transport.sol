@@ -43,7 +43,7 @@ contract transport {
 
     /*##### INTER-DOMAIN LINKS FUNCTIONS #####*/
     // add a new set of interd-domain links
-    function addIDLContext(string memory _interdomainLink, strin memory _e2etop)  public returns (bool){
+    function addIDLContext(string memory _interdomainLink, string memory _e2etop)  public returns (bool){
         string memory _log = "Inter-Domain Links distributed and E2E Topology updated";
         string memory _status = "NEW_IDL";
 
@@ -128,7 +128,7 @@ contract transport {
         CSInstanceCount ++;
         
         //generates event to deploy connectivity service
-        emit notifyTopologyActions(_contextOwner, _id, _status);
+        emit notifyTopologyActions(_contextOwner, _id, _status, _cs_info);
             
         //sends back to the client the response and 
         emit topology_response(msg.sender, _log, _status);
