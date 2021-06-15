@@ -169,7 +169,8 @@ def add_context_e2e_graph(context_json):
   for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
     # adds all the nodes in the abstracted topology
     for node_item in topology_item["node"]:
-      e2e_topology_graph.add_node(node_item["uuid"])
+      node_name = str(context_json["tapi-common:context"]["uuid"]+":"+node_item["uuid"]) #NOTE: the context-uuid is used to differentiat between nodes of different domains with equal uuid
+      e2e_topology_graph.add_node(node_name)
     
     # adds all the (unidirectional) topology links in the abstracted VLINK and TRANSPARENT
     if topology_item["link"]:
@@ -182,14 +183,17 @@ def add_context_e2e_graph(context_json):
         node2 = link_item["node-edge-point"][1]["node-uuid"]
         node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
 
+        node_src = str(context_json["tapi-common:context"]["uuid"]+":"+node1)   #NOTE: the context-uuid is used to differentiat between nodes of different domains with equal uuid
+        node_dst = str(context_json["tapi-common:context"]["uuid"]+":"+node2)
+
         # add edge with weight only for VLINK mode
         if os.environ.get("ABSTRACION_MODEL") == "vlink":
           for link_info in link_item["name"]:
             if link_info["value-name"] == "weight":
               weight_info = link_info["value"]
-              e2e_topology_graph.add_edge(node1, node2, weight = weight_info,  link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+              e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info,  link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
         else:
-          e2e_topology_graph.add_edge(node1, node2, link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+          e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
 
 # updates the e2e graph by adding new domains and itner-domains links.
 def add_idl_e2e_graph(e2e_json):
@@ -212,7 +216,7 @@ def add_idl_e2e_graph(e2e_json):
       else:
         # add edge with weight only for VLINK mode
         if os.environ.get("ABSTRACION_MODEL") == "vlink":
-          e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
+          e2e_topology_graph.add_edge(node_1, node_2, weight=1, interdomain_link_uuid=uuid_idl)
         else:
           e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
 
