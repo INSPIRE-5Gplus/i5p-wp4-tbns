@@ -401,6 +401,7 @@ Example of the json to pass:
 @app.route('/pdl-transport', methods=['POST'])
 def distribute_context_blockchain():
   # with this command we share the local context and the local view of the e2e topology (request.json)
+  print(request.json)
   response = orch.context_to_bl(request.json)
   if response[1] == 200:
     return response[0], 200
