@@ -1,7 +1,7 @@
 #!/usr/local/bin/python3.4
 
 
-import os, sys, logging, json, argparse, time, datetime, requests, uuid
+import os, sys, logging, json, argparse, time, datetime, uuid, requests
 from flask import Flask, request, jsonify
 from configparser import ConfigParser
 from concurrent.futures import ThreadPoolExecutor
@@ -401,7 +401,7 @@ Example of the json to pass:
 @app.route('/pdl-transport', methods=['POST'])
 def distribute_context_blockchain():
   # with this command we share the local context and the local view of the e2e topology (request.json)
-  settings.logger.info("This is thhe request.json", str(request.json))
+  settings.logger.info("This is the request.data: %s", str(request.json))
   
   response = orch.context_to_bl(request.json)
   if response[1] == 200:

@@ -198,24 +198,22 @@ def add_context_e2e_graph(context_json):
 # updates the e2e graph by adding new domains and itner-domains links.
 def add_idl_e2e_graph(e2e_json):
   settings.logger.info("Adding IDLs to the local E2E Context graph.")
-  print ("******* Adding nodes!!")
-  print (str(type(e2e_json)))
   # adds all the SDN domains defined in the json
   for domain_item in e2e_json["e2e-topology"]["nodes-list"]:
       e2e_topology_graph.add_node(domain_item)
 
   print("******* Adding links!!")
   # add the links interconnecting the SDN domains defined in the json IF 
-  for interdomain_link_item in e2e_json["e2e-topology"]["interdomina-links"]:
-
+  for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
     # adding both unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][0]
     node_2 = interdomain_link_item["nodes-involved"][1]
     uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
     
-    response = e2e_topology_graph.get_edge_data(node_1, node_2)
-    # as we work with a MultiDiGraph, a check the existing links to not add them again.     
-    if response["interdomain_link_uuid"] == uuid_idl:
+    response = e2e_topology_graph.has_edge(node_1, node_2)
+    print(str(response))
+    # as we work with a MultiDiGraph, check the existing links to not add them again.     
+    if response == True:
       pass
     else:
       # add edge with weight only for VLINK mode
@@ -228,9 +226,9 @@ def add_idl_e2e_graph(e2e_json):
     node_2 = interdomain_link_item["nodes-involved"][0]
     uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
     
-    response = e2e_topology_graph.get_edge_data(node_1, node_2)
+    response = e2e_topology_graph.has_edge(node_1, node_2)
     # as we work with a MultiDiGraph, a check the existing links to not add them again.     
-    if response["interdomain_link_uuid"] == uuid_idl:
+    if response == True:
       pass
     else:
       # add edge with weight only for VLINK mode
