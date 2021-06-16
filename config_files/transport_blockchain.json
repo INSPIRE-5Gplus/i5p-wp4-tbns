@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x65e336bD6DAb899DF705B8869B1fd22EE28E7722",
+    "contract_address":"0xefE4671c3316040a8A483064271b1B2693efaD01",
     "abi":[
         {
             "anonymous": false,
@@ -19,31 +19,13 @@
                 {
                     "indexed": false,
                     "internalType": "string",
-                    "name": "vl_ref",
-                    "type": "string"
-                },
-                {
-                    "indexed": false,
-                    "internalType": "string",
-                    "name": "instance_id",
-                    "type": "string"
-                },
-                {
-                    "indexed": false,
-                    "internalType": "string",
                     "name": "status",
                     "type": "string"
                 },
                 {
                     "indexed": false,
                     "internalType": "string",
-                    "name": "topology",
-                    "type": "string"
-                },
-                {
-                    "indexed": false,
-                    "internalType": "string",
-                    "name": "config_params",
+                    "name": "sdn_info",
                     "type": "string"
                 }
             ],
@@ -78,20 +60,107 @@
         {
             "inputs": [
                 {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "CSInstanceIds",
-            "outputs": [
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
                 {
                     "internalType": "string",
-                    "name": "",
+                    "name": "_context",
                     "type": "string"
                 }
             ],
-            "stateMutability": "view",
+            "name": "addContextTemplate",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_interdomainLink",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_e2etop",
+                    "type": "string"
+                }
+            ],
+            "name": "addIDLContext",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_contextOwner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_cs_info",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
+            "name": "instantiateConnectivityService",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_cs_info",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_status",
+                    "type": "string"
+                }
+            ],
+            "name": "updateConnectivityService",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -111,17 +180,7 @@
                 },
                 {
                     "internalType": "string",
-                    "name": "instance_id",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "vl_ref",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "config_params",
+                    "name": "cs_info",
                     "type": "string"
                 },
                 {
@@ -151,7 +210,7 @@
                     "type": "uint256"
                 }
             ],
-            "name": "ContextTemplateIds",
+            "name": "CSInstanceIds",
             "outputs": [
                 {
                     "internalType": "string",
@@ -170,21 +229,11 @@
                     "type": "string"
                 }
             ],
-            "name": "ContextTemplate_list",
+            "name": "DomainContext_list",
             "outputs": [
                 {
                     "internalType": "string",
-                    "name": "topology",
-                    "type": "string"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "price",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "string",
-                    "name": "unit",
+                    "name": "context",
                     "type": "string"
                 },
                 {
@@ -199,54 +248,20 @@
         {
             "inputs": [
                 {
-                    "internalType": "string",
-                    "name": "_id",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_topology",
-                    "type": "string"
-                },
-                {
                     "internalType": "uint256",
-                    "name": "_price",
+                    "name": "",
                     "type": "uint256"
-                },
+                }
+            ],
+            "name": "DomainContextIds",
+            "outputs": [
                 {
                     "internalType": "string",
-                    "name": "_unit",
+                    "name": "",
                     "type": "string"
                 }
             ],
-            "name": "addContextTemplate",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_templateId",
-                    "type": "string"
-                }
-            ],
-            "name": "deactivateContextTemplate",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -259,16 +274,6 @@
             ],
             "name": "getContextTemplate",
             "outputs": [
-                {
-                    "internalType": "string",
-                    "name": "",
-                    "type": "string"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                },
                 {
                     "internalType": "string",
                     "name": "",
@@ -300,7 +305,7 @@
             "inputs": [
                 {
                     "internalType": "uint256",
-                    "name": "_id",
+                    "name": "_index",
                     "type": "uint256"
                 }
             ],
@@ -316,66 +321,16 @@
             "type": "function"
         },
         {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "_contextOwner",
-                    "type": "address"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_id",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_vl_ref",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_config_params",
-                    "type": "string"
-                }
-            ],
-            "name": "instantiateConnectivityService",
+            "inputs": [],
+            "name": "getE2EContext",
             "outputs": [
                 {
-                    "internalType": "bool",
+                    "internalType": "string",
                     "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_id",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_instanceId",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_status",
                     "type": "string"
                 }
             ],
-            "name": "updateConnectivityService",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "type": "function"
         }
     ]

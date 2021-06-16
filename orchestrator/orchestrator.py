@@ -86,6 +86,7 @@ def get_slicessubnets_templates():
 ######################################## SDN TRANSPORT CONTEXT FUNCTIONS ########################################
 # adds the Inter-domin links and distributes them and the domain context in the blockchain
 def context_to_bl(idl_json):
+    settings.logger.info("Received IDL and context to distribute.")
     # FIRST: updates the local graph containning the e2e tpology
     vl_computation.add_idl_e2e_graph(idl_json)
     
