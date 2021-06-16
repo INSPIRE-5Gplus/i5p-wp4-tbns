@@ -8,7 +8,7 @@
       ],
       "interdomain-links": [
         {
-          "name": "D1:VIC-D2:Blanes",
+          "name": "D1:Blanes-D2:Vic",
           "nodes-involved": [
             "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
             "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769"

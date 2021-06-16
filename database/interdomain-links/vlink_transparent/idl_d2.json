@@ -1,27 +1,27 @@
 {
     "e2e-topology": {
       "nodes-list": [
-        "node_Vic_uuid",
-        "node_Blanes_uuid",
-        "node_Manresa_uuid",
-        "node_Solsona_uuid",
-        "node_Vilanova_uuid",
-        "node_Tarragona_uuid"
+        "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+        "226b9166-974e-57ff-821d-2f24e5a71b00:5c9809bc-33a9-5214-ab03-b256457b4b46",
+        "3d89bd76-e54d-5fab-9787-eb609f291ee0:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+        "226b9166-974e-57ff-821d-2f24e5a71b00:f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+        "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3:589df6c1-90e1-51f5-bda4-b4cd6b2d01e4"
       ],
       "interdomain-links": [
         {
-          "name": "Blanes-VIC",
+          "name": "D1:Blanes-D2:Vic",
           "nodes-involved": [
-            "node_Blanes_uuid",
-            "node_Vic_uuid"
+            "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+            "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769"
           ],
           "link-options": [
             {
               "uuid": "f7f5cdef-8bb0-42c4-a315-bbc852b0a193",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "node_Blanes_uuid",
-                "node-2": "node_Vic_uuid"
+                "node-1": "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                "node-2": "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -30,14 +30,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep-uuid": "nep_Blanes_15"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_15"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -46,14 +46,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep_uuid": "nep_Blanes_16"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep_uuid": "39030ade-eb0f-5c5d-9ada-8180bf599ff6"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_16"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -62,14 +62,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep_uuid": "nep_Blanes_17"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep_uuid": "b3671088-cc06-5dfa-87b4-bfed433191bd"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_17"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -78,14 +78,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep_uuid": "nep_Blanes_18"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep_uuid": "8d23fa0b-e14a-5121-bfa7-0c979ee85704"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_18"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -94,14 +94,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep_uuid": "nep_Blanes_19"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep_uuid": "4e1e89bc-0289-5e62-95d0-6c3b237f6822"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_19"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -113,8 +113,8 @@
               "uuid": "c5174040-26df-4950-8cf3-47ac8115f2ae",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "node_Vic_uuid",
-                "node-2": "node_Blanes_uuid"
+                "node-1": "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769",
+                "node-2": "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -123,14 +123,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_15"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep-uuid": "nep_Blanes_15"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -139,14 +139,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_16"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep-uuid": "nep_Blanes_16"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "39030ade-eb0f-5c5d-9ada-8180bf599ff6"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -155,14 +155,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_17"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep-uuid": "nep_Blanes_17"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "b3671088-cc06-5dfa-87b4-bfed433191bd"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -171,14 +171,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_18"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep-uuid": "nep_Blanes_18"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "8d23fa0b-e14a-5121-bfa7-0c979ee85704"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -187,14 +187,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vic_uuid",
-                      "nep-uuid": "node_Vic_19"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Blanes_uuid",
-                      "nep-uuid": "nep_Blanes_19"
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "4e1e89bc-0289-5e62-95d0-6c3b237f6822"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -225,18 +225,18 @@
           ]
         },
         {
-          "name": "Manresa-Solsona",
+          "name": "D2:Manresa-D3:Solsona",
           "nodes-involved": [
-            "node_Manresa_uuid",
-            "node_Solsona_uuid"
+            "226b9166-974e-57ff-821d-2f24e5a71b00:5c9809bc-33a9-5214-ab03-b256457b4b46",
+            "3d89bd76-e54d-5fab-9787-eb609f291ee0:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5"
           ],
           "link-options": [
             {
               "uuid": "e843c8bb-6fb1-4f42-a2e3-27b25712cc33",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "node_Manresa_uuid",
-                "node-2": "node_Solsona_uuid"
+                "node-1": "226b9166-974e-57ff-821d-2f24e5a71b00:5c9809bc-33a9-5214-ab03-b256457b4b46",
+                "node-2": "3d89bd76-e54d-5fab-9787-eb609f291ee0:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -245,14 +245,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep-uuid": "nep_Manresa_15"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep-uuid": "cfdb89f0-8d0e-52c6-a12a-30be209a2185"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_15"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -261,14 +261,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_16"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "65d1df8d-c9d5-5e5f-9917-fbad1064f472"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_16"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "39030ade-eb0f-5c5d-9ada-8180bf599ff6"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -277,14 +277,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_17"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "61253d9a-f5d5-59a2-a29b-fb0f81efd361"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_17"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "b3671088-cc06-5dfa-87b4-bfed433191bd"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -293,14 +293,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_18"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "51e0761f-cdd5-5a04-b1c0-4ab527c715bc"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_18"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "8d23fa0b-e14a-5121-bfa7-0c979ee85704"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -309,14 +309,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_19"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "d6d2819a-80b5-5c86-91fc-c22c609dde0a"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_19"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "4e1e89bc-0289-5e62-95d0-6c3b237f6822"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -328,8 +328,8 @@
               "uuid": "00db0a6e-f846-4b33-9540-de7fb35dbcb7",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "node_Solsona_uuid",
-                "node-2": "node_Manresa_uuid"
+                "node-1": "3d89bd76-e54d-5fab-9787-eb609f291ee0:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                "node-2": "226b9166-974e-57ff-821d-2f24e5a71b00:5c9809bc-33a9-5214-ab03-b256457b4b46"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -338,14 +338,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_15"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep-uuid": "nep_Manresa_15"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep-uuid": "cfdb89f0-8d0e-52c6-a12a-30be209a2185"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -354,14 +354,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_16"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "39030ade-eb0f-5c5d-9ada-8180bf599ff6"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_16"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "65d1df8d-c9d5-5e5f-9917-fbad1064f472"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -370,14 +370,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_17"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "b3671088-cc06-5dfa-87b4-bfed433191bd"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_17"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "61253d9a-f5d5-59a2-a29b-fb0f81efd361"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -386,14 +386,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_18"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "8d23fa0b-e14a-5121-bfa7-0c979ee85704"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_18"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "51e0761f-cdd5-5a04-b1c0-4ab527c715bc"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -402,14 +402,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Solsona_uuid",
-                      "nep-uuid": "node_Solsona_19"
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "4e1e89bc-0289-5e62-95d0-6c3b237f6822"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Manresa_uuid",
-                      "nep_uuid": "nep_Manresa_19"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+                      "nep_uuid": "d6d2819a-80b5-5c86-91fc-c22c609dde0a"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -440,18 +440,18 @@
           ]
         },
         {
-          "name": "Vilanova-Tarragona",
+          "name": "D2:Vilanova-D4:Tarragona",
           "nodes-involved": [
-            "node_Vilanova_uuid",
-            "node_Tarragona_uuid"
+            "226b9166-974e-57ff-821d-2f24e5a71b00:f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+            "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3:589df6c1-90e1-51f5-bda4-b4cd6b2d01e4"
           ],
           "link-options": [
             {
               "uuid": "98a55366-1d57-42d5-9216-8012160acdc4",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "node_Vilanova_uuid",
-                "node-2": "node_Tarragona_uuid"
+                "node-1": "226b9166-974e-57ff-821d-2f24e5a71b00:f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                "node-2": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3:589df6c1-90e1-51f5-bda4-b4cd6b2d01e4"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -460,13 +460,13 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep-uuid": "nep_Vilanova_15"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep-uuid": "8f9ca18a-1736-57b3-97d4-c9b5f5bb3611"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_15"
                     }
                   ] ,
@@ -476,13 +476,13 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_16"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "82412f0e-1e67-5574-8509-95de23f9b46e"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_16"
                     }
                   ] ,
@@ -492,13 +492,13 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_17"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "6b29a597-856a-5ce2-a564-9595568febf5"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_17"
                     }
                   ] ,
@@ -508,13 +508,13 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_18"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "8c4a355c-13a2-57c3-a285-650a6f4c7249"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_18"
                     }
                   ] ,
@@ -524,13 +524,13 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_19"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "e0e9dacf-d640-5688-8de3-f8e1044dc015"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_19"
                     }
                   ] ,
@@ -543,8 +543,8 @@
               "uuid": "8bd4f029-51dc-40fd-878d-aca432f0376c",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "node_Tarragona_uuid",
-                "node-2": "node_Vilanova_uuid"
+                "node-1": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3:589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+                "node-2": "226b9166-974e-57ff-821d-2f24e5a71b00:f8fa6c3a-1840-5d2d-939d-d231cd9c50f1"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -553,14 +553,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                       "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                        "nep-uuid": "node_Tarragona_15"
                      },
                      {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep-uuid": "nep_Vilanova_15"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep-uuid": "8f9ca18a-1736-57b3-97d4-c9b5f5bb3611"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -569,14 +569,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_16"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_16"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "82412f0e-1e67-5574-8509-95de23f9b46e"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -585,14 +585,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_17"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_17"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "6b29a597-856a-5ce2-a564-9595568febf5"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -601,14 +601,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_18"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_18"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "8c4a355c-13a2-57c3-a285-650a6f4c7249"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -617,14 +617,14 @@
                 {
                   "node-edge-point":[
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Tarragona_uuid",
+                      "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+                      "node-uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
                       "nep-uuid": "node_Tarragona_19"
                     },
                     {
-                      "topology-uuid": "uuid",
-                      "node-uuid": "node_Vilanova_uuid",
-                      "nep_uuid": "nep_Vilanova_19"
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+                      "nep_uuid": "e0e9dacf-d640-5688-8de3-f8e1044dc015"
                     }
                   ] ,
                   "occupied-spectrum": [
