@@ -52,6 +52,9 @@ def transport_event_loop(transport_event_filter, poll_interval):
 
 def handle_transport_event(event):
     event_json = {}
+    print("******")
+    print(str(event))
+    print("******")
     if (event['args']['status'] == "NEW_IDL" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW SET OF IDL")
         event_json = json.loads(event['args']['sdn_info'])

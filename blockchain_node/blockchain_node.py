@@ -122,9 +122,17 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     tx_hash = settings.transport_contract.functions.addIDLContext(idl_string, e2e_topology_string).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+
+    #listen the event associated to the transaction receipt
+    rich_logs = settings.slice_contract.events.topology_response().processReceipt(tx_receipt)
+    
+    #create json to send back to the user the initial instantiation request info.
+    deployment_response = {}
+    deployment_response["log"] = rich_logs[0]['args']['log']
+    deployment_response["status"] = rich_logs[0]['args']['status']
         
-    return idl_json, 200
+    return deployment_response, 200
 
 # returns the number of slice-subnets (NSTs) in the blockchain db
 def get_idl_counter():
