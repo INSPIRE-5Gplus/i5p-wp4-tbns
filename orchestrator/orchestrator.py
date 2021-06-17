@@ -97,22 +97,22 @@ def context_to_bl(idl_json):
         e2e_nodes_list = []
         e2e_idl_list = []
 
-        for node_item in idl_json["e2e_topology"]["nodes-list"]:
+        for node_item in idl_json["e2e-topology"]["nodes-list"]:
             e2e_nodes_list.append(node_item)
-        e2e_topology["e2e_topology"]["nodes-list"] = e2e_nodes_list
+        e2e_topology["e2e-topology"]["nodes-list"] = e2e_nodes_list
         
-        for idl_item in idl_json["e2e_topology"]["interdomain-links"]:
+        for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             e2e_idl_list.append(idl_item)
-        e2e_topology["e2e_topology"]["interdomain-links"] = e2e_idl_list
+        e2e_topology["e2e-topology"]["interdomain-links"] = e2e_idl_list
     else: 
         e2e_topology = response[0]
-        e2e_nodes_list = e2e_topology["e2e_topology"]["nodes-list"]
-        for node_item in idl_json["e2e_topology"]["nodes-list"]:
+        e2e_nodes_list = e2e_topology["e2e-topology"]["nodes-list"]
+        for node_item in idl_json["e2e-topology"]["nodes-list"]:
             if node_item not in e2e_nodes_list:
                 e2e_nodes_list.append(node_item)
-        e2e_topology["e2e_topology"]["nodes-list"] = e2e_nodes_list
-        e2e_idl_list = e2e_topology["e2e_topology"]["interdomain-links"]
-        for idl_item in idl_json["e2e_topology"]["interdomain-links"]:
+        e2e_topology["e2e-topology"]["nodes-list"] = e2e_nodes_list
+        e2e_idl_list = e2e_topology["e2e-topology"]["interdomain-links"]
+        for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             found_existing_idl = False
             for ref_idl in e2e_idl_list:
                 if idl_item["name"] == ref_idl["name"]:
@@ -120,7 +120,7 @@ def context_to_bl(idl_json):
                     break
             if found_existing_idl == False:
                 e2e_idl_list.append(idl_item)
-        e2e_topology["e2e_topology"]["interdomain-links"] = e2e_idl_list
+        e2e_topology["e2e-topology"]["interdomain-links"] = e2e_idl_list
     
     response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:
