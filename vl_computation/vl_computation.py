@@ -202,7 +202,6 @@ def add_idl_e2e_graph(e2e_json):
   for domain_item in e2e_json["e2e-topology"]["nodes-list"]:
       e2e_topology_graph.add_node(domain_item)
 
-  print("******* Adding links!!")
   # add the links interconnecting the SDN domains defined in the json IF 
   for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
     # adding both unidirectional links for the routing process in the E2E MultiDiGraph
@@ -211,7 +210,6 @@ def add_idl_e2e_graph(e2e_json):
     uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
     
     response = e2e_topology_graph.has_edge(node_1, node_2)
-    print(str(response))
     # as we work with a MultiDiGraph, check the existing links to not add them again.     
     if response == True:
       pass
@@ -236,6 +234,9 @@ def add_idl_e2e_graph(e2e_json):
         e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+  
+  nx.draw_networkx(e2e_topology_graph)
+  plt.show()
 
 # paints the graph
 def paint_graph():

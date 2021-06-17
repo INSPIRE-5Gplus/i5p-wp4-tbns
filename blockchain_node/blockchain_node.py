@@ -172,7 +172,7 @@ def get_context_id(index):
 def get_e2etopology_from_blockchain():
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
-    response = settings.transport_contract.functions.getE2EContext(settings.web3.eth.defaultAccount).call()
+    response = settings.transport_contract.functions.getE2EContext().call()
     context_json = json.loads(response[0])
     return context_json, 200
 
