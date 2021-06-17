@@ -125,7 +125,7 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
 
     #listen the event associated to the transaction receipt
-    rich_logs = settings.slice_contract.events.topology_response().processReceipt(tx_receipt)
+    rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
     
     #create json to send back to the user the initial instantiation request info.
     deployment_response = {}
