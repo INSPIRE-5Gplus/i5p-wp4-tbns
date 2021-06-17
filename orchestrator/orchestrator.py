@@ -94,16 +94,20 @@ def context_to_bl(idl_json):
     response = bl_mapper.get_e2etopology_from_blockchain()
     if response[0] == "empty":
         e2e_topology = {}
+        e2e_topo = {}
         e2e_nodes_list = []
         e2e_idl_list = []
 
         for node_item in idl_json["e2e-topology"]["nodes-list"]:
             e2e_nodes_list.append(node_item)
-        e2e_topology["e2e-topology"]["nodes-list"] = e2e_nodes_list
+        e2e_topo["nodes-list"] = e2e_nodes_list
         
         for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             e2e_idl_list.append(idl_item)
-        e2e_topology["e2e-topology"]["interdomain-links"] = e2e_idl_list
+        e2e_topo["interdomain-links"] = e2e_idl_list
+
+        e2e_topology["e2e-topology"] = e2e_topo
+
     else: 
         e2e_topology = response[0]
         e2e_nodes_list = e2e_topology["e2e-topology"]["nodes-list"]
