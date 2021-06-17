@@ -115,9 +115,11 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     
     #response = settings.transport_contract.functions.getE2EContext(settings.web3.eth.defaultAccount).call()
     #idl_json = json.loads(response[0])
-
+    idl_string = json.dumps(idl_json)
+    e2e_topology_string = json.dumps(e2e_topology)
+    
     # Add a connectivity service template to make it available for other domains
-    tx_hash = settings.transport_contract.functions.addIDLContext(idl_json, e2e_topology).transact()
+    tx_hash = settings.transport_contract.functions.addIDLContext(idl_string, e2e_topology_string).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     settings.web3.eth.waitForTransactionReceipt(tx_hash)
