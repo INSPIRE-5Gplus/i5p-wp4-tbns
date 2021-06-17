@@ -234,9 +234,6 @@ def add_idl_e2e_graph(e2e_json):
         e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
-  
-  nx.draw_networkx(e2e_topology_graph)
-  plt.show()
 
 # paints the graph
 def paint_graph():
