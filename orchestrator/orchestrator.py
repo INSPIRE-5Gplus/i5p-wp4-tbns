@@ -85,7 +85,7 @@ def get_slicessubnets_templates():
 
 ######################################## SDN TRANSPORT CONTEXT FUNCTIONS ########################################
 # adds the Inter-domin links and distributes them and the domain context in the blockchain
-def context_to_bl(idl_json):
+def idl_to_bl(idl_json):
     settings.logger.info("ORCH: Received IDL and context to distribute.")
     # FIRST: updates the local graph containning the e2e tpology
     vl_computation.add_idl_e2e_graph(idl_json)
@@ -131,16 +131,20 @@ def context_to_bl(idl_json):
     if response[1] != 200:
         return ({"msg":"ERROR - Something went wrong when distributing IDL info."}, 400)
 
+    return ({"msg":"Interdomain-Links and Domain SDN Context distributed."}, 200)
+
+# adds the Inter-domin links and distributes them and the domain context in the blockchain
+def context_to_bl():
     settings.logger.info("ORCH: IDL DONE, Getting local context, distributing it.")
     # THIRD: get the local context & distributes the local sdn context with the other peers
-    #abstracted_sdn_context = db.get_element("", "context")
-    #context_json = {}
-    #context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
-    #context_json["context"] = json.dumps(abstracted_sdn_context) 
-    #response = bl_mapper.context_to_blockchain(context_json)
-    #settings.logger.info("ORCH: Local context distributed.")
-
-    return ({"msg":"Interdomain-Links and Domain SDN Context distributed."}, 200)
+    abstracted_sdn_context = db.get_element("", "context")
+    context_json = {}
+    context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
+    context_json["context"] = json.dumps(abstracted_sdn_context) 
+    response = bl_mapper.context_to_blockchain(context_json)
+    settings.logger.info("ORCH: Local context distributed.")
+    msg = "Interdomain-Links and Domain SDN Context distributed with status: " + str(response["status"])
+    return ({"msg":msg}, 200)
 
 # adds the inter-domain links information coming from another peer to the E2E local graph
 def add_idl_info(blockchain_domain_json):
