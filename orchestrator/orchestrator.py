@@ -86,10 +86,11 @@ def get_slicessubnets_templates():
 ######################################## SDN TRANSPORT CONTEXT FUNCTIONS ########################################
 # adds the Inter-domin links and distributes them and the domain context in the blockchain
 def context_to_bl(idl_json):
-    settings.logger.info("Received IDL and context to distribute.")
+    settings.logger.info("ORCH: Received IDL and context to distribute.")
     # FIRST: updates the local graph containning the e2e tpology
     vl_computation.add_idl_e2e_graph(idl_json)
     
+    settings.logger.info("ORCH: Get E2E topology from BL.")
     # SECOND: gets current e2e_topology, adds new nodes & IDLs (if they are not already in there) and distributes both json to the blockchain peers  
     response = bl_mapper.get_e2etopology_from_blockchain()
     if response[0] == "empty":
@@ -125,22 +126,25 @@ def context_to_bl(idl_json):
                 e2e_idl_list.append(idl_item)
         e2e_topology["e2e-topology"]["interdomain-links"] = e2e_idl_list
     
+    settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
     response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:
         return ({"msg":"ERROR - Somthing went wrong when distributing IDL info."}, 400)
 
+    settings.logger.info("ORCH: Getting local context, distributing it.")
     # THIRD: get the local context & distributes the local sdn context with the other peers
     abstracted_sdn_context = db.get_element("", "context")
     context_json = {}
     context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
     context_json["context"] = json.dumps(abstracted_sdn_context) 
     response = bl_mapper.context_to_blockchain(context_json)
+    settings.logger.info("ORCH: Local context distributed.")
 
     return ({"msg":"Interdomain-Links and Domain SDN Context distributed."}, 200)
 
 # adds the inter-domain links information coming from another peer to the E2E local graph
 def add_idl_info(blockchain_domain_json):
-    settings.logger.info("ORCH: Adding inter-domain links to the E2E graph for path conmputation." + str(blockchain_domain_json))
+    settings.logger.info("ORCH: Adding inter-domain links to the E2E graph for path conmputation.")
     vl_computation.add_idl_e2e_graph(blockchain_domain_json)
 
 # adds the SDN domain context information coming from another peer to the E2E local graph

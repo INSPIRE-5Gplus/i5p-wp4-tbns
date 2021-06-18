@@ -166,12 +166,15 @@ def vlink_abstraction(local_context):
 
 # creates the initial e2e graph with its local domain information
 def add_context_e2e_graph(context_json):
+  settings.logger.info("VL_COMP: Adding external context to local E2E graph.")
   for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
+    settings.logger.info("VL_COMP: Topology within the received context.")
     # adds all the nodes in the abstracted topology
     for node_item in topology_item["node"]:
       node_name = str(context_json["tapi-common:context"]["uuid"]+":"+node_item["uuid"]) #NOTE: the context-uuid is used to differentiat between nodes of different domains with equal uuid
       e2e_topology_graph.add_node(node_name)
-    
+    settings.logger.info("VL_COMP: External context nodes added.")
+
     # adds all the (unidirectional) topology links in the abstracted VLINK and TRANSPARENT
     if topology_item["link"]:
       for link_item in topology_item["link"]:
@@ -194,14 +197,16 @@ def add_context_e2e_graph(context_json):
               e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info,  link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
         else:
           e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+    settings.logger.info("VL_COMP: External context links added.")      
 
 # updates the e2e graph by adding new domains and itner-domains links.
 def add_idl_e2e_graph(e2e_json):
-  settings.logger.info("Adding IDLs to the local E2E Context graph.")
+  settings.logger.info("VL_COMP: Adding IDLs to the local E2E Context graph.")
   # adds all the SDN domains defined in the json
   for domain_item in e2e_json["e2e-topology"]["nodes-list"]:
       e2e_topology_graph.add_node(domain_item)
 
+  settings.logger.info("VL_COMP: Nodes added, adding links to E2E graph")
   # add the links interconnecting the SDN domains defined in the json IF 
   for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
     # adding both unidirectional links for the routing process in the E2E MultiDiGraph
@@ -234,6 +239,8 @@ def add_idl_e2e_graph(e2e_json):
         e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+  
+  settings.logger.info("VL_COMP: Added Edges to E2E Graph.")
 
 # paints the graph
 def paint_graph():
