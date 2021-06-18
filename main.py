@@ -407,7 +407,7 @@ def distribute_idl_blockchain():
 
 # distributes the domain context in the Blockchain
 @app.route('/pdl-transport/context', methods=['POST'])
-def distribute_idl_blockchain():
+def distribute_context_blockchain():
   # with this command we share the local context and the local view of the e2e topology (request.json)
   #response = orch.context_to_bl(request.json)
   #if response[1] == 200:
