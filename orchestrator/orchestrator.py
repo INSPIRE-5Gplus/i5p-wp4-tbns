@@ -134,7 +134,6 @@ def context_to_bl(idl_json):
     settings.logger.info("ORCH: Getting local context, distributing it.")
     # THIRD: get the local context & distributes the local sdn context with the other peers
     abstracted_sdn_context = db.get_element("", "context")
-    print("**********" + str(type(abstracted_sdn_context)))
     context_json = {}
     context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
     context_json["context"] = json.dumps(abstracted_sdn_context) 
