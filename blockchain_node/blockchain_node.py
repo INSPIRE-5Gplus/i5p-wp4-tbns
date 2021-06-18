@@ -127,16 +127,17 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     settings.logger.info('BLOCKCHAIN_MAPPER: Transaction receipt.')
 
     #listen the event associated to the transaction receipt
-    rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
-    settings.logger.info('BLOCKCHAIN_MAPPER: tpology_event.' + str(rich_logs))
+    #rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
+    #settings.logger.info('BLOCKCHAIN_MAPPER: tpology_event.' + str(rich_logs))
     
     #create json to send back to the user the initial instantiation request info.
-    deployment_response = {}
-    deployment_response["log"] = rich_logs[0]['args']['log']
-    deployment_response["status"] = rich_logs[0]['args']['status']
-
+    #deployment_response = {}
+    #deployment_response["log"] = rich_logs[0]['args']['log']
+    #deployment_response["status"] = rich_logs[0]['args']['status']
+    msg = {}
+    msg["msg"] = "Everything OK"
         
-    return deployment_response, 200
+    return msg, 200
 
 # returns the number of slice-subnets (NSTs) in the blockchain db
 def get_idl_counter():
