@@ -142,8 +142,10 @@ def get_idl_id(index):
 # distributes the domain SDN context with the other peers
 def context_to_blockchain(context_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
-    id_string = str(context_json["id"])
-    context_string = str(context_json["context"])
+    #id_string = str(context_json["id"])
+    #context_string = str(context_json["context"])
+    id_string = "CTTC"
+    context_string = "This is a string sentence."
     
     # Add a connectivity service template to make it available for other domains
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, context_string).transact()
