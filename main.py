@@ -401,11 +401,15 @@ Example of the json to pass:
 @app.route('/pdl-transport', methods=['POST'])
 def distribute_context_blockchain():
   # with this command we share the local context and the local view of the e2e topology (request.json)
-  response = orch.context_to_bl(request.json)
-  if response[1] == 200:
-    return response[0], 200
-  else:
-    return response[0], response[1]
+  #response = orch.context_to_bl(request.json)
+  #if response[1] == 200:
+  #  return response[0], 200
+  #else:
+  #  return response[0], response[1]
+  settings.executor.submit(orch.context_to_bl, request.json)
+  response = {}
+  response['log'] = "Request accepted, distributin IDL and domain context."
+  return response, 200
 
 #  GET all the contexts (local and blockchain)
 @app.route('/pdl-transport/all_contexts', methods=['GET'])
@@ -436,7 +440,7 @@ Example E2E_CS request
 # requests a CS based on a set of two SIPs and a capacity
 @app.route('/pdl-transport/connectivity_service', methods=['POST'])
 def request_e2e_cs():
-  settings.executor.submit(orch.instantiate_e2e_connectivity_service(request.json), request.json)
+  settings.executor.submit(orch.instantiate_e2e_connectivity_service, request.json)
   response = {}
   response['log'] = "Request accepted, creating the E2E CS."
   return response, 200

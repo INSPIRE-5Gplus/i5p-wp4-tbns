@@ -129,16 +129,16 @@ def context_to_bl(idl_json):
     settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
     response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:
-        return ({"msg":"ERROR - Somthing went wrong when distributing IDL info."}, 400)
+        return ({"msg":"ERROR - Something went wrong when distributing IDL info."}, 400)
 
-    settings.logger.info("ORCH: Getting local context, distributing it.")
+    settings.logger.info("ORCH: IDL DONE, Getting local context, distributing it.")
     # THIRD: get the local context & distributes the local sdn context with the other peers
-    abstracted_sdn_context = db.get_element("", "context")
-    context_json = {}
-    context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
-    context_json["context"] = json.dumps(abstracted_sdn_context) 
-    response = bl_mapper.context_to_blockchain(context_json)
-    settings.logger.info("ORCH: Local context distributed.")
+    #abstracted_sdn_context = db.get_element("", "context")
+    #context_json = {}
+    #context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
+    #context_json["context"] = json.dumps(abstracted_sdn_context) 
+    #response = bl_mapper.context_to_blockchain(context_json)
+    #settings.logger.info("ORCH: Local context distributed.")
 
     return ({"msg":"Interdomain-Links and Domain SDN Context distributed."}, 200)
 
