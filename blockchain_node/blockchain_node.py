@@ -111,7 +111,7 @@ def update_blockchain_slice(subnet_json):
 ###################################### BLOCKCHAIN MAPPER FOR IDLs, SDN CONTEXT & CSs #######################################
 # distributes the domain associated inter-domain links (IDL) with the other peers
 def interdomainlinks_to_blockchain(idl_json, e2e_topology):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local IDLs & e2e topology Blockchain peers.')
     
     #response = settings.transport_contract.functions.getE2EContext(settings.web3.eth.defaultAccount).call()
     #idl_json = json.loads(response[0])
@@ -120,17 +120,21 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     
     # Add a connectivity service template to make it available for other domains
     tx_hash = settings.transport_contract.functions.addIDLContext(idl_string, e2e_topology_string).transact()
+    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new IDL done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction receipt.')
 
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
+    settings.logger.info('BLOCKCHAIN_MAPPER: tpology_event.' + str(rich_logs))
     
     #create json to send back to the user the initial instantiation request info.
     deployment_response = {}
     deployment_response["log"] = rich_logs[0]['args']['log']
     deployment_response["status"] = rich_logs[0]['args']['status']
+
         
     return deployment_response, 200
 
@@ -150,14 +154,24 @@ def context_to_blockchain(context_json):
     
     # Add a connectivity service template to make it available for other domains
     tx_hash = settings.transport_contract.functions.addContextTemplate(context_json["id"], context_json["context"]).transact()
+    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
+
+    rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
+    settings.logger.info('BLOCKCHAIN_MAPPER: topology_event.' + str(rich_logs))
+
+    #response = settings.transport_contract.functions.getContextTemplate(str(context_json["id"])).call()
+    #context_json['blockchain_owner'] = response[3]
+    #create json to send back to the user the initial instantiation request info.
+    deployment_response = {}
+    deployment_response["log"] = rich_logs[0]['args']['log']
+    deployment_response["status"] = rich_logs[0]['args']['status']
+    deployment_response["owner"] = rich_logs[0]['args']['requester']
     
-    response = settings.transport_contract.functions.getContextTemplate(str(context_json["id"])).call()
-    context_json['blockchain_owner'] = response[3]
-    
-    return context_json, 200
+    return deployment_response, 200
 
 # returns topology saved in the blockchain
 def get_context_from_blockchain(context_ID):
