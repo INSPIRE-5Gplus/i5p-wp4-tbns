@@ -44,7 +44,7 @@ contract transport {
     /*##### INTER-DOMAIN LINKS FUNCTIONS #####*/
     // add a new set of interd-domain links
     function addIDLContext(string memory _interdomainLink, string memory _e2etop)  public returns (bool){
-        string memory _log = "Inter-Domain Links distributed and E2E Topology updated";
+        //string memory _log = "Inter-Domain Links distributed and E2E Topology updated";
         string memory _status = "NEW_IDL";
 
         //IDLContext_list[msg.sender].interdomainLink = _interdomainLink;
@@ -57,7 +57,7 @@ contract transport {
         emit notifyTopologyActions(msg.sender, "", _status, _interdomainLink);
         
         // generates an event for the owner with the response
-        emit topology_response(msg.sender, _log, _status);
+        //emit topology_response(msg.sender, _log, _status);
         return true;
     }
     // gets the information of a single context template
@@ -80,7 +80,7 @@ contract transport {
     /*##### DOMAIN CONTEXT FUNCTIONS #####*/
     // add a new domain context template
     function addContextTemplate(string memory _id, string memory _context) public returns (bool){
-        string memory _log = "SDN domain added.";
+        //string memory _log = "SDN domain added.";
         string memory _status = "NEW_DOMAIN";
 
         DomainContext_list[_id].context = _context;
@@ -93,7 +93,7 @@ contract transport {
         emit notifyTopologyActions(msg.sender, _id, _status, _context);
         
         //sends back to the client the response
-        emit topology_response(msg.sender, _log, _status);
+        //emit topology_response(msg.sender, _log, _status);
         return true;
     }
     // gets the information of a single domain context
