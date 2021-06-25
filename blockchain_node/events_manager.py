@@ -41,7 +41,7 @@ def handle_sliceInstance_event(event):
     else:
         # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
         # TODO: exception/error management
-        settings.logger.info("TRANSPORT_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")
+        settings.logger.info("SLICE_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.")
 
 def transport_event_loop(transport_event_filter, poll_interval):
     while True:

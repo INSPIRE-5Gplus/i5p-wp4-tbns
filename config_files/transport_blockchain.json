@@ -1,5 +1,5 @@
 {
-    "contract_address":"0xc2A23E43eDc204f7d90233EB981caF8F9f158AA9",
+    "contract_address":"0x3310b488095a0e6150a0Eee25E176331d7E7E9C4",
     "abi":[
         {
             "anonymous": false,
@@ -26,6 +26,42 @@
                     "indexed": false,
                     "internalType": "string",
                     "name": "sdn_info",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "name_context",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "sip",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "nw_topo_serv",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "topo_metadata",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "node_topo",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "link_topo",
                     "type": "string"
                 }
             ],
@@ -146,7 +182,32 @@
             "outputs": [
                 {
                     "internalType": "string",
-                    "name": "context",
+                    "name": "name_context",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "sip",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "nw_topo_serv",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "topo_metadata",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "node_topo",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "link_topo",
                     "type": "string"
                 },
                 {
@@ -162,12 +223,37 @@
             "inputs": [
                 {
                     "internalType": "string",
-                    "name": "_id",
+                    "name": "id",
                     "type": "string"
                 },
                 {
                     "internalType": "string",
-                    "name": "_context",
+                    "name": "name_context",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "sip",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "nw_topo_serv",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "topo_metadata",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "node_topo",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "link_topo",
                     "type": "string"
                 }
             ],
@@ -210,12 +296,37 @@
             "inputs": [
                 {
                     "internalType": "string",
-                    "name": "_templateId",
+                    "name": "_id",
                     "type": "string"
                 }
             ],
             "name": "getContextTemplate",
             "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
                 {
                     "internalType": "string",
                     "name": "",

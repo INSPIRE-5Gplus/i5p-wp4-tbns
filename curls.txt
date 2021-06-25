@@ -1,5 +1,5 @@
 Distribute ILS & context:
->> curl -i -H "Content-Type: application/json" -X POST -d '<json_data>' http://localhost:4441/pdl-transport
+>> curl -i -H "Content-Type: application/json" -X POST -d '<json_data>' http://localhost:4441/pdl-transport/idl
 
 <data_json> example:
 
