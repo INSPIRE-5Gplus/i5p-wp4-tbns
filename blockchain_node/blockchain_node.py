@@ -143,10 +143,15 @@ def get_idl_id(index):
 def context_to_blockchain(context_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
     id_string = str(context_json["id"])
-    context_string = str(context_json["context"])
+    name_context = str(context_json["name_context"])
+    sip = str(context_json["sip"])
+    nw_topo_serv = str(context_json["nw_topo_serv"])
+    topo_metadata = str(context_json["topo_metadata"])
+    node_topo = str(context_json["node_topo"])
+    link_topo = str(context_json["link_topo"])
     
     # Add a connectivity service template to make it available for other domains
-    tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, context_string).transact()
+    tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
@@ -173,9 +178,27 @@ def get_context_from_blockchain(context_ID):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context template information. ID: ' + str(context_ID))
     response = settings.transport_contract.functions.getContextTemplate(context_ID).call()
-    context_json = json.loads(response[0])
-    context_json['blockchain_owner'] = response[1]
-    return context_json, 200
+    
+    #contstruct the context information as a single json.
+    context_json = {}
+    topology_list = []
+    topology_json = {}
+    tapi_topo_topo_context_json = {}
+    context_json["uuid"] = context_ID
+    context_json["name"] = json.loads(response[0])
+    context_json["service-interface-point"] = json.loads(response[1])
+    tapi_topo_topo_context_json["nw-topology-service"] = json.loads(response[2])
+    topology_json = json.loads(response[3])
+    topology_json["node"] = json.loads(response[4])
+    topology_json["link"] = json.loads(response[5])
+    topology_list.append(topology_json)
+    tapi_topo_topo_context_json["topology"] = topology_list
+    context_json["tapi-topology:topology-context"] = tapi_topo_topo_context_json
+
+    response_json = {}
+    response_json["context"] = context_json
+    response_json["blockchain_owner"] = response[6]
+    return response_json, 200
 
 # returns the number of slice-subnets (NSTs) in the blockchain db
 def get_context_counter():

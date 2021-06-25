@@ -136,11 +136,24 @@ def idl_to_bl(idl_json):
 # adds the Inter-domin links and distributes them and the domain context in the blockchain
 def context_to_bl():
     settings.logger.info("ORCH: IDL DONE, Getting local context, distributing it.")
-    # THIRD: get the local context & distributes the local sdn context with the other peers
+    # gets the local context
     abstracted_sdn_context = db.get_element("", "context")
+    
+    # divides the context in smaller parts (string) due to the Blockchain limitations with JSONs and string length.
     context_json = {}
     context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
-    context_json["context"] = json.dumps(abstracted_sdn_context) 
+    context_json["name_context"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["name"])
+    context_json["sip"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["service-interface-point"])
+    context_json["nw_topo_serv"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["nw-topology-service"])
+    topo_metadata = {}
+    topo_metadata["uuid"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["uuid"]
+    topo_metadata["layer-ptocol-name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["layer-ptocol-name"]
+    topo_metadata["name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["name"]
+    context_json["topo_metadata"] = json.dumps(topo_metadata)
+    context_json["node_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"])
+    context_json["link_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["link"])
+
+    # distributes the local sdn context with the other peers
     response = bl_mapper.context_to_blockchain(context_json)
     settings.logger.info("ORCH: Local context distributed.")
     msg = "Interdomain-Links and Domain SDN Context distributed with status: " + str(response["status"])
