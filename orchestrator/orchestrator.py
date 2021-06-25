@@ -151,8 +151,11 @@ def context_to_bl():
     context_json["nw_topo_serv"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["nw-topology-service"])
     print("D***********")
     topo_metadata = {}
+    print("D1**********")
     topo_metadata["uuid"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["uuid"]
-    topo_metadata["layer-ptocol-name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["layer-ptocol-name"]
+    print("D2**********")
+    topo_metadata["layer-protocol-name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["layer-protocol-name"]
+    print("D3**********")
     topo_metadata["name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["name"]
     print("E***********")
     context_json["topo_metadata"] = json.dumps(topo_metadata)
