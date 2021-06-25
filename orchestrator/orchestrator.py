@@ -143,25 +143,16 @@ def context_to_bl():
     settings.logger.info("ORCH: Splitting the context json in strings for the BL.")
     context_json = {}
     context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
-    print("A***********")
     context_json["name_context"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["name"])
-    print("B***********")
     context_json["sip"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["service-interface-point"])
-    print("C***********")
     context_json["nw_topo_serv"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["nw-topology-service"])
-    print("D***********")
     topo_metadata = {}
-    topo_metadata["uuid"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["uuid"]
-    print("E***********")
-    topo_metadata["layer-ptocol-name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["layer-ptocol-name"]
-    topo_metadata["name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["name"]
-    print("F***********")
+    topo_metadata["uuid"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["uuid"]
+    topo_metadata["layer-ptocol-name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["layer-ptocol-name"]
+    topo_metadata["name"] = abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["name"]
     context_json["topo_metadata"] = json.dumps(topo_metadata)
-    print("G**********")
-    context_json["node_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["node"])
-    print("H***********")
-    context_json["link_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"]["link"])
-    print("I***********")
+    context_json["node_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"])
+    context_json["link_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["link"])
 
     # distributes the local sdn context with the other peers
     response = bl_mapper.context_to_blockchain(context_json)
