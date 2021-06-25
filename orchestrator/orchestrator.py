@@ -139,7 +139,11 @@ def context_to_bl():
     # gets the local context
     abstracted_sdn_context = db.get_element("", "context")
     
-    # divides the context in smaller parts (string) due to the Blockchain limitations with JSONs and string length.
+    # divides the context in smaller parts (string) due to the Blockchain limitations with JSONs and string length
+    settings.logger.info("ORCH: Splitting the context json in strings for the BL.")
+    print("TYPE: " + str(type(abstracted_sdn_context)))
+    print(abstracted_sdn_context["tapi-common:context"]["uuid"])
+    print("***********")
     context_json = {}
     context_json["id"] = abstracted_sdn_context["tapi-common:context"]["uuid"]
     context_json["name_context"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["name"])
