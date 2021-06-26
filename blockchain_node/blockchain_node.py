@@ -149,6 +149,13 @@ def context_to_blockchain(context_json):
     topo_metadata = str(context_json["topo_metadata"])
     node_topo = str(context_json["node_topo"])
     link_topo = str(context_json["link_topo"])
+    print("id_string length: " + str(len(id_string)))
+    print("name_context length: " + str(len(name_context)))
+    print("sip length: " + str(len(sip)))
+    print("nw_topo_serv length: " + str(len(nw_topo_serv)))
+    print("topo_metadata length: " + str(len(topo_metadata)))
+    print("node_topo length: " + str(len(node_topo)))
+    print("link_topo length: " + str(len(link_topo)))
     
     # Add a connectivity service template to make it available for other domains
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo).transact()
