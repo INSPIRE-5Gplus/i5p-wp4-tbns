@@ -224,6 +224,8 @@ def get_e2etopology_from_blockchain():
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
     response = settings.transport_contract.functions.getE2EContext().call()
+    print("We've go a response from the getE2E")
+    print (response)
     if (not response):
         context_json = "empty"
     else:
