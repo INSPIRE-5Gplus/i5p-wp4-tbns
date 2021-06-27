@@ -1,5 +1,5 @@
 {
-    "contract_address":"0xA562dD0281f49fE8C368FA3dBdc8c144f74F1fCb",
+    "contract_address":"0x669D9dDfdB4d118aD24bfBC9325499fD646034b9",
     "abi":[
         {
             "anonymous": false,
@@ -287,6 +287,11 @@
                 {
                     "internalType": "string",
                     "name": "id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "node_topo",
                     "type": "string"
                 },
                 {

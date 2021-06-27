@@ -155,6 +155,10 @@ def context_to_blockchain(context_json):
     print("nw_topo_serv length: " + str(len(nw_topo_serv)))
     print("topo_metadata length: " + str(len(topo_metadata)))
     print("node_topo length: " + str(len(node_topo)))
+    node_topo1 = node_topo[0:len(node_topo)//2]
+    node_topo2 = node_topo[len(node_topo)//2 if len(node_topo)%2 == 0 else ((len(node_topo)//2)+1):]
+    print("node_topo1 length: " + str(len(node_topo1)))
+    print("node_topo2 length: " + str(len(node_topo2)))
     print("link_topo length: " + str(len(link_topo)))
     
     # Add a connectivity service template to make it available for other domains
@@ -166,14 +170,14 @@ def context_to_blockchain(context_json):
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
 
     settings.logger.info('BLOCKCHAIN_MAPPER: Tirggering transaction part 2.')
-    tx_hash = settings.transport_contract.functions.addContextTemplate_part2(id_string, nw_topo_serv, topo_metadata, node_topo).transact()
+    tx_hash = settings.transport_contract.functions.addContextTemplate_part2(id_string, nw_topo_serv, topo_metadata, node_topo1).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: Part_2 done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
 
     settings.logger.info('BLOCKCHAIN_MAPPER: Tirggering transaction part 3.')
-    tx_hash = settings.transport_contract.functions.addContextTemplate_part3(id_string, link_topo).transact()
+    tx_hash = settings.transport_contract.functions.addContextTemplate_part3(id_string, node_topo2, link_topo).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: Part_3 done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
