@@ -158,6 +158,7 @@ def context_to_blockchain(context_json):
     print("link_topo length: " + str(len(link_topo)))
     
     # Add a connectivity service template to make it available for other domains
+    settings.logger.info('BLOCKCHAIN_MAPPER: Tirggering transaction for new context.')
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
     
@@ -165,15 +166,16 @@ def context_to_blockchain(context_json):
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
 
-    #rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
-    #settings.logger.info('BLOCKCHAIN_MAPPER: topology_event.' + str(rich_logs))
+    rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
+    settings.logger.info('BLOCKCHAIN_MAPPER: topology_event.' + str(rich_logs))
 
-    #response = settings.transport_contract.functions.getContextTemplate(str(context_json["id"])).call()
+    response = settings.transport_contract.functions.getContextTemplate(str(context_json["id"])).call()
     #create json to send back to the user the initial instantiation request info.
-    #deployment_response = {}
-    #deployment_response["log"] = rich_logs[0]['args']['log']
-    #deployment_response["status"] = rich_logs[0]['args']['status']
-    #deployment_response["owner"] = rich_logs[0]['args']['requester']
+    deployment_response = {}
+    deployment_response["log"] = rich_logs[0]['args']['log']
+    deployment_response["status"] = rich_logs[0]['args']['status']
+    deployment_response["owner"] = rich_logs[0]['args']['requester']
+    print(str(deployment_response))
 
     msg = {}
     msg["msg"] = "Everything OK"
