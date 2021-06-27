@@ -83,22 +83,34 @@ contract transport {
 
     /*##### DOMAIN CONTEXT FUNCTIONS #####*/
     // add a new domain context template
-    function addContextTemplate(string memory id, string memory name_context, string memory sip, string memory nw_topo_serv, string memory topo_metadata, string memory node_topo, string memory link_topo) public returns (bool){
-        //string memory _log = "SDN domain added.";
-        string memory status = "NEW_DOMAIN";
-
+    function addContextTemplate_part1(string memory id, string memory name_context, string memory sip) public returns (bool){
         DomainContext_list[id].name_context = name_context;
         DomainContext_list[id].sip = sip;
+        DomainContext_list[id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
+        DomainContextIds.push(id);
+        DomainContextCount ++;
+
+        return true;
+    }
+    function addContextTemplate_part2(string memory id, string memory nw_topo_serv, string memory topo_metadata, string memory node_topo) public returns (bool){
         DomainContext_list[id].nw_topo_serv = nw_topo_serv;
         DomainContext_list[id].topo_metadata = topo_metadata;
         DomainContext_list[id].node_topo = node_topo;
+
+        return true;
+    }
+    function addContextTemplate_part3(string memory id, string memory link_topo) public returns (bool){
+        //string memory _log = "SDN domain added.";
+        string memory status = "NEW_DOMAIN";
+
         DomainContext_list[id].link_topo = link_topo;
         DomainContext_list[id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
         DomainContextIds.push(id);
         DomainContextCount ++;
 
         // all the peers except the owner will take this event
-        emit notifyTopologyActions(msg.sender, id, status, '', name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo);
+        //emit notifyTopologyActions(msg.sender, id, status, '', name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo);
+        emit notifyTopologyActions(msg.sender, id, status, '', DomainContext_list[id].name_context, DomainContext_list[id].sip, DomainContext_list[id].nw_topo_serv, DomainContext_list[id].topo_metadata, DomainContext_list[id].node_topo, link_topo);
         
         //sends back to the client the response
         //emit topology_response(msg.sender, _log, _status);
