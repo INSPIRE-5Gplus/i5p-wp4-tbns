@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x04D9c499d3cC0C02455ACC4891c4e25Cc0e12F6a",
+    "contract_address":"0xA562dD0281f49fE8C368FA3dBdc8c144f74F1fCb",
     "abi":[
         {
             "anonymous": false,
@@ -235,6 +235,25 @@
                     "internalType": "string",
                     "name": "sip",
                     "type": "string"
+                }
+            ],
+            "name": "addContextTemplate_part1",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "id",
+                    "type": "string"
                 },
                 {
                     "internalType": "string",
@@ -250,6 +269,25 @@
                     "internalType": "string",
                     "name": "node_topo",
                     "type": "string"
+                }
+            ],
+            "name": "addContextTemplate_part2",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "id",
+                    "type": "string"
                 },
                 {
                     "internalType": "string",
@@ -257,7 +295,7 @@
                     "type": "string"
                 }
             ],
-            "name": "addContextTemplate",
+            "name": "addContextTemplate_part3",
             "outputs": [
                 {
                     "internalType": "bool",
