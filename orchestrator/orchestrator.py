@@ -93,6 +93,7 @@ def idl_to_bl(idl_json):
     settings.logger.info("ORCH: Get E2E topology from BL.")
     # SECOND: gets current e2e_topology, adds new nodes & IDLs (if they are not already in there) and distributes both json to the blockchain peers  
     response = bl_mapper.get_e2etopology_from_blockchain()
+    print ("length of the e2e_topology string BEFORE: " + str(len(response[0])))
     if response[0] == "empty":
         e2e_topology = {}
         e2e_topo = {}
@@ -126,6 +127,7 @@ def idl_to_bl(idl_json):
                 e2e_idl_list.append(idl_item)
         e2e_topology["e2e-topology"]["interdomain-links"] = e2e_idl_list
     
+    print ("length of the e2e_topology string BEFORE: " + str(len(e2e_topology)))
     settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
     response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:
