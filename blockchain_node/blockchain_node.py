@@ -115,8 +115,6 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     #response = settings.transport_contract.functions.getE2EContext(settings.web3.eth.defaultAccount).call()
     idl_string = json.dumps(idl_json)
     e2e_topology_string = json.dumps(e2e_topology)
-    print("idl_string length: " + str(len(idl_string)))
-    print("e2e_topology_string length: " + str(len(e2e_topology_string)))
     
     # Add a connectivity service template to make it available for other domains
     tx_hash = settings.transport_contract.functions.addIDLContext(idl_string, e2e_topology_string).transact()
@@ -224,15 +222,10 @@ def get_e2etopology_from_blockchain():
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
     response = settings.transport_contract.functions.getE2EContext().call()
-    print("We've go a response from the getE2E")
     if (not response):
         context_json = "empty"
     else:
-        print("BL_node_A********")
         converted_response = response.replace("'", "\"")
-        print("BL_node_B********")
-        context_json = json.loads(converted_response)
-        print(str(type(context_json)))
     return context_json, 200
 
 # requests the deployment of a CS between domains

@@ -93,9 +93,7 @@ def idl_to_bl(idl_json):
     settings.logger.info("ORCH: Get E2E topology from BL.")
     # SECOND: gets current e2e_topology, adds new nodes & IDLs (if they are not already in there) and distributes both json to the blockchain peers  
     response = bl_mapper.get_e2etopology_from_blockchain()
-    print("A**********************")
     if response[0] == "empty":
-        print("A1**********************")
         e2e_topology = {}
         e2e_topo = {}
         e2e_nodes_list = []
@@ -111,9 +109,7 @@ def idl_to_bl(idl_json):
 
         e2e_topology["e2e-topology"] = e2e_topo
     else:
-        print("A2**********************")
         e2e_topology = response[0]
-        print(str(type(e2e_topology)))
         e2e_nodes_list = e2e_topology["e2e-topology"]["nodes-list"]
         for node_item in idl_json["e2e-topology"]["nodes-list"]:
             if node_item not in e2e_nodes_list:
