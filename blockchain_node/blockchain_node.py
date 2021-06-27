@@ -225,13 +225,13 @@ def get_e2etopology_from_blockchain():
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
     response = settings.transport_contract.functions.getE2EContext().call()
     print("We've go a response from the getE2E")
-    print (response)
     if (not response):
         context_json = "empty"
     else:
         print(str(type(response)))
         response = "'" + response + "'"
         context_json = json.loads(response)
+        print(str(type(context_json)))
     return context_json, 200
 
 # requests the deployment of a CS between domains
