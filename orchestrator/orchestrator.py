@@ -166,7 +166,7 @@ def add_idl_info(blockchain_domain_json):
 
 # adds the SDN domain context information coming from another peer to the E2E local graph
 def add_context_info(bl_context_id):
-    settings.logger.info("ORCH: Adding external SDN domain context information for path computation." + str(blockchain_domain_json))
+    settings.logger.info("ORCH: Adding external SDN domain context information for path computation." + str(bl_context_id))
     
     response = bl_mapper.get_context_from_blockchain(bl_context_id)
     context_json = response[0]
