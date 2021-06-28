@@ -101,7 +101,7 @@ contract transport {
     }
     function addContextTemplate_part3(string memory id, string memory node_topo2, string memory link_topo) public returns (bool){
         //string memory _log = "SDN domain added.";
-        //string memory status = "NEW_DOMAIN";
+        string memory status = "NEW_DOMAIN";
         string memory joined_node = string(abi.encodePacked(DomainContext_list[id].node_topo, node_topo2));
         DomainContext_list[id].node_topo = joined_node;
         DomainContext_list[id].link_topo = link_topo;
@@ -111,7 +111,7 @@ contract transport {
 
         // all the peers except the owner will take this event
         //emit notifyTopologyActions(msg.sender, id, status, '', name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo);
-        //emit notifyTopologyActions(msg.sender, id, status, '', DomainContext_list[id].name_context, DomainContext_list[id].sip, DomainContext_list[id].nw_topo_serv, DomainContext_list[id].topo_metadata, DomainContext_list[id].node_topo, link_topo);
+        emit notifyTopologyActions(msg.sender, id, status,'','','','','','','');
         
         //sends back to the client the response
         //emit topology_response(msg.sender, _log, _status);
