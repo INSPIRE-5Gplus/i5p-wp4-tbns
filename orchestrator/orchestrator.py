@@ -156,7 +156,7 @@ def context_to_bl():
     # distributes the local sdn context with the other peers
     response = bl_mapper.context_to_blockchain(context_json)
     settings.logger.info("ORCH: Local context distributed.")
-    msg = "Interdomain-Links and Domain SDN Context distributed with status: " + str(response["status"])
+    msg = "Domain SDN Context distributed with status: " + str(response["status"])
     return ({"msg":msg}, 200)
 
 # adds the inter-domain links information coming from another peer to the E2E local graph

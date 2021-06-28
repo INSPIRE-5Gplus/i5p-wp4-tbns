@@ -150,18 +150,9 @@ def context_to_blockchain(context_json):
     nw_topo_serv = str(context_json["nw_topo_serv"])
     topo_metadata = str(context_json["topo_metadata"])
     node_topo = str(context_json["node_topo"])
-    link_topo = str(context_json["link_topo"])
-    print("id_string length: " + str(len(id_string)))
-    print("name_context length: " + str(len(name_context)))
-    print("sip length: " + str(len(sip)))
-    print("nw_topo_serv length: " + str(len(nw_topo_serv)))
-    print("topo_metadata length: " + str(len(topo_metadata)))
-    print("node_topo length: " + str(len(node_topo)))
     node_topo1 = node_topo[0:len(node_topo)//2]
     node_topo2 = node_topo[len(node_topo)//2 if len(node_topo)%2 == 0 else ((len(node_topo)//2)+1):]
-    print("node_topo1 length: " + str(len(node_topo1)))
-    print("node_topo2 length: " + str(len(node_topo2)))
-    print("link_topo length: " + str(len(link_topo)))
+    link_topo = str(context_json["link_topo"])
     
     # Add a connectivity service template to make it available for other domains
     settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
