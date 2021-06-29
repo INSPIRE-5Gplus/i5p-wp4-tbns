@@ -47,7 +47,6 @@ def transport_event_loop(transport_event_filter, poll_interval):
     while True:
         for event in transport_event_filter.get_new_entries():
             handle_transport_event(event)
-        
         time.sleep(poll_interval)
 
 def handle_transport_event(event):
