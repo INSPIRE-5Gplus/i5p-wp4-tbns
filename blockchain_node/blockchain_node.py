@@ -173,18 +173,7 @@ def context_to_blockchain(context_json):
     nw_topo_serv = context_json["nw_topo_serv"]
     topo_metadata = context_json["topo_metadata"]
     node_topo = context_json["node_topo"]
-    
-    #node_topo1 = node_topo[0:len(node_topo)//2]
-    #node_topo2 = node_topo[len(node_topo)//2 if len(node_topo)%2 == 0 else ((len(node_topo)//2)+1):]
-    link_topo = str(context_json["link_topo"])
-
-    print("iid_stringd: " + str(len(id_string)))
-    print("name_context: " + str(len(name_context)))
-    print("sip: " + str(len(sip)))
-    print("nw_topo_serv: " + str(len(nw_topo_serv)))
-    print("topo_metadatada " + str(len(topo_metadata)))
-    print("node_topo: " + str(len(node_topo)))
-    print("link_topo: " + str(len(link_topo)))
+    link_topo = context_json["link_topo"]
 
     sip_uuid_list = []
     node_uuid_list = []
@@ -198,8 +187,12 @@ def context_to_blockchain(context_json):
         sip_uuid_list.append(sip_item["uuid"])
     
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Nodes.')
+    print(context_json["node_topo"])
     for node_item in json.loads(context_json["node_topo"]):
         bl_node_uuid = context_json["id"]+"-"+node_item["uuid"]
+        print("***************************")
+        print(bl_node_uuid)
+        print(node_item)
         tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item)).transact()
         # Wait for transaction to be mined and check it's in the blockchain (get)
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
