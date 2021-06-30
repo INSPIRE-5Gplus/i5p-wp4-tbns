@@ -166,13 +166,13 @@ def context_to_blockchain(context_json):
         return segmented_list
     
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
-    id_string = str(context_json["id"])
-    name_context = str(context_json["name_context"])
-    sip = str(context_json["sip"])
+    id_string = json.dumps(context_json["id"])
+    name_context = json.dumps(context_json["name_context"])
+    sip = json.dumps(context_json["sip"])
     #segmented_sip = divide_string_in_3(sip)
-    nw_topo_serv = str(context_json["nw_topo_serv"])
-    topo_metadata = str(context_json["topo_metadata"])
-    node_topo = str(context_json["node_topo"])
+    nw_topo_serv = json.dumps(context_json["nw_topo_serv"])
+    topo_metadata = json.dumps(context_json["topo_metadata"])
+    node_topo = json.dumps(context_json["node_topo"])
     
     #node_topo1 = node_topo[0:len(node_topo)//2]
     #node_topo2 = node_topo[len(node_topo)//2 if len(node_topo)%2 == 0 else ((len(node_topo)//2)+1):]
@@ -191,13 +191,16 @@ def context_to_blockchain(context_json):
     link_uuid_list = []
     print(context_json["sip"])
     for sip_item in context_json["sip"]:
+        print("*********************************************")
+        print(json.dumps(sip_item))
         settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIP.')
         bl_sip_uuid = context_json["id"]+"-"+sip_item["uuid"]
         settings.logger.info('BLOCKCHAIN_MAPPER: sip uuid:' + bl_sip_uuid)
-        tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, str(sip_item)).transact()
+        tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, json.dumps(sip_item)).transact()
     
         # Wait for transaction to be mined and check it's in the blockchain (get)
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+
         sip_uuid_list.append(sip_item["uuid"])
     
     for node_item in context_json["node_topo"]:
