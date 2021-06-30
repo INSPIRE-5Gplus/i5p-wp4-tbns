@@ -189,35 +189,27 @@ def context_to_blockchain(context_json):
     sip_uuid_list = []
     node_uuid_list = []
     link_uuid_list = []
-    print(context_json["sip"])
-    for sip_item in json.loads(context_json["sip"]):
-        print("*********************************************")
-        print(json.dumps(sip_item))
-        settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIP.')
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIPs.')
+    for sip_item in json.loads(context_json["sip"]):        
         bl_sip_uuid = context_json["id"]+"-"+sip_item["uuid"]
-        print(bl_sip_uuid)
         tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, json.dumps(sip_item)).transact()
         # Wait for transaction to be mined
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-
         sip_uuid_list.append(sip_item["uuid"])
     
-    for node_item in context_json["node_topo"]:
-        settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Node.')
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Nodes.')
+    for node_item in json.loads(context_json["node_topo"]):
         bl_node_uuid = context_json["id"]+"-"+node_item["uuid"]
-        tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, str(node_item)).transact()
-    
+        tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item)).transact()
         # Wait for transaction to be mined and check it's in the blockchain (get)
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
         node_uuid_list.appen(node_item["uuid"])
     
     if context_json["link_topo"]:
-        settings.logger.info('BLOCKCHAIN_MAPPER: There are Links to distribute.')
-        for link_item in context_json["link_topo"]:
-            settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Link.')
+        settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Links.')
+        for link_item in json.loads(context_json["link_topo"]):
             bl_link_uuid = context_json["id"]+"-"+link_item["uuid"]
-            tx_hash = settings.transport_contract.functions.addLink(bl_link_uuid, str(link_item)).transact()
-        
+            tx_hash = settings.transport_contract.functions.addLink(bl_link_uuid, json.dumps(link_item)).transact()
             # Wait for transaction to be mined and check it's in the blockchain (get)
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
             link_uuid_list.append(link_item)
@@ -226,7 +218,13 @@ def context_to_blockchain(context_json):
     
     # Add a connectivity service template to make it available for other domains
     settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
-    tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, str(sip_uuid_list), nw_topo_serv, topo_metadata, str(node_uuid_list), str(link_uuid_list)).transact()
+    print(sip_uuid_list)
+    print("sip_uuid_list: " + str(len(sip_uuid_list)))
+    print(node_uuid_list)
+    print("node_uuid_list: " + str(len(node_uuid_list)))
+    print(link_uuid_list)
+    print("link_uuid_list: " + str(len(link_uuid_list)))
+    tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, json.dumps(sip_uuid_list), nw_topo_serv, topo_metadata, json.dumps(node_uuid_list), json.dumps(link_uuid_list)).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: PART_1 done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
