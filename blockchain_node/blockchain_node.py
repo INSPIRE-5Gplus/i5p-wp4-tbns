@@ -143,44 +143,72 @@ def get_idl_id(index):
 
 # distributes the domain SDN context with the other peers
 def context_to_blockchain(context_json):
+    def divide_string_in_3(sentence):
+        parts = 3
+        segmented_list = []
+        initial_pos = 0
+        ending_pos = 0
+        chunk_size = len(sentence)/parts
+        rounded_up_size = round(chunk_size)
+        rounded_down_size = int(chunk_size)
+
+        for i in range(parts):
+            if i==(parts-1):
+                ending_pos = ending_pos + (rounded_down_size)
+                segmented_string = sentence[initial_pos:ending_pos]
+                segmented_list.append(segmented_string)
+            else:
+                ending_pos = ending_pos + (rounded_up_size)
+                segmented_string = sentence[initial_pos:ending_pos]
+                segmented_list.append(segmented_string)
+            
+            initial_pos = ending_pos
+        return segmented_list
+    
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
     id_string = str(context_json["id"])
     name_context = str(context_json["name_context"])
     sip = str(context_json["sip"])
+    segmented_sip = divide_string_in_3(sip)
     nw_topo_serv = str(context_json["nw_topo_serv"])
     topo_metadata = str(context_json["topo_metadata"])
     node_topo = str(context_json["node_topo"])
-    node_topo1 = node_topo[0:len(node_topo)//2]
-    node_topo2 = node_topo[len(node_topo)//2 if len(node_topo)%2 == 0 else ((len(node_topo)//2)+1):]
+    segmented_node_topo = divide_string_in_3(node_topo)
+    #node_topo1 = node_topo[0:len(node_topo)//2]
+    #node_topo2 = node_topo[len(node_topo)//2 if len(node_topo)%2 == 0 else ((len(node_topo)//2)+1):]
     link_topo = str(context_json["link_topo"])
 
     print("iid_stringd: " + str(len(id_string)))
     print("name_context: " + str(len(name_context)))
     print("sip: " + str(len(sip)))
+    print("sip: " + str(len(segmented_sip[0])))
+    print("sip: " + str(len(segmented_sip[1])))
+    print("sip: " + str(len(segmented_sip[2])))
     print("nw_topo_serv: " + str(len(nw_topo_serv)))
     print("topo_metadatada " + str(len(topo_metadata)))
     print("node_topo: " + str(len(node_topo)))
-    print("node_topo1" + str(len(node_topo1)))
-    print("node_topo2: " + str(len(node_topo2)))
+    print("node_topo1: " + str(len(segmented_node_topo[0])))
+    print("node_topo2: " + str(len(segmented_node_topo[1])))
+    print("node_topo2: " + str(len(segmented_node_topo[2])))
     print("link_topo: " + str(len(link_topo)))
     
     # Add a connectivity service template to make it available for other domains
     settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
-    tx_hash = settings.transport_contract.functions.addContextTemplate_part1(id_string, name_context, sip).transact()
+    tx_hash = settings.transport_contract.functions.addContextTemplate_part1(id_string, name_context, segmented_sip[0], segmented_sip[1], segmented_sip[2]).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: PART_1 done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
 
     settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction part 2.')
-    tx_hash = settings.transport_contract.functions.addContextTemplate_part2(id_string, nw_topo_serv, topo_metadata, node_topo1).transact()
+    tx_hash = settings.transport_contract.functions.addContextTemplate_part2(id_string, nw_topo_serv, topo_metadata, segmented_node_topo[0], segmented_node_topo[1]).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: Part_2 done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
 
     settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction part 3.')
-    tx_hash = settings.transport_contract.functions.addContextTemplate_part3(id_string, node_topo2, link_topo).transact()
+    tx_hash = settings.transport_contract.functions.addContextTemplate_part3(id_string, segmented_node_topo[2], link_topo).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: Part_3 done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)

@@ -83,8 +83,9 @@ contract transport {
 
     /*##### DOMAIN CONTEXT FUNCTIONS #####*/
     // add a new domain context template
-    function addContextTemplate_part1(string memory _id, string memory name_context, string memory sip) public returns (bool){
+    function addContextTemplate_part1(string memory _id, string memory name_context, string memory sip1, string memory sip2, string memory sip3) public returns (bool){
         DomainContext_list[_id].name_context = name_context;
+        string memory sip = string(abi.encodePacked(sip1, sip2, sip3));
         DomainContext_list[_id].sip = sip;
         DomainContext_list[_id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
         DomainContextIds.push(_id);
@@ -92,17 +93,18 @@ contract transport {
 
         return true;
     }
-    function addContextTemplate_part2(string memory _id, string memory nw_topo_serv, string memory topo_metadata, string memory node_topo) public returns (bool){
+    function addContextTemplate_part2(string memory _id, string memory nw_topo_serv, string memory topo_metadata, string memory node_topo1, string memory node_topo2) public returns (bool){
         DomainContext_list[_id].nw_topo_serv = nw_topo_serv;
         DomainContext_list[_id].topo_metadata = topo_metadata;
+        string memory node_topo = string(abi.encodePacked(node_topo1, node_topo2));
         DomainContext_list[_id].node_topo = node_topo;
 
         return true;
     }
-    function addContextTemplate_part3(string memory _id, string memory node_topo2, string memory link_topo) public returns (bool){
+    function addContextTemplate_part3(string memory _id, string memory node_topo3, string memory link_topo) public returns (bool){
         //string memory _log = "SDN domain added.";
-        string memory _status = "NEW_DOMAIN";
-        string memory joined_node = string(abi.encodePacked(DomainContext_list[_id].node_topo, node_topo2));
+        //string memory _status = "NEW_DOMAIN";
+        string memory joined_node = string(abi.encodePacked(DomainContext_list[_id].node_topo, node_topo3));
         DomainContext_list[_id].node_topo = joined_node;
         DomainContext_list[_id].link_topo = link_topo;
         DomainContext_list[_id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
@@ -111,7 +113,6 @@ contract transport {
         //emit notifyTopologyActions(msg.sender, id, status, '', name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo);
         //emit notifyTopologyActions(msg.sender, _id, _status, "", "", "", "", "", "", "");
 
-        
         //sends back to the client the response
         //emit topology_response(msg.sender, _log, _status);
         return true;
