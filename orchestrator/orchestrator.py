@@ -165,11 +165,13 @@ def add_idl_info(blockchain_domain_json):
     vl_computation.add_idl_e2e_graph(blockchain_domain_json)
 
 # adds the SDN domain context information coming from another peer to the E2E local graph
-def add_context_info(bl_context_id):
-    settings.logger.info("ORCH: Adding external SDN domain context information for path computation." + str(bl_context_id))
-    
-    response = bl_mapper.get_context_from_blockchain(bl_context_id)
+def add_context_info(context_json):
+    settings.logger.info("ORCH: Adding external SDN domain context information in the E2E Network graph." + str(context_json["uuid"]))
+    response = bl_mapper.get_context_sips_ndoes_links_from_blockchain(context_json)
     context_json = response[0]
+
+    #TODO: compose the json with real TAPI structure before passing it to be added in the local E2E graph.
+
     vl_computation.add_context_e2e_graph(context_json)
 
 # returns the transport context information in the local domain

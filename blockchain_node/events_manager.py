@@ -57,8 +57,18 @@ def handle_transport_event(event):
         settings.executor.submit(orch.add_idl_info, event_json)
     elif (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
-        context_id = event['args']['id']
-        settings.executor.submit(orch.add_context_info, context_id)
+        context_json = {}
+        context_json["uuid"] =  event['args']['id']
+        context_json["name_context"] =  event['args']['name_context']
+        context_json["sip"] =  event['args']['sip']
+        context_json["nw_topo_serv"] =  event['args']['nw_topo_serv']
+        context_json["topo_metadata"] =  event['args']['itopo_metadatad']
+        context_json["node_topo"] =  event['args']['inode_topod']
+        context_json["link_topo"] =  event['args']['link_topo']
+        
+        #TODO: uncomment and remove print once the composition is done.
+        print(context_json)
+        #settings.executor.submit(orch.add_context_info, context_json)
     elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
         cs_json = json.loads(event['args']['cs_dumps'])

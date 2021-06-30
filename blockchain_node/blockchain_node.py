@@ -187,12 +187,8 @@ def context_to_blockchain(context_json):
         sip_uuid_list.append(sip_item["uuid"])
     
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Nodes.')
-    print(context_json["node_topo"])
     for node_item in json.loads(context_json["node_topo"]):
         bl_node_uuid = context_json["id"]+":"+node_item["uuid"]
-        print("***************************")
-        print(bl_node_uuid)
-        print(node_item)
         tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item)).transact()
         # Wait for transaction to be mined and check it's in the blockchain (get)
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
@@ -205,18 +201,17 @@ def context_to_blockchain(context_json):
             tx_hash = settings.transport_contract.functions.addLink(bl_link_uuid, json.dumps(link_item)).transact()
             # Wait for transaction to be mined and check it's in the blockchain (get)
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-            link_uuid_list.append(link_item)
+            link_uuid_list.append(link_item["uuid"])
     else:
         settings.logger.info('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
     
-    # Add a connectivity service template to make it available for other domains
-    settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
-    print(sip_uuid_list)
     print("sip_uuid_list: " + str(len(sip_uuid_list)))
-    print(node_uuid_list)
     print("node_uuid_list: " + str(len(node_uuid_list)))
     print(link_uuid_list)
     print("link_uuid_list: " + str(len(link_uuid_list)))
+    
+    # Add a connectivity service template to make it available for other domains
+    settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')    
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, json.dumps(sip_uuid_list), nw_topo_serv, topo_metadata, json.dumps(node_uuid_list), json.dumps(link_uuid_list)).transact()
     settings.logger.info('BLOCKCHAIN_MAPPER: PART_1 done.')
     
@@ -240,14 +235,16 @@ def context_to_blockchain(context_json):
     
     return msg, 200
 
-# returns topology saved in the blockchain
+# TODO: need to be updated with what it really returns (context with list of sips, ndoes, links)
 def get_context_from_blockchain(context_ID):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
-    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context template information. ID: ' + str(context_ID))
-    response = settings.transport_contract.functions.getContextTemplate(context_ID).call()
+    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context information (sips, ndoes and links).' )
     
+    #response = settings.transport_contract.functions.getContextTemplate(context_ID).call()   
+    response = {}
     #contstruct the context information as a single json.
     context_json = {}
+    """
     topology_list = []
     topology_json = {}
     tapi_topo_topo_context_json = {}
@@ -261,11 +258,38 @@ def get_context_from_blockchain(context_ID):
     topology_list.append(topology_json)
     tapi_topo_topo_context_json["topology"] = topology_list
     context_json["tapi-topology:topology-context"] = tapi_topo_topo_context_json
+    """
 
     response_json = {}
     response_json["context"] = context_json
     response_json["blockchain_owner"] = response[6]
     return response_json, 200
+
+# return all the sips, nodes and links belonging to a specific context to build the json with the complete TAPI format
+def get_context_sips_ndoes_links_from_blockchain(context_json):
+    sips_list_json = []
+    for sip_item in context_json["sip"]:
+        response = settings.transport_contract.functions.getSIP(sip_item).call() 
+        sip_json = json.loads(response[0])
+        sips_list_json.append(sip_json)
+    context_json["sip"] = sips_list_json
+
+    nodes_list_json = []
+    for node_item in context_json["node_topo"]:
+        response = settings.transport_contract.functions.getNode(node_item).call() 
+        node_json = json.loads(response[0])
+        nodes_list_json.append(node_json)
+    context_json["node_topo"] = nodes_list_json
+
+    links_list_json = []
+    if context_json["link_topo"]:
+        for link_item in context_json["link_topo"]:
+            response = settings.transport_contract.functions.getLink(link_item).call() 
+            link_json = json.loads(response[0])
+            links_list_json.append(link_json)
+    context_json["link_topo"] = links_list_json
+    
+    return context_json
 
 # returns the number of slice-subnets (NSTs) in the blockchain db
 def get_context_counter():
@@ -277,7 +301,7 @@ def get_context_id(index):
     response = settings.transport_contract.functions.getContextTemplateId(index).call()
     return response
 
-# returns E2E Topology information from blockchain
+# returns IDLs information from blockchain
 def get_e2etopology_from_blockchain():
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
