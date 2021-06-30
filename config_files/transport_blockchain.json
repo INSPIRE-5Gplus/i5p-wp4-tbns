@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x7Ea3269e6286FCE8A7E5b7E87A2E51cd3863c57c",
+    "contract_address":"0xBc71B07c2ed52505787B64F3856571Ded101497F",
     "abi":[
         {
             "anonymous": false,
@@ -222,6 +222,135 @@
         {
             "inputs": [
                 {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "LinksIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "name": "Links_list",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "link_info",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "linkOwner",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "NodesIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "name": "Nodes_list",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "node_info",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "nodeOwner",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SIPsIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "name": "SIPs_list",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "sip_info",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "sipOwner",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
                     "internalType": "string",
                     "name": "_id",
                     "type": "string"
@@ -233,36 +362,7 @@
                 },
                 {
                     "internalType": "string",
-                    "name": "sip1",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "sip2",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "sip3",
-                    "type": "string"
-                }
-            ],
-            "name": "addContextTemplate_part1",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_id",
+                    "name": "sip",
                     "type": "string"
                 },
                 {
@@ -277,36 +377,7 @@
                 },
                 {
                     "internalType": "string",
-                    "name": "node_topo1",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "node_topo2",
-                    "type": "string"
-                }
-            ],
-            "name": "addContextTemplate_part2",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_id",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "node_topo3",
+                    "name": "node_topo",
                     "type": "string"
                 },
                 {
@@ -315,7 +386,7 @@
                     "type": "string"
                 }
             ],
-            "name": "addContextTemplate_part3",
+            "name": "addContextTemplate",
             "outputs": [
                 {
                     "internalType": "bool",
@@ -340,6 +411,78 @@
                 }
             ],
             "name": "addIDLContext",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "link_info",
+                    "type": "string"
+                }
+            ],
+            "name": "addLink",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "node_info",
+                    "type": "string"
+                }
+            ],
+            "name": "addNode",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "sip_info",
+                    "type": "string"
+                }
+            ],
+            "name": "addSip",
             "outputs": [
                 {
                     "internalType": "bool",
@@ -434,6 +577,63 @@
         {
             "inputs": [],
             "name": "getE2EContext",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
+            "name": "getLink",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
+            "name": "getNode",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
+            "name": "getSIP",
             "outputs": [
                 {
                     "internalType": "string",
