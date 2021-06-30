@@ -171,8 +171,31 @@ def add_context_info(context_json):
     context_json = response[0]
 
     #TODO: compose the json with real TAPI structure before passing it to be added in the local E2E graph.
+    tapi_context_json={}
+    tapi_common_context = {}
+    tapi_topology_context = {}
+    topology = []
+    topology_element = {}
 
-    vl_computation.add_context_e2e_graph(context_json)
+    tapi_common_context["uuid"] = context_json["id"]
+    tapi_common_context["name"] = context_json["name_context"]
+    tapi_common_context["service-interface-point"] = context_json["sip"]
+    topo_metadata = json.loads(context_json["topo_metadata"])
+    topology_element["uuid"] = topo_metadata["uuid"]
+    topology_element["layer-protocol-name"] = topo_metadata["layer-protocol-name"]
+    topology_element["name"] = topo_metadata["name"]
+    topology_element["node"] = json.loads(context_json["node_topo"])
+    topology_element["link"] = json.loads(context_json["link_topo"])
+    topology.append(topology_element)
+    tapi_topology_context["nw-topology-service"] = context_json["nw_topo_serv"]
+    tapi_topology_context["topology"] = topology
+    tapi_common_context["tapi-topology:topology-context"] = tapi_topology_context
+    tapi_context_json["tapi-common:context"] = tapi_common_context
+
+    print(type(tapi_context_json))
+    print(tapi_context_json)
+
+    #vl_computation.add_context_e2e_graph(tapi_context_json)
 
 # returns the transport context information in the local domain
 def get_context():

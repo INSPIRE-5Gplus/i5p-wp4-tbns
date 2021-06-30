@@ -62,13 +62,11 @@ def handle_transport_event(event):
         context_json["name_context"] =  event['args']['name_context']
         context_json["sip"] =  event['args']['sip']
         context_json["nw_topo_serv"] =  event['args']['nw_topo_serv']
-        context_json["topo_metadata"] =  event['args']['itopo_metadatad']
+        context_json["topo_metadata"] =  event['args']['topo_metadata']
         context_json["node_topo"] =  event['args']['inode_topod']
         context_json["link_topo"] =  event['args']['link_topo']
         
-        #TODO: uncomment and remove print once the composition is done.
-        print(context_json)
-        #settings.executor.submit(orch.add_context_info, context_json)
+        settings.executor.submit(orch.add_context_info, context_json)
     elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
         cs_json = json.loads(event['args']['cs_dumps'])

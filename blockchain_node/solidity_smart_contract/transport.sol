@@ -3,30 +3,49 @@ pragma solidity ^0.8.0;
 
 contract transport {
     /*##### INTERDOMAIN-LINKS INFORMATION #####*/
-    /*struct IDLContext{
-        //string idl_id;
-        string interdomainLink;
-        address idlOwner;
-    }
-    mapping(string => IDLContext) public IDLContext_list;
-    address[] public IDLContextIds;
-    uint IDLContextCount;*/
     string e2e_topology;
 
-    /*##### DOMAIN CONTEXT INFORMATION #####*/
+    /*##### DOMAIN CONTEXT INFORMATION  plus SIPs, Nodes and Links #####*/
     struct DomainContext{
         //string domain_id;
         string name_context;
-        string sip;
+        string sip;                 //list of sip uuids
         string nw_topo_serv;
         string topo_metadata;
-        string node_topo;
-        string link_topo;
+        string node_topo;           //list of nodes uuids
+        string link_topo;           //list of links uuids
         address contextOwner;
     }
     mapping(string => DomainContext) public DomainContext_list;
     string[] public DomainContextIds;
     uint DomainContextCount;
+    
+    struct SIPs{
+        //string sip_id;
+        string sip_info;
+        address sipOwner;
+    }
+    mapping(string => SIPs) public SIPs_list;
+    string[] public SIPsIds;
+    uint SIPsCount;
+    
+    struct Nodes{
+        //string nodeid;
+        string node_info;
+        address nodeOwner;
+    }
+    mapping(string => Nodes) public Nodes_list;
+    string[] public NodesIds;
+    uint NodesCount;
+    
+    struct Links{
+        //string link_id;
+        string link_info;
+        address linkOwner;
+    }
+    mapping(string => Links) public Links_list;
+    string[] public LinksIds;
+    uint LinksCount;
 
     /*##### CONNECTIVITY SERVICE INSTANCES #####*/
     //TODO: update the structure to have an address, uuid and a status (this struct will be dynamic)
@@ -42,7 +61,6 @@ contract transport {
     uint CSInstanceCount;
 
     /*##### EVENTS #####*/
-    //event templateRemoved (string log);
     event topology_response(address requester, string log, string status);
     event notifyTopologyActions(address owner, string id, string status, string sdn_info, string name_context, string sip, string nw_topo_serv, string topo_metadata, string node_topo, string link_topo);
 
@@ -52,10 +70,6 @@ contract transport {
         //string memory _log = "Inter-Domain Links distributed and E2E Topology updated";
         string memory _status = "NEW_IDL";
 
-        //IDLContext_list[msg.sender].interdomainLink = _interdomainLink;
-        //IDLContext_list[msg.sender].idlOwner = msg.sender;
-        //IDLContextIds.push(msg.sender);
-        //IDLContextCount ++;
         e2e_topology = _e2etop;
 
         // generates and event for all the peers except the owner to update their E2E view
@@ -67,54 +81,58 @@ contract transport {
     }
     // gets the information of a single context template
     function getE2EContext() public view returns (string memory){
-        //string memory _idl = IDLContext_list[_owner].interdomainLink;
-        //return (_idl);
         return e2e_topology;
     }
-    // gets the number of context templates available in the blockchain
-    //function getIDLContextCount() public view returns(uint) {
-        //return IDLContextCount;
-    //}
-    // gets the uuid of the context template in position i (used when to get ALL context templates)
-    //function getIDLContextId(uint _index) public view returns (string memory){
-        //return IDLContextIds[_index];
-    //}
-    //TODO: DELETE IDL element
 
     /*##### DOMAIN CONTEXT FUNCTIONS #####*/
     // add a new domain context template
-    function addContextTemplate_part1(string memory _id, string memory name_context, string memory sip1, string memory sip2, string memory sip3) public returns (bool){
+    function addContextTemplate(string memory _id, string memory name_context, string memory sip, string memory nw_topo_serv, string memory topo_metadata, string memory node_topo, string memory link_topo) public returns (bool){
+        string memory status = "NEW_DOMAIN";
+        
         DomainContext_list[_id].name_context = name_context;
-        string memory sip = string(abi.encodePacked(sip1, sip2, sip3));
         DomainContext_list[_id].sip = sip;
+        DomainContext_list[_id].nw_topo_serv = nw_topo_serv;
+        DomainContext_list[_id].topo_metadata = topo_metadata;
+        DomainContext_list[_id].node_topo = node_topo;
+        DomainContext_list[_id].link_topo = link_topo;
         DomainContext_list[_id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
         DomainContextIds.push(_id);
         DomainContextCount ++;
-
-        return true;
-    }
-    function addContextTemplate_part2(string memory _id, string memory nw_topo_serv, string memory topo_metadata, string memory node_topo1, string memory node_topo2) public returns (bool){
-        DomainContext_list[_id].nw_topo_serv = nw_topo_serv;
-        DomainContext_list[_id].topo_metadata = topo_metadata;
-        string memory node_topo = string(abi.encodePacked(node_topo1, node_topo2));
-        DomainContext_list[_id].node_topo = node_topo;
-
-        return true;
-    }
-    function addContextTemplate_part3(string memory _id, string memory node_topo3, string memory link_topo) public returns (bool){
-        //string memory _log = "SDN domain added.";
-        //string memory _status = "NEW_DOMAIN";
-        string memory joined_node = string(abi.encodePacked(DomainContext_list[_id].node_topo, node_topo3));
-        DomainContext_list[_id].node_topo = joined_node;
-        DomainContext_list[_id].link_topo = link_topo;
-        DomainContext_list[_id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
-
+        
         // all the peers except the owner will take this event
-        //emit notifyTopologyActions(msg.sender, id, status, '', name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo);
+        emit notifyTopologyActions(msg.sender, _id, status, '', name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo);
         //emit notifyTopologyActions(msg.sender, _id, _status, "", "", "", "", "", "", "");
 
         //sends back to the client the response
         //emit topology_response(msg.sender, _log, _status);
+
+        return true;
+    }
+    // add a new sip
+    function addSip(string memory _id, string memory sip_info) public returns (bool){
+        //the _id is a composition of the context uuid and the sip uuid
+        SIPs_list[_id].sip_info = sip_info;
+        SIPs_list[_id].sipOwner = msg.sender;  //the peer uploading the sip info is the owner
+        SIPsIds.push(_id);
+        SIPsCount ++;
+        return true;
+    }
+    // add a new node
+    function addNode(string memory _id, string memory node_info) public returns (bool){
+        //the _id is a composition of the context uuid and the node uuid
+        Nodes_list[_id].node_info = node_info;
+        Nodes_list[_id].nodeOwner = msg.sender;  //the peer uploading the node info is the owner
+        NodesIds.push(_id);
+        NodesCount ++;
+        return true;
+    }
+    // add a new link
+    function addLink(string memory _id, string memory link_info) public returns (bool){
+        //the _id is a composition of the context uuid and the link uuid
+        Links_list[_id].link_info = link_info;
+        Links_list[_id].linkOwner = msg.sender;  //the peer uploading the link info is the owner
+        LinksIds.push(_id);
+        LinksCount ++;
         return true;
     }
     // gets the information of a single domain context
@@ -126,8 +144,6 @@ contract transport {
         string memory node_topo = DomainContext_list[_id].node_topo;
         string memory link_topo = DomainContext_list[_id].link_topo;
         address _own = DomainContext_list[_id].contextOwner;
-        
-        /*return string(abi.encodePacked(a, b, c, d, e));*/
 
         return (name_context, sip, nw_topo_serv, topo_metadata, node_topo, link_topo, _own);
     }
@@ -140,6 +156,21 @@ contract transport {
         return DomainContextIds[_index];
     }
     // TODO: remove specific domain context
+    // gets the information of a single sip
+    function getSIP(string memory _id) public view returns (string memory){
+        string memory sip = SIPs_list[_id].sip_info;
+        return (sip);
+    }
+    // gets the information of a single node
+    function getNode(string memory _id) public view returns (string memory){
+        string memory node = Nodes_list[_id].node_info;
+        return (node);
+    }
+    // gets the information of a single link
+    function getLink(string memory _id) public view returns (string memory){
+        string memory link = Links_list[_id].link_info;
+        return (link);
+    }
 
     /*##### CONNECTIVITY SERVICE INSTANCES FUNCTIONS #####*/
     // generates an event to deploy a connectivity service
