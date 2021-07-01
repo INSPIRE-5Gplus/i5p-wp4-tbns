@@ -175,6 +175,7 @@ def add_context_info(context_json):
     
     print("ORCH: ------- A")
     response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
+    print (str(response))
     print("ORCH: ------- B")
     context_json = json.loads(response[0])
     print("context_json_type: " + type(context_json))
