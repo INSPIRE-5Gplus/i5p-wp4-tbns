@@ -180,8 +180,12 @@ def add_context_info(context_json):
     tapi_common_context["uuid"] = response_json["uuid"]
     tapi_common_context["name"] = response_json["name_context"]
     print("ORCH: ------- E")
-    print(str(type(response_json["sip"])))
-    tapi_common_context["service-interface-point"] = json.loads(response_json["sip"])
+    sips = []
+    for sip_item_string in response_json["sip"]:
+        sip_item_json = json.loads(sip_item_string)
+        sips.append(sip_item_json)
+    tapi_common_context["service-interface-point"] = sips
+    print(str(tapi_common_context["service-interface-point"]))
     print("ORCH: ------- F")
     topo_metadata = response_json["topo_metadata"]
     print("ORCH: ------- G")
