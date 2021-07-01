@@ -282,12 +282,8 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
     for node_uuid in json.loads(context_json["node_topo"]):
         node_ref = context_json["uuid"]+":"+node_uuid
         print("BL_NODE:GET NODE with ID: " + str(node_ref))
-        print(type(node_ref))
         response = settings.transport_contract.functions.getNode(node_ref).call()
-        print(str(response))
-        node_json = json.loads(response[0])
-        print(node_json)
-        print(type(node_json))
+        node_json = json.loads(response)
         nodes_list_json.append(node_json)
     print(nodes_list_json)
     context_json["node_topo"] = nodes_list_json
@@ -297,9 +293,8 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
     for sip_uuid in json.loads(context_json["sip"]):
         sip_ref = context_json["uuid"]+":"+sip_uuid
         print("BL_NODE:GET SIP with ID: " + str(sip_ref))
-        print(type(sip_ref))
         response = settings.transport_contract.functions.getSIP(sip_ref).call() 
-        sip_json = json.loads(response[0])
+        sip_json = json.loads(response)
         sips_list_json.append(sip_json)
     context_json["sip"] = sips_list_json
 
@@ -311,9 +306,8 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
         for link_uuid in linklist:
             link_ref = context_json["uuid"]+":"+sip_uuid
             print("BL_NODE:GET LINK with ID: " + str(link_ref))
-            print(type(link_ref))
             response = settings.transport_contract.functions.getLink(link_ref).call() 
-            link_json = json.loads(response[0])
+            link_json = json.loads(response)
             links_list_json.append(link_json)
     context_json["link_topo"] = links_list_json
     
