@@ -283,7 +283,8 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
         node_ref = context_json["uuid"]+":"+node_uuid
         print("BL_NODE:GET NODE with ID: " + str(node_ref))
         print(type(node_ref))
-        response = settings.transport_contract.functions.getNode(node_ref).call() 
+        response = settings.transport_contract.functions.getNode(node_ref).call()
+        print(str(response))
         node_json = json.loads(response[0])
         print(node_json)
         print(type(node_json))
