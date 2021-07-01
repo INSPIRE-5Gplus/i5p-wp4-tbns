@@ -213,11 +213,13 @@ def context_to_blockchain(context_json):
     # Add a connectivity service template to make it available for other domains
     settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')    
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, json.dumps(sip_uuid_list), nw_topo_serv, topo_metadata, json.dumps(node_uuid_list), json.dumps(link_uuid_list)).transact()
-    settings.logger.info('BLOCKCHAIN_MAPPER: PART_1 done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
+
+    response = settings.transport_contract.functions.getNodeCount().call()
+    print(str(response[0]))
 
     #rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
     #settings.logger.info('BLOCKCHAIN_MAPPER: topology_event.' + str(rich_logs))
