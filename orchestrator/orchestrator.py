@@ -175,18 +175,22 @@ def add_context_info(context_json):
     
     print("ORCH: ------- A")
     response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
+    print (str(type(response))) #tuple
+    print (str(response[0]))
+    print (str(type(response[0]))) # dict
+    print (str(response[1])) #200
     print("ORCH: ------- B")
-    context_json = response[0]
-    print("context_json_type: " + type(context_json))
+    response_json = response[0]
+    print("ORCH: ------- B1")
+    print("response_json_type: " + type(response_json))
     print("ORCH: ------- C")
-    print(context_json["id"])
-    tapi_common_context["uuid"] = context_json["id"]
+    tapi_common_context["uuid"] = response_json["id"]
     print("ORCH: ------- D")
-    tapi_common_context["name"] = context_json["name_context"]
+    tapi_common_context["name"] = response_json["name_context"]
     print("ORCH: ------- E")
-    tapi_common_context["service-interface-point"] = context_json["sip"]
+    tapi_common_context["service-interface-point"] = response_json["sip"]
     print("ORCH: ------- F")
-    topo_metadata = json.loads(context_json["topo_metadata"])
+    topo_metadata = response_json["topo_metadata"]
     print("ORCH: ------- G")
     topology_element["uuid"] = topo_metadata["uuid"]
     print("ORCH: ------- H")
@@ -194,13 +198,13 @@ def add_context_info(context_json):
     print("ORCH: ------- I")
     topology_element["name"] = topo_metadata["name"]
     print("ORCH: ------- J")
-    topology_element["node"] = json.loads(context_json["node_topo"])
+    topology_element["node"] = response_json["node_topo"]
     print("ORCH: ------- K")
-    topology_element["link"] = json.loads(context_json["link_topo"])
+    topology_element["link"] = response_json["link_topo"]
     print("ORCH: ------- L")
     topology.append(topology_element)
     print("ORCH: ------- M")
-    tapi_topology_context["nw-topology-service"] = context_json["nw_topo_serv"]
+    tapi_topology_context["nw-topology-service"] = response_json["nw_topo_serv"]
     print("ORCH: ------- N")
     tapi_topology_context["topology"] = topology
     print("ORCH: ------- O")
