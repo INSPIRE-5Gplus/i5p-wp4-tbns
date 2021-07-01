@@ -182,7 +182,7 @@ def add_context_info(context_json):
     print("ORCH: ------- B")
     response_json = response[0]
     print("ORCH: ------- B1")
-    print("response_json_type: " + type(response_json))
+    print("response_json_type: " + str(type(response_json)))
     print("ORCH: ------- C")
     tapi_common_context["uuid"] = response_json["id"]
     print("ORCH: ------- D")
