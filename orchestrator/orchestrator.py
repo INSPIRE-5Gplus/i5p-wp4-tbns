@@ -168,7 +168,7 @@ def add_idl_info(blockchain_domain_json):
 def add_context_info(context_json):
     settings.logger.info("ORCH: Adding external SDN domain context information in the E2E Network graph." + str(context_json["uuid"]))
     print("ORCH: ------- A")
-    response = bl_mapper.get_context_sips_ndoes_links_from_blockchain(context_json)
+    response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
     print("ORCH: ------- B")
     context_json = response[0]
     print("ORCH: ------- C")

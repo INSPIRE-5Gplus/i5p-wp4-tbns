@@ -143,6 +143,7 @@ def get_idl_id(index):
 
 # distributes the domain SDN context with the other peers
 def context_to_blockchain(context_json):
+    """
     def divide_string_in_3(sentence):
         parts = 3
         segmented_list = []
@@ -164,43 +165,52 @@ def context_to_blockchain(context_json):
             
             initial_pos = ending_pos
         return segmented_list
-    
+    """
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local contextconnectivity service template information with Blockchain peers.')
     id_string = context_json["id"]
     name_context = context_json["name_context"]
-    sip = context_json["sip"]
+    #sip = context_json["sip"]
     #segmented_sip = divide_string_in_3(sip)
     nw_topo_serv = context_json["nw_topo_serv"]
     topo_metadata = context_json["topo_metadata"]
-    node_topo = context_json["node_topo"]
-    link_topo = context_json["link_topo"]
+    #node_topo = context_json["node_topo"]
+    #link_topo = context_json["link_topo"]
 
     sip_uuid_list = []
     node_uuid_list = []
     link_uuid_list = []
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIPs.')
-    for sip_item in json.loads(context_json["sip"]):        
-        bl_sip_uuid = context_json["id"]+":"+sip_item["uuid"]
-        tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, json.dumps(sip_item)).transact()
-        # Wait for transaction to be mined
-        tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-        sip_uuid_list.append(sip_item["uuid"])
-    
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Nodes.')
     for node_item in json.loads(context_json["node_topo"]):
         bl_node_uuid = context_json["id"]+":"+node_item["uuid"]
-        tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item)).transact()
-        # Wait for transaction to be mined and check it's in the blockchain (get)
+        node_string = json.dumps(node_item)
+        print("bl_node_uuid: " + bl_node_uuid)
+        print(type(bl_node_uuid))
+        print("node_item: " + node_item)
+        print(type(node_item))
+        print("node_string: " + node_string)
+        print(type(node_string))
+        tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, node_string).transact()
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+        
         node_uuid_list.append(node_item["uuid"])
-    
+
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIPs.')
+    for sip_item in json.loads(context_json["sip"]):        
+        bl_sip_uuid = context_json["id"]+":"+sip_item["uuid"]
+        sip_string = json.dumps(sip_item)
+        tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, sip_string).transact()
+        tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+        
+        sip_uuid_list.append(sip_item["uuid"])
+        
     if context_json["link_topo"]:
         settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Links.')
         for link_item in json.loads(context_json["link_topo"]):
             bl_link_uuid = context_json["id"]+":"+link_item["uuid"]
-            tx_hash = settings.transport_contract.functions.addLink(bl_link_uuid, json.dumps(link_item)).transact()
-            # Wait for transaction to be mined and check it's in the blockchain (get)
+            link_string = json.dumps(link_item)
+            tx_hash = settings.transport_contract.functions.addLink(bl_link_uuid, link_string).transact()
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+            
             link_uuid_list.append(link_item["uuid"])
     else:
         settings.logger.info('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
@@ -217,9 +227,6 @@ def context_to_blockchain(context_json):
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
-
-    response = settings.transport_contract.functions.getNodeCount().call()
-    print(str(response[0]))
 
     #rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
     #settings.logger.info('BLOCKCHAIN_MAPPER: topology_event.' + str(rich_logs))
@@ -268,13 +275,15 @@ def get_context_from_blockchain(context_ID):
     return response_json, 200
 
 # return all the sips, nodes and links belonging to a specific context to build the json with the complete TAPI format
-def get_context_sips_ndoes_links_from_blockchain(context_json):
+def get_context_sips_nodes_links_from_blockchain(context_json):
     print("BL_NODE:GETTING Nodes")
     nodes_list_json = []
-    for node_item in json.loads(context_json["node_topo"]):
-        print("BL_NODE:GET NODE with ID: " + str(node_item))
-        print(type(node_item))
-        response = settings.transport_contract.functions.getNode(node_item).call() 
+
+    for node_uuid in json.loads(context_json["node_topo"]):
+        node_ref = context_json["uuid"]+":"+node_uuid
+        print("BL_NODE:GET NODE with ID: " + str(node_ref))
+        print(type(node_ref))
+        response = settings.transport_contract.functions.getNode(node_ref).call() 
         node_json = json.loads(response[0])
         print(node_json)
         print(type(node_json))
@@ -284,10 +293,11 @@ def get_context_sips_ndoes_links_from_blockchain(context_json):
 
     sips_list_json = []
     print("BL_NODE:GETTING SIPs")
-    for sip_item in json.loads(context_json["sip"]):
-        print("BL_NODE:GET SIP with ID: " + str(sip_item))
-        print(type(sip_item))
-        response = settings.transport_contract.functions.getSIP(sip_item).call() 
+    for sip_uuid in json.loads(context_json["sip"]):
+        sip_ref = context_json["uuid"]+":"+sip_uuid
+        print("BL_NODE:GET SIP with ID: " + str(sip_ref))
+        print(type(sip_ref))
+        response = settings.transport_contract.functions.getSIP(sip_ref).call() 
         sip_json = json.loads(response[0])
         sips_list_json.append(sip_json)
     context_json["sip"] = sips_list_json
@@ -297,10 +307,11 @@ def get_context_sips_ndoes_links_from_blockchain(context_json):
     print("BL_NODE:GETTING Links")
     linklist = json.loads(context_json["link_topo"])
     if linklist:
-        for link_item in linklist:
-            print("BL_NODE:GET LINK with ID: " + str(link_item))
-            print(type(link_item))
-            response = settings.transport_contract.functions.getLink(link_item).call() 
+        for link_uuid in linklist:
+            link_ref = context_json["uuid"]+":"+sip_uuid
+            print("BL_NODE:GET LINK with ID: " + str(link_ref))
+            print(type(link_ref))
+            response = settings.transport_contract.functions.getLink(link_ref).call() 
             link_json = json.loads(response[0])
             links_list_json.append(link_json)
     context_json["link_topo"] = links_list_json
