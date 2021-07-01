@@ -63,7 +63,7 @@ def handle_transport_event(event):
         context_json["sip"] =  event['args']['sip']
         context_json["nw_topo_serv"] =  event['args']['nw_topo_serv']
         context_json["topo_metadata"] =  event['args']['topo_metadata']
-        context_json["node_topo"] =  event['args']['inode_topod']
+        context_json["node_topo"] =  event['args']['node_topo']
         context_json["link_topo"] =  event['args']['link_topo']
         
         settings.executor.submit(orch.add_context_info, context_json)
