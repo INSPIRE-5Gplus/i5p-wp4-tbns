@@ -176,18 +176,16 @@ def add_context_info(context_json):
     print("ORCH: ------- A")
     response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
     response_json = response[0]
-    print("response_json_type: " + str(type(response_json)))
     tapi_common_context["uuid"] = response_json["uuid"]
     tapi_common_context["name"] = response_json["name_context"]
-    print("ORCH: ------- E")
     sips = []
     for sip_item_string in response_json["sip"]:
         sip_item_json = json.loads(sip_item_string)
         sips.append(sip_item_json)
     tapi_common_context["service-interface-point"] = sips
-    print(str(tapi_common_context["service-interface-point"]))
-    print("ORCH: ------- F")
-    topo_metadata = response_json["topo_metadata"]
+    topo_metadata = json.loads(response_json["topo_metadata"])
+    print(str(type(response_json["topo_metadata"])))
+    print(str(type(topo_metadata)))
     print("ORCH: ------- G")
     topology_element["uuid"] = topo_metadata["uuid"]
     print("ORCH: ------- H")
@@ -195,15 +193,21 @@ def add_context_info(context_json):
     print("ORCH: ------- I")
     topology_element["name"] = topo_metadata["name"]
     print("ORCH: ------- J")
-    print(str(type(response_json["node_topo"])))
-    topology_element["node"] = json.loads(response_json["node_topo"])
+    nodes = []
+    for node_item_string in response_json["node_topo"]:
+        node_item_json = json.loads(node_item_string)
+        nodes.append(node_item_json)
+    topology_element["node"] = nodes
     print("ORCH: ------- K")
-    print(str(type(response_json["link_topo"])))
-    topology_element["link"] = json.loads(response_json["link_topo"])
+    links = []
+    for link_item_string in response_json["link_topo"]:
+        link_item_json = json.loads(link_item_string)
+        links.append(link_item_json)
+    topology_element["link"] = links
     print("ORCH: ------- L")
     topology.append(topology_element)
     print("ORCH: ------- M")
-    tapi_topology_context["nw-topology-service"] = response_json["nw_topo_serv"]
+    tapi_topology_context["nw-topology-service"] = json.loads(response_json["nw_topo_serv"])
     print("ORCH: ------- N")
     tapi_topology_context["topology"] = topology
     print("ORCH: ------- O")
