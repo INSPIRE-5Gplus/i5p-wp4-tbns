@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x635Bf025819C3e9fc81f57fA831e0a1B5cB39398",
+    "contract_address":"0xd9145CCE52D386f254917e481eB44e9943F39138",
     "abi":[
         {
             "anonymous": false,
@@ -620,6 +620,19 @@
                     "internalType": "string",
                     "name": "",
                     "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getNodeCount",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
                 }
             ],
             "stateMutability": "view",
