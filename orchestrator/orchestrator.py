@@ -167,10 +167,12 @@ def add_idl_info(blockchain_domain_json):
 # adds the SDN domain context information coming from another peer to the E2E local graph
 def add_context_info(context_json):
     settings.logger.info("ORCH: Adding external SDN domain context information in the E2E Network graph." + str(context_json["uuid"]))
+    print("ORCH: ------- A")
     response = bl_mapper.get_context_sips_ndoes_links_from_blockchain(context_json)
+    print("ORCH: ------- B")
     context_json = response[0]
+    print("ORCH: ------- C")
 
-    #TODO: compose the json with real TAPI structure before passing it to be added in the local E2E graph.
     tapi_context_json={}
     tapi_common_context = {}
     tapi_topology_context = {}
@@ -178,19 +180,33 @@ def add_context_info(context_json):
     topology_element = {}
 
     tapi_common_context["uuid"] = context_json["id"]
+    print("ORCH: ------- D")
     tapi_common_context["name"] = context_json["name_context"]
+    print("ORCH: ------- E")
     tapi_common_context["service-interface-point"] = context_json["sip"]
+    print("ORCH: ------- F")
     topo_metadata = json.loads(context_json["topo_metadata"])
+    print("ORCH: ------- G")
     topology_element["uuid"] = topo_metadata["uuid"]
+    print("ORCH: ------- H")
     topology_element["layer-protocol-name"] = topo_metadata["layer-protocol-name"]
+    print("ORCH: ------- I")
     topology_element["name"] = topo_metadata["name"]
+    print("ORCH: ------- J")
     topology_element["node"] = json.loads(context_json["node_topo"])
+    print("ORCH: ------- K")
     topology_element["link"] = json.loads(context_json["link_topo"])
+    print("ORCH: ------- L")
     topology.append(topology_element)
+    print("ORCH: ------- M")
     tapi_topology_context["nw-topology-service"] = context_json["nw_topo_serv"]
+    print("ORCH: ------- N")
     tapi_topology_context["topology"] = topology
+    print("ORCH: ------- O")
     tapi_common_context["tapi-topology:topology-context"] = tapi_topology_context
+    print("ORCH: ------- P")
     tapi_context_json["tapi-common:context"] = tapi_common_context
+    print("ORCH: ------- Q")
 
     print(type(tapi_context_json))
     print(tapi_context_json)

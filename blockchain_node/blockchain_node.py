@@ -267,19 +267,26 @@ def get_context_from_blockchain(context_ID):
 
 # return all the sips, nodes and links belonging to a specific context to build the json with the complete TAPI format
 def get_context_sips_ndoes_links_from_blockchain(context_json):
+    print("BL_NODE:GETTING Nodes")
+    nodes_list_json = []
+    for node_item in context_json["node_topo"]:
+        print("BL_NODE:GET NODE")
+        response = settings.transport_contract.functions.getNode(node_item).call() 
+        node_json = json.loads(response[0])
+        print(node_json)
+        print(type(node_json))
+        nodes_list_json.append(node_json)
+    print(nodes_list_json)
+    context_json["node_topo"] = nodes_list_json
+
     sips_list_json = []
+    print("BL_NODE:GETTING SIPs")
     for sip_item in context_json["sip"]:
         response = settings.transport_contract.functions.getSIP(sip_item).call() 
         sip_json = json.loads(response[0])
         sips_list_json.append(sip_json)
     context_json["sip"] = sips_list_json
 
-    nodes_list_json = []
-    for node_item in context_json["node_topo"]:
-        response = settings.transport_contract.functions.getNode(node_item).call() 
-        node_json = json.loads(response[0])
-        nodes_list_json.append(node_json)
-    context_json["node_topo"] = nodes_list_json
 
     links_list_json = []
     if context_json["link_topo"]:
