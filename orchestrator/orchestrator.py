@@ -175,20 +175,16 @@ def add_context_info(context_json):
     
     print("ORCH: ------- A")
     response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
-    print (str(type(response))) #tuple
-    print (str(response[0]))
-    print (str(type(response[0]))) # dict
-    print (str(response[1])) #200
     print("ORCH: ------- B")
     response_json = response[0]
     print("ORCH: ------- B1")
     print("response_json_type: " + str(type(response_json)))
     print("ORCH: ------- C")
-    tapi_common_context["uuid"] = response_json["id"]
+    tapi_common_context["uuid"] = response_json["uuid"]
     print("ORCH: ------- D")
     tapi_common_context["name"] = response_json["name_context"]
     print("ORCH: ------- E")
-    tapi_common_context["service-interface-point"] = response_json["sip"]
+    tapi_common_context["service-interface-point"] = json.loads(response_json["sip"])
     print("ORCH: ------- F")
     topo_metadata = response_json["topo_metadata"]
     print("ORCH: ------- G")
@@ -198,9 +194,9 @@ def add_context_info(context_json):
     print("ORCH: ------- I")
     topology_element["name"] = topo_metadata["name"]
     print("ORCH: ------- J")
-    topology_element["node"] = response_json["node_topo"]
+    topology_element["node"] = json.loads(response_json["node_topo"])
     print("ORCH: ------- K")
-    topology_element["link"] = response_json["link_topo"]
+    topology_element["link"] = json.loads(response_json["link_topo"])
     print("ORCH: ------- L")
     topology.append(topology_element)
     print("ORCH: ------- M")
