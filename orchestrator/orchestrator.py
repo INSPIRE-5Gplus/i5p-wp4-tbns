@@ -173,7 +173,6 @@ def add_context_info(context_json):
     topology = []
     topology_element = {}
     
-    print("ORCH: ------- A")
     response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
     response_json = response[0]
     tapi_common_context["uuid"] = response_json["uuid"]
@@ -184,42 +183,26 @@ def add_context_info(context_json):
         sips.append(sip_item_json)
     tapi_common_context["service-interface-point"] = sips
     topo_metadata = json.loads(response_json["topo_metadata"])
-    print(str(type(response_json["topo_metadata"])))
-    print(str(type(topo_metadata)))
-    print("ORCH: ------- G")
     topology_element["uuid"] = topo_metadata["uuid"]
-    print("ORCH: ------- H")
     topology_element["layer-protocol-name"] = topo_metadata["layer-protocol-name"]
-    print("ORCH: ------- I")
     topology_element["name"] = topo_metadata["name"]
-    print("ORCH: ------- J")
     nodes = []
     for node_item_string in response_json["node_topo"]:
         node_item_json = json.loads(node_item_string)
         nodes.append(node_item_json)
     topology_element["node"] = nodes
-    print("ORCH: ------- K")
     links = []
     for link_item_string in response_json["link_topo"]:
         link_item_json = json.loads(link_item_string)
         links.append(link_item_json)
     topology_element["link"] = links
-    print("ORCH: ------- L")
     topology.append(topology_element)
-    print("ORCH: ------- M")
     tapi_topology_context["nw-topology-service"] = json.loads(response_json["nw_topo_serv"])
-    print("ORCH: ------- N")
     tapi_topology_context["topology"] = topology
-    print("ORCH: ------- O")
     tapi_common_context["tapi-topology:topology-context"] = tapi_topology_context
-    print("ORCH: ------- P")
     tapi_context_json["tapi-common:context"] = tapi_common_context
-    print("ORCH: ------- Q")
 
-    print(type(tapi_context_json))
-    print(tapi_context_json)
-
-    #vl_computation.add_context_e2e_graph(tapi_context_json)
+    vl_computation.add_context_e2e_graph(tapi_context_json)
 
 # returns the transport context information in the local domain
 def get_context():
