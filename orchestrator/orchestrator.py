@@ -175,13 +175,11 @@ def add_context_info(context_json):
     
     print("ORCH: ------- A")
     response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
-    print (str(type(response)))
-    print (str(type(response[0])))
-    print (str(response[1]))
     print("ORCH: ------- B")
-    context_json = json.loads(response[0])
+    context_json = response[0]
     print("context_json_type: " + type(context_json))
     print("ORCH: ------- C")
+    print(context_json["id"])
     tapi_common_context["uuid"] = context_json["id"]
     print("ORCH: ------- D")
     tapi_common_context["name"] = context_json["name_context"]
