@@ -167,18 +167,18 @@ def add_idl_info(blockchain_domain_json):
 # adds the SDN domain context information coming from another peer to the E2E local graph
 def add_context_info(context_json):
     settings.logger.info("ORCH: Adding external SDN domain context information in the E2E Network graph." + str(context_json["uuid"]))
-    print("ORCH: ------- A")
-    response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
-    print("ORCH: ------- B")
-    context_json = response[0]
-    print("ORCH: ------- C")
-
     tapi_context_json={}
     tapi_common_context = {}
     tapi_topology_context = {}
     topology = []
     topology_element = {}
-
+    
+    print("ORCH: ------- A")
+    response = bl_mapper.get_context_sips_nodes_links_from_blockchain(context_json)
+    print("ORCH: ------- B")
+    context_json = json.loads(response[0])
+    print("context_json_type: " + type(context_json))
+    print("ORCH: ------- C")
     tapi_common_context["uuid"] = context_json["id"]
     print("ORCH: ------- D")
     tapi_common_context["name"] = context_json["name_context"]

@@ -245,7 +245,6 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
         response = settings.transport_contract.functions.getNode(node_ref).call()
         node_json = json.loads(response)
         nodes_list_json.append(node_json)
-    print(nodes_list_json)
     context_json["node_topo"] = nodes_list_json
 
     sips_list_json = []
@@ -255,7 +254,6 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
         sip_json = json.loads(response)
         sips_list_json.append(sip_json)
     context_json["sip"] = sips_list_json
-
 
     links_list_json = []
     linklist = json.loads(context_json["link_topo"])
