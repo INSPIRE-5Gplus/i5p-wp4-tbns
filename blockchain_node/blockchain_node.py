@@ -295,7 +295,7 @@ def get_context_sips_ndoes_links_from_blockchain(context_json):
     print("BL_NODE:GETTING Links")
     linklist = json.loads(context_json["link_topo"])
     if linklist:
-        for link_item in linklist]:
+        for link_item in linklist:
             print("BL_NODE:GET LINK with ID: " + str(link_item))
             print(type(link_item))
             response = settings.transport_contract.functions.getLink(link_item).call() 
