@@ -111,7 +111,7 @@ def update_blockchain_slice(subnet_json):
 ###################################### BLOCKCHAIN MAPPER FOR IDLs, SDN CONTEXT & CSs #######################################
 # distributes the domain associated inter-domain links (IDL) with the other peers
 def interdomainlinks_to_blockchain(idl_json, e2e_topology):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local IDLs & e2e topology Blockchain peers.')
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes known IDLs & updates the e2e topology element saved in the Blockchain.')
     #response = settings.transport_contract.functions.getE2EContext(settings.web3.eth.defaultAccount).call()
     idl_string = json.dumps(idl_json)
     e2e_topology_string = json.dumps(e2e_topology)
