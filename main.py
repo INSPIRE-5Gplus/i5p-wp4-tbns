@@ -128,7 +128,8 @@ def get_context():
 #prints local E2E graph
 @app.route('/print_e2econtext', methods=['GET'])
 def draw_graph():
-  vl_computation.paint_graph()
+  incoming_data = request.json
+  vl_computation.paint_graph(incoming_data["labels"])
   return {"msg":"Abstracted topology using " + os.environ.get("ABSTRACION_MODEL") + " model."}, 200
 
 """

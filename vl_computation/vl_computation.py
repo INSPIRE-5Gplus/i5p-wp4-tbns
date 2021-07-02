@@ -243,12 +243,15 @@ def add_idl_e2e_graph(e2e_json):
   settings.logger.info("VL_COMP: Added Edges to E2E Graph.")
 
 # paints the graph
-def paint_graph():
-  nx.draw_networkx(e2e_topology_graph)
+def paint_graph(labels):
+  if labels == "False":
+    nx.draw_networkx(e2e_topology_graph, with_labels=False)
+  else:
+    nx.draw_networkx(e2e_topology_graph)
+  
   plt.show()
   return {"msg":"Graph painted"}, 200
   
-
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
   path_nodes_list = []
