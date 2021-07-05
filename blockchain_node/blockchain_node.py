@@ -151,7 +151,8 @@ def context_to_blockchain(context_json):
     link_uuid_list = []
     
     # Distributes the sips in the SDN context.
-    for sip_item in json.loads(context_json["sip"]):        
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIPs.') 
+    for sip_item in json.loads(context_json["sip"]):
         bl_sip_uuid = context_json["id"]+":"+sip_item["uuid"]
         sip_string = json.dumps(sip_item)
         tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, sip_string).transact()
@@ -160,6 +161,7 @@ def context_to_blockchain(context_json):
         sip_uuid_list.append(sip_item["uuid"])
     
     # Distributes the nodes in the SDN context.
+    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Node.')
     for node_item in json.loads(context_json["node_topo"]):
         bl_node_uuid = context_json["id"]+":"+node_item["uuid"]
         node_string = json.dumps(node_item)
