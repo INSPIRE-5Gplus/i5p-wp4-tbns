@@ -197,7 +197,7 @@ def add_context_e2e_graph(context_json):
               e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info,  link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
         else:
           e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
-    settings.logger.info("VL_COMP: External context links added.")      
+      settings.logger.info("VL_COMP: External context links added.")      
 
 # updates the e2e graph by adding new domains and itner-domains links.
 def add_idl_e2e_graph(e2e_json):

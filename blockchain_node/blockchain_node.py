@@ -165,11 +165,13 @@ def context_to_blockchain(context_json):
     for node_item in json.loads(context_json["node_topo"]):
         bl_node_uuid = context_json["id"]+":"+node_item["uuid"]
         node_string = json.dumps(node_item)
+        print(str(len(node_string)))
         tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, node_string).transact()
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
         node_uuid_list.append(node_item["uuid"])
     
     # Distributes the links in the SDN context if there are.
+    print(str(context_json["link_topo"]))
     if context_json["link_topo"]:
         settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Links.')
         for link_item in json.loads(context_json["link_topo"]):
