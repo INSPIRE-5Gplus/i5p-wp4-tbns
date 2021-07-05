@@ -172,7 +172,9 @@ def context_to_blockchain(context_json):
     
     # Distributes the links in the SDN context if there are.
     print(str(context_json["link_topo"]))
-    if context_json["link_topo"]:
+    if context_json["link_topo"] == []:
+        settings.logger.info('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
+    else:
         settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Links.')
         for link_item in json.loads(context_json["link_topo"]):
             bl_link_uuid = context_json["id"]+":"+link_item["uuid"]
@@ -181,11 +183,16 @@ def context_to_blockchain(context_json):
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
             
             link_uuid_list.append(link_item["uuid"])
-    else:
-        settings.logger.info('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
     
     # Add a connectivity service template to make it available for other domains
-    settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')    
+    settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
+    print("id_string: " + str(len(id_string)))
+    print("name_context: "+ str(len(name_context)))
+    print("sip_uuid_list: " + str(len(sip_uuid_list)))
+    print("nw_topo_serv: " + str(len(nw_topo_serv)))
+    print("topo_metadata: " + str(len(topo_metadata)))
+    print("node_uuid_list: " + str(len(node_uuid_list))) 
+    print("link_uuid_list: " + str(len(link_uuid_list)))
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, json.dumps(sip_uuid_list), nw_topo_serv, topo_metadata, json.dumps(node_uuid_list), json.dumps(link_uuid_list)).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
