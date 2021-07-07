@@ -31,12 +31,22 @@ contract transport {
     
     struct Nodes{
         //string nodeid;
-        string node_info;
+        string node_name;
+        string neps_topo;           //list of neps uuids
         address nodeOwner;
     }
     mapping(string => Nodes) public Nodes_list;
     string[] public NodesIds;
     uint NodesCount;
+    
+    struct NEPs{
+        //string nepid;
+        string nep_info;
+        address nepOwner;
+    }
+    mapping(string => NEPs) public NEPs_list;
+    string[] public NEPsIds;
+    uint NEPsCount;
     
     struct Links{
         //string link_id;
@@ -118,12 +128,22 @@ contract transport {
         return true;
     }
     // add a new node
-    function addNode(string memory _id, string memory node_info) public returns (bool){
+    function addNode(string memory _id, string memory node_name, string memory neps_topo) public returns (bool){
         //the _id is a composition of the context uuid and the node uuid
-        Nodes_list[_id].node_info = node_info;
+        Nodes_list[_id].node_name = node_name;
+        Nodes_list[_id].neps_topo = neps_topo;
         Nodes_list[_id].nodeOwner = msg.sender;  //the peer uploading the node info is the owner
         NodesIds.push(_id);
         NodesCount ++;
+        return true;
+    }
+        // add a new node
+    function addNep(string memory _id, string memory nep_info) public returns (bool){
+        //the _id is a composition of the context uuid and the node uuid
+        NEPs_list[_id].nep_info = nep_info;
+        NEPs_list[_id].nepOwner = msg.sender;  //the peer uploading the node info is the owner
+        NEPsIds.push(_id);
+        NEPsCount ++;
         return true;
     }
     // add a new link
@@ -162,9 +182,19 @@ contract transport {
         return (sip);
     }
     // gets the information of a single node
-    function getNode(string memory _id) public view returns (string memory){
-        string memory node = Nodes_list[_id].node_info;
-        return (node);
+    function getNode(string memory _id) public view returns (string memory, string memory){
+        string memory node_name = Nodes_list[_id].node_name;
+        string memory neps_topo = Nodes_list[_id].neps_topo;
+        return (node_name, neps_topo);
+    }
+    // gets the number of nodes
+    function getNodeCount() public view returns(uint) {
+        return NodesCount;
+    }
+    // gets the information of a single nep
+    function getNep(string memory _id) public view returns (string memory){
+        string memory nep = NEPs_list[_id].nep_info;
+        return (nep);
     }
     // gets the information of a single link
     function getLink(string memory _id) public view returns (string memory){

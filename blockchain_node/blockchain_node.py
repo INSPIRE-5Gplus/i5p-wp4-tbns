@@ -170,13 +170,20 @@ def context_to_blockchain(context_json):
         
         sip_uuid_list.append(sip_item["uuid"])
     
-    # Distributes the nodes in the SDN context.
+    # Distributes the nodes and their NEPs in the SDN context.
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Node.')
-    for node_item in json.loads(context_json["node_topo"]):
-        bl_node_uuid = context_json["id"]+":"+node_item["uuid"]
-        node_string = json.dumps(node_item)
-        print(str(len(node_string)))
-        tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, node_string).transact()
+    node_topo = json.loads(context_json["node_topo"])
+    for node_item in node_topo:
+        #TODO: distribution of NEPS for each node
+        neps_uuid_list = []
+        for nep_item in node_item["owned-node-edge-point"]:
+            bl_nep_uuid = context_json["id"]+":"+node_item["uuid"]+":"+nep_item["uuid"]
+            nep_string = json.dumps(nep_item)
+            tx_hash = settings.transport_contract.functions.addNep(bl_nep_uuid, nep_string).transact()
+            neps_uuid_list.append(nep_item["uuid"])
+
+        bl_node_uuid = context_json["id"]+":"+node_item["uuid"]        
+        tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item["name"]), json.dumps(neps_uuid_list)).transact()
         print("NODE DISTRIBUTED.")
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
         print("NODE DISTRIBUTED_2.")
@@ -251,6 +258,7 @@ def get_context_from_blockchain(context_ID):
 
 # return all the sips, nodes and links belonging to a specific context to build the json with the complete TAPI format
 def get_context_sips_nodes_links_from_blockchain(context_json):
+    # GETs and prepares the SIPs info
     sips_list = []
     for sip_uuid in json.loads(context_json["sip"]):
         sip_ref = context_json["uuid"]+":"+sip_uuid
@@ -258,13 +266,26 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
         sips_list.append(response)
     context_json["sip"] = sips_list
     
+    # GETs and prepares the nodes info
     nodes_list = []
     for node_uuid in json.loads(context_json["node_topo"]):
+        # the nodes info comes in a 2-step process, first the node and then its neps
         node_ref = context_json["uuid"]+":"+node_uuid
-        response = settings.transport_contract.functions.getNode(node_ref).call()
-        nodes_list.append(response)
+        node_response = settings.transport_contract.functions.getNode(node_ref).call()
+        node_item = {}
+        node_item["uuid"] = node_uuid
+        node_item["name"] = json.loads(node_response[0])
+        neps_uuid_list = json.loads(node_response[1])
+        string_neps_list = []
+        for nep_uuid in neps_uuid_list:
+            nep_ref = context_json["uuid"]+":"+node_uuid+":"+nep_uuid
+            nep_esponse = settings.transport_contract.functions.getNep(nep_ref).call()
+            string_neps_list.append(json.loads(nep_esponse))
+        node_item["owned-node-edge-point"] = string_neps_list
+        nodes_list.append(json.dumps(node_item))
     context_json["node_topo"] = nodes_list
 
+    # GETs and prepares the links info
     links_list = []
     linklist = json.loads(context_json["link_topo"])
     if linklist:

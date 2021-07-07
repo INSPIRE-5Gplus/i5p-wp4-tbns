@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x2b52a03d79ed6606b616235E2c2E54367d99Ba54",
+    "contract_address":"0x73a7c816214ADC3Db48dCa0b608f3101546B2381",
     "abi":[
         {
             "anonymous": false,
@@ -270,6 +270,49 @@
                     "type": "uint256"
                 }
             ],
+            "name": "NEPsIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "name": "NEPs_list",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "nep_info",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "nepOwner",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
             "name": "NodesIds",
             "outputs": [
                 {
@@ -293,7 +336,12 @@
             "outputs": [
                 {
                     "internalType": "string",
-                    "name": "node_info",
+                    "name": "node_name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "neps_topo",
                     "type": "string"
                 },
                 {
@@ -454,7 +502,36 @@
                 },
                 {
                     "internalType": "string",
-                    "name": "node_info",
+                    "name": "nep_info",
+                    "type": "string"
+                }
+            ],
+            "name": "addNep",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "node_name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "neps_topo",
                     "type": "string"
                 }
             ],
@@ -614,8 +691,32 @@
                     "type": "string"
                 }
             ],
+            "name": "getNep",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
             "name": "getNode",
             "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
                 {
                     "internalType": "string",
                     "name": "",
