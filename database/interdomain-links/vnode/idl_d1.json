@@ -1,24 +1,24 @@
 {
     "e2e-topology": {
       "nodes-list": [
-        "0bd7908e-c22b-574d-8bba-396d060e2611",
-        "226b9166-974e-57ff-821d-2f24e5a71b00",
-        "3d89bd76-e54d-5fab-9787-eb609f291ee0"
+        "0bd7908e-c22b-574d-8bba-396d060e2611:0bd7908e-c22b-574d-8bba-396d060e2611",
+        "226b9166-974e-57ff-821d-2f24e5a71b00:226b9166-974e-57ff-821d-2f24e5a71b00",
+        "3d89bd76-e54d-5fab-9787-eb609f291ee0:3d89bd76-e54d-5fab-9787-eb609f291ee0"
       ],
       "interdomain-links": [
         {
           "name": "D1-D2",
           "nodes-involved": [
-            "0bd7908e-c22b-574d-8bba-396d060e2611",
-            "226b9166-974e-57ff-821d-2f24e5a71b00"
+            "0bd7908e-c22b-574d-8bba-396d060e2611:0bd7908e-c22b-574d-8bba-396d060e2611",
+            "226b9166-974e-57ff-821d-2f24e5a71b00:226b9166-974e-57ff-821d-2f24e5a71b00"
           ],
           "link-options": [
             {
               "uuid": "f7f5cdef-8bb0-42c4-a315-bbc852b0a193",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "0bd7908e-c22b-574d-8bba-396d060e2611",
-                "node-2": "226b9166-974e-57ff-821d-2f24e5a71b00"
+                "node-1": "0bd7908e-c22b-574d-8bba-396d060e2611:0bd7908e-c22b-574d-8bba-396d060e2611",
+                "node-2": "226b9166-974e-57ff-821d-2f24e5a71b00:226b9166-974e-57ff-821d-2f24e5a71b00"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -110,8 +110,8 @@
               "uuid": "c5174040-26df-4950-8cf3-47ac8115f2ae",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "226b9166-974e-57ff-821d-2f24e5a71b00",
-                "node-2": "0bd7908e-c22b-574d-8bba-396d060e2611"
+                "node-1": "226b9166-974e-57ff-821d-2f24e5a71b00:226b9166-974e-57ff-821d-2f24e5a71b00",
+                "node-2": "0bd7908e-c22b-574d-8bba-396d060e2611:0bd7908e-c22b-574d-8bba-396d060e2611"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -224,16 +224,16 @@
         {
           "name": "D1-D3",
           "nodes-involved": [
-            "0bd7908e-c22b-574d-8bba-396d060e2611",
-            "3d89bd76-e54d-5fab-9787-eb609f291ee0"
+            "0bd7908e-c22b-574d-8bba-396d060e2611:0bd7908e-c22b-574d-8bba-396d060e2611",
+            "3d89bd76-e54d-5fab-9787-eb609f291ee0:3d89bd76-e54d-5fab-9787-eb609f291ee0"
           ],
           "link-options": [
             {
               "uuid": "278c061e-b8c1-4379-9161-99ec4b8e9ace",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "0bd7908e-c22b-574d-8bba-396d060e2611",
-                "node-2": "3d89bd76-e54d-5fab-9787-eb609f291ee0"
+                "node-1": "0bd7908e-c22b-574d-8bba-396d060e2611:0bd7908e-c22b-574d-8bba-396d060e2611",
+                "node-2": "3d89bd76-e54d-5fab-9787-eb609f291ee0:3d89bd76-e54d-5fab-9787-eb609f291ee0"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
@@ -325,8 +325,8 @@
               "uuid": "14bdd482-7ebb-40f6-b15e-33ea62ef6d24",
               "direction": "UNIDIRECTIONAL",
               "nodes-direction": {
-                "node-1": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
-                "node-2": "0bd7908e-c22b-574d-8bba-396d060e2611"
+                "node-1": "3d89bd76-e54d-5fab-9787-eb609f291ee0:3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                "node-2": "0bd7908e-c22b-574d-8bba-396d060e2611:0bd7908e-c22b-574d-8bba-396d060e2611"
               },
               "layer-protocol-name": [
                 "PHOTONIC_MEDIA"
