@@ -197,13 +197,6 @@ def context_to_blockchain(context_json):
     
     # Add a connectivity service template to make it available for other domains
     settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
-    print("id_string: " + str(len(id_string)))
-    print("name_context: "+ str(len(name_context)))
-    print("sip_uuid_list: " + str(len(sip_uuid_list)))
-    print("nw_topo_serv: " + str(len(nw_topo_serv)))
-    print("topo_metadata: " + str(len(topo_metadata)))
-    print("node_uuid_list: " + str(len(node_uuid_list))) 
-    print("link_uuid_list: " + str(len(link_uuid_list)))
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, json.dumps(sip_uuid_list), nw_topo_serv, topo_metadata, json.dumps(node_uuid_list), json.dumps(link_uuid_list)).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
