@@ -36,7 +36,7 @@ def vnode_abstraction(local_context):
         topology_element["name"] = topology_item["name"]
 
         # wa want just a node from all the nodes in the reference context
-        node_element["uuid"] = topology_item["uuid"]        # we identiy the node with the topology uuid it comes from
+        node_element["uuid"] = local_context["tapi-common:context"]["uuid"]
         node_element["name"] = topology_item["name"]        # for now we use tha topology name
         for node_item in topology_item["node"]:
             for owned_nep_item in node_item["owned-node-edge-point"]:
