@@ -150,6 +150,13 @@ def context_to_blockchain(context_json):
     node_uuid_list = []
     link_uuid_list = []
 
+    print("id_string: " + str(len(id_string)))
+    print("name_context: " + str(len(name_context)))
+    print("nw_topo_serv: " + str(len(nw_topo_serv)))
+    print("topo_metadata: " + str(len(topo_metadata)))
+    print("sip: " + str(len(context_json["sip"])))
+    print("node_topo: " + str(len(context_json["node_topo"])))
+    print("link_topo: " + str(len(context_json["link_topo"])))
     print(str(context_json["link_topo"]))
     print(str(type(context_json["link_topo"])))
     
@@ -176,7 +183,7 @@ def context_to_blockchain(context_json):
         node_uuid_list.append(node_item["uuid"])
     
     # Distributes the links in the SDN context if there are.
-    if context_json["link_topo"] == []:
+    if json.loads(context_json["link_topo"]) == []:
         settings.logger.info('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
     else:
         settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Links.')
