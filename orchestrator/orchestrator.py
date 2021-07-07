@@ -152,7 +152,6 @@ def context_to_bl():
     context_json["topo_metadata"] = json.dumps(topo_metadata)
     context_json["node_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"])
     context_json["link_topo"] = json.dumps(abstracted_sdn_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["link"])
-    print(str(context_json["link_topo"]))
 
     # distributes the local sdn context with the other peers
     response = bl_mapper.context_to_blockchain(context_json)

@@ -149,16 +149,6 @@ def context_to_blockchain(context_json):
     sip_uuid_list = []
     node_uuid_list = []
     link_uuid_list = []
-
-    print("id_string: " + str(len(id_string)))
-    print("name_context: " + str(len(name_context)))
-    print("nw_topo_serv: " + str(len(nw_topo_serv)))
-    print("topo_metadata: " + str(len(topo_metadata)))
-    print("sip: " + str(len(context_json["sip"])))
-    print("node_topo: " + str(len(context_json["node_topo"])))
-    print("link_topo: " + str(len(context_json["link_topo"])))
-    print(str(context_json["link_topo"]))
-    print(str(type(context_json["link_topo"])))
     
     # Distributes the sips in the SDN context.
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIPs.') 
@@ -184,9 +174,7 @@ def context_to_blockchain(context_json):
 
         bl_node_uuid = context_json["id"]+":"+node_item["uuid"]        
         tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item["name"]), json.dumps(neps_uuid_list)).transact()
-        print("NODE DISTRIBUTED.")
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-        print("NODE DISTRIBUTED_2.")
         node_uuid_list.append(node_item["uuid"])
     
     # Distributes the links in the SDN context if there are.
