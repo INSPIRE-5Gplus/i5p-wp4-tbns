@@ -370,88 +370,102 @@ Example of route_neps = [
     {type_link, link_uuid, context_uuid, node_uuid, nep_uuid, direction}
   ]
 Example of route_interdominlinks = [
-    {"link-option-uuid", "available_spectrum":[YYY, YYY]},
-    {"link-option-uuid", "available_spectrum":[YYY, YYY]}
+    {"link-option-uuid", "available_spectrum"},
+    {"link-option-uuid", "available_spectrum"}
   ]
 """
 # based on the NEPs route, it looks for the corresponding SIPs to define the CSs
 def nep2sip_route_mapping(route_neps, e2e_cs_request):
-  found_nep = {}
   route_sips = []
-  transparent_links = []
+  route_spectrum = []
+  route_links = []        # used only in transparent abstraction mode
   internal_neps = []
   # maps intermediate NEPs to intermediate SIPs
   for idx, nep_item  in enumerate(route_neps):
-    if "type_link" in nep_item:
-      # NOTE: this if will be accessed only in transparent abstraction mode
-      next_nep = route_neps[idx+1]
-      if "type_link" in next_nep and nep_item["link_uuid"] == next_nep["link_uuid"]:
-        trans_link_item = {}
-        trans_link_item["uuid"] = nep_item["link_uuid"]
-        trans_link_item["topology"] = nep_item["topology"]
-        transparent_links.append(trans_link_item)
-        internal_neps.append(nep_item)
-        internal_neps.append(next_nep)
-      else:
-        # NOTE: if it enters at this point, it means the nep_item is an internal nep and ...
-        # ... its link has already been selected in the previous loop round
-        pass 
-    else:
-      # get the specific context to discover the correct SIP to use attached to the link under study
-      response = bl_mapper.get_context_from_blockchain(nep_item["context"])
-      domain_context = response['context']
-      # look inot all the nodes of the incoming context-topology (we consider there is only one topology per context)
-      for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
-        for owned_nep_item in node_item["owned-node-edge-point"]:
-          if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
-            found_nep = owned_nep_item
-            break
-        found_sip = False
-        if 'mapped-service-interface-point' in found_nep.keys():
-          # domain external NEP (it has SIPs)
-          for mapped_sip_item in found_nep["mapped-service-interface-point"]:
-            for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
-              if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
-                sip_item["topology"] = nep_item["topology"]
-                sip_item["blockchain_owner"] = response['blockchain_owner']
-                route_sips.append(sip_item)
-                found_sip = True
+    # get the specific context to discover the correct SIP to use attached to the link under study
+    response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
+    domain_context = response['context']
+    # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)
+    for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
+      # looks the neps in the node
+      found_nep = False
+      for owned_nep_item in node_item["owned-node-edge-point"]:
+        if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
+          found_nep = True
+          found_sip = False
+          if 'mapped-service-interface-point' in owned_nep_item.keys():
+            # NOTE: VNODE will only enter in here, never in the associated else as it has only neps with sips
+            # looks for the SIP info associated to the nep
+            for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
+              for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
+                # validates the sips_uuid and their direction coincide
+                if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
+                  # adds the sip element into the sips_route
+                  sip_item["context_uuid"] = nep_item["context_uuid"]
+                  sip_item["blockchain_owner"] = response['blockchain_owner']
+                  route_sips.append(sip_item)
+                  found_sip = True
+                  break
+              if found_sip:
                 break
-            if found_sip:
-              break
-          if found_sip:
-            break
-        else:
-          # domain internal NEP (no SIPs)
-          pass
-  
-  # adds the FIRST SIP in the route
+          else:
+            #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
+            # adds the spectrum_info of each internal NEP to solve the spectrum continuity later
+            route_spectrum.append(owned_nep_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+            #NOTE: this is only accessed in transparent abstraction mode
+            if os.environ.get("ABSTRACION_MODEL") == "transparent":
+              next_nep = route_neps[idx+1]
+              if nep_item["link_uuid"] == next_nep["link_uuid"]:
+                link_item = {}
+                link_item["uuid"] = nep_item["link_uuid"]
+                link_item["context_uuid"] = nep_item["context_uuid"]
+                route_links.append(link_item)
+                #internal_neps.append(nep_item)
+                #internal_neps.append(next_nep)
+        if found_nep:
+          break
+      if found_nep:
+        break
+
+  # adds the FIRST SIP in the route_sips
   response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
   for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
-        if sip_item["uuid"] == e2e_cs_request["domain-source"]["sip"]:
+        if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
           sip_item["blockchain_owner"] = response['blockchain_owner']
           route_sips.insert(0, sip_item)
+          # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
+          route_spectrum.insert(0, sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
   
-  # adds the last SIP in the route
+  # adds the last SIP in the route_sips
   response = bl_mapper.get_context_from_blockchain(e2e_cs_request["destination"]["context_uuid"])
   for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
-        if sip_item["uuid"] == e2e_cs_request["domain-source"]["sip"]:
+        if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
           sip_item["blockchain_owner"] = response['blockchain_owner']
           route_sips.append(sip_item)
+          # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
+          route_spectrum.append(sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
   
-  return route_sips, transparent_links, internal_neps
+  return route_sips, route_spectrum, route_links, internal_neps
 
 """
 Example of route_sips = [
-  {sip_info, "topology", "blockchain_owner"},
-  {sip_info, "topology", "blockchain_owner"}
+  {sip_info, "context_uuid", "blockchain_owner"},
+  {sip_info, "context_uuid", "blockchain_owner"}
+]
+Example of route_links = [
+    {uuid, context_uuid},
+    {uuid, context_uuid}
+]
+Example of route_spectrum = [
+  {"available_spectrum},
+  {"available_spectrum}
 ]
 Example of internal_neps = [
-    {link_uuid, topology, node_uuid, nep_uuid, direction},
-    {link_uuid, topology, node_uuid, nep_uuid, direction},
-    {link_uuid, topology, node_uuid, nep_uuid, direction},
-    {link_uuid, topology, node_uuid, nep_uuid, direction}
-  ]
+  {link_uuid, topology, node_uuid, nep_uuid, direction},
+  {link_uuid, topology, node_uuid, nep_uuid, direction},
+  {link_uuid, topology, node_uuid, nep_uuid, direction},
+  {link_uuid, topology, node_uuid, nep_uuid, direction}
+]
 """
 # Spectrum assignment --> We look for the exact-Fit, otherwise the Best-Fit
 def spectrum_assignment(spectrum_list, capacity):  

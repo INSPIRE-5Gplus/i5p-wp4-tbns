@@ -426,18 +426,20 @@ def get_all_contexts():
 """
 Example E2E_CS request 
   {
-      "domain-source": {
-          "uuid": "SDN_domain_uuid",
-          "sip": "sip_uuid",
-      },
-      "domain-destination": {
-          "uuid": "SDN_domain_uuid",
-          "sip": "sip_destination_uuid",
-      },
-          "capacity": {
-          "value": 150,
-          "unit": "GHz"
-      }
+    "source": {
+        "context_uuid": "uuid",
+        "node_uuid": "uuid",
+        "sip_uuid": "uuid",
+    },
+    "destination": {
+        "context_uuid": "uuid",
+        "node_uuid": "uuid",
+        "sip_uuid": "uuid",
+    },
+    "capacity": {
+        "value": 75,
+        "unit": "GHz"
+    }
   }
 """
 # requests a CS based on a set of two SIPs and a capacity

@@ -356,7 +356,9 @@ Example E2E_CS data object
 def instantiate_e2e_connectivity_service(e2e_cs_request):
     # defines e2e CS data object parameters
     e2e_cs_json = {}
-    spectrum_list = []
+    selected_spectrum = []
+    sips_route = []
+    selected_links = []
     domain_CS = []
     e2e_topology_json = bl_mapper.get_e2etopology_from_blockchain()
 
@@ -388,38 +390,29 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     for route_item in route_nodes_list:
         # maps the route from the nodes to the neps involved.
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json)
-        if response_nep_mapped[0] and response_nep_mapped[1]:
+        neps_route = response_nep_mapped[0]
+        idl_route = response_nep_mapped[1]
+        if neps_route != [] and idl_route != []:
             # identifies the SIP used for each NEP in the route
-            route_sips = vl_computation.nep2sip_route_mapping(response_nep_mapped[0], e2e_cs_request)
+            response_sip_mapped = vl_computation.nep2sip_route_mapping(neps_route, e2e_cs_request)
+            
             # generates available spectrums list from interdomain links & internal neps
-            for interdomainlink_item in response_nep_mapped[1]:
-                spectrum_list.append(interdomainlink_item["available_spectrum"])
-            # it will access only when working in transparent abstraction mode
-            if route_sips[2]: 
-                for internal_nep_item in route_sips[2]:
-                    # get specific domain topology to discover the correct SIP to use
-                    response = bl_mapper.get_context_from_blockchain(internal_nep_item["topology"])
-                    domain_context = response['context']
-                    # look inot all the nodes of the incoming context
-                    for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
-                        for owned_nep_item in node_item["owned-node-edge-point"]:
-                            if owned_nep_item["uuid"] == internal_nep_item["nep_uuid"]:
-                                available_slots = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
-                                for available_item in available_slots:
-                                    spectrum_slot = []
-                                    spectrum_slot.append(available_item["lower-frequency"])
-                                    spectrum_slot.append(available_item["upper-frequency"])
-                                    spectrum_list.append(spectrum_slot)
+            sips_route = response_sip_mapped[0]
+            spectrums_available = response_sip_mapped[1]
+            selected_links = response_sip_mapped[2]
+            for interdomainlink_item in idl_route:
+                spectrums_available.append(interdomainlink_item["available_spectrum"])
             
             # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
-            selected_spectrum = vl_computation.spectrum_assignment(spectrum_list, capacity)
+            selected_spectrum = vl_computation.spectrum_assignment(spectrums_available, capacity)
         else:
             print("Looking for the next route.")
         # rsa done is complete: routing path computed and spectrum slot selected
-        if selected_spectrum:
+        if selected_spectrum != []:
             selected_route = route_item
             break
 
+    #TODO: GENERATE ALL THE DOMAIN CSs, the E2E CS data object, UPDATE e2e_topology data object, update the context (SIPS, NEPS) data object in the blockchain
     # generates the domain CSs requests [{sip_info, "topology", "blockchain_owner"},{...},...]]
     # route_sips[0] -> route of SIPs 
     # route_sips[1] -> list of context links per each CS (only transparent abstraction) [{link_uuid, topology},{}...]
