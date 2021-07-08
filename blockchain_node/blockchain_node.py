@@ -214,33 +214,56 @@ def context_to_blockchain(context_json):
     
     return msg, 200
 
-# TODO: need to be updated with what it really returns (context with list of sips, ndoes, links)
+# gets specific context info and returns a JSON
 def get_context_from_blockchain(context_ID):
-    # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context information (sips, ndoes and links).' )
-    
-    #response = settings.transport_contract.functions.getContextTemplate(context_ID).call()   
-    response = {}
-    #contstruct the context information as a single json.
+    response = settings.transport_contract.functions.getContextTemplate(context_ID).call()
     context_json = {}
-    """
-    topology_list = []
-    topology_json = {}
-    tapi_topo_topo_context_json = {}
-    context_json["uuid"] = context_ID
-    context_json["name"] = json.loads(response[0])
-    context_json["service-interface-point"] = json.loads(response[1])
-    tapi_topo_topo_context_json["nw-topology-service"] = json.loads(response[2])
-    topology_json = json.loads(response[3])
-    topology_json["node"] = json.loads(response[4])
-    topology_json["link"] = json.loads(response[5])
-    topology_list.append(topology_json)
-    tapi_topo_topo_context_json["topology"] = topology_list
-    context_json["tapi-topology:topology-context"] = tapi_topo_topo_context_json
-    """
+    context_json["uuid"] =  context_ID
+    context_json["name_context"] =  response[0]
+    context_json["sip"] =  response[1]
+    context_json["nw_topo_serv"] =  response[2]
+    context_json["topo_metadata"] =  response[3]
+    context_json["node_topo"] =  response[4]
+    context_json["link_topo"] =  response[5]
 
-    response_json = {}
-    response_json["context"] = context_json
+    #contstruct the context information as a single json.
+    tapi_context_json={}
+    tapi_common_context = {}
+    tapi_topology_context = {}
+    topology = []
+    topology_element = {}
+    
+    response = get_context_sips_nodes_links_from_blockchain(context_json)
+    response_json = response[0]
+    tapi_common_context["uuid"] = response_json["uuid"]
+    tapi_common_context["name"] = response_json["name_context"]
+    sips = []
+    for sip_item_string in response_json["sip"]:
+        sip_item_json = json.loads(sip_item_string)
+        sips.append(sip_item_json)
+    tapi_common_context["service-interface-point"] = sips
+    topo_metadata = json.loads(response_json["topo_metadata"])
+    topology_element["uuid"] = topo_metadata["uuid"]
+    topology_element["layer-protocol-name"] = topo_metadata["layer-protocol-name"]
+    topology_element["name"] = topo_metadata["name"]
+    nodes = []
+    for node_item_string in response_json["node_topo"]:
+        node_item_json = json.loads(node_item_string)
+        nodes.append(node_item_json)
+    topology_element["node"] = nodes
+    links = []
+    for link_item_string in response_json["link_topo"]:
+        link_item_json = json.loads(link_item_string)
+        links.append(link_item_json)
+    topology_element["link"] = links
+    topology.append(topology_element)
+    tapi_topology_context["nw-topology-service"] = json.loads(response_json["nw_topo_serv"])
+    tapi_topology_context["topology"] = topology
+    tapi_common_context["tapi-topology:topology-context"] = tapi_topology_context
+    tapi_context_json["tapi-common:context"] = tapi_common_context
+
+    response_json["context"] = tapi_context_json
     response_json["blockchain_owner"] = response[6]
     return response_json, 200
 

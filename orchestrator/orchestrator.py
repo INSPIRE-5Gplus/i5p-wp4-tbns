@@ -301,33 +301,37 @@ def update_connectivity_service_from_blockchain(cs_json):
 """
 Example E2E_CS request 
     {
-        "node-source": {
-            "uuid": "SDN_domain_uuid",
-            "sip": "sip_uuid",
+        "source": {
+            "context_uuid": "uuid",
+            "node_uuid": "uuid",
+            "sip_uuid": "uuid",
         },
-        "node-destination": {
-            "uuid": "SDN_domain_uuid",
-            "sip": "sip_destination_uuid",
+        "destination": {
+            "context_uuid": "uuid",
+            "node_uuid": "uuid",
+            "sip_uuid": "uuid",
         },
         "capacity": {
-            "value": 150,
+            "value": 75,
             "unit": "GHz"
         }
     }
 Example E2E_CS data object 
     {
         "uuid": "uuid_e2e_cs",
-        "status" : DEPLOYED/TERMINATED,
-        "node-source": {
-            "uuid": "node_uuid",
-            "sip": "sip_uuid",
+        "status" : INSTANTIATING/DEPLOYED/TERMINATED,
+        "source": {
+            "context_uuid": "uuid",
+            "node_uuid": "uuid",
+            "sip_uuid": "uuid",d",
         },
-        "node-destination": {
-            "uuid": "node_uuid",
-            "sip": "sip_destination_uuid",
+        "destination": {
+            "context_uuid": "uuid",
+            "node_uuid": "uuid",
+            "sip_uuid": "uuid",
         },
         "capacity": {
-            "value": 150,
+            "value": 75,
             "unit": "GHz"
         },
         "spectrum": {
@@ -358,8 +362,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = uuid.uuid4()
-    e2e_cs_json["node-source"] = e2e_cs_request["node-source"]
-    e2e_cs_json["node-destination"] = e2e_cs_request["node-destination"]
+    e2e_cs_json["source"] = e2e_cs_request["source"]
+    e2e_cs_json["destination"] = e2e_cs_request["destination"]
     e2e_cs_json["status"]  = "INSTANTIATING"
     e2e_cs_json["capacity"] = e2e_cs_request["capacity"]
     if e2e_cs_request["capacity"]["unit"] == "GHz":
@@ -371,20 +375,22 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         capacity = e2e_cs_request["capacity"]["value"]
     
     # ROUTING PATH COMPUTATION options based based on source and destination domains
-    src = e2e_cs_request["node-source"]["uuid"]
-    dst = e2e_cs_request["node-destination"]["uuid"]
+    if os.environ.get("ABSTRACION_MODEL") == "vnode":
+        src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["contex_uuid"]["uuid"]
+        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["context_uuid"]
+    else:
+        src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["node_uuid"]["uuid"]
+        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
+    # we find the k-shortest path (K=7)
     route_nodes_list = vl_computation.find_path(src, dst)
-    e2e_cs_json["route"] = route_nodes_list
 
-    # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)    
-    # if one route does not have a slot, passes to the next one
+    # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
-        # idetifies the NEPs between inter-domain links
-        response_nep_mapped = vl_computation.domain2nep_route_mapping(route_item, e2e_topology_json)
+        # maps the route from the nodes to the neps involved.
+        response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json)
         if response_nep_mapped[0] and response_nep_mapped[1]:
             # identifies the SIP used for each NEP in the route
             route_sips = vl_computation.nep2sip_route_mapping(response_nep_mapped[0], e2e_cs_request)
-            
             # generates available spectrums list from interdomain links & internal neps
             for interdomainlink_item in response_nep_mapped[1]:
                 spectrum_list.append(interdomainlink_item["available_spectrum"])
@@ -407,9 +413,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             
             # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
             selected_spectrum = vl_computation.spectrum_assignment(spectrum_list, capacity)
-        
+        else:
+            print("Looking for the next route.")
         # rsa done is complete: routing path computed and spectrum slot selected
         if selected_spectrum:
+            selected_route = route_item
             break
 
     # generates the domain CSs requests [{sip_info, "topology", "blockchain_owner"},{...},...]]
@@ -420,7 +428,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     spectrum = {}
     spectrum["low-freq"] = selected_spectrum[0]
     spectrum["high-freq"] = selected_spectrum[1]
-    e2e_cs_json["spectrum"] = spectrum    
+    e2e_cs_json["spectrum"] = spectrum
+    e2e_cs_json["route"] = selected_route
     
     cs_list = []
     iter_sips = iter(route_sips[0]) #iter is used to work using pairs of elements

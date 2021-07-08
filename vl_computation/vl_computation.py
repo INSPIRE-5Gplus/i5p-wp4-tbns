@@ -87,11 +87,11 @@ def vlink_abstraction(local_context):
     # virtual links design among nodes with SIPs
     for link_item in topology_item["link"]:
       # adds all the existing links into de graph
-        node1 = link_item["node-edge-point"][0]["node-uuid"]
-        node_edge_point1 = link_item["node-edge-point"][0]["node-edge-point-uuid"]
-        node2 = link_item["node-edge-point"][1]["node-uuid"]
-        node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
-        G.add_edge(node1, node2, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+      node1 = link_item["node-edge-point"][0]["node-uuid"]
+      node_edge_point1 = link_item["node-edge-point"][0]["node-edge-point-uuid"]
+      node2 = link_item["node-edge-point"][1]["node-uuid"]
+      node_edge_point2 = link_item["node-edge-point"][1]["node-edge-point-uuid"]
+      G.add_edge(node1, node2, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
 
     # Create abstracted vlink topology based on the transparent model
     topology_element["uuid"] = topology_item["uuid"]
@@ -179,6 +179,7 @@ def add_context_e2e_graph(context_json):
     if topology_item["link"]:
       for link_item in topology_item["link"]:
         # e2e_topology_graph.add_edge(node_1["uuid"], node_2["uuid"], uuid=interdomain_link_item["uuid"])
+        cont = context_json["tapi-common:context"]["uuid"]
         l_uuid = link_item["uuid"]
         topo = link_item["node-edge-point"][0]["topology-uuid"]
         node1 = link_item["node-edge-point"][0]["node-uuid"]
@@ -194,9 +195,9 @@ def add_context_e2e_graph(context_json):
           for link_info in link_item["name"]:
             if link_info["value-name"] == "weight":
               weight_info = link_info["value"]
-              e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info,  link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+              e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
         else:
-          e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+          e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
       settings.logger.info("VL_COMP: External context links added.")      
 
 # updates the e2e graph by adding new domains and itner-domains links.
@@ -209,13 +210,12 @@ def add_idl_e2e_graph(e2e_json):
   settings.logger.info("VL_COMP: Nodes added, adding links to E2E graph")
   # add the links interconnecting the SDN domains defined in the json IF 
   for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
-    # adding both unidirectional links for the routing process in the E2E MultiDiGraph
+    # adding FIRST unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][0]
     node_2 = interdomain_link_item["nodes-involved"][1]
     uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
-    
-    response = e2e_topology_graph.has_edge(node_1, node_2)
-    # as we work with a MultiDiGraph, check the existing links to not add them again.     
+    # checks if the unidirectional ink exist already (working with multi-digraph)
+    response = e2e_topology_graph.has_edge(node_1, node_2)     
     if response == True:
       pass
     else:
@@ -225,12 +225,12 @@ def add_idl_e2e_graph(e2e_json):
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
 
+    # adding SECOND unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][1]
     node_2 = interdomain_link_item["nodes-involved"][0]
     uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
-    
-    response = e2e_topology_graph.has_edge(node_1, node_2)
-    # as we work with a MultiDiGraph, a check the existing links to not add them again.     
+    # checks if the unidirectional link exist already (working with multi-digraph)
+    response = e2e_topology_graph.has_edge(node_1, node_2)    
     if response == True:
       pass
     else:
@@ -267,40 +267,57 @@ def find_path(src, dst):
      
   return path_nodes_list
 
+"""
+get_edge_data options:
+  context_info ->
+  (vlink)       {weight = weight_info, link_uuid = l_uuid, context=con, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2}
+  (vnode/trans) {link_uuid = l_uuid, context=con, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2}
+  idl info ->
+  (vlink)       {weight=1, interdomain_link_uuid=uuid_idl}
+  (vnode/trans) {interdomain_link_uuid=uuid_idl}
+"""
 # Based on a given route, looks for the specific NEPs involved in the inter-domain links
-def domain2nep_route_mapping(route, e2e_topology):
+def node2nep_route_mapping(route, e2e_topology):
   route_neps = []
   route_interdominlinks = []
 
-  # it gets the list of neps involved for each link (two ndoes) in the route
+  # it gets the list of neps based on the order of nodes in the route
   for idx, route_item  in enumerate(route):
-    link_found = False
+    neps_found = False
+    # as long as the current reoute_item is not the last, enters as it works in pairs.
     if route[idx] != len(route-1):
-      #response = get link information (node1,node2) from graph
+      # gets the data of the edge
       response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])
+      # link belongs to an interdomain link
+      #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage 1NEP wit XSIPs
       if "interdomain_link_uuid" in response:
-        # link belongs to an interdomain link
         for idl_item in e2e_topology["interdomain-links"]:
+          # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
             for link_option_item in idl_item["link-options"]:
+              # the correct direction link is found (working with multi-digraph)
               if link_option_item["uuid"] == response["interdomain_link_uuid"]:
                 for physical_option_item in link_option_item["physical-options"]:
+                  # the first one without occupied-spectrum is good.
                   if not physical_option_item["occupied-spectrum"]:
-                    # get the topology, node, NEPs and direction (OUTPUT/INPUT) from the graph and add into the route-neps
+                    # gets nep 1 info from the e2e_topology 6 adds it into the route-neps
                     new_nep = {}
+                    new_nep["type_link"] = "IDL"
                     new_nep["link_uuid"] = link_option_item["uuid"]
-                    new_nep["topology"] = physical_option_item["node-edge-point"][0]["topology-uuid"]
+                    new_nep["context_uuid"] = physical_option_item["node-edge-point"][0]["context-uuid"]
                     new_nep["node_uuid"] = physical_option_item["node-edge-point"][0]["node-uuid"]
                     new_nep["nep_uuid"] = physical_option_item["node-edge-point"][0]["nep-uuid"]
                     new_nep["direction"] = "OUTPUT"
                     route_neps.append(new_nep)
+                    # gets nep 2 info from the e2e_topology 6 adds it into the route-neps
+                    new_nep["type_link"] = "IDL"
                     new_nep["link_uuid"] = link_option_item["uuid"]
-                    new_nep["topology"] = physical_option_item["node-edge-point"][1]["topology-uuid"]
+                    new_nep["context_uuid"] = physical_option_item["node-edge-point"][1]["context-uuid"]
                     new_nep["node_uuid"] = physical_option_item["node-edge-point"][1]["node-uuid"]
                     new_nep["nep_uuid"] = physical_option_item["node-edge-point"][1]["nep-uuid"]
                     new_nep["direction"] = "INPUT"
                     route_neps.append(new_nep)
-
+                    # keeps the IDL spectrum availability so later we can validate the route spectrum continuity
                     new_idl = {}
                     new_idl["link-option-uuid"] = link_option_item["uuid"]
                     new_idl["available-spectrum"] = link_option_item["available-spectrum"]
@@ -310,25 +327,32 @@ def domain2nep_route_mapping(route, e2e_topology):
               if neps_found:
                 break
               else:
-                print("Link-option not available, looking the next one to check if it is free to be used.")
+                print("Link-option not good. Check another route")
+                route_neps = []
+                route_interdominlinks = []
+                return route_neps, route_interdominlinks
+          else:
+            print("Looking if the next link is the good one it must be checked.")
           if neps_found:
             break
-          else:
-            print("Looking if the next link is the good one and if it has available spectrum.")
         if neps_found == False:
-          print("Link blocked as the link has no options with spectrum available.")
-          return [], []
+          print("NO link was found with this information.")
+          route_neps = []
+          route_interdominlinks = []
+          return route_neps, route_interdominlinks
       else:
         # link belongs to a context
         new_nep = {}
         new_nep["link_uuid"] = response["link_uuid"]
-        new_nep["topology"] = response["topology"]
+        new_nep["context_uuid"] = response["context"]
+        new_nep["topology_uuid"] = response["topology"]
         new_nep["node_uuid"] = response["n1"]
         new_nep["nep_uuid"] = response["nep1"]
         new_nep["direction"] = "OUTPUT"
         route_neps.append(new_nep)
         new_nep["link_uuid"] = response["link_uuid"]
-        new_nep["topology"] = response["topology"]
+        new_nep["context_uuid"] = response["context"]
+        new_nep["topology_uuid"] = response["topology"]
         new_nep["node_uuid"] = response["n2"]
         new_nep["nep_uuid"] = response["nep2"]
         new_nep["direction"] = "INPUT"
@@ -337,17 +361,17 @@ def domain2nep_route_mapping(route, e2e_topology):
   return route_neps, route_interdominlinks
 
 """
+Example of route_neps = [
+    {type_link, link_uuid, context_uuid, node_uuid, nep_uuid, direction},
+    {type_link, link_uuid, context_uuid, node_uuid, nep_uuid, direction},
+    {link_uuid, context_uuid, topology_uuid, node_uuid, nep_uuid, direction},
+    {link_uuid, context_uuid, topology_uuid, node_uuid, nep_uuid, direction},
+    {type_link, link_uuid, context_uuid, node_uuid, nep_uuid, direction},
+    {type_link, link_uuid, context_uuid, node_uuid, nep_uuid, direction}
+  ]
 Example of route_interdominlinks = [
     {"link-option-uuid", "available_spectrum":[YYY, YYY]},
-    {"link-option-uuid", "available_spectrum"}
-  ]
-Example of route_neps = [
-    {link_uuid, topology, node_uuid, nep_uuid, direction},
-    {link_uuid, topology, node_uuid, nep_uuid, direction},
-    {topology, node_uuid, nep_uuid, direction},
-    {topology, node_uuid, nep_uuid, direction},
-    {link_uuid, topology, node_uuid, nep_uuid, direction},
-    {link_uuid, topology, node_uuid, nep_uuid, direction}
+    {"link-option-uuid", "available_spectrum":[YYY, YYY]}
   ]
 """
 # based on the NEPs route, it looks for the corresponding SIPs to define the CSs
@@ -358,10 +382,10 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request):
   internal_neps = []
   # maps intermediate NEPs to intermediate SIPs
   for idx, nep_item  in enumerate(route_neps):
-    if "link_uuid" in nep_item:
+    if "type_link" in nep_item:
       # NOTE: this if will be accessed only in transparent abstraction mode
       next_nep = route_neps[idx+1]
-      if "link_uuid" in next_nep and nep_item["link_uuid"] == next_nep["link_uuid"]:
+      if "type_link" in next_nep and nep_item["link_uuid"] == next_nep["link_uuid"]:
         trans_link_item = {}
         trans_link_item["uuid"] = nep_item["link_uuid"]
         trans_link_item["topology"] = nep_item["topology"]
@@ -373,38 +397,43 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request):
         # ... its link has already been selected in the previous loop round
         pass 
     else:
-      # get specific domain topology to discover the correct SIP to use
-      response = bl_mapper.get_context_from_blockchain(nep_item["topology"])
+      # get the specific context to discover the correct SIP to use attached to the link under study
+      response = bl_mapper.get_context_from_blockchain(nep_item["context"])
       domain_context = response['context']
-      # look inot all the nodes of the incoming context
+      # look inot all the nodes of the incoming context-topology (we consider there is only one topology per context)
       for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
         for owned_nep_item in node_item["owned-node-edge-point"]:
           if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
             found_nep = owned_nep_item
             break
         found_sip = False
-        for mapped_sip_item in found_nep["mapped-service-interface-point"]:
-          for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
-            if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
-              sip_item["topology"] = nep_item["topology"]
-              sip_item["blockchain_owner"] = response['blockchain_owner']
-              route_sips.append(sip_item)
-              found_sip = True
+        if 'mapped-service-interface-point' in found_nep.keys():
+          # domain external NEP (it has SIPs)
+          for mapped_sip_item in found_nep["mapped-service-interface-point"]:
+            for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
+              if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
+                sip_item["topology"] = nep_item["topology"]
+                sip_item["blockchain_owner"] = response['blockchain_owner']
+                route_sips.append(sip_item)
+                found_sip = True
+                break
+            if found_sip:
               break
           if found_sip:
             break
-        if found_sip:
-          break
+        else:
+          # domain internal NEP (no SIPs)
+          pass
   
   # adds the FIRST SIP in the route
-  response = bl_mapper.get_context_from_blockchain(e2e_cs_request["domain-source"]["uuid"])
+  response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
   for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
         if sip_item["uuid"] == e2e_cs_request["domain-source"]["sip"]:
           sip_item["blockchain_owner"] = response['blockchain_owner']
           route_sips.insert(0, sip_item)
   
   # adds the last SIP in the route
-  response = bl_mapper.get_context_from_blockchain(e2e_cs_request["domain-destination"]["uuid"])
+  response = bl_mapper.get_context_from_blockchain(e2e_cs_request["destination"]["context_uuid"])
   for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
         if sip_item["uuid"] == e2e_cs_request["domain-source"]["sip"]:
           sip_item["blockchain_owner"] = response['blockchain_owner']
