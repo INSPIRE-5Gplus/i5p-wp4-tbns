@@ -277,7 +277,7 @@ get_edge_data options:
   (vnode/trans) {interdomain_link_uuid=uuid_idl}
 """
 # Based on a given route, looks for the specific NEPs involved in the inter-domain links
-def node2nep_route_mapping(route, e2e_topology):
+def node2nep_route_mapping(route, e2e_topology, capacity):
   route_neps = []
   route_interdominlinks = []
 
@@ -294,12 +294,27 @@ def node2nep_route_mapping(route, e2e_topology):
         for idl_item in e2e_topology["interdomain-links"]:
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
+            # checks if this NEP has enough available spectrum  to fit the requested capacity
+            available_spectrum = idl_item["available_spectrum"]
+            availability = False
+            for available_item in available_spectrum:
+              available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+              if (available_diff >= capacity):
+                availability = True
+                break
+            # if False, the NEp is not good, and another route is necessary
+            if availability == False:
+              print("This IDL has not enough available spectrum for the requested capacity.")
+              route_neps = []
+              route_interdominlinks = []
+              return route_neps, route_interdominlinks
+            # looks in all the tricky NEPs (simulating a single NEP with multiple SIPs)
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
               if link_option_item["uuid"] == response["interdomain_link_uuid"]:
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
-                  if not physical_option_item["occupied-spectrum"]:
+                  if physical_option_item["occupied-spectrum"] == []:
                     # gets nep 1 info from the e2e_topology 6 adds it into the route-neps
                     new_nep = {}
                     new_nep["type_link"] = "IDL"
@@ -375,7 +390,7 @@ Example of route_interdominlinks = [
   ]
 """
 # based on the NEPs route, it looks for the corresponding SIPs to define the CSs
-def nep2sip_route_mapping(route_neps, e2e_cs_request):
+def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_sips = []
   route_spectrum = []
   route_links = []        # used only in transparent abstraction mode
@@ -410,8 +425,25 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request):
                 break
           else:
             #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
+            available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]
+            # checks if this NEP has enough available spectrum  to fit the requested capacity
+            availability = False
+            for available_item in available_spectrum:
+              available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+              if (available_diff >= capacity):
+                availability = True
+                break
+            # if False, the NEp is not good, and another route is necessary
+            if availability == False:
+              print("This NEP has not enough available spectrum for the requested capacity.")
+              route_sips = []
+              route_spectrum = []
+              route_links = []
+              internal_neps = []
+              return route_sips, route_spectrum, route_links, internal_neps
+            
             # adds the spectrum_info of each internal NEP to solve the spectrum continuity later
-            route_spectrum.append(owned_nep_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+            route_spectrum.append(available_spectrum)
             #NOTE: this is only accessed in transparent abstraction mode
             if os.environ.get("ABSTRACION_MODEL") == "transparent":
               next_nep = route_neps[idx+1]

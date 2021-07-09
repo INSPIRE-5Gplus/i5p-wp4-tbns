@@ -333,6 +333,10 @@ Example E2E_CS data object
   }
 """
 # manages the creation of an E2E CS
+#TODO: IMPORTANT!!
+# - Update e2e_topology (spectrum_occupied/availability) in the BL, once the route is selected and applied
+# - Update SDN Context (spectrum_occupied/availability) in the BL, once each domain CS is applied.
+# - Create the JSON to send the request to the SDN Controllers.
 def instantiate_e2e_connectivity_service(e2e_cs_request):
     # defines e2e CS data object parameters
     e2e_cs_json = {}
@@ -369,35 +373,47 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
         # maps the route from the nodes to the neps involved.
-        response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json)
+        response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
         idl_route = response_nep_mapped[1]
-        if neps_route != [] and idl_route != []:
-            # identifies the SIP used for each NEP in the route
-            response_sip_mapped = vl_computation.nep2sip_route_mapping(neps_route, e2e_cs_request)
-            
-            # generates available spectrums list from interdomain links & internal neps
-            sips_route = response_sip_mapped[0]
-            spectrums_available = response_sip_mapped[1]
-            internal_links_route = response_sip_mapped[2]
-            for interdomainlink_item in idl_route:
-                spectrums_available.append(interdomainlink_item["available_spectrum"])
-            
-            # prepares the spectrum slots available into a list of pair values.
-            spectrums_list = []
-            for spectrum_item in spectrums_available:
-                spectrum_slot = []
-                spectrum_slot.append(spectrum_item["lower-frequency"])
-                spectrum_slot.append(spectrum_item["upper-frequency"])
-                spectrums_list.append(spectrum_slot)
-            # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
-            selected_spectrum = vl_computation.spectrum_assignment(spectrums_list, capacity)
+        if neps_route == [] and idl_route == []:
+            print("No NEP or link available in the itnerdomain links. Looking for the next route.")
+            continue
+        # identifies the SIP used for each NEP in the route
+        response_sip_mapped = vl_computation.nep2sip_route_mapping(neps_route, e2e_cs_request, capacity)
+        sips_route = response_sip_mapped[0]
+        spectrums_available = response_sip_mapped[1]
+        internal_links_route = response_sip_mapped[2]
+        if sips_route == [] and spectrums_available == [] and spectrums_available == []:
+            print("No spectrum availability in NEP. Looking for the next route.")
+            continue
+        # generates available spectrums list from interdomain links & internal neps
+        for interdomainlink_item in idl_route:
+            spectrums_available.append(interdomainlink_item["available_spectrum"])
+        
+        # prepares the spectrum slots available into a list of pair values.
+        spectrums_list = []
+        for spectrum_item in spectrums_available:
+            spectrum_slot = []
+            spectrum_slot.append(spectrum_item["lower-frequency"])
+            spectrum_slot.append(spectrum_item["upper-frequency"])
+            spectrums_list.append(spectrum_slot)
+        # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
+        selected_spectrum = vl_computation.spectrum_assignment(spectrums_list, capacity)
+
+        # rsa done is complete or if empty, starts with the next route
+        if selected_spectrum == []:
+            print("No spectrum continuity. Looking for the next route.")
+            continue
         else:
-            print("Looking for the next route.")
-        # rsa done is complete: routing path computed and spectrum slot selected
-        if selected_spectrum != []:
             selected_route = route_item
             break
+    
+    # if no route is found, returns to inform
+    if selected_route == []:
+        print("NO route available between these two SIPs.")
+        e2e_cs_json["status"]  = "ERROR - no route available."
+        return e2e_cs_json, 200
 
     # adds more generic info into the e2e_cs data object
     spectrum = {}
@@ -479,15 +495,31 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
 
+    # TODO: centralised update of used NEPs and SIPs occupied spectrums
+    # què actualitxo?
+    # - NEPs (occupied i available) interns al SDN context
+    # - SIPs (occupied i available) del SDN context
+    # - physical-option (occupied) + idl_item (available) dels IDLs del e2e_topology
+    
+    # utiltizant neps_route actualitzem NEPs interns (update_NEP_BL)
+        # for loop neps_route
+        # if not type_link (és un NEP/SIP d'un IDL, no l'actualitzo ara)
+            # get_NEP_from_BL
+            # update data
+            # update_NEP_BL (updated_data)
+    # TODO...
+    sips_route
+    for idl_ref in idl_route:
+        for idl_item in e2e_topology_json["interdomain-links"]:
+            for link_option_item in idl_item["link-options"]:
+
+
     # saves the e2e_cs data object to confirm full deployment.
     e2e_cs_json["status"]  = "DEPLOYED"
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     
-    #TODO: IMPORTANT!! Check that the e2e_topology in the Blockchain is updated for the IDLs management
-    #and the right context_SDN is updated.
-
     return e2e_cs_json,200
 
 ################################### E2E NETWORK SLICE INSTANCES FUNCTIONS #######################################
