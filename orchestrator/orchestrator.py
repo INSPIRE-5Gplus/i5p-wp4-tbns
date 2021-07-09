@@ -241,60 +241,33 @@ def get_all_contexts():
 #TODO: get E2E topology function to show the E2E topology (draw with matplotlib)
 
 # manages a local connectivity service configuration process
-def instantiate_local_connectivity_service(cs_json):
-    settings.logger.info("ORCH: Received request to deploy a local CS: " +str(cs_json))
-    response = sdn_mapper.instantiate_connectivity_service(cs_json)
-    if response[1] != 200:
-        # manage epossible errors by informing to the original requester
-        pass   
+def instantiate_local_connectivity_service(event_json):
+    settings.logger.info("ORCH: Received request to deploy a local CS: " +str(event_json["cs_info"]["uuid"]))
+    response = sdn_mapper.instantiate_connectivity_service(event_json["cs_info"], event_json["spectrum"], event_json["capacity"])
+    if response[1] == 200:  
+        mutex_local_csdb_access.acquire()
+        db.add_cs(response[0])
+        mutex_local_csdb_access.release()
+        event_json["cs_info"]['status'] = "DEPLOYED"
+    else:
+        print("ERROR deploying local domain CS.")
+        event_json["cs_info"]['status'] = "ERROR"
     
-    mutex_local_csdb_access.acquire()
-    db.add_cs(cs_json)
-    mutex_local_csdb_access.release()
-
-    cs_json['status'] = "READY"
-    response = bl_mapper.update_blockchain_cs(cs_json)
+    response = bl_mapper.update_blockchain_cs(event_json)
 
 # updates a CS information belonging to another domain (Blockchain)
-def update_connectivity_service_from_blockchain(cs_json):
+def update_connectivity_service_from_blockchain(event_json):
     settings.logger.info("ORCH: Updating connectivity services information from another domain.")
-    
-    """
-    # look in the local nsi db which nsi has the updated connectivity service of one of its virtual links.
-    found_nsi = False
-    response = db.get_elements("slices")
-
-    for nsi_item in response:
-        for slice_vl_item in nsi_item["slice_vls"]:
-            if slice_vl_item["vl_id"] == cs_json['vl_ref']:
-                for cs_item in slice_vl_item['cs_list']:
-                    if cs_item['id'] == cs_json['id']:
-                        cs_item['status'] = cs_json['status']
-                        cs_item['blockchain_owner'] = cs_json['blockchain_owner']
-                
-                        # saves the nsi object into the db
-                        mutex_slice2db_access.acquire()
-                        db.update_db(nsi_item["id"], nsi_item, "slices")
-                        mutex_slice2db_access.release()
-                        
-                        found_nsi = True
-                        break
-            if found_nsi:
-                break
-        if found_nsi:
-            break
-    """
     mutex_e2e_csdb_access.acquire()
-    #db.add_element(e2e_cs_json, "e2e_cs")
-    e2ecs_list = db.get_elements("e2e_cs")
-    for e2ecs_item in e2ecs_list:
-        for domaincs_item in e2ecs_item["domain-CS"]:
-            if domaincs_item["uuid"] == cs_json["id"]:
-                domaincs_item["status"] = "READY"
+    e2e_cs_list = db.get_elements("e2e_cs")
+    for e2e_cs_item in e2e_cs_list:
+        for domain_cs_item in e2e_cs_item["domain-cs"]:
+            if domain_cs_item["uuid"] == event_json["id"]:
+                domain_cs_item["status"] = "DEPLOYED"
+                db.update_db(e2e_cs_item["uuid"], e2e_cs_item, "e2e_cs")
                 found_cs = True
                 break
         if found_cs == True:
-            db.update_db(e2ecs_item["uuid"], e2ecs_item, "e2e_cs")
             break
     mutex_e2e_csdb_access.release()
 
@@ -316,41 +289,48 @@ Example E2E_CS request
             "unit": "GHz"
         }
     }
-Example E2E_CS data object 
-    {
-        "uuid": "uuid_e2e_cs",
-        "status" : INSTANTIATING/DEPLOYED/TERMINATED,
-        "source": {
-            "context_uuid": "uuid",
-            "node_uuid": "uuid",
-            "sip_uuid": "uuid",d",
-        },
-        "destination": {
-            "context_uuid": "uuid",
-            "node_uuid": "uuid",
-            "sip_uuid": "uuid",
-        },
-        "capacity": {
-            "value": 75,
-            "unit": "GHz"
-        },
-        "spectrum": {
-            "higher-freq": 191700000,
-            "lower-freq": 191850000
-        },
-        "route":[
-            #info guardada amb el route_node_domain parameter
-            "node_uuid",
-            "node_uuid",
-            "node_uuid
-        ],
-        "domain-CS":[
-            {
-                "uuid": "uuid_CS",
-                "address_peer": "blockchain-peer_address"
-            }
+Example E2E_CS data object  
+  {
+    "uuid": "uuid_e2e_cs",
+    "status" : "INSTANTIATING/DEPLOYED/TERMINATED",
+    "source": {
+      "context_uuid": "uuid",
+      "node_uuid": "uuid",
+      "sip_uuid": "uuid",d",
+    },
+    "destination": {
+      "context_uuid": "uuid",
+      "node_uuid": "uuid",
+      "sip_uuid": "uuid",
+    },
+    "capacity": {
+      "value": 75,
+      "unit": "GHz"
+    },
+    "spectrum": {
+      "upper-frequency": 191700000,
+      "lower-frequency": 191850000
+    },
+    "route-nodes":[
+      "node_uuid",
+      "node_uuid",
+      "node_uuid
+    ]
+    "domain-cs":[
+      {
+        "uuid": "uuid_CS",
+        "context-uuid" : "uuid,
+        "address-owner": "blockchain-peer_address",
+        "status": "INSTANTIATING/DEPLOYED/TERMINATED",
+        "sip-source": "sip_uuid",
+        "sip-destination": "sip_uuid",
+        "internal-links":[
+          "link_uuid",
+          "link_uuid"
         ]
-    }
+      }
+    ]
+  }
 """
 # manages the creation of an E2E CS
 def instantiate_e2e_connectivity_service(e2e_cs_request):
@@ -358,12 +338,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     e2e_cs_json = {}
     selected_spectrum = []
     sips_route = []
-    selected_links = []
+    internal_links_route = []
     domain_CS = []
     e2e_topology_json = bl_mapper.get_e2etopology_from_blockchain()
 
     # assigns initial CS data object information
-    e2e_cs_json["uuid"] = uuid.uuid4()
+    e2e_cs_json["uuid"] = str(uuid.uuid4())
     e2e_cs_json["source"] = e2e_cs_request["source"]
     e2e_cs_json["destination"] = e2e_cs_request["destination"]
     e2e_cs_json["status"]  = "INSTANTIATING"
@@ -399,12 +379,19 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             # generates available spectrums list from interdomain links & internal neps
             sips_route = response_sip_mapped[0]
             spectrums_available = response_sip_mapped[1]
-            selected_links = response_sip_mapped[2]
+            internal_links_route = response_sip_mapped[2]
             for interdomainlink_item in idl_route:
                 spectrums_available.append(interdomainlink_item["available_spectrum"])
             
+            # prepares the spectrum slots available into a list of pair values.
+            spectrums_list = []
+            for spectrum_item in spectrums_available:
+                spectrum_slot = []
+                spectrum_slot.append(spectrum_item["lower-frequency"])
+                spectrum_slot.append(spectrum_item["upper-frequency"])
+                spectrums_list.append(spectrum_slot)
             # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
-            selected_spectrum = vl_computation.spectrum_assignment(spectrums_available, capacity)
+            selected_spectrum = vl_computation.spectrum_assignment(spectrums_list, capacity)
         else:
             print("Looking for the next route.")
         # rsa done is complete: routing path computed and spectrum slot selected
@@ -412,86 +399,95 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             selected_route = route_item
             break
 
-    #TODO: GENERATE ALL THE DOMAIN CSs, the E2E CS data object, UPDATE e2e_topology data object, update the context (SIPS, NEPS) data object in the blockchain
-    # generates the domain CSs requests [{sip_info, "topology", "blockchain_owner"},{...},...]]
-    # route_sips[0] -> route of SIPs 
-    # route_sips[1] -> list of context links per each CS (only transparent abstraction) [{link_uuid, topology},{}...]
-    # capacity
-    # selected_spectrum --> frequency slots
+    # adds more generic info into the e2e_cs data object
     spectrum = {}
-    spectrum["low-freq"] = selected_spectrum[0]
-    spectrum["high-freq"] = selected_spectrum[1]
+    spectrum["lower-frequency"] = selected_spectrum[0]
+    spectrum["upper-frequency"] = selected_spectrum[1]
     e2e_cs_json["spectrum"] = spectrum
-    e2e_cs_json["route"] = selected_route
+    e2e_cs_json["route-ndoes"] = selected_route
     
+    # creates a list of domain-CSs and adds thir information in the e2e_cs data object
     cs_list = []
-    iter_sips = iter(route_sips[0]) #iter is used to work using pairs of elements
+    iter_sips = iter(sips_route) #iter is used to work using pairs of elements
     for sip_item in iter_sips:
         # checks that each pair of sips belongs to the same owner, otherwise does not generate the cs_info
-        if sip_item["topology"] == next(iter_sips["topology"]):
+        if sip_item["context_uuid"] == next(iter_sips["context_uuid"]):
             cs_info = {}
-            constrained_links = []
-            cs_uuid = uuid.uuid4()
-            cs_info["uuid"] = cs_uuid
+            internal_links = []
+            cs_info["uuid"] = str(uuid.uuid4())
+            cs_info["context-uuid"] = sip_item["context_uuid"]
             cs_info["address_owner"] = sip_item["address_owner"]
-            cs_info["topology-uuid"] = sip_item["topology"]
-            sip_list = []
-            sip_list.append(sip_item["uuid"])
-            sip_list.append(next(iter_sips["uuid"]))
-            cs_info["sips"] = sip_list
-            cs_info["capacity"] = e2e_cs_request["capacity"]
-            cs_info["spectrum_slot"] = spectrum
+            cs_info["status"] = "INSTANTIATING"
+            cs_info["sip-source"] = sip_item["uuid"]
+            cs_info["sip-destination"] = next(iter_sips["uuid"])
             
-            # adds the list of constrained links for the current domain CS
-            # NOTE: this IF will be accessed only in transparent abstraction mode
-            if route_sips[1]:
-                for link_item in route_sips[1]:
-                    if link_item["topology"] == sip_item["topology"]:
-                        constrained_links.append(link_item["topology"])
-            cs_info["constrained_links"] = constrained_links
+            # adds the list of internal (constrained) links for the current domain CS
+            # NOTE: ONLY accessed in transparent abstraction mode
+            if internal_links_route and os.environ.get("ABSTRACION_MODEL") == "transparent":
+                for link_item in internal_links_route:
+                    if link_item["context_uuid"] == sip_item["context_uuid"]:
+                        internal_links.append(link_item["uuid"])
+            cs_info["internal-links"] = internal_links
             cs_list.append(cs_info)
         else:
             # if the two sips belong to two different domains, it passes to the next item.
             continue
+    e2e_cs_json["domain-cs"] = cs_list
     
-    e2e_cs_json["domain-CS"] = cs_list
+    # saves the first version of the new e2e_cs data object
     mutex_e2e_csdb_access.acquire()
-    db.add_elemente_db(e2e_cs_json, "e2e_cs")
+    db.add_element(e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     
-    # FOR loop to send domain CSs requests
+    # distribuïm domain CSs requests
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address_owner"] == str(settings.web3.eth.defaultAccount):
-            response = sdn_mapper.instantiate_connectivity_service(cs_item)
+            response = sdn_mapper.instantiate_connectivity_service(cs_item, spectrum, e2e_cs_json["capacity"])
             if response[1] == 200:
+                #saves the domain CS information
                 mutex_local_csdb_access.acquire()
-                db.add_cs(response[1])
+                db.add_cs(response[0])
                 mutex_local_csdb_access.release()
+                # saves the reference domain CS information int eh E2E CS data object.
+                mutex_e2e_csdb_access.acquire()
+                e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+                for domain_cs_item in e2e_cs["domain-cs"]:
+                    if domain_cs_item["uuid"] == cs_item["uuid"]:
+                        domain_cs_item["status"] = "DEPLOYED"
+                        break
+                db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+                mutex_e2e_csdb_access.release()
+            else:
+                print("ERROR requesting local domain CS.")
         else:
-            response = bl_mapper.instantiate_blockchain_cs(cs_item["address_owner"], cs_item, cs_item["uuid"])
+            response = bl_mapper.instantiate_blockchain_cs(cs_item["address_owner"], cs_item, spectrum, e2e_cs_json["capacity"])
     
         if response[1] != 200:
             # ERROR!! NOTE: think how to manage it
             break
 
-    # WHILE LOOP to validate all domain CSs composing the E2E CS are READY
+    # deployment management to validate all domain CSs composing the E2E CS are READY
     while  e2e_cs_ready == False:
         e2e_cs_ready = True
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
         for domainCS_item in e2e_cs["domain-CS"]:
-            if domainCS_item["status"] != "READY":
+            if domainCS_item["status"] != "DEPLOYED":
                 e2e_cs_ready = False
                 break
         mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
 
-    e2e_cs_json["status"]  = "READY"
+    # saves the e2e_cs data object to confirm full deployment.
+    e2e_cs_json["status"]  = "DEPLOYED"
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     
+    #TODO: IMPORTANT!! Check that the e2e_topology in the Blockchain is updated for the IDLs management
+    #and the right context_SDN is updated.
+
     return e2e_cs_json,200
 
 ################################### E2E NETWORK SLICE INSTANCES FUNCTIONS #######################################

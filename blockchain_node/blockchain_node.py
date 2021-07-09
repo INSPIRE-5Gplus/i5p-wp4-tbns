@@ -331,12 +331,14 @@ def get_e2etopology_from_blockchain():
     return context_json, 200
 
 # requests the deployment of a CS between domains
-def instantiate_blockchain_cs(address, cs_json, cs_uuid):
+def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to configure connectivity service in the Blockchain')
-    cs_dumps = json.dumps(cs_json)
+    cs_string = json.dumps(cs_json)
+    spectrum_string = json.dumps(spectrum)
+    capacity_string = json.dumps(capacity)
     
     # instantiate slice-subnet
-    tx_hash = settings.transport_contract.functions.instantiateConnectivityService(address,cs_dumps, cs_uuid).transact()
+    tx_hash = settings.transport_contract.functions.instantiateConnectivityService(address, cs_json["uuid"], cs_string, spectrum_string, capacity_string).transact()
     
     # Wait for transaction to be added and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
@@ -358,8 +360,11 @@ def terminate_blockchain_cs(ref_cs):
 # NOTE: requests to update a connectivity service element in the Blockchain
 def update_blockchain_cs(cs_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Updates connectivity service element within the Blockchain.')
-    # Add a service
-    tx_hash = settings.transport_contract.functions.updateConnectivityService(cs_json['uuid'], cs_json, cs_json['status']).transact()
+    cs_uuid = cs_json["cs_info"]['uuid']
+    cs_string = json.dumps(cs_json)
+    cs_status = cs_json["cs_info"]['status']
+    # distribute the updated domain CS information
+    tx_hash = settings.transport_contract.functions.updateConnectivityService(cs_uuid, cs_string, cs_status).transact()
 
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)

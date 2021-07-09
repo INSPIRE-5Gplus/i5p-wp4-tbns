@@ -62,6 +62,8 @@ contract transport {
     struct CSInstance{
         string id;
         string cs_info;
+        string spectrum;
+        string capacity;
         string status;
         address instantiationClient;
         address contextOwner;
@@ -205,12 +207,15 @@ contract transport {
     /*##### CONNECTIVITY SERVICE INSTANCES FUNCTIONS #####*/
     // generates an event to deploy a connectivity service
     //TODO: when needing more parameters to configure a CS, use a json as string
-    function instantiateConnectivityService(address _contextOwner, string memory _cs_info, string memory _id) public returns (bool){
+    //(address, cs_json["uuid"], cs_string, spectrum_string, capacity_string)
+    function instantiateConnectivityService(address _contextOwner, string memory _id, string memory _cs_info, string memory _spectrum, string memory _capacity) public returns (bool){
         string memory _status = "NEW";
         string memory _log = "Connectivity Service requested.";
 
         CSInstance_list[_id].id = _id;
         CSInstance_list[_id].cs_info = _cs_info;
+        CSInstance_list[_id].spectrum = _spectrum;
+        CSInstance_list[_id].capacity = _capacity;
         CSInstance_list[_id].instantiationClient = msg.sender;
         CSInstance_list[_id].contextOwner = _contextOwner;
         CSInstance_list[_id].status = _status;
@@ -218,7 +223,7 @@ contract transport {
         CSInstanceCount ++;
         
         //generates event to deploy connectivity service
-        emit notifyTopologyActions(_contextOwner, _id, _status, _cs_info, "", "", "", "", "", "");
+        emit notifyTopologyActions(_contextOwner, _id, _status, _cs_info, _spectrum, "", "", _capacity, "", "");
             
         //sends back to the client the response and 
         emit topology_response(msg.sender, _log, _status);

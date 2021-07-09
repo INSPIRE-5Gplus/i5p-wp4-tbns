@@ -535,3 +535,4 @@ def intersections(a,b):
 
 #To update the available spectrum ranges based on the supported and occupied
 #https://stackoverflow.com/questions/51905210/python-delete-subinterval-from-an-interval
+
