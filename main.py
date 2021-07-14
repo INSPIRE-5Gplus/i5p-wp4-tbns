@@ -10,7 +10,7 @@ from web3 import Web3
 
 from config_files import settings
 from orchestrator import orchestrator as orch
-from blockchain_node import blockchain_node as bl_node
+from blockchain_node import blockchain_node as bl_mapper
 from blockchain_node import events_manager
 from vl_computation import vl_computation
 from database import database as db
@@ -445,7 +445,24 @@ Example E2E_CS request
 # requests a CS based on a set of two SIPs and a capacity
 @app.route('/pdl-transport/connectivity_service', methods=['POST'])
 def request_e2e_cs():
-  settings.executor.submit(orch.instantiate_e2e_connectivity_service, request.json)
+  # validates the two requested SIPs are free to be used
+  request_json = request.json
+  sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["sip_uuid"]
+  sip_info_string = bl_mapper.get_sip(sip_uuid)
+  sip_json = json.loads(sip_info_string)
+  check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
+  if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
+      return '{"msg": Not possible to create this CS. The SOUREC SIP is already used.}', 200
+  
+  sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["sip_uuid"]
+  sip_info_string = bl_mapper.get_sip(sip_uuid)
+  sip_json = json.loads(sip_info_string)
+  check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
+  if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
+      return '{"msg": Not possible to create this CS. The DESTINATION SIP is already used.}', 200
+  
+  
+  settings.executor.submit(orch.instantiate_e2e_connectivity_service, request_json)
   response = {}
   response['log'] = "Request accepted, creating the E2E CS."
   return response, 200

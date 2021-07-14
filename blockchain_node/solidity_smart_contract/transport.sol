@@ -95,6 +95,12 @@ contract transport {
     function getE2EContext() public view returns (string memory){
         return e2e_topology;
     }
+    // update e2e_topology
+    function updateE2EContext(string memory _e2e_topology) public returns (bool){
+        //the _id is a composition of the context uuid, the node uuid and the nep uuid
+        e2e_topology = _e2e_topology;
+        return true;
+    }
 
     /*##### DOMAIN CONTEXT FUNCTIONS #####*/
     // add a new domain context template
@@ -129,6 +135,12 @@ contract transport {
         SIPsCount ++;
         return true;
     }
+    // update a sip
+    function updateSip(string memory _id, string memory sip_info) public returns (bool){
+        //the _id is a composition of the context uuid, the node uuid and the nep uuid
+        SIPs_list[_id].sip_info = sip_info;
+        return true;
+    }
     // add a new node
     function addNode(string memory _id, string memory node_name, string memory neps_topo) public returns (bool){
         //the _id is a composition of the context uuid and the node uuid
@@ -139,13 +151,19 @@ contract transport {
         NodesCount ++;
         return true;
     }
-        // add a new node
+    // add a new nep
     function addNep(string memory _id, string memory nep_info) public returns (bool){
         //the _id is a composition of the context uuid and the node uuid
         NEPs_list[_id].nep_info = nep_info;
         NEPs_list[_id].nepOwner = msg.sender;  //the peer uploading the node info is the owner
         NEPsIds.push(_id);
         NEPsCount ++;
+        return true;
+    }
+    // update a nep
+    function updateNep(string memory _id, string memory nep_info) public returns (bool){
+        //the _id is a composition of the context uuid, the node uuid and the nep uuid
+        NEPs_list[_id].nep_info = nep_info;
         return true;
     }
     // add a new link
@@ -177,7 +195,6 @@ contract transport {
     function getContextTemplateId(uint _index) public view returns (string memory){
         return DomainContextIds[_index];
     }
-    // TODO: remove specific domain context
     // gets the information of a single sip
     function getSIP(string memory _id) public view returns (string memory){
         string memory sip = SIPs_list[_id].sip_info;

@@ -139,6 +139,26 @@ def get_idl_id(index):
     response = settings.transport_contract.functions.getIDLContextId(index).call()
     return response
 
+# returns IDLs information from blockchain
+def get_e2etopology_from_blockchain():
+    # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
+    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
+    response = settings.transport_contract.functions.getE2EContext().call()
+    if (not response):
+        context_json = "empty"
+    else:
+        converted_response = response.replace("'", "\"")
+        context_json = json.loads(converted_response)
+    return context_json, 200
+
+# update e2e_topology in the BL
+def update_e2e_topology(e2e_topo):
+    settings.logger.info('BLOCKCHAIN_MAPPER: Updating E2E Topology.')
+    e2e_string = json.dumps(e2e_topo)
+    response = settings.transport_contract.functions.updateE2EContext(e2e_string).call()
+
+    return '{"msg":"E2E topology updated in the BL."}', 200
+
 # distributes the domain SDN context with the other peers
 def context_to_blockchain(context_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local SDN context information with Blockchain peers.')
@@ -170,6 +190,7 @@ def context_to_blockchain(context_json):
             bl_nep_uuid = context_json["id"]+":"+node_item["uuid"]+":"+nep_item["uuid"]
             nep_string = json.dumps(nep_item)
             tx_hash = settings.transport_contract.functions.addNep(bl_nep_uuid, nep_string).transact()
+            tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
             neps_uuid_list.append(nep_item["uuid"])
 
         bl_node_uuid = context_json["id"]+":"+node_item["uuid"]        
@@ -318,17 +339,30 @@ def get_context_id(index):
     response = settings.transport_contract.functions.getContextTemplateId(index).call()
     return response
 
-# returns IDLs information from blockchain
-def get_e2etopology_from_blockchain():
-    # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
-    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
-    response = settings.transport_contract.functions.getE2EContext().call()
-    if (not response):
-        context_json = "empty"
-    else:
-        converted_response = response.replace("'", "\"")
-        context_json = json.loads(converted_response)
-    return context_json, 200
+# returns the slice-subnet (NST) ID based on the index position within the slice_subnets list in the blockchain
+def get_sip(index):
+    response = settings.transport_contract.functions.getSIP(index).call()
+    return response
+
+# updates a specific NEP info in the BL
+def update_sip(sip_id, sip_json):
+    sip_string = json.dumps(sip_json)
+    tx_hash = settings.transport_contract.functions.updateNep(sip_id, sip_string).transact()
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    return sip_id, 200
+
+# returns a specific NEP info
+def get_nep(index):
+    response = settings.transport_contract.functions.getNep(index).call()
+    nep_json = response.loads()
+    return nep_json
+
+# updates a specific NEP info in the BL
+def update_nep(nep_id, nep_json):
+    nep_string = json.dumps(nep_json)
+    tx_hash = settings.transport_contract.functions.updateNep(nep_id, nep_string).transact()
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    return nep_id, 200
 
 # requests the deployment of a CS between domains
 def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):

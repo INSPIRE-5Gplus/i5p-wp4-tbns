@@ -336,7 +336,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                     new_idl = {}
                     new_idl["link-option-uuid"] = link_option_item["uuid"]
                     new_idl["available-spectrum"] = link_option_item["available-spectrum"]
-                    route_interdominlinks.append
+                    route_interdominlinks.append(new_idl)
                     neps_found = True
                     break
               if neps_found:
@@ -424,27 +424,30 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               if found_sip:
                 break
           else:
-            #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
-            available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]
-            # checks if this NEP has enough available spectrum  to fit the requested capacity
-            availability = False
-            for available_item in available_spectrum:
-              available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
-              if (available_diff >= capacity):
-                availability = True
-                break
-            # if False, the NEp is not good, and another route is necessary
-            if availability == False:
-              print("This NEP has not enough available spectrum for the requested capacity.")
-              route_sips = []
-              route_spectrum = []
-              route_links = []
-              internal_neps = []
-              return route_sips, route_spectrum, route_links, internal_neps
-            
-            # adds the spectrum_info of each internal NEP to solve the spectrum continuity later
-            route_spectrum.append(available_spectrum)
-            #NOTE: this is only accessed in transparent abstraction mode
+            # only the transmitter neps are itneresting for the spectrum continuity
+            if nep_item["direction"] == "OUTPUT":
+              #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
+              available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]
+              # checks if this NEP has enough available spectrum  to fit the requested capacity
+              availability = False
+              for available_item in available_spectrum:
+                available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+                if (available_diff >= capacity):
+                  availability = True
+                  break
+              # if False, the NEp is not good, and another route is necessary
+              if availability == False:
+                print("This NEP has not enough available spectrum for the requested capacity.")
+                route_sips = []
+                route_spectrum = []
+                route_links = []
+                internal_neps = []
+                return route_sips, route_spectrum, route_links, internal_neps
+
+                # adds the spectrum_info of each internal NEP to solve the spectrum continuity later
+                route_spectrum.append(available_spectrum)
+
+            # adds the links to require their usage (only done in transparent abstraction mode)
             if os.environ.get("ABSTRACION_MODEL") == "transparent":
               next_nep = route_neps[idx+1]
               if nep_item["link_uuid"] == next_nep["link_uuid"]:
@@ -452,14 +455,13 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
                 link_item["uuid"] = nep_item["link_uuid"]
                 link_item["context_uuid"] = nep_item["context_uuid"]
                 route_links.append(link_item)
-                #internal_neps.append(nep_item)
-                #internal_neps.append(next_nep)
         if found_nep:
           break
       if found_nep:
         break
 
   # adds the FIRST SIP in the route_sips
+  #TODO: improve the code using the get_sip(uuid) function, to removes for loops.
   response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
   for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
         if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
@@ -484,6 +486,7 @@ Example of route_sips = [
   {sip_info, "context_uuid", "blockchain_owner"},
   {sip_info, "context_uuid", "blockchain_owner"}
 ]
+# list of links to use in the transparnt mode.
 Example of route_links = [
     {uuid, context_uuid},
     {uuid, context_uuid}
@@ -500,7 +503,8 @@ Example of internal_neps = [
 ]
 """
 # Spectrum assignment --> We look for the exact-Fit, otherwise the Best-Fit
-def spectrum_assignment(spectrum_list, capacity):  
+def spectrum_assignment(spectrum_list, capacity):
+  #spectrum = [[UUU,YYY],[ZZZ, TTT]]
   # it checks the availability of all the involved inter-domain links and extract the 
   # common available spectrum bigger than 75GHz
   ref_spectrum = spectrum_list[0]
@@ -567,4 +571,21 @@ def intersections(a,b):
 
 #To update the available spectrum ranges based on the supported and occupied
 #https://stackoverflow.com/questions/51905210/python-delete-subinterval-from-an-interval
+def availabe_spectrum(a,b):
+  d = []
+  i=a[0]
+  j=a[1]
 
+  for idx, b_item in enumerate(b):
+    start=b_item[0]
+    end=b_item[1]
+    if i == b_item[0]:
+      i=end
+    else:
+      d.append([i,start])
+      i=end
+    
+    if idx == len(b)-1 and b_item[1] < a[1]:
+      d.append([end,j])
+
+  return d
