@@ -122,6 +122,7 @@ Generated CS request
 """
 # assegurar que el json a enviar és el que comença amb "tapi-connectivity:input"
 def instantiate_connectivity_service(cs_info_json, spectrum, capacitiy):
+  settings.logger.info("SDN_MAPPER: Arrived a requests to deploy a local CS.")
   #TODO: once the JSON for the requests i identified, update the code below
   """
   #var with the json to add into the request
@@ -192,13 +193,11 @@ def instantiate_connectivity_service(cs_info_json, spectrum, capacitiy):
   else:
       return response.text, response.status_code
   """
-
   #return response.text, response.status_code
-  return_json = {}
+  #return_json = {}
   #return_json['instance_id'] = cs_info_json["uuid"] instance???
-  return_json["cs_uuid"] = cs_info_json["uuid"]
-  return_json["status"] = "READY"
-  return return_json, 200
+  cs_info_json["status"] = "DEPLOYED"
+  return cs_info_json, 200
 
 #TODO: sends request to terminate a connectivity service
 def terminate_connectivity_service():

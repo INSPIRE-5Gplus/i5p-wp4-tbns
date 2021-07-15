@@ -259,9 +259,11 @@ def find_path(src, dst):
 
   # calculates the route based on the virtual link weights. For the other abstraction models, the edges weight is 1.
   if os.environ.get("ABSTRACION_MODEL") == "vlink":
+    print("Calculating routes for the VLINK")
     simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst, "weight")
   else:
     simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst)
+    print("Calculating routes for the VNODE or Transparent")
   for path in islice(simple_path_list, K):
     path_nodes_list.append(path)
      
@@ -280,7 +282,7 @@ get_edge_data options:
 def node2nep_route_mapping(route, e2e_topology, capacity):
   route_neps = []
   route_interdominlinks = []
-
+  print("starting the node2nep_route_mapping procedure")
   # it gets the list of neps based on the order of nodes in the route
   for idx, route_item  in enumerate(route):
     neps_found = False
@@ -288,19 +290,24 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
     if route[idx] != len(route-1):
       # gets the data of the edge
       response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])
+      print("get_edge_data: " + str(response))
       # link belongs to an interdomain link
-      #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage 1NEP wit XSIPs
+      #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
       if "interdomain_link_uuid" in response:
+        print("NEP belonging to an IDL (with SIPS)")
         for idl_item in e2e_topology["interdomain-links"]:
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
+            print("found the two neps composing an IDL.")
             # checks if this NEP has enough available spectrum  to fit the requested capacity
             available_spectrum = idl_item["available_spectrum"]
             availability = False
             for available_item in available_spectrum:
               available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+              print("available_diff: " +str(available_diff))
               if (available_diff >= capacity):
                 availability = True
+                print("Found availavle spectrum: "+ str(available_diff) +" vs "+ str(capacity))
                 break
             # if False, the NEp is not good, and another route is necessary
             if availability == False:
@@ -312,9 +319,11 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
               if link_option_item["uuid"] == response["interdomain_link_uuid"]:
+                print("Found the right IDL in the e2e_topology data object")
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
                   if physical_option_item["occupied-spectrum"] == []:
+                    print("Found a free physical-option to be used.")
                     # gets nep 1 info from the e2e_topology 6 adds it into the route-neps
                     new_nep = {}
                     new_nep["type_link"] = "IDL"
@@ -356,6 +365,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
           route_interdominlinks = []
           return route_neps, route_interdominlinks
       else:
+        print("NEP belonging to an internal NEP")
         # link belongs to a context
         new_nep = {}
         new_nep["link_uuid"] = response["link_uuid"]
@@ -395,26 +405,33 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_spectrum = []
   route_links = []        # used only in transparent abstraction mode
   internal_neps = []
+  print("starting the nep2sip_route_mapping procedure")
   # maps intermediate NEPs to intermediate SIPs
   for idx, nep_item  in enumerate(route_neps):
     # get the specific context to discover the correct SIP to use attached to the link under study
     response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
     domain_context = response['context']
+    print("domain_context: "+str(domain_context))
     # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)
     for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
       # looks the neps in the node
       found_nep = False
       for owned_nep_item in node_item["owned-node-edge-point"]:
         if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
+          print("Found the NEP to be used, checking if it's internal or client.")
           found_nep = True
           found_sip = False
           if 'mapped-service-interface-point' in owned_nep_item.keys():
+            print("Client NEP")
             # NOTE: VNODE will only enter in here, never in the associated else as it has only neps with sips
             # looks for the SIP info associated to the nep
             for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
               for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
                 # validates the sips_uuid and their direction coincide
+                print(str(mapped_sip_item["service-interface-point-uuid"]) + " - " +str(sip_item["uuid"]))
+                print(str(nep_item["direction"]) + " - " +str(sip_item["direction"]))
                 if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
+                  print("This nep is the one we are looking for.")
                   # adds the sip element into the sips_route
                   sip_item["context_uuid"] = nep_item["context_uuid"]
                   sip_item["blockchain_owner"] = response['blockchain_owner']
@@ -424,14 +441,17 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               if found_sip:
                 break
           else:
+            print("Internal NEP")
             # only the transmitter neps are itneresting for the spectrum continuity
             if nep_item["direction"] == "OUTPUT":
+              print("we take it as it's an output nep.")
               #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
               available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]
               # checks if this NEP has enough available spectrum  to fit the requested capacity
               availability = False
               for available_item in available_spectrum:
                 available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+                print("Checking available_spectrum: " + str(available_diff))
                 if (available_diff >= capacity):
                   availability = True
                   break
@@ -444,11 +464,13 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
                 internal_neps = []
                 return route_sips, route_spectrum, route_links, internal_neps
 
-                # adds the spectrum_info of each internal NEP to solve the spectrum continuity later
-                route_spectrum.append(available_spectrum)
+              # adds the spectrum_info of each internal NEP to solve the spectrum continuity later
+              print("GOOD NEP, adding its available spectrum.")
+              route_spectrum.append(available_spectrum)
 
             # adds the links to require their usage (only done in transparent abstraction mode)
             if os.environ.get("ABSTRACION_MODEL") == "transparent":
+              print("Sselecting the links for in transparent mode.")
               next_nep = route_neps[idx+1]
               if nep_item["link_uuid"] == next_nep["link_uuid"]:
                 link_item = {}
@@ -465,6 +487,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
   for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
         if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+          print("first sip_item: " +str(sip_item))
           sip_item["blockchain_owner"] = response['blockchain_owner']
           route_sips.insert(0, sip_item)
           # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
@@ -474,6 +497,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   response = bl_mapper.get_context_from_blockchain(e2e_cs_request["destination"]["context_uuid"])
   for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
         if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+          print("last sip_item: " +str(sip_item))
           sip_item["blockchain_owner"] = response['blockchain_owner']
           route_sips.append(sip_item)
           # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
@@ -569,7 +593,7 @@ def intersections(a,b):
   
   return ranges
 
-#To update the available spectrum ranges based on the supported and occupied
+#Fins the available_spectrum looking the differente beteen the supportable_spectrum(a) and the occupied_spectrum(b)
 #https://stackoverflow.com/questions/51905210/python-delete-subinterval-from-an-interval
 def availabe_spectrum(a,b):
   d = []

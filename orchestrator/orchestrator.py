@@ -270,6 +270,7 @@ def update_connectivity_service_from_blockchain(event_json):
         if found_cs == True:
             break
     mutex_e2e_csdb_access.release()
+    print("Incoming updated domains CS from Bl is saved.")
 
 """
 Example E2E_CS request 
@@ -333,11 +334,9 @@ Example E2E_CS data object
   }
 """
 # manages the creation of an E2E CS
-#TODO: IMPORTANT!!
-# - Update e2e_topology (spectrum_occupied/availability) in the BL, once the route is selected and applied
-# - Update SDN Context (spectrum_occupied/availability) in the BL, once each domain CS is applied.
-# - Create the JSON to send the request to the SDN Controllers.
+#TODO: Create the JSON to send the request to the SDN Controllers.
 def instantiate_e2e_connectivity_service(e2e_cs_request):
+    settings.logger.info("ORCH: Received IDL and context to distribute.")
     # defines e2e CS data object parameters
     e2e_cs_json = {}
     selected_spectrum = []
@@ -351,6 +350,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     e2e_cs_json["destination"] = e2e_cs_request["destination"]
     e2e_cs_json["status"]  = "INSTANTIATING"
     e2e_cs_json["capacity"] = e2e_cs_request["capacity"]
+    print("1_e2e_cs_json: "+str(e2e_cs_json))
     if e2e_cs_request["capacity"]["unit"] == "GHz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000
     elif e2e_cs_request["capacity"]["unit"] == "THz":
@@ -366,8 +366,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     else:
         src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["node_uuid"]["uuid"]
         dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
+    print("src: "+str(src))
+    print("dst: "+str(dst))
     # we find the k-shortest path (K=7)
     route_nodes_list = vl_computation.find_path(src, dst)
+    print("route_nodes_list: " + str(route_nodes_list))
 
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
@@ -375,6 +378,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
         idl_route = response_nep_mapped[1]
+        print("neps_route: " + str(neps_route))
+        print("idl_route: "+str(idl_route))
         if neps_route == [] and idl_route == []:
             print("No NEP or link available in the itnerdomain links. Looking for the next route.")
             continue
@@ -383,13 +388,17 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         sips_route = response_sip_mapped[0]
         spectrums_available = response_sip_mapped[1]
         internal_links_route = response_sip_mapped[2]
-        if sips_route == [] and spectrums_available == [] and spectrums_available == []:
+        print("sips_route: "+str(sips_route))
+        print("spectrums_available: "+str(spectrums_available))
+        print("internal_links_route: "+str(internal_links_route))
+        if sips_route == [] and spectrums_available == []:
             print("No spectrum availability in NEP. Looking for the next route.")
             continue
         # generates available spectrums list from interdomain links & internal neps
+        print("adding the IDLs spectrum available")
         for interdomainlink_item in idl_route:
             spectrums_available.append(interdomainlink_item["available_spectrum"])
-        
+        print("spectrums_available: "+str(spectrums_available))
         # prepares the spectrum slots available into a list of pair values.
         spectrums_list = []
         for spectrum_item in spectrums_available:
@@ -399,6 +408,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             spectrums_list.append(spectrum_slot)
         # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
         selected_spectrum = vl_computation.spectrum_assignment(spectrums_list, capacity)
+        print("selected_spectrum: "+str(selected_spectrum))
 
         # rsa done is complete or if empty, starts with the next route
         if selected_spectrum == []:
@@ -420,10 +430,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     spectrum["upper-frequency"] = selected_spectrum[1]
     e2e_cs_json["spectrum"] = spectrum
     e2e_cs_json["route-ndoes"] = selected_route
+    print("2_e2e_cs_json: "+str(e2e_cs_json))
     
     # creates a list of domain-CSs and adds thir information in the e2e_cs data object
     cs_list = []
     iter_sips = iter(sips_route) #iter is used to work using pairs of elements
+    print("creating the domain CS objects for the e2e_cs_json")
     for sip_item in iter_sips:
         # checks that each pair of sips belongs to the same owner, otherwise does not generate the cs_info
         if sip_item["context_uuid"] == next(iter_sips["context_uuid"]):
@@ -448,22 +460,27 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             # if the two sips belong to two different domains, it passes to the next item.
             continue
     e2e_cs_json["domain-cs"] = cs_list
+    print("3_e2e_cs_json: "+str(e2e_cs_json))
     
     # saves the first version of the new e2e_cs data object
     mutex_e2e_csdb_access.acquire()
     db.add_element(e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
+    print("e2e_cs data object saved in the local database")
     
     # distribuïm domain CSs requests
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address_owner"] == str(settings.web3.eth.defaultAccount):
+            print("Sending domain CS request to the local SDN controller.")
             response = sdn_mapper.instantiate_connectivity_service(cs_item, spectrum, e2e_cs_json["capacity"])
-            if response[1] == 200:
+            if response[1] == 200 and response[1]["status"] == "DEPLOYED":
+                print("Saving domain CS in the local database.")
                 #saves the domain CS information
                 mutex_local_csdb_access.acquire()
                 db.add_cs(response[0])
                 mutex_local_csdb_access.release()
+                print("Saving (updating) e2e_cs data object")
                 # saves the reference domain CS information int eh E2E CS data object.
                 mutex_e2e_csdb_access.acquire()
                 e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
@@ -473,21 +490,23 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                         break
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
+                print("Everything updated.")
             else:
+                #TODO: manage this error
                 print("ERROR requesting local domain CS.")
+                return e2e_cs_json,400
         else:
+            print("Distributing domain CS request to the BL.")
             response = bl_mapper.instantiate_blockchain_cs(cs_item["address_owner"], cs_item, spectrum, e2e_cs_json["capacity"])
     
-        if response[1] != 200:
-            # ERROR!! NOTE: think how to manage it
-            break
-
     # deployment management to validate all domain CSs composing the E2E CS are READY
+    print("Waiting all the domains CS from other domains to be deployed.")
     while  e2e_cs_ready == False:
         e2e_cs_ready = True
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
         for domainCS_item in e2e_cs["domain-CS"]:
+            print("domainCS_item[status]: "+str(domainCS_item["status"]))
             if domainCS_item["status"] != "DEPLOYED":
                 e2e_cs_ready = False
                 break
@@ -502,14 +521,17 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     new_ocuppied_item["lower-frequency"] = e2e_cs_json["spectrum"]["lower-frequency"]
     new_ocuppied_item["upper-frequency"] = e2e_cs_json["spectrum"]["upper-frequency"]
     new_ocuppied_item["frequency-constraint"] =  freq_const
+    print("new_ocuppied_itemw: " +str(new_ocuppied_item))
 
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
+    print("Updating available spectrums in the itnernal NEPs of each SDN Context and the IDLs.")
     for idx, nep_item in enumerate(neps_route):
         if "type_link" not in nep_item.keys() and nep_item["direction"] == "OUTPUT":
             # updates the internal NEPsinformation
             # gets the nep info
             requested_uuid = nep_item["context_uuid"]+":"+nep_item["node_uuid"]+":"+nep_item["nep_uuid"]
             requested_nep = bl_mapper.get_nep(requested_uuid)
+            print("1_requested NEP :" +str(requested_nep))
             # modifies the occupied-spectrum key
             requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"].append(new_ocuppied_item)
             # modifies the value in the available-spectrum key in the nep info
@@ -518,12 +540,14 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             supportable_range = [low_suportable, up_suportable]
             occupied_slots = []
             available_slots = []
-            i = supportable_range.start
             occupied_spectrum = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
             for spectrum_item in occupied_spectrum:
                 occupied_slots.append([spectrum_item["lower-frequency"], spectrum_item["upper-frequency"]])
+            print("occupied_slots: "+str(occupied_slots))
             if occupied_slots:
                 available_slots = vl_computation.availabe_spectrum(supportable_range, occupied_slots)
+                print("available_slots: "+str(available_slots))
+                available_slots_json = []
                 for slot_item in available_slots:
                     #append pair of available frequency slots to the list
                     freq_const = {}
@@ -533,12 +557,16 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                     new_available_item["frequency-constraint"] =  freq_const
                     new_available_item["lower-frequency"] = slot_item[0]
                     new_available_item["upper-frequency"] = slot_item[1]
-                    available_slots.append(new_available_item)
-                requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots
+                    available_slots_json.append(new_available_item)
+                requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
             else:
                 print("There is a problem with the occupied spectrums.")
             # sends the new info to the BL
+            print("2_requested NEP :" +str(requested_nep))
             response_update = bl_mapper.update_nep(requested_uuid, requested_nep)
+            if response_update[1]!= 200:
+                print("Error when saving updated data object.")
+                pass
         elif "type_link" in nep_item.keys() and nep_item["link_uuid"] == neps_route[idx+1]["link_uuid"]:
             # composes the uuiiiiids based on the asbtraction model is being used.
             if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
@@ -555,18 +583,24 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                     for link_option_item in idl_item["link-options"]:
                         if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
                             for physical_option_item in link_option_item["physical-options"]:
+                                # IDL physical-option being used found
                                 if physical_option_item["node-edge_point"][0]["nep-uuid"] == nep_item["nep_uuid"] and physical_option_item["node-edge_point"][1]["nep_uuid"] == neps_route[idx+1]["nep_uuid"]:
                                     physical_option_item["occupied-spectrum"] = new_ocuppied_item
                                     spectrum_added = True
 
                                 if physical_option_item["occupied-spectrum"] != []:
-                                    occupied_slots.append([physical_option_item["occupied-spectrum"]["lower-frequency"], physical_option_item["occupied-spectrum"]["upper-frequency"]])   
+                                    low_freq = physical_option_item["occupied-spectrum"]["lower-frequency"]
+                                    up_freq = physical_option_item["occupied-spectrum"]["upper-frequency"]
+                                    print("Added the occupied_spectrum")
+                                    occupied_slots.append([low_freq,up_freq])   
 
                         if spectrum_added and occupied_slots:
                             low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
                             up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
                             supportable_range = [low_suportable, up_suportable]
                             available_slots = vl_computation.availabe_spectrum(supportable_range, occupied_slots)
+                            print("available_slots: "+str(available_slots))
+                            available_slots_json = []
                             for slot_item in available_slots:
                                 #append pair of available frequency slots to the list
                                 freq_const = {}
@@ -576,18 +610,20 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                                 new_available_item["frequency-constraint"] =  freq_const
                                 new_available_item["lower-frequency"] = slot_item[0]
                                 new_available_item["upper-frequency"] = slot_item[1]
-                                available_slots.append(new_available_item)
-                            requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots
+                                available_slots_json.append(new_available_item)
+                            requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
                             break
                 if spectrum_added:
                     break   
         
             # update e2e_topology info
+            print("updating the e2e_topology in the BL.")
             response = bl_mapper.update_e2e_topology(e2e_topology_json)
         else:
             print("This NEP is neither an internal output or in an IDL.")
     
     # update the spectrum information for each SIP used in the route
+    print("Updating available spectrums in the SIPs of each SDN Context.")
     for sip_item in sips_route:
         sip_json = json.loads(sip_item["sip_info"])
         # adds the occupied spectrum info
@@ -604,8 +640,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         upp_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"]["upper-frequency"]
         supportable_range = [low_suportable, upp_suportable]
         occupied_slots.append([low_occupied, upp_occupied])
-        i = supportable_range.start
         available_slots = vl_computation.availabe_spectrum(supportable_range, occupied_slots)
+        print("available_slots: "+str(available_slots))
+        available_slots_json = []
         for slot_item in available_slots:
             #append pair of available frequency slots to the list
             freq_const = {}
@@ -615,17 +652,20 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             new_available_item["frequency-constraint"] =  freq_const
             new_available_item["lower-frequency"] = slot_item[0]
             new_available_item["upper-frequency"] = slot_item[1]
-            available_slots.append(new_available_item)
-        requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots
+            available_slots_json.append(new_available_item)
+        requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
         sip_id = sip_item["context_uuid"]+":"+sip_json["uuid"]
+        print("Updating SIP in the BL.")
         response = bl_mapper.update_sip(sip_id, sip_json)  
 
 
     # saves the e2e_cs data object to confirm full deployment.
+    print("Saving the e2e_cs data object in the local database.")
     e2e_cs_json["status"]  = "DEPLOYED"
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
+    print("The last print!!!! ou yeah!")
     
     return e2e_cs_json,200
 

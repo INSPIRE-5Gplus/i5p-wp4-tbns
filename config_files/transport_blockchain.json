@@ -1,5 +1,5 @@
 {
-    "contract_address":"0xB180ee6bC928E3455C1166E35EDA7a76d36e9eaD",
+    "contract_address":"0x26658e7fd9000EC0477eFd4f1071A1525E0EB59e",
     "abi":[
         {
             "anonymous": false,
@@ -130,6 +130,16 @@
                 {
                     "internalType": "string",
                     "name": "cs_info",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "spectrum",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "capacity",
                     "type": "string"
                 },
                 {
@@ -767,12 +777,22 @@
                 },
                 {
                     "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
                     "name": "_cs_info",
                     "type": "string"
                 },
                 {
                     "internalType": "string",
-                    "name": "_id",
+                    "name": "_spectrum",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_capacity",
                     "type": "string"
                 }
             ],
@@ -806,6 +826,73 @@
                 }
             ],
             "name": "updateConnectivityService",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_e2e_topology",
+                    "type": "string"
+                }
+            ],
+            "name": "updateE2EContext",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "nep_info",
+                    "type": "string"
+                }
+            ],
+            "name": "updateNep",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "sip_info",
+                    "type": "string"
+                }
+            ],
+            "name": "updateSip",
             "outputs": [
                 {
                     "internalType": "bool",

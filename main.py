@@ -445,9 +445,11 @@ Example E2E_CS request
 # requests a CS based on a set of two SIPs and a capacity
 @app.route('/pdl-transport/connectivity_service', methods=['POST'])
 def request_e2e_cs():
+  settings.logger.info('Received E2E CS deployment request.')
   # validates the two requested SIPs are free to be used
   request_json = request.json
   sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["sip_uuid"]
+  print (sip_uuid)
   sip_info_string = bl_mapper.get_sip(sip_uuid)
   sip_json = json.loads(sip_info_string)
   check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
@@ -455,13 +457,14 @@ def request_e2e_cs():
       return '{"msg": Not possible to create this CS. The SOUREC SIP is already used.}', 200
   
   sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["sip_uuid"]
+  print (sip_uuid)
   sip_info_string = bl_mapper.get_sip(sip_uuid)
   sip_json = json.loads(sip_info_string)
   check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
   if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
       return '{"msg": Not possible to create this CS. The DESTINATION SIP is already used.}', 200
   
-  
+  settings.logger.info('Selected SIPs available to be used. Starting the deployment.') 
   settings.executor.submit(orch.instantiate_e2e_connectivity_service, request_json)
   response = {}
   response['log'] = "Request accepted, creating the E2E CS."

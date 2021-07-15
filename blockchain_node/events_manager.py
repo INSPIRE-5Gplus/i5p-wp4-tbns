@@ -83,6 +83,8 @@ def handle_transport_event(event):
         pass
     elif (event['args']['status'] == "REMOVED" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         pass
+    elif (event['args']['status'] == "ERROR"):
+        print("An error has occurred in another domain!!")
     else:
         # print ("An ERROR has ocurred, a log should be sent to the requester/user.")
         # TODO: exception/error management

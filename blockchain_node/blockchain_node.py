@@ -371,9 +371,10 @@ def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     spectrum_string = json.dumps(spectrum)
     capacity_string = json.dumps(capacity)
     
+    print("Before distributing domain CS.")
     # instantiate slice-subnet
     tx_hash = settings.transport_contract.functions.instantiateConnectivityService(address, cs_json["uuid"], cs_string, spectrum_string, capacity_string).transact()
-    
+    print("After distributing domain CS.")
     # Wait for transaction to be added and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
@@ -384,6 +385,7 @@ def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     deployment_response = {}
     deployment_response["log"] = rich_logs[0]['args']['log']
     deployment_response["status"] = rich_logs[0]['args']['status']
+    print("Domain CS requests distributed.")
     
     return deployment_response, 200
 
@@ -397,9 +399,10 @@ def update_blockchain_cs(cs_json):
     cs_uuid = cs_json["cs_info"]['uuid']
     cs_string = json.dumps(cs_json)
     cs_status = cs_json["cs_info"]['status']
+    print("Before distributing updated domain CS.")
     # distribute the updated domain CS information
     tx_hash = settings.transport_contract.functions.updateConnectivityService(cs_uuid, cs_string, cs_status).transact()
-
+    print("After distributing updated domain CS.")
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
@@ -409,5 +412,5 @@ def update_blockchain_cs(cs_json):
     deployment_response = {}
     deployment_response["log"] = rich_logs[0]['args']['log']
     deployment_response["status"] = rich_logs[0]['args']['status']
-    
+    print("Updated Domain CS requests distributed.")
     return deployment_response, 200
