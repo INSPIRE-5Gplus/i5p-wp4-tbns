@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x26658e7fd9000EC0477eFd4f1071A1525E0EB59e",
+    "contract_address":"0x2EC05C66aaB67FB15365faBB0714d550b8a2bca7",
     "abi":[
         {
             "anonymous": false,
@@ -512,6 +512,55 @@
                 },
                 {
                     "internalType": "string",
+                    "name": "_dir",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_nodesdir",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_lpn",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_phyopt",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_sup",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_av",
+                    "type": "string"
+                }
+            ],
+            "name": "addLinkOption",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
                     "name": "nep_info",
                     "type": "string"
                 }
@@ -701,6 +750,50 @@
                     "type": "string"
                 }
             ],
+            "name": "getLinkOption",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
             "name": "getNep",
             "outputs": [
                 {
@@ -805,6 +898,74 @@
                 }
             ],
             "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "linkOptionsIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "name": "linkOptions_list",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "direction",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "nodes_direction",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "lay_prot_name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "physical_options",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "sup_spectrum",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "av_spectrum",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "contextOwner",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
             "type": "function"
         },
         {

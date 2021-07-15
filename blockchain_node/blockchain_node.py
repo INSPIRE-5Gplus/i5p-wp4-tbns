@@ -112,7 +112,6 @@ def update_blockchain_slice(subnet_json):
 # distributes the domain associated inter-domain links (IDL) with the other peers
 def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes known IDLs & updates the e2e topology element saved in the Blockchain.')
-    #response = settings.transport_contract.functions.getE2EContext(settings.web3.eth.defaultAccount).call()
     idl_string = json.dumps(idl_json)
     e2e_topology_string = json.dumps(e2e_topology)
     
@@ -124,6 +123,22 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     settings.logger.info('BLOCKCHAIN_MAPPER: Transaction receipt.')
 
+    msg = {}
+    msg["msg"] = "Everything OK"
+        
+    return msg, 200
+
+# distributes link-option to the BL
+def linkoption_to_blockchain(linkoption_json):
+    id = linkoption_json["uuid"]
+    dir = linkoption_json["direction"]
+    nodesdir = json.dumps(linkoption_json["nodes-direction"])
+    lpn = json.dumps(linkoption_json["layer-protocol-name"])
+    phyopt = json.dumps(linkoption_json["physical-options"])
+    sup = json.dumps(linkoption_json["supportable-spectrum"])
+    av = json.dumps(linkoption_json["available-spectrum"])
+    response = settings.transport_contract.functions.addLinkOption(id, dir, nodesdir, lpn, phyopt,_sup, av).call()
+    
     msg = {}
     msg["msg"] = "Everything OK"
         
@@ -144,11 +159,26 @@ def get_e2etopology_from_blockchain():
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
     response = settings.transport_contract.functions.getE2EContext().call()
-    if (not response):
+    if (not response[0]):
         context_json = "empty"
     else:
         converted_response = response.replace("'", "\"")
         context_json = json.loads(converted_response)
+    return context_json, 200
+
+# returns a link-option belonging to an IDL from blockchain
+def get_linkOption_from_blockchain(link_option_uuid):
+    # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
+    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
+    response = settings.transport_contract.functions.getLinkOption(link_option_uuid).call()
+    context_json = {}
+    context_json["uuid"] = link_option_uuid
+    context_json["direction"] = response[0]
+    context_json["nodes-direction"] = json.loads(response[1])
+    context_json["layer-protocol-name"] = json.loads(response[2])
+    context_json["physicial-options"] = json.loads(response[3])
+    context_json["supportable-spectrum"] = json.loads(response[4])
+    context_json["available-spectrum"] = json.loads(response[5])
     return context_json, 200
 
 # update e2e_topology in the BL

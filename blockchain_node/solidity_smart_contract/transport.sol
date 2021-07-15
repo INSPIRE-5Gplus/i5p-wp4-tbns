@@ -4,6 +4,20 @@ pragma solidity ^0.8.0;
 contract transport {
     /*##### INTERDOMAIN-LINKS INFORMATION #####*/
     string e2e_topology;
+    
+    struct linkOptions{
+        //string linkOption_id;
+        string direction;
+        string nodes_direction;
+        string lay_prot_name;
+        string physical_options;
+        string sup_spectrum;
+        string av_spectrum;
+        address contextOwner;
+    }
+    mapping(string => linkOptions) public linkOptions_list;
+    string[] public linkOptionsIds;
+    uint linkOptionsCount;
 
     /*##### DOMAIN CONTEXT INFORMATION  plus SIPs, Nodes and Links #####*/
     struct DomainContext{
@@ -91,9 +105,33 @@ contract transport {
         //emit topology_response(msg.sender, _log, _status);
         return true;
     }
+    // add a new link-option for the e2e_topology
+    function addLinkOption(string memory _id, string memory _dir, string memory _nodesdir, string memory _lpn, string memory _phyopt, string memory _sup, string memory _av) public returns (bool){
+        linkOptions_list[_id].direction = _dir;
+        linkOptions_list[_id].nodes_direction = _nodesdir;
+        linkOptions_list[_id].lay_prot_name = _lpn;
+        linkOptions_list[_id].physical_options = _phyopt;
+        linkOptions_list[_id].sup_spectrum = _sup;
+        linkOptions_list[_id].av_spectrum = _av;
+        linkOptions_list[_id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
+        linkOptionsIds.push(_id);
+        linkOptionsCount ++;
+        
+        return true;
+    }
     // gets the information of a single context template
     function getE2EContext() public view returns (string memory){
         return e2e_topology;
+    }
+    // gets the information of a single sip
+    function getLinkOption(string memory _id) public view returns (string memory, string memory, string memory, string memory, string memory, string memory){
+        string memory dir = linkOptions_list[_id].direction;
+        string memory nodesdir = linkOptions_list[_id].nodes_direction;
+        string memory lpn = linkOptions_list[_id].lay_prot_name;
+        string memory phyopt = linkOptions_list[_id].physical_options;
+        string memory sup = linkOptions_list[_id].sup_spectrum;
+        string memory av = linkOptions_list[_id].av_spectrum;
+        return (dir, nodesdir, lpn, phyopt, sup, av);
     }
     // update e2e_topology
     function updateE2EContext(string memory _e2e_topology) public returns (bool){
