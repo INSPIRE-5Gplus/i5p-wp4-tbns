@@ -107,6 +107,26 @@
                 "occupied-spectrum": [
                 ]
               }
+            ],
+            "supportable_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
+            ],
+            "available_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
             ]
           },
           {
@@ -200,27 +220,27 @@
                 "occupied-spectrum": [
                 ]
               }
+            ],
+            "supportable_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
+            ],
+            "available_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
             ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
           }
         ]
       },
@@ -322,6 +342,26 @@
                 "occupied-spectrum": [
                 ]
               }
+            ],
+            "supportable_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
+            ],
+            "available_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
             ]
           },
           {
@@ -415,27 +455,27 @@
                 "occupied-spectrum": [
                 ]
               }
+            ],
+            "supportable_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
+            ],
+            "available_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
             ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
           }
         ]
       },
@@ -537,6 +577,26 @@
                 "occupied-spectrum": [
                 ]
               }
+            ],
+            "supportable_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
+            ],
+            "available_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
             ]
           },
           {
@@ -630,27 +690,27 @@
                 "occupied-spectrum": [
                 ]
               }
+            ],
+            "supportable_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
+            ],
+            "available_spectrum": [
+              {
+                "lower-frequency": 191700000,
+                "upper-frequency": 196100000,
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_50GHZ",
+                  "grid-type": "DWDM"
+                }
+              }
             ]
-          }
-        ],
-        "supportable_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
-          }
-        ],
-        "available_spectrum": [
-          {
-            "lower-frequency": 191700000,
-            "upper-frequency": 196100000,
-            "frequency-constraint": {
-              "adjustment-granularity": "G_50GHZ",
-              "grid-type": "DWDM"
-            }
           }
         ]
       }
