@@ -429,12 +429,12 @@ Example E2E_CS request
     "source": {
         "context_uuid": "uuid",
         "node_uuid": "uuid",
-        "sip_uuid": "uuid",
+        "sip_uuid": "uuid"
     },
     "destination": {
         "context_uuid": "uuid",
         "node_uuid": "uuid",
-        "sip_uuid": "uuid",
+        "sip_uuid": "uuid"
     },
     "capacity": {
         "value": 75,
@@ -448,11 +448,15 @@ def request_e2e_cs():
   settings.logger.info('Received E2E CS deployment request.')
   # validates the two requested SIPs are free to be used
   request_json = request.json
+  print("request_json: " + str(request_json))
   sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["sip_uuid"]
   print (sip_uuid)
   sip_info_string = bl_mapper.get_sip(sip_uuid)
+  print("Main_A")
   sip_json = json.loads(sip_info_string)
+  print("sip_json: "+ str(sip_json))
   check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
+  print("Main_B")
   if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
       return '{"msg": Not possible to create this CS. The SOUREC SIP is already used.}', 200
   
