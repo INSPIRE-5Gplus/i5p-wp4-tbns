@@ -110,6 +110,7 @@ def idl_to_bl(idl_json):
                 print("Distributing link-option: " +str(linkoption_item["uuid"]))
                 print(str(linkoption_item))
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
+                print("added linkoption")
                 response = bl_mapper.linkoption_to_blockchain(linkoption_item)
                 print("linkoption distributed. Next")
             newidl_item["link-options"] = linkoptions_uuid_list
