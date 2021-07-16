@@ -86,7 +86,6 @@ def get_slicessubnets_templates():
 ######################################## SDN TRANSPORT CONTEXT FUNCTIONS ########################################
 # adds the Inter-domin links and distributes them and the domain context in the blockchain
 def idl_to_bl(idl_json):
-    original_idl = idl_json
     settings.logger.info("ORCH: Received IDL and context to distribute.")
     # FIRST: updates the local graph containning the e2e tpology
     vl_computation.add_idl_e2e_graph(idl_json)
@@ -109,19 +108,25 @@ def idl_to_bl(idl_json):
         
         for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             linkoptions_uuid_list = []
+            temp_idls = []
+            temp_idl_item = {}
             for linkoption_item in idl_item["link-options"]:
                 print("Distributing link-option: " +str(linkoption_item["uuid"]))
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
                 response = bl_mapper.linkoption_to_blockchain(linkoption_item)
-            newidl_item = idl_item
-            print("END_EMPTY_1: "+ str(original_idl))
-            newidl_item["link-options"] = linkoptions_uuid_list
-            print("END_EMPTY_2: "+ str(original_idl))
-            e2e_topo["interdomain-links"].append(newidl_item)
-            print ("Next IDL")
+            
+            temp_idl_item["name"] = idl_item["name"]
+            temp_idl_item["nodes-involved"] = idl_item["nodes-involved"]
+            temp_idl_item["link-options"] = linkoptions_uuid_list
+            temp_idls.append(temp_idl_item)            
+
+        print("END_EMPTY_1: "+ str(idl_json))
+        e2e_topo["interdomain-links"] = temp_idls
+        print("END_EMPTY_2: "+ str(idl_json))
+        print ("Next IDL")
         
         e2e_topology["e2e-topology"] = e2e_topo
-        print("original_idl: "+ str(original_idl))
+        print("original_idl: "+ str(idl_json))
         print("e2e_topology: "+str(e2e_topology))
     else:
         e2e_topology = response[0]
@@ -159,9 +164,9 @@ def idl_to_bl(idl_json):
                 newidl_item["link-options"] = linkoptions_uuid_list
                 e2e_topology["e2e-topology"]["interdomain-links"].append(newidl_item)
 
-    print("original_idl_2: " + str(original_idl))
+    print("original_idl_2: " + str(idl_json))
     settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
-    response = bl_mapper.interdomainlinks_to_blockchain(original_idl, e2e_topology)
+    response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:
         return ({"msg":"ERROR - Something went wrong when distributing IDL info."}, 400)
 
