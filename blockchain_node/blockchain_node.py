@@ -162,8 +162,11 @@ def get_e2etopology_from_blockchain():
     if (not response):
         context_json = "empty"
     else:
+        print("GET_E2E_TOPOLOGY_A")
         converted_response = response.replace("'", "\"")
+        print("GET_E2E_TOPOLOGY_B")
         context_json = json.loads(converted_response)
+        print("GET_E2E_TOPOLOGY_C: " + str(context_json))
     return context_json, 200
 
 # returns a link-option belonging to an IDL from blockchain
@@ -171,15 +174,16 @@ def get_linkOption_from_blockchain(link_option_uuid):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information.')
     response = settings.transport_contract.functions.getLinkOption(link_option_uuid).call()
-    context_json = {}
-    context_json["uuid"] = link_option_uuid
-    context_json["direction"] = response[0]
-    context_json["nodes-direction"] = json.loads(response[1])
-    context_json["layer-protocol-name"] = json.loads(response[2])
-    context_json["physicial-options"] = json.loads(response[3])
-    context_json["supportable-spectrum"] = json.loads(response[4])
-    context_json["available-spectrum"] = json.loads(response[5])
-    return context_json, 200
+    linkoption_json = {}
+    linkoption_json["uuid"] = link_option_uuid
+    linkoption_json["direction"] = response[0]
+    linkoption_json["nodes-direction"] = json.loads(response[1])
+    linkoption_json["layer-protocol-name"] = json.loads(response[2])
+    linkoption_json["physicial-options"] = json.loads(response[3])
+    linkoption_json["supportable-spectrum"] = json.loads(response[4])
+    linkoption_json["available-spectrum"] = json.loads(response[5])
+    print("linkoption_json: " +str(linkoption_json))
+    return linkoption_json, 200
 
 # update e2e_topology in the BL
 def update_e2e_topology(e2e_topo):

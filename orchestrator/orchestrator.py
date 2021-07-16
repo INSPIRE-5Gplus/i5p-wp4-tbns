@@ -362,7 +362,7 @@ Example E2E_CS data object
 # manages the creation of an E2E CS
 #TODO: Create the JSON to send the request to the SDN Controllers.
 def instantiate_e2e_connectivity_service(e2e_cs_request):
-    settings.logger.info("ORCH: Received IDL and context to distribute.")
+    settings.logger.info("ORCH: Received E2E request info. Let's process it.")
     # defines e2e CS data object parameters
     e2e_cs_json = {}
     selected_spectrum = []
@@ -374,6 +374,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     if e2e_topology_json[0] == "empty":
         return {"msg":"There is no e2e_topology to work with."}
     else:
+        print("Preparing the JSON with the E2E Topology.")
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
             linkoptions_list = []
@@ -381,6 +382,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
                 linkoptions_list.append(response)
             idl_item["link-options"] = linkoptions_list
+        print("e2e_topology_json: " + str(e2e_topology_json))
 
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = str(uuid.uuid4())
