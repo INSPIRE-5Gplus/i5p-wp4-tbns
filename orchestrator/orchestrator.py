@@ -129,14 +129,6 @@ def idl_to_bl(idl_json):
             if node_item not in e2e_nodes_list:
                 e2e_nodes_list.append(node_item)
         e2e_topology["e2e-topology"]["nodes-list"] = e2e_nodes_list
-        
-        # prepares the intedomain-links to compare the existing with the new ones in the IDL json
-        #for idl_item in e2e_topology["e2e-topology"]["interdomain-links"]:
-        #    linkoptions_list = []
-        #    for linkoption_uuid_item in idl_item["link-options"]:
-        #        response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
-        #        linkoptions_list.append(response)
-        #    idl_item["link-options"] = linkoptions_list
 
         # compares the existing IDl with those in the incoming idl_json
         e2e_idl_list = e2e_topology["e2e-topology"]["interdomain-links"]
@@ -148,11 +140,9 @@ def idl_to_bl(idl_json):
                     found_existing_idl = True
                     break
             if found_existing_idl == False:
-                print("NEW IDL TO ADD!!")
                 temp_idl_item = {}
                 for linkoption_item in idl_item["link-options"]:
                     linkoptions_uuid_list.append(linkoption_item["uuid"])
-                    print("Distributing link-option")
                     response = bl_mapper.linkoption_to_blockchain(linkoption_item)
 
                 temp_idl_item["name"] = idl_item["name"]
@@ -162,8 +152,6 @@ def idl_to_bl(idl_json):
 
         e2e_topology["e2e-topology"]["interdomain-links"]=e2e_idl_list
 
-    print("idl_json: " + str(idl_json))
-    print("e2e_topology: " +str(e2e_topology))
     settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
     response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:
