@@ -209,37 +209,51 @@ def add_idl_e2e_graph(e2e_json):
 
   settings.logger.info("VL_COMP: Nodes added, adding links to E2E graph")
   # add the links interconnecting the SDN domains defined in the json IF 
+  print(str(e2e_json["e2e-topology"]["interdomain-links"]))
   for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
+    print("A")
     # adding FIRST unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][0]
+    print("B: " +str(node_1))
     node_2 = interdomain_link_item["nodes-involved"][1]
+    print("C: "+str(node_2))
     uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
     # checks if the unidirectional ink exist already (working with multi-digraph)
+    print("D")
     response = e2e_topology_graph.has_edge(node_1, node_2)     
+    print("E")
     if response == True:
+      print("F")
       pass
     else:
+      print("G")
       # add edge with weight only for VLINK mode
       if os.environ.get("ABSTRACION_MODEL") == "vlink":
         e2e_topology_graph.add_edge(node_1, node_2, weight=1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
-
+    print("H")
     # adding SECOND unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][1]
+    print("I: "+str(node_1))
     node_2 = interdomain_link_item["nodes-involved"][0]
+    print("J: "+str(node_2))
     uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
     # checks if the unidirectional link exist already (working with multi-digraph)
+    print("K")
     response = e2e_topology_graph.has_edge(node_1, node_2)    
+    print("L")
     if response == True:
+      print("M")
       pass
     else:
+      print("N")
       # add edge with weight only for VLINK mode
       if os.environ.get("ABSTRACION_MODEL") == "vlink":
         e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
-  
+  print("O")
   settings.logger.info("VL_COMP: Added Edges to E2E Graph.")
 
 # paints the graph
