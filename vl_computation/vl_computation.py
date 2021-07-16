@@ -209,7 +209,6 @@ def add_idl_e2e_graph(e2e_json):
 
   settings.logger.info("VL_COMP: Nodes added, adding links to E2E graph")
   # add the links interconnecting the SDN domains defined in the json IF 
-  print(str(e2e_json["e2e-topology"]["interdomain-links"]))
   for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
     # adding FIRST unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][0]

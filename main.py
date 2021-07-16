@@ -449,7 +449,7 @@ def request_e2e_cs():
   # validates the two requested SIPs are free to be used
   request_json = request.json
   print("request_json: " + str(request_json))
-  sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["sip_uuid"]
+  sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["source"]["sip_uuid"]
   print (sip_uuid)
   sip_info_string = bl_mapper.get_sip(sip_uuid)
   print("Main_A")
@@ -460,7 +460,7 @@ def request_e2e_cs():
   if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
       return '{"msg": Not possible to create this CS. The SOUREC SIP is already used.}', 200
   
-  sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["sip_uuid"]
+  sip_uuid = request_json["destination"]["context_uuid"]+":"+request_json["destination"]["sip_uuid"]
   print (sip_uuid)
   sip_info_string = bl_mapper.get_sip(sip_uuid)
   sip_json = json.loads(sip_info_string)
