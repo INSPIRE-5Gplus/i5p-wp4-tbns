@@ -112,14 +112,16 @@ def idl_to_bl(idl_json):
                 print("Distributing link-option: " +str(linkoption_item["uuid"]))
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
                 response = bl_mapper.linkoption_to_blockchain(linkoption_item)
-            print("BEFORE: " + str(idl_json))
             newidl_item = idl_item
-            print("AFTER: " + str(idl_json))
+            print("END_EMPTY_1: "+ str(idl_json))
             newidl_item["link-options"] = linkoptions_uuid_list
+            print("END_EMPTY_2: "+ str(idl_json))
             e2e_topo["interdomain-links"].append(newidl_item)
+            print("END_EMPTY_3: "+ str(idl_json))
             print ("Next IDL")
         
         e2e_topology["e2e-topology"] = e2e_topo
+        print("END_EMPTY_4: "+ str(idl_json))
     else:
         e2e_topology = response[0]
         e2e_nodes_list = e2e_topology["e2e-topology"]["nodes-list"]
