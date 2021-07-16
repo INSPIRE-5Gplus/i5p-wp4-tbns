@@ -106,7 +106,7 @@
                 ]
               }
             ],
-            "supportable_spectrum": [
+            "supportable-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
@@ -116,7 +116,7 @@
                 }
               }
             ],
-            "available_spectrum": [
+            "available-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
@@ -219,7 +219,7 @@
                 ]
               }
             ],
-            "supportable_spectrum": [
+            "supportable-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
@@ -229,7 +229,7 @@
                 }
               }
             ],
-            "available_spectrum": [
+            "available-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
@@ -341,7 +341,7 @@
                 ]
               }
             ],
-            "supportable_spectrum": [
+            "supportable-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
@@ -351,7 +351,7 @@
                 }
               }
             ],
-            "available_spectrum": [
+            "available-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
@@ -454,7 +454,7 @@
                 ]
               }
             ],
-            "supportable_spectrum": [
+            "supportable-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
@@ -464,7 +464,7 @@
                 }
               }
             ],
-            "available_spectrum": [
+            "available-spectrum": [
               {
                 "lower-frequency": 191700000,
                 "upper-frequency": 196100000,
