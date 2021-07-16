@@ -137,9 +137,7 @@ def linkoption_to_blockchain(linkoption_json):
     phyopt = json.dumps(linkoption_json["physical-options"])
     sup = json.dumps(linkoption_json["supportable-spectrum"])
     av = json.dumps(linkoption_json["available-spectrum"])
-    print("Before sending link-option")
     response = settings.transport_contract.functions.addLinkOption(id, dir, nodesdir, lpn, phyopt,sup, av).call()
-    print("after sending link-option")
     
     msg = {}
     msg["msg"] = "Everything OK"
