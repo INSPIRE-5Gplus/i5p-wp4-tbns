@@ -106,19 +106,17 @@ def idl_to_bl(idl_json):
             e2e_nodes_list.append(node_item)
         e2e_topo["nodes-list"] = e2e_nodes_list
         
-        for newidl_item in idl_json["e2e-topology"]["interdomain-links"]:
+        for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             linkoptions_uuid_list = []
-            for linkoption_item in newidl_item["link-options"]:
+            for linkoption_item in idl_item["link-options"]:
                 print("Distributing link-option: " +str(linkoption_item["uuid"]))
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
                 response = bl_mapper.linkoption_to_blockchain(linkoption_item)
+            newidl_item = idl_item
             newidl_item["link-options"] = linkoptions_uuid_list
-            print(str(newidl_item["link-options"]))
             e2e_topo["interdomain-links"].append(newidl_item)
-            print(str(e2e_topo["interdomain-links"]))
         
         e2e_topology["e2e-topology"] = e2e_topo
-        print(e2e_topo["interdomain-links"])
     else:
         e2e_topology = response[0]
         e2e_nodes_list = e2e_topology["e2e-topology"]["nodes-list"]
@@ -138,19 +136,20 @@ def idl_to_bl(idl_json):
         #    idl_item["link-options"] = linkoptions_list
 
         # compares the existing IDl with those in the incoming idl_json
-        for newidl_item in idl_json["e2e-topology"]["interdomain-links"]:
+        for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             linkoptions_uuid_list = []
             found_existing_idl = False
             for ref_idl in e2e_topology["e2e-topology"]["interdomain-links"]:
-                if newidl_item["name"] == ref_idl["name"]:
+                if idl_item["name"] == ref_idl["name"]:
                     found_existing_idl = True
                     break
             if found_existing_idl == False:
                 print("NEW IDL TO ADD!!")
-                for linkoption_item in newidl_item["link-options"]:
+                for linkoption_item in idl_item["link-options"]:
                     linkoptions_uuid_list.append(linkoption_item["uuid"])
                     print("Distributing link-option")
                     response = bl_mapper.linkoption_to_blockchain(linkoption_item)
+                newidl_item = idl_item
                 newidl_item["link-options"] = linkoptions_uuid_list
                 e2e_topology["e2e-topology"]["interdomain-links"].append(newidl_item)
 
