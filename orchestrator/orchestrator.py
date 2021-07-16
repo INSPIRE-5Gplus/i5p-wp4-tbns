@@ -153,6 +153,7 @@ def idl_to_bl(idl_json):
                 newidl_item["link-options"] = linkoptions_uuid_list
                 e2e_topology["e2e-topology"]["interdomain-links"].append(newidl_item)
 
+    print(str(idl_json))
     settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
     response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:
@@ -189,6 +190,7 @@ def context_to_bl():
 # adds the inter-domain links information coming from another peer to the E2E local graph
 def add_idl_info(blockchain_domain_json):
     settings.logger.info("ORCH: Adding inter-domain links to the E2E graph for path conmputation.")
+    print(str(blockchain_domain_json))
     vl_computation.add_idl_e2e_graph(blockchain_domain_json)
 
 # adds the SDN domain context information coming from another peer to the E2E local graph
