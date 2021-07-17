@@ -376,6 +376,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     else:
         print("Preparing the JSON with the E2E Topology.")
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
+        print("e2e_topology_json: " + str(e2e_topology_json))
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
             print("Check_A")
             linkoptions_list = []
