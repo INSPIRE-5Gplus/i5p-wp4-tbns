@@ -377,11 +377,16 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         print("Preparing the JSON with the E2E Topology.")
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
+            print("Check_A")
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
+                print("Check_B")
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
+                print("response: " + str(response))
                 linkoptions_list.append(response)
+            print("linkoptions_list: " + str(linkoptions_list))
             idl_item["link-options"] = linkoptions_list
+            print("idle_item: " + str(idl_item))
         print("e2e_topology_json: " + str(e2e_topology_json))
 
     # assigns initial CS data object information
