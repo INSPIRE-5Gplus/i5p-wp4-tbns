@@ -389,39 +389,38 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     e2e_cs_json["destination"] = e2e_cs_request["destination"]
     e2e_cs_json["status"]  = "INSTANTIATING"
     e2e_cs_json["capacity"] = e2e_cs_request["capacity"]
-    print("1_e2e_cs_json: "+str(e2e_cs_json))
     if e2e_cs_request["capacity"]["unit"] == "GHz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000
-        print("This is the capacity (GHz): " + str(capacity))
     elif e2e_cs_request["capacity"]["unit"] == "THz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000000
-        print("This is the capacity (THz): " + str(capacity))
     else:
         #Unit is MHz
         capacity = e2e_cs_request["capacity"]["value"]
-        print("This is the capacity (MHz): " + str(capacity))
     
+    print("1_e2e_cs_json: "+str(e2e_cs_json))
     # ROUTING PATH COMPUTATION options based based on source and destination domains
-    print("Before looking the abstraction model to compose the uuids.")
-    print("This is the abstraction mode: " + str(os.environ.get("ABSTRACION_MODEL")))
-    print("Before if")
+    source_json = json.loads(e2e_cs_request["source"])
+    destination_json = json.loads(e2e_cs_request["destination"])
     if str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
         print("After it")
-        print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
-        src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["contex_uuid"]
-        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["context_uuid"]
+        print("composing names of src and dst: " + str(source_json["contex_uuid"]))
+        src = source_json["contex_uuid"]+":"+source_json["contex_uuid"]
+        dst = destination_json["context_uuid"]+":"+destination_json["context_uuid"]
     elif str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
         print("After it_1")
-        print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
-        print("composing names of src and dst: " + e2e_cs_request["source"]["contex_uuid"])
-        src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
-        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
-    else:
+        print("composing names of src and dst: " + str(source_json["contex_uuid"]))
+        print("composing names of src and dst: " + source_json["contex_uuid"])
+        src = source_json["contex_uuid"]+":"+source_json["node_uuid"]
+        dst = destination_json["context_uuid"]+":"+destination_json["node_uuid"]
+    elif str(os.environ.get("ABSTRACION_MODEL")) == "vlink":
         print("After it_2")
-        print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
-        print("composing names of src and dst: " + e2e_cs_request["source"]["contex_uuid"])
-        src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
-        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
+        print("composing names of src and dst: " + str(source_json["contex_uuid"]))
+        print("composing names of src and dst: " + source_json["contex_uuid"])
+        src = source_json["contex_uuid"]+":"+source_json["node_uuid"]
+        dst = destination_json["context_uuid"]+":"+destination_json["node_uuid"]
+    else:
+        settings.logger.info("ORCH: ERROR!!!")
+
     print("src: "+str(src))
     print("dst: "+str(dst))
     # we find the k-shortest path (K=7)
