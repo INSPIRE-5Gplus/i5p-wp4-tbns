@@ -138,11 +138,9 @@ def linkoption_to_blockchain(linkoption_json):
     sup = json.dumps(linkoption_json["supportable-spectrum"])
     av = json.dumps(linkoption_json["available-spectrum"])
     tx_hash = settings.transport_contract.functions.addLinkOption(id, dir, nodesdir, lpn, phyopt,sup, av).transact()
-    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new Link-Option done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction receipt.')
     
     msg = {}
     msg["msg"] = "Everything OK"

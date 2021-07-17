@@ -394,13 +394,17 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     print("type_e2e_cs_json: "+str(type(e2e_cs_json)))
     if e2e_cs_request["capacity"]["unit"] == "GHz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000
+        print("This is the capacity (GHz): " + str(capacity))
     elif e2e_cs_request["capacity"]["unit"] == "THz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000000
+        print("This is the capacity (THz): " + str(capacity))
     else:
         #Unit is MHz
         capacity = e2e_cs_request["capacity"]["value"]
+        print("This is the capacity (MHz): " + str(capacity))
     
     # ROUTING PATH COMPUTATION options based based on source and destination domains
+    print("Before looking the abstraction model to compose the uuids.")
     if os.environ.get("ABSTRACION_MODEL") == "vnode":
         print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
         src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["contex_uuid"]
