@@ -111,6 +111,7 @@ def idl_to_bl(idl_json):
             temp_idl_item = {}
             for linkoption_item in idl_item["link-options"]:
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
+                print("linkoption_item: " +str(linkoption_item))
                 response = bl_mapper.linkoption_to_blockchain(linkoption_item)
             
             temp_idl_item["name"] = idl_item["name"]
@@ -143,6 +144,7 @@ def idl_to_bl(idl_json):
                 temp_idl_item = {}
                 for linkoption_item in idl_item["link-options"]:
                     linkoptions_uuid_list.append(linkoption_item["uuid"])
+                    print("linkoption_item: " +str(linkoption_item))
                     response = bl_mapper.linkoption_to_blockchain(linkoption_item)
 
                 temp_idl_item["name"] = idl_item["name"]

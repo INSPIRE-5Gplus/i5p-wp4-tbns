@@ -130,6 +130,7 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
 
 # distributes link-option to the BL
 def linkoption_to_blockchain(linkoption_json):
+    print("linkoption_json: "+ str(linkoption_json))
     id = linkoption_json["uuid"]
     dir = linkoption_json["direction"]
     nodesdir = json.dumps(linkoption_json["nodes-direction"])
@@ -137,6 +138,13 @@ def linkoption_to_blockchain(linkoption_json):
     phyopt = json.dumps(linkoption_json["physical-options"])
     sup = json.dumps(linkoption_json["supportable-spectrum"])
     av = json.dumps(linkoption_json["available-spectrum"])
+    print("id: "+ str(id))
+    print("dir: "+ str(dir))
+    print("nodesdir: "+ str(nodesdir))
+    print("lpn: "+ str(lpn))
+    print("phyopt: "+ str(phyopt))
+    print("sup: "+ str(sup))
+    print("av: " +str(av))
     response = settings.transport_contract.functions.addLinkOption(id, dir, nodesdir, lpn, phyopt,sup, av).call()
     
     msg = {}
