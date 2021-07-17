@@ -402,9 +402,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # ROUTING PATH COMPUTATION options based based on source and destination domains
     if os.environ.get("ABSTRACION_MODEL") == "vnode":
+        print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
         src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["contex_uuid"]
         dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["context_uuid"]
     else:
+        print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
+        print("composing names of src and dst: " + e2e_cs_request["source"]["contex_uuid"])
         src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
         dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
     print("src: "+str(src))
