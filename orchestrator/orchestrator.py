@@ -399,25 +399,23 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     print("1_e2e_cs_json: "+str(e2e_cs_json))
     # ROUTING PATH COMPUTATION options based based on source and destination domains
-    source_json = json.loads(e2e_cs_request["source"])
-    destination_json = json.loads(e2e_cs_request["destination"])
     if str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
         print("After it")
-        print("composing names of src and dst: " + str(source_json["contex_uuid"]))
-        src = source_json["contex_uuid"]+":"+source_json["contex_uuid"]
-        dst = destination_json["context_uuid"]+":"+destination_json["context_uuid"]
+        print("composing names of src and dst: " + str(e2e_cs_request["source"]["context_uuid"]))
+        src = e2e_cs_request["source"]["context_uuid"]+":"+e2e_cs_request["source"]["context_uuid"]
+        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["context_uuid"]
     elif str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
         print("After it_1")
-        print("composing names of src and dst: " + str(source_json["contex_uuid"]))
-        print("composing names of src and dst: " + source_json["contex_uuid"])
-        src = source_json["contex_uuid"]+":"+source_json["node_uuid"]
-        dst = destination_json["context_uuid"]+":"+destination_json["node_uuid"]
+        print("composing names of src and dst: " + str(e2e_cs_request["source"]["context_uuid"]))
+        print("composing names of src and dst: " + e2e_cs_request["source"]["context_uuid"])
+        src = e2e_cs_request["source"]["context_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
+        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
     elif str(os.environ.get("ABSTRACION_MODEL")) == "vlink":
         print("After it_2")
-        print("composing names of src and dst: " + str(source_json["contex_uuid"]))
-        print("composing names of src and dst: " + source_json["contex_uuid"])
-        src = source_json["contex_uuid"]+":"+source_json["node_uuid"]
-        dst = destination_json["context_uuid"]+":"+destination_json["node_uuid"]
+        print("composing names of src and dst: " + str(e2e_cs_request["source"]["context_uuid"]))
+        print("composing names of src and dst: " + e2e_cs_request["source"]["context_uuid"])
+        src = e2e_cs_request["source"]["context_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
+        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
     else:
         settings.logger.info("ORCH: ERROR!!!")
 
