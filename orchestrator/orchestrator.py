@@ -111,7 +111,6 @@ def idl_to_bl(idl_json):
             temp_idl_item = {}
             for linkoption_item in idl_item["link-options"]:
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
-                print("linkoption_item: " +str(linkoption_item))
                 response = bl_mapper.linkoption_to_blockchain(linkoption_item)
             
             temp_idl_item["name"] = idl_item["name"]
@@ -404,9 +403,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # ROUTING PATH COMPUTATION options based based on source and destination domains
     print("Before looking the abstraction model to compose the uuids.")
-    print("Another value: "+ str(os.environ.get("PDL_PORT")))
-    print('Abstraction mode is: ' + str(os.environ.get("ABSTRACION_MODEL")))
-    if os.environ.get("ABSTRACION_MODEL") == "vnode":
+    if str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
         print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
         src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["contex_uuid"]
         dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["context_uuid"]
