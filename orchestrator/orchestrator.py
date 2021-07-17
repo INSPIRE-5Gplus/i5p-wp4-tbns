@@ -403,11 +403,21 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # ROUTING PATH COMPUTATION options based based on source and destination domains
     print("Before looking the abstraction model to compose the uuids.")
+    print("This is the abstraction mode: " + str(os.environ.get("ABSTRACION_MODEL")))
+    print("Before if")
     if str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
+        print("After it")
         print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
         src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["contex_uuid"]
         dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["context_uuid"]
+    elif str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
+        print("After it_1")
+        print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
+        print("composing names of src and dst: " + e2e_cs_request["source"]["contex_uuid"])
+        src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
+        dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
     else:
+        print("After it_2")
         print("composing names of src and dst: " + str(e2e_cs_request["source"]["contex_uuid"]))
         print("composing names of src and dst: " + e2e_cs_request["source"]["contex_uuid"])
         src = e2e_cs_request["source"]["contex_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
