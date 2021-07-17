@@ -144,7 +144,6 @@ def idl_to_bl(idl_json):
                 temp_idl_item = {}
                 for linkoption_item in idl_item["link-options"]:
                     linkoptions_uuid_list.append(linkoption_item["uuid"])
-                    print("linkoption_item: " +str(linkoption_item))
                     response = bl_mapper.linkoption_to_blockchain(linkoption_item)
 
                 temp_idl_item["name"] = idl_item["name"]
@@ -377,24 +376,13 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     if e2e_topology_json == "empty":
         return {"msg":"There is no e2e_topology to work with."}
     else:
-        print("Preparing the JSON with the E2E Topology.")
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
-        print("e2e_topology_json: " + str(e2e_topology_json))
-        print("e2e_topology_json: " + str(type(e2e_topology_json)))
-        print("e2e_topology_json[e2e-topology][interdomain-links]: " + str(e2e_topology_json["e2e-topology"]["interdomain-links"]))
-        print("e2e_topology_json[e2e-topology][interdomain-links]: " + str(type(e2e_topology_json["e2e-topology"]["interdomain-links"])))
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
-            print("Check_A: "+str(idl_item))
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
-                print("Check_B")
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
-                print("response: " + str(response))
                 linkoptions_list.append(response[0])
-            print("linkoptions_list: " + str(linkoptions_list))
             idl_item["link-options"] = linkoptions_list
-            print("idle_item: " + str(idl_item))
-        print("e2e_topology_json: " + str(e2e_topology_json))
 
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = str(uuid.uuid4())
@@ -403,8 +391,10 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     e2e_cs_json["status"]  = "INSTANTIATING"
     e2e_cs_json["capacity"] = e2e_cs_request["capacity"]
     print("1_e2e_cs_json: "+str(e2e_cs_json))
+    print("type_e2e_cs_json: "+str(type(e2e_cs_json)))
     if e2e_cs_request["capacity"]["unit"] == "GHz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000
+        print("Capacity of " + str(capacity))
     elif e2e_cs_request["capacity"]["unit"] == "THz":
         capacity = e2e_cs_request["capacity"]["value"] * 1000000
     else:
