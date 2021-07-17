@@ -162,11 +162,8 @@ def get_e2etopology_from_blockchain():
     if (not response):
         context_json = "empty"
     else:
-        print("GET_E2E_TOPOLOGY_A")
         converted_response = response.replace("'", "\"")
-        print("GET_E2E_TOPOLOGY_B")
         context_json = json.loads(converted_response)
-        print("GET_E2E_TOPOLOGY_C: " + str(context_json))
     return context_json, 200
 
 # returns a link-option belonging to an IDL from blockchain

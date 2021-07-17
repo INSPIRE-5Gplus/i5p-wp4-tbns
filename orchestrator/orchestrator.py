@@ -370,21 +370,25 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     internal_links_route = []
     
     # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
-    e2e_topology_json = bl_mapper.get_e2etopology_from_blockchain()
-    if e2e_topology_json[0] == "empty":
+    response = bl_mapper.get_e2etopology_from_blockchain()
+    e2e_topology_json = response[0]
+    if e2e_topology_json == "empty":
         return {"msg":"There is no e2e_topology to work with."}
     else:
         print("Preparing the JSON with the E2E Topology.")
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
         print("e2e_topology_json: " + str(e2e_topology_json))
+        print("e2e_topology_json: " + str(type(e2e_topology_json)))
+        print("e2e_topology_json[e2e-topology][interdomain-links]: " + str(e2e_topology_json["e2e-topology"]["interdomain-links"]))
+        print("e2e_topology_json[e2e-topology][interdomain-links]: " + str(type(e2e_topology_json["e2e-topology"]["interdomain-links"])))
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
-            print("Check_A")
+            print("Check_A: "+str(idl_item))
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
                 print("Check_B")
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
                 print("response: " + str(response))
-                linkoptions_list.append(response)
+                linkoptions_list.append(response[0])
             print("linkoptions_list: " + str(linkoptions_list))
             idl_item["link-options"] = linkoptions_list
             print("idle_item: " + str(idl_item))
