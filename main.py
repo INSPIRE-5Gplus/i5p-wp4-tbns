@@ -29,6 +29,7 @@ settings.init_logging()
 @app.route('/pdl/pings', methods=['GET'])
 def getPings():
   ping_response  = {'code creation date': '2020-04-12 11:00:00 UTC', 'current_time': str(datetime.datetime.now().isoformat())}
+  vl_computation.get_nodes()
   return jsonify(ping_response), 200
 
 ########################################## PDL-SLICING API ##########################################

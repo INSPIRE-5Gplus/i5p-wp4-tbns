@@ -260,7 +260,10 @@ def paint_graph(labels):
   
   plt.show()
   return {"msg":"Graph painted"}, 200
-  
+
+def get_nodes():
+  print(str(list(e2e_topology_graph.nodes)))
+
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
   path_nodes_list = []
