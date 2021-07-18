@@ -260,11 +260,13 @@ def find_path(src, dst):
     print("Calculating routes for the VLINK")
     simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst, "weight")
   else:
+    print("BEFORE: Calculating routes for the VNODE or Transparent")
     simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst)
-    print("Calculating routes for the VNODE or Transparent")
+    print("CAFTER: alculating routes for the VNODE or Transparent")
   for path in islice(simple_path_list, K):
     path_nodes_list.append(path)
-     
+  
+  print("Returning the list of paths")
   return path_nodes_list
 
 """
