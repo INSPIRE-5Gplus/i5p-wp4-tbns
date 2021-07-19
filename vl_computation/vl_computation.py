@@ -173,8 +173,6 @@ def add_context_e2e_graph(context_json):
     for node_item in topology_item["node"]:
       #NOTE: the context-uuid is used to differentiate between nodes of different domains with equal uuid
       node_name = str(context_json["tapi-common:context"]["uuid"]+":"+node_item["uuid"])
-      print(node_name)
-
       e2e_topology_graph.add_node(node_name)
     settings.logger.info("VL_COMP: External context nodes added.")
 
@@ -193,8 +191,6 @@ def add_context_e2e_graph(context_json):
         #NOTE: the context-uuid is used to differentiat between nodes of different domains with equal uuid
         node_src = str(context_json["tapi-common:context"]["uuid"]+":"+node1)
         node_dst = str(context_json["tapi-common:context"]["uuid"]+":"+node2)
-        print(node_src)
-        print(node_dst)
 
         # add edge with weight only for VLINK mode
         if os.environ.get("ABSTRACION_MODEL") == "vlink":
@@ -211,7 +207,6 @@ def add_idl_e2e_graph(e2e_json):
   settings.logger.info("VL_COMP: Adding IDLs to the local E2E Context graph.")
   # adds all the SDN domains defined in the json
   for domain_item in e2e_json["e2e-topology"]["nodes-list"]:
-    print(domain_item)
     e2e_topology_graph.add_node(domain_item)
 
   settings.logger.info("VL_COMP: Nodes added, adding links to E2E graph")
@@ -221,8 +216,6 @@ def add_idl_e2e_graph(e2e_json):
     node_1 = interdomain_link_item["nodes-involved"][0]
     node_2 = interdomain_link_item["nodes-involved"][1]
     uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
-    print(node_1)
-    print(node_2)
     # checks if the unidirectional ink exist already (working with multi-digraph)
     response = e2e_topology_graph.has_edge(node_1, node_2)     
     if response == True:
@@ -237,8 +230,6 @@ def add_idl_e2e_graph(e2e_json):
     node_1 = interdomain_link_item["nodes-involved"][1]
     node_2 = interdomain_link_item["nodes-involved"][0]
     uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
-    print(node_1)
-    print(node_2)
     # checks if the unidirectional link exist already (working with multi-digraph)
     response = e2e_topology_graph.has_edge(node_1, node_2)    
     if response == True:
@@ -275,11 +266,17 @@ def find_path(src, dst):
     simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst, "weight")
   else:
     print("BEFORE: Calculating routes for the VNODE or Transparent")
-    simple_path_list = list(islice(nx.shortest_simple_paths(e2e_topology_graph, src, dst),K))
+    #simple_path_list = list(islice(nx.shortest_simple_paths(e2e_topology_graph, src, dst),K))
+    #simple_path_list = nx.all_simple_paths(e2e_topology_graph, src, dst)
+    simple_path_list = nx.all_shortest_paths(e2e_topology_graph, src, dst)
     print("THis is the simple_path_list: " + str(simple_path_list))
     print("AFTER: alculating routes for the VNODE or Transparent")
-  #for path in islice(simple_path_list, K):
-    #path_nodes_list.append(path)
+    #if there are less than 7 paths, we take them all.
+    if len(simple_path_list) < K:
+      K = len(simple_path_list)
+    print("Selecting the paths.")
+    for path in islice(simple_path_list, K):
+      path_nodes_list.append(path)
   
   print("Returning the list of paths: " + str(simple_path_list))
   #return path_nodes_list
