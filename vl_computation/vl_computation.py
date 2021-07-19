@@ -275,14 +275,15 @@ def find_path(src, dst):
     simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst, "weight")
   else:
     print("BEFORE: Calculating routes for the VNODE or Transparent")
-    simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst)
+    simple_path_list = list(islice(nx.shortest_simple_paths(e2e_topology_graph, src, dst),K))
     print("THis is the simple_path_list: " + str(simple_path_list))
-    print("CAFTER: alculating routes for the VNODE or Transparent")
-  for path in islice(simple_path_list, K):
-    path_nodes_list.append(path)
+    print("AFTER: alculating routes for the VNODE or Transparent")
+  #for path in islice(simple_path_list, K):
+    #path_nodes_list.append(path)
   
-  print("Returning the list of paths")
-  return path_nodes_list
+  print("Returning the list of paths: " + str(simple_path_list))
+  #return path_nodes_list
+  return simple_path_list
 
 """
 get_edge_data options:
