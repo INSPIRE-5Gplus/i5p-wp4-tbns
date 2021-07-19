@@ -268,9 +268,9 @@ def find_path(src, dst):
     print("BEFORE: Calculating routes for the VNODE or Transparent")
     #simple_path_list = list(islice(nx.shortest_simple_paths(e2e_topology_graph, src, dst),K))
     #simple_path_list = nx.all_simple_paths(e2e_topology_graph, src, dst)
-    simple_path_list = nx.all_shortest_paths(e2e_topology_graph, src, dst)
-    print("THis is the simple_path_list: " + str(simple_path_list))
-    print("AFTER: alculating routes for the VNODE or Transparent")
+    simple_path_list = list(nx.all_shortest_paths(e2e_topology_graph, src, dst))
+    print("This is the simple_path_list: " + str(simple_path_list))
+    print("AFTER: Calculating routes for the VNODE or Transparent")
     #if there are less than 7 paths, we take them all.
     if len(simple_path_list) < K:
       K = len(simple_path_list)
