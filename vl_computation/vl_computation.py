@@ -253,7 +253,10 @@ def paint_graph(labels):
   return {"msg":"Graph painted"}, 200
 
 def get_nodes():
+  print("List of nodes: ")
   print(str(list(e2e_topology_graph.nodes)))
+  print("List of edges: ")
+  print(str(list(e2e_topology_graph.edges)))
 
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
