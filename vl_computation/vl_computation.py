@@ -261,7 +261,7 @@ def get_nodes():
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
   path_nodes_list = []
-  K = 7 # we will keep the 7 shortest paths generated
+  K = 20 # we will keep the 20 shortest paths generated
 
   # calculates the route based on the virtual link weights. For the other abstraction models, the edges weight is 1.
   if os.environ.get("ABSTRACION_MODEL") == "vlink":
@@ -272,19 +272,19 @@ def find_path(src, dst):
     #simple_path_list = list(islice(nx.shortest_simple_paths(e2e_topology_graph, src, dst),K))
     #simple_path_list = nx.all_simple_paths(e2e_topology_graph, src, dst)
     #simple_path_list = list(nx.all_shortest_paths(e2e_topology_graph, src, dst))
-    simple_path_list = [p for p in nx.all_shortest_paths(e2e_topology_graph, src, dst)]
-    print("This is the simple_path_list: " + str(simple_path_list))
+    #simple_path_list = [p for p in nx.all_shortest_paths(e2e_topology_graph, src, dst)]
+    simple_path_list = ([p for p in nx.all_simple_paths(e2e_topology_graph, source=src, target=dst)])
     print("AFTER: Calculating routes for the VNODE or Transparent")
-    #if there are less than 7 paths, we take them all.
+    simple_path_list.sort(key=len)
+    path_nodes_list = []
+    #if there are less than 20 paths, we take them all.
     if len(simple_path_list) < K:
       K = len(simple_path_list)
-    print("Selecting the paths.")
     for path in islice(simple_path_list, K):
       path_nodes_list.append(path)
-  
-  print("Returning the list of paths: " + str(simple_path_list))
+
   #return path_nodes_list
-  return simple_path_list
+  return path_nodes_list
 
 """
 get_edge_data options:
