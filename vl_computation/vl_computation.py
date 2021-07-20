@@ -294,7 +294,6 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
   route_interdominlinks = []
   # it gets the list of neps based on the order of nodes in the route
   for idx, route_item in enumerate(route):
-    print("Checking a new route_item with index: ." + str(idx))
     neps_found = False
     # as long as the current route_item is not the last, enters as it works in pairs.
     if idx < (len(route)-1):
@@ -305,27 +304,19 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       if "interdomain_link_uuid" in response[0].keys():
         print("NEPs belonging to an IDL (with SIPS)")
         for idl_item in e2e_topology["e2e-topology"]["interdomain-links"]:
-          print("idl_item: " +str(idl_item["name"]))
-          print("route_item: " + str(route_item))
-          print("route[idx+1]: " + str(route[idx+1]))
-          print("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
-            print("found the two neps composing an IDL.")
             # looks which on of the two direction link-option to take
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
               if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
-                print("Found the right IDL in the e2e_topology data object")
                 # checks if this NEP has enough available spectrum  to fit the requested capacity
                 available_spectrum = link_option_item["available-spectrum"]
                 availability = False
                 for available_item in available_spectrum:
                   available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
-                  print("available_diff: " +str(available_diff))
                   if (available_diff >= capacity):
                     availability = True
-                    print("Found availavle spectrum: "+ str(available_diff) +" vs "+ str(capacity))
                     break
                 
                 # if False, the NEp is not good, and another route is necessary
@@ -337,28 +328,27 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                 
                 #NOTE: the physical-options are a list of NEPs sharing the same spectrum to simulate a NEp with multi-sips.
                 # found the right IDL and direction, taking the first physical nep pair available among all the possibilities.
-                print("Looking for a physical-option.")
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
                   if physical_option_item["occupied-spectrum"] == []:
-                    print("Found a free physical-option to be used.")
                     # gets nep 1 info from the e2e_topology 6 adds it into the route-neps
-                    new_nep = {}
-                    new_nep["type_link"] = "IDL"
-                    new_nep["link_uuid"] = link_option_item["uuid"]
-                    new_nep["context_uuid"] = physical_option_item["node-edge-point"][0]["context-uuid"]
-                    new_nep["node_uuid"] = physical_option_item["node-edge-point"][0]["node-uuid"]
-                    new_nep["nep_uuid"] = physical_option_item["node-edge-point"][0]["nep-uuid"]
-                    new_nep["direction"] = "OUTPUT"
-                    route_neps.append(new_nep)
+                    new_nep_ouput = {}
+                    new_nep_ouput["type_link"] = "IDL"
+                    new_nep_ouput["link_uuid"] = link_option_item["uuid"]
+                    new_nep_ouput["context_uuid"] = physical_option_item["node-edge-point"][0]["context-uuid"]
+                    new_nep_ouput["node_uuid"] = physical_option_item["node-edge-point"][0]["node-uuid"]
+                    new_nep_ouput["nep_uuid"] = physical_option_item["node-edge-point"][0]["nep-uuid"]
+                    new_nep_ouput["direction"] = "OUTPUT"
+                    route_neps.append(new_nep_ouput)
                     # gets nep 2 info from the e2e_topology 6 adds it into the route-neps
-                    new_nep["type_link"] = "IDL"
-                    new_nep["link_uuid"] = link_option_item["uuid"]
-                    new_nep["context_uuid"] = physical_option_item["node-edge-point"][1]["context-uuid"]
-                    new_nep["node_uuid"] = physical_option_item["node-edge-point"][1]["node-uuid"]
-                    new_nep["nep_uuid"] = physical_option_item["node-edge-point"][1]["nep-uuid"]
-                    new_nep["direction"] = "INPUT"
-                    route_neps.append(new_nep)
+                    new_nep_inpout = {}
+                    new_nep_inpout["type_link"] = "IDL"
+                    new_nep_inpout["link_uuid"] = link_option_item["uuid"]
+                    new_nep_inpout["context_uuid"] = physical_option_item["node-edge-point"][1]["context-uuid"]
+                    new_nep_inpout["node_uuid"] = physical_option_item["node-edge-point"][1]["node-uuid"]
+                    new_nep_inpout["nep_uuid"] = physical_option_item["node-edge-point"][1]["nep-uuid"]
+                    new_nep_inpout["direction"] = "INPUT"
+                    route_neps.append(new_nep_inpout)
                     # keeps the IDL spectrum availability so later we can validate the route spectrum continuity
                     new_idl = {}
                     new_idl["link-option-uuid"] = link_option_item["uuid"]
@@ -369,16 +359,16 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
               if neps_found:
                 break
               else:
-                print("Link-option not good. Check another route")
+                settings.logger.info("WARNING - Link-option not good. Check another route")
                 route_neps = []
                 route_interdominlinks = []
                 return route_neps, route_interdominlinks
           else:
-            print("Looking if the next link is the good one it must be checked.")
+            settings.logger.info("Looking if the next link is the good one it must be checked.")
           if neps_found:
             break
         if neps_found == False:
-          print("NO link was found with this information.")
+          settings.logger.info("ERROR - NO link was found with this information.")
           route_neps = []
           route_interdominlinks = []
           return route_neps, route_interdominlinks
@@ -386,21 +376,22 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
         print("NEPs belonging to an internal link")
         # link belongs to a context
         
-        new_nep = {}
-        new_nep["link_uuid"] = response[0]["link_uuid"]
-        new_nep["context_uuid"] = response[0]["context"]
-        new_nep["topology_uuid"] = response[0]["topology"]
-        new_nep["node_uuid"] = response[0]["n1"]
-        new_nep["nep_uuid"] = response[0]["nep1"]
-        new_nep["direction"] = "OUTPUT"
-        route_neps.append(new_nep)
-        new_nep["link_uuid"] = response[0]["link_uuid"]
-        new_nep["context_uuid"] = response[0]["context"]
-        new_nep["topology_uuid"] = response[0]["topology"]
-        new_nep["node_uuid"] = response[0]["n2"]
-        new_nep["nep_uuid"] = response[0]["nep2"]
-        new_nep["direction"] = "INPUT"
-        route_neps.append(new_nep)
+        new_nep_output = {}
+        new_nep_output["link_uuid"] = response[0]["link_uuid"]
+        new_nep_output["context_uuid"] = response[0]["context"]
+        new_nep_output["topology_uuid"] = response[0]["topology"]
+        new_nep_output["node_uuid"] = response[0]["n1"]
+        new_nep_output["nep_uuid"] = response[0]["nep1"]
+        new_nep_output["direction"] = "OUTPUT"
+        route_neps.append(new_nep_output)
+        new_nep_inpout = {}
+        new_nep_inpout["link_uuid"] = response[0]["link_uuid"]
+        new_nep_inpout["context_uuid"] = response[0]["context"]
+        new_nep_inpout["topology_uuid"] = response[0]["topology"]
+        new_nep_inpout["node_uuid"] = response[0]["n2"]
+        new_nep_inpout["nep_uuid"] = response[0]["nep2"]
+        new_nep_inpout["direction"] = "INPUT"
+        route_neps.append(new_nep_inpout)
   
   return route_neps, route_interdominlinks
 

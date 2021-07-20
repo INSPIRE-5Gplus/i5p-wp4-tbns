@@ -271,6 +271,7 @@ def context_to_blockchain(context_json):
 def get_context_from_blockchain(context_ID):
     settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context information (sips, ndoes and links).' )
     response = settings.transport_contract.functions.getContextTemplate(context_ID).call()
+    print("response: " +str(response))
     context_json = {}
     context_json["uuid"] =  context_ID
     context_json["name_context"] =  response[0]
@@ -288,6 +289,7 @@ def get_context_from_blockchain(context_ID):
     topology_element = {}
     
     response = get_context_sips_nodes_links_from_blockchain(context_json)
+    print("response: " + str(response))
     response_json = response[0]
     tapi_common_context["uuid"] = response_json["uuid"]
     tapi_common_context["name"] = response_json["name_context"]
