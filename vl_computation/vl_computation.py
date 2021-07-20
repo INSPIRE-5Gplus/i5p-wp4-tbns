@@ -306,6 +306,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
         print("NEPs belonging to an IDL (with SIPS)")
         print("TYEP e2e_topology: " + str(type(e2e_topology)))
         print("e2e_topology: " + str(e2e_topology))
+        e2e_topology = json.loads(e2e_topology)
         for idl_item in e2e_topology["interdomain-links"]:
           print("idl_item: " +str(idl_item))
           print("route_item: " + str(route_item))

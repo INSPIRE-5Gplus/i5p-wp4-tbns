@@ -100,14 +100,15 @@ def idl_to_bl(idl_json):
         e2e_topo = {}
         e2e_topo["nodes-list"] = []
         e2e_topo["interdomain-links"] = []
+        temp_idls = []
         
         for node_item in idl_json["e2e-topology"]["nodes-list"]:
             e2e_nodes_list.append(node_item)
         e2e_topo["nodes-list"] = e2e_nodes_list
         
+        
         for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             linkoptions_uuid_list = []
-            temp_idls = []
             temp_idl_item = {}
             for linkoption_item in idl_item["link-options"]:
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
@@ -382,11 +383,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
                 linkoptions_list.append(response[0])
-                print("linkoption_item_type: " + str(type(response[0])))
             idl_item["link-options"] = linkoptions_list
-            print("lidl_item[link-options]_type: " + str(type(idl_item["link-options"])))
-    print("e2e_topology_type: " + str(type(e2e_topology_json)))
-    print("e2e_topology: " + str(e2e_topology_json))
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = str(uuid.uuid4())
     e2e_cs_json["source"] = e2e_cs_request["source"]
@@ -419,7 +416,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
-        print("route_item: " + str(route_item))
         # maps the route from the nodes to the neps involved.
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
