@@ -304,7 +304,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
       if "interdomain_link_uuid" in response[0].keys():
         print("NEPs belonging to an IDL (with SIPS)")
-        print("TYEP e2e_topology: ") + str(type(e2e_topology))
+        print("TYEP e2e_topology: " + str(type(e2e_topology)))
         for idl_item in e2e_topology["interdomain-links"]:
           print("idl_item: " +str(idl_item))
           # the correct IDL is found
