@@ -304,41 +304,40 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
       if "interdomain_link_uuid" in response[0].keys():
         print("NEPs belonging to an IDL (with SIPS)")
-        print("TYEP e2e_topology: " + str(type(e2e_topology)))
-        print("e2e_topology[nodes]: " + str(e2e_topology["e2e-topology"]["nodes-list"]))
-        print("e2e_topology[idls]: " + str(type(e2e_topology["e2e-topology"]["interdomain-links"])))
-        print("e2e_topology[idls]: " + str(e2e_topology["e2e-topology"]["interdomain-links"]))
-        print("type e2e_topology[idls]: " + str(type(e2e_topology["e2e-topology"]["interdomain-links"][0])))
-        print("e2e_topology[idls]: " + str(e2e_topology["e2e-topology"]["interdomain-links"][0]))
         for idl_item in e2e_topology["e2e-topology"]["interdomain-links"]:
           print("idl_item: " +str(idl_item))
           print("route_item: " + str(route_item))
-          print("route_item[idx+1]: " + str(route_item[idx+1]))
+          if idx+1 <= len(route):
+            print("route_item[idx+1]: " + str(route_item[idx+1]))
           print("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
             print("found the two neps composing an IDL.")
-            # checks if this NEP has enough available spectrum  to fit the requested capacity
-            available_spectrum = idl_item["available_spectrum"]
-            availability = False
-            for available_item in available_spectrum:
-              available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
-              print("available_diff: " +str(available_diff))
-              if (available_diff >= capacity):
-                availability = True
-                print("Found availavle spectrum: "+ str(available_diff) +" vs "+ str(capacity))
-                break
-            # if False, the NEp is not good, and another route is necessary
-            if availability == False:
-              print("This IDL has not enough available spectrum for the requested capacity.")
-              route_neps = []
-              route_interdominlinks = []
-              return route_neps, route_interdominlinks
-            # looks in all the tricky NEPs (simulating a single NEP with multiple SIPs)
+            # looks which on of the two direction link-option to take
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
               if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
                 print("Found the right IDL in the e2e_topology data object")
+                # checks if this NEP has enough available spectrum  to fit the requested capacity
+                available_spectrum = link_option_item["available-spectrum"]
+                availability = False
+                for available_item in available_spectrum:
+                  available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+                  print("available_diff: " +str(available_diff))
+                  if (available_diff >= capacity):
+                    availability = True
+                    print("Found availavle spectrum: "+ str(available_diff) +" vs "+ str(capacity))
+                    break
+                
+                # if False, the NEp is not good, and another route is necessary
+                if availability == False:
+                  print("This IDL has not enough available spectrum for the requested capacity.")
+                  route_neps = []
+                  route_interdominlinks = []
+                  return route_neps, route_interdominlinks
+                
+                #NOTE: the physical-options are a list of NEPs sharing the same spectrum to simulate a NEp with multi-sips.
+                # found the right IDL and direction, taking the first physical nep pair available among all the possibilities.
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
                   if physical_option_item["occupied-spectrum"] == []:
