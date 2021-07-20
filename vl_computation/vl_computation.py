@@ -292,13 +292,12 @@ get_edge_data options:
 def node2nep_route_mapping(route, e2e_topology, capacity):
   route_neps = []
   route_interdominlinks = []
-  print("starting the node2nep_route_mapping procedure")
   # it gets the list of neps based on the order of nodes in the route
-  for idx, route_item  in enumerate(route):
+  for idx, route_item in enumerate(route):
     print("A")
     neps_found = False
-    # as long as the current reoute_item is not the last, enters as it works in pairs.
-    if route[idx] != len(route-1):
+    # as long as the current route_item is not the last, enters as it works in pairs.
+    if idx < (len(route)-1):
       print("B")
       # gets the data of the edge
       response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])

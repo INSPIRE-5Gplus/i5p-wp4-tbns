@@ -412,8 +412,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # we find the k-shortest path (K=7)
     route_nodes_list = vl_computation.find_path(src, dst)
-    print("route_nodes_list: " + str(route_nodes_list))
-    print("type route_nodes_list: " + str(type(route_nodes_list)))
 
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:

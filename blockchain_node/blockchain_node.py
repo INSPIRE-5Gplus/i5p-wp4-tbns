@@ -172,7 +172,6 @@ def get_e2etopology_from_blockchain():
 # returns a link-option belonging to an IDL from blockchain
 def get_linkOption_from_blockchain(link_option_uuid):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
-    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain IDL information with id: ' + str(link_option_uuid))
     response = settings.transport_contract.functions.getLinkOption(link_option_uuid).call()
     linkoption_json = {}
     linkoption_json["uuid"] = link_option_uuid
