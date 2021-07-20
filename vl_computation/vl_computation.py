@@ -268,13 +268,7 @@ def find_path(src, dst):
     print("Calculating routes for the VLINK")
     simple_path_list = nx.shortest_simple_paths(e2e_topology_graph, src, dst, "weight")
   else:
-    print("BEFORE: Calculating routes for the VNODE or Transparent")
-    #simple_path_list = list(islice(nx.shortest_simple_paths(e2e_topology_graph, src, dst),K))
-    #simple_path_list = nx.all_simple_paths(e2e_topology_graph, src, dst)
-    #simple_path_list = list(nx.all_shortest_paths(e2e_topology_graph, src, dst))
-    #simple_path_list = [p for p in nx.all_shortest_paths(e2e_topology_graph, src, dst)]
     simple_path_list = ([p for p in nx.all_simple_paths(e2e_topology_graph, source=src, target=dst)])
-    print("AFTER: Calculating routes for the VNODE or Transparent")
     simple_path_list.sort(key=len)
     path_nodes_list = []
     #if there are less than 20 paths, we take them all.
@@ -283,7 +277,6 @@ def find_path(src, dst):
     for path in islice(simple_path_list, K):
       path_nodes_list.append(path)
 
-  #return path_nodes_list
   return path_nodes_list
 
 """
@@ -302,9 +295,11 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
   print("starting the node2nep_route_mapping procedure")
   # it gets the list of neps based on the order of nodes in the route
   for idx, route_item  in enumerate(route):
+    print("A")
     neps_found = False
     # as long as the current reoute_item is not the last, enters as it works in pairs.
     if route[idx] != len(route-1):
+      print("B")
       # gets the data of the edge
       response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])
       print("get_edge_data: " + str(response))
