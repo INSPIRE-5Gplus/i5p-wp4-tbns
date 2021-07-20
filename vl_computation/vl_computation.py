@@ -294,18 +294,16 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
   route_interdominlinks = []
   # it gets the list of neps based on the order of nodes in the route
   for idx, route_item in enumerate(route):
-    print("A")
+    print("Checking a new route_item with idnex: ." + str(idx))
     neps_found = False
     # as long as the current route_item is not the last, enters as it works in pairs.
     if idx < (len(route)-1):
-      print("B")
       # gets the data of the edge
       response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])
-      print("get_edge_data: " + str(response))
       # link belongs to an interdomain link
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
-      if "interdomain_link_uuid" in response:
-        print("NEP belonging to an IDL (with SIPS)")
+      if "interdomain_link_uuid" in response[0].keys():
+        print("NEPs belonging to an IDL (with SIPS)")
         for idl_item in e2e_topology["interdomain-links"]:
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
@@ -329,7 +327,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
             # looks in all the tricky NEPs (simulating a single NEP with multiple SIPs)
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
-              if link_option_item["uuid"] == response["interdomain_link_uuid"]:
+              if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
                 print("Found the right IDL in the e2e_topology data object")
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
@@ -376,21 +374,22 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
           route_interdominlinks = []
           return route_neps, route_interdominlinks
       else:
-        print("NEP belonging to an internal NEP")
+        print("NEPs belonging to an internal link")
         # link belongs to a context
+        
         new_nep = {}
-        new_nep["link_uuid"] = response["link_uuid"]
-        new_nep["context_uuid"] = response["context"]
-        new_nep["topology_uuid"] = response["topology"]
-        new_nep["node_uuid"] = response["n1"]
-        new_nep["nep_uuid"] = response["nep1"]
+        new_nep["link_uuid"] = response[0]["link_uuid"]
+        new_nep["context_uuid"] = response[0]["context"]
+        new_nep["topology_uuid"] = response[0]["topology"]
+        new_nep["node_uuid"] = response[0]["n1"]
+        new_nep["nep_uuid"] = response[0]["nep1"]
         new_nep["direction"] = "OUTPUT"
         route_neps.append(new_nep)
-        new_nep["link_uuid"] = response["link_uuid"]
-        new_nep["context_uuid"] = response["context"]
-        new_nep["topology_uuid"] = response["topology"]
-        new_nep["node_uuid"] = response["n2"]
-        new_nep["nep_uuid"] = response["nep2"]
+        new_nep["link_uuid"] = response[0]["link_uuid"]
+        new_nep["context_uuid"] = response[0]["context"]
+        new_nep["topology_uuid"] = response[0]["topology"]
+        new_nep["node_uuid"] = response[0]["n2"]
+        new_nep["nep_uuid"] = response[0]["nep2"]
         new_nep["direction"] = "INPUT"
         route_neps.append(new_nep)
   
