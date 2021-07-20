@@ -153,7 +153,6 @@ def idl_to_bl(idl_json):
 
         e2e_topology["e2e-topology"]["interdomain-links"]=e2e_idl_list
 
-    print("e2e_topology: " + str(e2e_topology))
     settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
     response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
     if response[1] != 200:

@@ -178,7 +178,7 @@ def get_linkOption_from_blockchain(link_option_uuid):
     linkoption_json["direction"] = response[0]
     linkoption_json["nodes-direction"] = json.loads(response[1])
     linkoption_json["layer-protocol-name"] = json.loads(response[2])
-    linkoption_json["physicial-options"] = json.loads(response[3])
+    linkoption_json["physical-options"] = json.loads(response[3])
     linkoption_json["supportable-spectrum"] = json.loads(response[4])
     linkoption_json["available-spectrum"] = json.loads(response[5])
     return linkoption_json, 200

@@ -305,10 +305,9 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       if "interdomain_link_uuid" in response[0].keys():
         print("NEPs belonging to an IDL (with SIPS)")
         for idl_item in e2e_topology["e2e-topology"]["interdomain-links"]:
-          print("idl_item: " +str(idl_item))
+          print("idl_item: " +str(idl_item["name"]))
           print("route_item: " + str(route_item))
-          if idx+1 <= len(route):
-            print("route_item[idx+1]: " + str(route_item[idx+1]))
+          print("route[idx+1]: " + str(route[idx+1]))
           print("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
@@ -338,6 +337,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                 
                 #NOTE: the physical-options are a list of NEPs sharing the same spectrum to simulate a NEp with multi-sips.
                 # found the right IDL and direction, taking the first physical nep pair available among all the possibilities.
+                print("Looking for a physical-option.")
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
                   if physical_option_item["occupied-spectrum"] == []:
