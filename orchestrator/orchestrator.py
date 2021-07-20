@@ -381,8 +381,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
                 linkoptions_list.append(response[0])
+                print("linkoption_item_type: " + str(type(response[0])))
             idl_item["link-options"] = linkoptions_list
-
+            print("lidl_item[link-options]_type: " + str(type(idl_item["link-options"])))
+    print("e2e_topology_type: " + str(type(e2e_topology_json)))
+    print("e2e_topology: " + str(e2e_topology_json))
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = str(uuid.uuid4())
     e2e_cs_json["source"] = e2e_cs_request["source"]

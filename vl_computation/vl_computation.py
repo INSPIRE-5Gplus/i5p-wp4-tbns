@@ -305,8 +305,12 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       if "interdomain_link_uuid" in response[0].keys():
         print("NEPs belonging to an IDL (with SIPS)")
         print("TYEP e2e_topology: " + str(type(e2e_topology)))
+        print("e2e_topology: " + str(e2e_topology))
         for idl_item in e2e_topology["interdomain-links"]:
           print("idl_item: " +str(idl_item))
+          print("route_item: " + str(route_item))
+          print("route_item[idx+1]: " + str(route_item[idx+1]))
+          print("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
             print("found the two neps composing an IDL.")
