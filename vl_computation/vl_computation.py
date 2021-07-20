@@ -294,7 +294,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
   route_interdominlinks = []
   # it gets the list of neps based on the order of nodes in the route
   for idx, route_item in enumerate(route):
-    print("Checking a new route_item with idnex: ." + str(idx))
+    print("Checking a new route_item with index: ." + str(idx))
     neps_found = False
     # as long as the current route_item is not the last, enters as it works in pairs.
     if idx < (len(route)-1):
@@ -304,7 +304,9 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
       if "interdomain_link_uuid" in response[0].keys():
         print("NEPs belonging to an IDL (with SIPS)")
+        print("TYEP e2e_topology: ") + str(type(e2e_topology))
         for idl_item in e2e_topology["interdomain-links"]:
+          print("idl_item: " +str(idl_item))
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
             print("found the two neps composing an IDL.")

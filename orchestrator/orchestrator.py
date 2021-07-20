@@ -416,7 +416,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
         print("route_item: " + str(route_item))
-        print("type route_item: " + str(type(route_item)))
         # maps the route from the nodes to the neps involved.
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
