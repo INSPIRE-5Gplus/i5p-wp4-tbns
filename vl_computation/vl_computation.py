@@ -422,7 +422,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
     # get the specific context to discover the correct SIP to use attached to the link under study
     # requests the context only when two followed neps belong to a different context.
     if domain_context == {} or nep_item["context_uuid"] != route_neps[idx-1]["context_uuid"]:
-      print("Requesting Context because firs element or the current nep belongs to a different context respect the previous nep.")
       response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
       domain_context = response[0]['context']
     
@@ -435,7 +434,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
           found_nep = True
           found_sip = False
           if 'mapped-service-interface-point' in owned_nep_item.keys():
-            print("Client NEP")
+            #print("Client NEP")
             # NOTE: VNODE will only enter in here, never in the associated else as it has only neps with sips
             # looks for the SIP info associated to the nep
             for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
@@ -451,7 +450,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               if found_sip:
                 break
           else:
-            print("Internal NEP")
+            #print("Internal NEP")
             # only the transmitter neps are interesting for the spectrum continuity
             if nep_item["direction"] == "OUTPUT":
               #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
@@ -479,7 +478,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
             if os.environ.get("ABSTRACION_MODEL") == "transparent" and idx < (len(route_neps)-1):
               next_nep = route_neps[idx+1]
               if nep_item["link_uuid"] == next_nep["link_uuid"]:
-                print("Selecting the links for in transparent mode.")
                 link_item = {}
                 link_item["uuid"] = nep_item["link_uuid"]
                 link_item["context_uuid"] = nep_item["context_uuid"]
