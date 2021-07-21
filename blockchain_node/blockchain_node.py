@@ -335,7 +335,7 @@ def get_context_sips_nodes_links_from_blockchain(context_json):
     for sip_uuid in json.loads(context_json["sip"]):
         sip_ref = context_json["uuid"]+":"+sip_uuid
         response = settings.transport_contract.functions.getSIP(sip_ref).call() 
-        sips_list.append(response)
+        sips_list.append(response[0])
     context_json["sip"] = sips_list
     
     # GETs and prepares the nodes info
@@ -382,7 +382,7 @@ def get_context_id(index):
 # returns the slice-subnet (NST) ID based on the index position within the slice_subnets list in the blockchain
 def get_sip(index):
     response = settings.transport_contract.functions.getSIP(index).call()
-    response_json = {ç}
+    response_json = {}
     response_json["sip_info"] = json.loads(response[0])
     response_json["owner"] = response[1]
     return response_json
