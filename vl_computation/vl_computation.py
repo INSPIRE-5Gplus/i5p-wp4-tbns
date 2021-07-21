@@ -420,9 +420,8 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   for idx, nep_item  in enumerate(route_neps):
     # get the specific context to discover the correct SIP to use attached to the link under study
     response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
-    domain_context = response['context']
+    domain_context = response[0]['context']
     print("A")
-    print("domain_context: "+str(domain_context))
     # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)
     for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
       # looks the neps in the node
@@ -497,7 +496,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   # adds the FIRST SIP in the route_sips
   #TODO: improve the code using the get_sip(uuid) function, to removes for loops.
   response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
-  for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
+  for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
         if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
           print("first sip_item: " +str(sip_item))
           sip_item["blockchain_owner"] = response['blockchain_owner']
@@ -507,7 +506,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   
   # adds the last SIP in the route_sips
   response = bl_mapper.get_context_from_blockchain(e2e_cs_request["destination"]["context_uuid"])
-  for sip_item in response["context"]["tapi-common:context"]["service-interface-point"]:
+  for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
         if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
           print("last sip_item: " +str(sip_item))
           sip_item["blockchain_owner"] = response['blockchain_owner']
