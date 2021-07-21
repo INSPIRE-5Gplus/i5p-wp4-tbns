@@ -302,7 +302,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       # link belongs to an interdomain link
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
       if "interdomain_link_uuid" in response[0].keys():
-        print("NEPs belonging to an IDL (with SIPS)")
+        #print("NEPs belonging to an IDL (with SIPS)")
         for idl_item in e2e_topology["e2e-topology"]["interdomain-links"]:
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
@@ -373,7 +373,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
           route_interdominlinks = []
           return route_neps, route_interdominlinks
       else:
-        print("NEPs belonging to an internal link")
+        #print("NEPs belonging to an internal link")
         # link belongs to a context
         
         new_nep_output = {}

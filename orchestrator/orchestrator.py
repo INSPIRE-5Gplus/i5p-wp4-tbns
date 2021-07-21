@@ -419,8 +419,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
         idl_route = response_nep_mapped[1]
-        print("neps_route: " + str(neps_route))
-        print("idl_route: "+str(idl_route))
+        #print("neps_route: " + str(neps_route))
+        #print("idl_route: "+str(idl_route))
         if neps_route == [] and idl_route == []:
             settings.logger.info("No NEP or link available in the itnerdomain links. Looking for the next route.")
             continue

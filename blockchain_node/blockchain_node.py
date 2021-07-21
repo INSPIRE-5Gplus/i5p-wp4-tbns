@@ -279,7 +279,7 @@ def get_context_from_blockchain(context_ID):
     context_json["topo_metadata"] =  response[3]
     context_json["node_topo"] =  response[4]
     context_json["link_topo"] =  response[5]
-
+    print("A")
     #contstruct the context information as a single json.
     sdn_json = {}
     tapi_context_json={}
@@ -287,41 +287,49 @@ def get_context_from_blockchain(context_ID):
     tapi_topology_context = {}
     topology = []
     topology_element = {}
-    
+    print("B")
     response = get_context_sips_nodes_links_from_blockchain(context_json)
     response_json = response[0]
     tapi_common_context["uuid"] = response_json["uuid"]
+    print("C")
     tapi_common_context["name"] = json.loads(response_json["name_context"])
-    
+    print("D: " + str(tapi_common_context))
     sips = []
     for sip_item_string in response_json["sip"]:
         sip_item_json = json.loads(sip_item_string)
         sips.append(sip_item_json)
     tapi_common_context["service-interface-point"] = sips
-
+    print("E: " + str(tapi_common_context))
     topo_metadata = json.loads(response_json["topo_metadata"])
     topology_element["uuid"] = topo_metadata["uuid"]
     topology_element["layer-protocol-name"] = topo_metadata["layer-protocol-name"]
     topology_element["name"] = topo_metadata["name"]
+    print("F: " + str(topology_element))
     
     nodes = []
     for node_item_string in response_json["node_topo"]:
         node_item_json = json.loads(node_item_string)
         nodes.append(node_item_json)
     topology_element["node"] = nodes
+    print("G: " + str(topology_element))
     
     links = []
     for link_item_string in response_json["link_topo"]:
         link_item_json = json.loads(link_item_string)
         links.append(link_item_json)
     topology_element["link"] = links
+    print("H: " + str(topology_element))
     
     topology.append(topology_element)
+    print("I")
     tapi_topology_context["nw-topology-service"] = json.loads(response_json["nw_topo_serv"])
+    print("J")
     tapi_topology_context["topology"] = topology
+    print("L")
     tapi_common_context["tapi-topology:topology-context"] = tapi_topology_context
+    print("M")
     tapi_context_json["tapi-common:context"] = tapi_common_context
-
+    print("N")
     sdn_json["context"] = tapi_context_json
     sdn_json["blockchain_owner"] = response[6]
     return sdn_json, 200
