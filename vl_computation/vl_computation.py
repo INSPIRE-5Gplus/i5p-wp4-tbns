@@ -421,12 +421,14 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
     # get the specific context to discover the correct SIP to use attached to the link under study
     response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
     domain_context = response['context']
+    print("A")
     print("domain_context: "+str(domain_context))
     # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)
     for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
       # looks the neps in the node
       found_nep = False
       for owned_nep_item in node_item["owned-node-edge-point"]:
+        print("owned_nep_item[uuid]: " + str(owned_nep_item["uuid"]) + " - nep_item[nep_uuid]: " + str(nep_item["nep_uuid"]))
         if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
           print("Found the NEP to be used, checking if it's internal or client.")
           found_nep = True
@@ -438,8 +440,8 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
             for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
               for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
                 # validates the sips_uuid and their direction coincide
-                print(str(mapped_sip_item["service-interface-point-uuid"]) + " - " +str(sip_item["uuid"]))
-                print(str(nep_item["direction"]) + " - " +str(sip_item["direction"]))
+                print("mapped_sip_item[sip]: " + str(mapped_sip_item["service-interface-point-uuid"]) + " - sip_item[uuid]: " + str(sip_item["uuid"]))
+                print("nep_item[direction]: " + str(nep_item["direction"]) + " - sip_item[direction]: " +str(sip_item["direction"]))
                 if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
                   print("This nep is the one we are looking for.")
                   # adds the sip element into the sips_route
