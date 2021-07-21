@@ -447,6 +447,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             spectrum_slot.append(spectrum_item["lower-frequency"])
             spectrum_slot.append(spectrum_item["upper-frequency"])
             spectrums_list.append(spectrum_slot)
+        print("spectrums_list: " + str(spectrums_list))
+        print("capacity: " + str(capacity))
         # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
         selected_spectrum = vl_computation.spectrum_assignment(spectrums_list, capacity)
         print("selected_spectrum: "+str(selected_spectrum))

@@ -436,10 +436,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
             for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
               for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
                 # validates the sips_uuid and their direction coincide
-                print("mapped_sip_item[sip]: " + str(mapped_sip_item["service-interface-point-uuid"]) + " - sip_item[uuid]: " + str(sip_item["uuid"]))
-                print("nep_item[direction]: " + str(nep_item["direction"]) + " - sip_item[direction]: " +str(sip_item["direction"]))
                 if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
-                  print("This nep is the one we are looking for.")
                   # adds the sip element into the sips_route
                   sip_item["context_uuid"] = nep_item["context_uuid"]
                   sip_item["blockchain_owner"] = response[0]['blockchain_owner']
@@ -474,7 +471,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               route_spectrum.append(available_spectrum)
 
             # adds the links to require their usage (only done in transparent abstraction mode)
-            if os.environ.get("ABSTRACION_MODEL") == "transparent":
+            if os.environ.get("ABSTRACION_MODEL") == "transparent" and idx < (len(route_neps)-1):
               next_nep = route_neps[idx+1]
               if nep_item["link_uuid"] == next_nep["link_uuid"]:
                 print("Selecting the links for in transparent mode.")
