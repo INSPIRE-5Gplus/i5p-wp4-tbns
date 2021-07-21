@@ -323,6 +323,7 @@ def get_context_from_blockchain(context_ID):
     tapi_context_json["tapi-common:context"] = tapi_common_context
     sdn_json["context"] = tapi_context_json
     sdn_json["blockchain_owner"] = response[6]
+    print("end composition")
     return sdn_json, 200
 
 # return all the sips, nodes and links belonging to a specific context to build the json with the complete TAPI format
