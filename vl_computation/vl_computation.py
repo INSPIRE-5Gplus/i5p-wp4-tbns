@@ -420,10 +420,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   for idx, nep_item  in enumerate(route_neps):
     # get the specific context to discover the correct SIP to use attached to the link under study
     response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
-    print("A")
-    print("type_response: "+ str(type(response)))
-    print("type_response[0]: "+ str(type(response[0])))
-    print("response: "+ str(response))
     domain_context = response[0]['context']
     print("B")
     # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)

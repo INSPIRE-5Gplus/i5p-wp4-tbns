@@ -279,6 +279,7 @@ def get_context_from_blockchain(context_ID):
     context_json["topo_metadata"] =  response[3]
     context_json["node_topo"] =  response[4]
     context_json["link_topo"] =  response[5]
+    context_owner = response[6]
 
     #contstruct the context information as a single json.
     sdn_json = {}
@@ -321,9 +322,10 @@ def get_context_from_blockchain(context_ID):
     tapi_topology_context["topology"] = topology
     tapi_common_context["tapi-topology:topology-context"] = tapi_topology_context
     tapi_context_json["tapi-common:context"] = tapi_common_context
+    
     sdn_json["context"] = tapi_context_json
-    sdn_json["blockchain_owner"] = response[6]
-    print("end composition")
+    sdn_json["blockchain_owner"] = context_owner
+
     return sdn_json, 200
 
 # return all the sips, nodes and links belonging to a specific context to build the json with the complete TAPI format
