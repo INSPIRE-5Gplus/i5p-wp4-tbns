@@ -442,11 +442,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         print("spectrums_available: "+str(spectrums_available))
         # prepares the spectrum slots available into a list of pair values.
         spectrums_list = []
-        for spectrum_item in spectrums_available:
-            spectrum_slot = []
-            spectrum_slot.append(spectrum_item["lower-frequency"])
-            spectrum_slot.append(spectrum_item["upper-frequency"])
-            spectrums_list.append(spectrum_slot)
+        for spectrum_nep_item in spectrums_available:
+            for spectrum_item in spectrum_nep_item:
+                spectrum_slot = []
+                spectrum_slot.append(spectrum_item["lower-frequency"])
+                spectrum_slot.append(spectrum_item["upper-frequency"])
+                spectrums_list.append(spectrum_slot)
         print("spectrums_list: " + str(spectrums_list))
         print("capacity: " + str(capacity))
         # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
