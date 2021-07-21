@@ -382,7 +382,10 @@ def get_context_id(index):
 # returns the slice-subnet (NST) ID based on the index position within the slice_subnets list in the blockchain
 def get_sip(index):
     response = settings.transport_contract.functions.getSIP(index).call()
-    return response
+    response_json = {ç}
+    response_json["sip_info"] = json.loads(response[0])
+    response_json["owner"] = response[1]
+    return response_json
 
 # updates a specific NEP info in the BL
 def update_sip(sip_id, sip_json):

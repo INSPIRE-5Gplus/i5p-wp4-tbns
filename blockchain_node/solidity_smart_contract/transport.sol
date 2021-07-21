@@ -234,9 +234,10 @@ contract transport {
         return DomainContextIds[_index];
     }
     // gets the information of a single sip
-    function getSIP(string memory _id) public view returns (string memory){
+    function getSIP(string memory _id) public view returns (string memory, address){
         string memory sip = SIPs_list[_id].sip_info;
-        return (sip);
+        address owner = SIPs_list[_id].sipOwner;
+        return (sip, owner);
     }
     // gets the information of a single node
     function getNode(string memory _id) public view returns (string memory, string memory){

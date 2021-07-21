@@ -453,11 +453,12 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
                 break
           else:
             print("Internal NEP")
-            # only the transmitter neps are itneresting for the spectrum continuity
+            # only the transmitter neps are interesting for the spectrum continuity
             if nep_item["direction"] == "OUTPUT":
-              print("we take it as it's an output nep.")
               #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
-              available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]
+              print("owned_nep_item: " + str(owned_nep_item))
+              print("owned_nep_item: " + str(owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]))
+              available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
               # checks if this NEP has enough available spectrum  to fit the requested capacity
               availability = False
               for available_item in available_spectrum:
@@ -481,7 +482,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
 
             # adds the links to require their usage (only done in transparent abstraction mode)
             if os.environ.get("ABSTRACION_MODEL") == "transparent":
-              print("Sselecting the links for in transparent mode.")
+              print("Selecting the links for in transparent mode.")
               next_nep = route_neps[idx+1]
               if nep_item["link_uuid"] == next_nep["link_uuid"]:
                 link_item = {}
@@ -495,24 +496,38 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
 
   # adds the FIRST SIP in the route_sips
   #TODO: improve the code using the get_sip(uuid) function, to removes for loops.
-  response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
-  for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
-        if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
-          print("first sip_item: " +str(sip_item))
-          sip_item["blockchain_owner"] = response['blockchain_owner']
-          route_sips.insert(0, sip_item)
-          # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
-          route_spectrum.insert(0, sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  print("Adding the last sip")
+  #response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
+  #for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
+  #      if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+  #        print("first sip_item: " +str(sip_item))
+  #        sip_item["blockchain_owner"] = response['blockchain_owner']
+  #        route_sips.insert(0, sip_item)
+  #        # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
+  #        route_spectrum.insert(0, sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  response_json = bl_mapper.get_sip(e2e_cs_request["source"]["sip_uuid"])
+  sip_item = response_json["sip_info"]
+  sip_item["blockchain_owner"] = response_json['owner']
+  route_sips.insert(0, sip_item)
+  # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
+  route_spectrum.insert(0, sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
   
   # adds the last SIP in the route_sips
-  response = bl_mapper.get_context_from_blockchain(e2e_cs_request["destination"]["context_uuid"])
-  for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
-        if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
-          print("last sip_item: " +str(sip_item))
-          sip_item["blockchain_owner"] = response['blockchain_owner']
-          route_sips.append(sip_item)
-          # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
-          route_spectrum.append(sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  print("Adding the last sip")
+  #response = bl_mapper.get_context_from_blockchain(e2e_cs_request["destination"]["context_uuid"])
+  #for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
+  #      if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+  #        print("last sip_item: " +str(sip_item))
+  #        sip_item["blockchain_owner"] = response['blockchain_owner']
+  #        route_sips.append(sip_item)
+  #        # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
+  #        route_spectrum.append(sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  response_json = bl_mapper.get_sip(e2e_cs_request["destination"]["context_uuid"])
+  sip_item = response_json["sip_info"]
+  sip_item["blockchain_owner"] = response_json['owner']
+  route_sips.insert(0, sip_item)
+  # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
+  route_spectrum.append(sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
   
   return route_sips, route_spectrum, route_links, internal_neps
 

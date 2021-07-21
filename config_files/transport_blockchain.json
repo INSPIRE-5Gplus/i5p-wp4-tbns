@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x9e4e1A3332d24c502DdBe7f30756b3BeFe26094E",
+    "contract_address":"0x55a0F7d68417183b7716714b6cBB0d5567b6104c",
     "abi":[
         {
             "anonymous": false,
@@ -856,6 +856,11 @@
                     "internalType": "string",
                     "name": "",
                     "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
                 }
             ],
             "stateMutability": "view",

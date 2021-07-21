@@ -450,15 +450,19 @@ def request_e2e_cs():
   # validates the two requested SIPs are free to be used
   request_json = request.json
   sip_uuid = request_json["source"]["context_uuid"]+":"+request_json["source"]["sip_uuid"]
-  sip_info_string = bl_mapper.get_sip(sip_uuid)
-  sip_json = json.loads(sip_info_string)
+  #sip_info_string = bl_mapper.get_sip(sip_uuid)
+  #sip_json = json.loads(sip_info_string)
+  response = bl_mapper.get_sip(sip_uuid)
+  sip_json = response["sip_info"]
   check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
   if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
       return '{"msg": Not possible to create this CS. The SOUREC SIP is already used.}', 200
   
   sip_uuid = request_json["destination"]["context_uuid"]+":"+request_json["destination"]["sip_uuid"]
-  sip_info_string = bl_mapper.get_sip(sip_uuid)
-  sip_json = json.loads(sip_info_string)
+  #sip_info_string = bl_mapper.get_sip(sip_uuid)
+  #sip_json = json.loads(sip_info_string)
+  response = bl_mapper.get_sip(sip_uuid)
+  sip_json = response["sip_info"]
   check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
   if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
       return '{"msg": Not possible to create this CS. The DESTINATION SIP is already used.}', 200
