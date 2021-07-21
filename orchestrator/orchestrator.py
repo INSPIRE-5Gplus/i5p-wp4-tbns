@@ -438,7 +438,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         # generates available spectrums list from interdomain links & internal neps
         print("adding the IDLs spectrum available")
         for interdomainlink_item in idl_route:
-            spectrums_available.append(interdomainlink_item["available_spectrum"])
+            spectrums_available.append(interdomainlink_item["available-spectrum"])
         print("spectrums_available: "+str(spectrums_available))
         # prepares the spectrum slots available into a list of pair values.
         spectrums_list = []
