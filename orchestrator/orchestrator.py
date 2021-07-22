@@ -473,13 +473,14 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # creates a list of domain-CSs and adds thir information in the e2e_cs data object
     cs_list = []
-    iter_sips = iter(sips_route) #iter is used to work using pairs of elements
+    #iter_sips = iter(sips_route) #iter is used to work using pairs of elements
     print("creating the domain CS objects for the e2e_cs_json")
-    for sip_item in iter_sips:
+    #for sip_item in iter_sips:
+    for idx, sip_item in enumerate(sips_route):
         print("sip_item: " +str(sip_item))
-        print("sip_item[context_uuid]: " + str(sip_item["context_uuid"]) + " - next(iter_sips[context_uuid]): " +  str(next(iter_sips["context_uuid"])))
+        print("sip_item[context_uuid]: " + str(sip_item["context_uuid"]) + " - next(iter_sips[context_uuid]): " +  str(sips_route[idx+1]["context_uuid"]))
         # checks that each pair of sips belongs to the same owner, otherwise does not generate the cs_info
-        if sip_item["context_uuid"] == next(iter_sips["context_uuid"]):
+        if sip_item["context_uuid"] == sips_route[idx+1]["context_uuid"]:
             cs_info = {}
             internal_links = []
             cs_info["uuid"] = str(uuid.uuid4())
@@ -487,7 +488,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             cs_info["address_owner"] = sip_item["address_owner"]
             cs_info["status"] = "INSTANTIATING"
             cs_info["sip-source"] = sip_item["uuid"]
-            cs_info["sip-destination"] = next(iter_sips["uuid"])
+            cs_info["sip-destination"] = sips_route[idx+1]["uuid"]
             
             # adds the list of internal (constrained) links for the current domain CS
             # NOTE: ONLY accessed in transparent abstraction mode
