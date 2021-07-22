@@ -507,7 +507,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     print("cs_list: " + str(cs_list))
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
-        if cs_item["address_owner"] == str(settings.web3.eth.defaultAccount):
+        if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
             print("Sending domain CS request to the local SDN controller.")
             response = sdn_mapper.instantiate_connectivity_service(cs_item, spectrum, e2e_cs_json["capacity"])
             if response[1] == 200 and response[0]["status"] == "DEPLOYED":
