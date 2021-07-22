@@ -469,16 +469,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     spectrum["upper-frequency"] = selected_spectrum[0] + capacity
     e2e_cs_json["spectrum"] = spectrum
     e2e_cs_json["route-nodes"] = selected_route
-    print("2_e2e_cs_json: "+str(e2e_cs_json))
     
     # creates a list of domain-CSs and adds thir information in the e2e_cs data object
     cs_list = []
-    #iter_sips = iter(sips_route) #iter is used to work using pairs of elements
-    print("Creating the domain CS objects for the e2e_cs_json")
-    #for sip_item in iter_sips:
     for idx, sip_item in enumerate(sips_route):
         if idx < (len(sips_route)-1):
-            print("sip_item[context_uuid]: " + str(sip_item["context_uuid"]) + " - next(iter_sips[context_uuid]): " +  str(sips_route[idx+1]["context_uuid"]))
             # checks that each pair of sips belongs to the same owner, otherwise does not generate the cs_info
             if sip_item["context_uuid"] == sips_route[idx+1]["context_uuid"]:
                 cs_info = {}
@@ -493,17 +488,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 # NOTE: ONLY accessed in transparent abstraction mode
                 if internal_links_route != [] and os.environ.get("ABSTRACION_MODEL") == "transparent":
                     for link_item in internal_links_route:
-                        print("link_item[context_uuid]: " + str(link_item["context_uuid"]) + " - sip_item[context_uuid]: " + str(sip_item["context_uuid"]))
                         if link_item["context_uuid"] == sip_item["context_uuid"]:
-                            print("internal link added")
                             internal_links.append(link_item["uuid"])
-                print("internal_links: " + str(internal_links))
                 cs_info["internal-links"] = internal_links
-                print("cs_info: " + str(cs_info))
                 cs_list.append(cs_info)
             else:
                 # if the two sips belong to two different domains, it passes to the next item.
-                print("sips from different context, NEXT.")
                 continue
     e2e_cs_json["domain-cs"] = cs_list
     print("3_e2e_cs_json: "+str(e2e_cs_json))
@@ -512,16 +502,17 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     mutex_e2e_csdb_access.acquire()
     db.add_element(e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
-    print("e2e_cs data object saved in the local database")
     
     # distribuïm domain CSs requests
+    print("cs_list: " + str(cs_list))
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address_owner"] == str(settings.web3.eth.defaultAccount):
             print("Sending domain CS request to the local SDN controller.")
             response = sdn_mapper.instantiate_connectivity_service(cs_item, spectrum, e2e_cs_json["capacity"])
-            if response[1] == 200 and response[1]["status"] == "DEPLOYED":
+            if response[1] == 200 and response[0]["status"] == "DEPLOYED":
                 print("Saving domain CS in the local database.")
+                print("deployed_cs: " + str(response[0]))
                 #saves the domain CS information
                 mutex_local_csdb_access.acquire()
                 db.add_cs(response[0])
@@ -530,10 +521,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 # saves the reference domain CS information int eh E2E CS data object.
                 mutex_e2e_csdb_access.acquire()
                 e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+                print("4_e2e_cs: "+str(e2e_cs))
                 for domain_cs_item in e2e_cs["domain-cs"]:
                     if domain_cs_item["uuid"] == cs_item["uuid"]:
                         domain_cs_item["status"] = "DEPLOYED"
                         break
+                print("5_e2e_cs: "+str(e2e_cs))
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
                 print("Everything updated.")
