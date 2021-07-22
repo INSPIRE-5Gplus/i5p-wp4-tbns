@@ -419,8 +419,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
         idl_route = response_nep_mapped[1]
-        print("neps_route: " + str(neps_route))
-        print("idl_route: "+str(idl_route))
+        #print("neps_route: " + str(neps_route))
+        #print("idl_route: "+str(idl_route))
         if neps_route == [] and idl_route == []:
             settings.logger.info("No NEP or link available in the itnerdomain links. Looking for the next route.")
             continue
@@ -429,25 +429,24 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         sips_route = response_sip_mapped[0]
         spectrums_available = response_sip_mapped[1]
         internal_links_route = response_sip_mapped[2]
-        print("sips_route: "+str(sips_route))
-        print("spectrums_available: "+str(spectrums_available))
-        print("internal_links_route: "+str(internal_links_route))
+        #print("sips_route: "+str(sips_route))
+        #print("spectrums_available: "+str(spectrums_available))
+        #print("internal_links_route: "+str(internal_links_route))
 
         if sips_route == [] and spectrums_available == []:
             print("No spectrum availability in NEP. Looking for the next route.")
             continue
         # generates available spectrums list from interdomain links & internal neps
-        print("adding the IDLs spectrum available")
         for idl_item in idl_route:
             new_spectrum = {}
             new_spectrum["available-spectrum"] = idl_item["available-spectrum"]
             spectrums_available.append(new_spectrum)
         
-        print("spectrums_available: "+str(spectrums_available))
-        print("capacity: " + str(capacity))
+        #print("spectrums_available: "+str(spectrums_available))
+        #print("capacity: " + str(capacity))
         # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
         selected_spectrum = vl_computation.spectrum_assignment(spectrums_available, capacity)
-        print("selected_spectrum: "+str(selected_spectrum))
+        #print("selected_spectrum: "+str(selected_spectrum))
 
         # rsa done is complete or if empty, starts with the next route
         if selected_spectrum == []:
@@ -463,13 +462,13 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         e2e_cs_json["status"]  = "ERROR - no route available."
         return e2e_cs_json, 200
 
-    print("selected_route: " + str(selected_route))
+    #print("selected_route: " + str(selected_route))
     # adds more generic info into the e2e_cs data object
     spectrum = {}
     spectrum["lower-frequency"] = selected_spectrum[0]
-    spectrum["upper-frequency"] = selected_spectrum[1]
+    spectrum["upper-frequency"] = selected_spectrum[0] + capacity
     e2e_cs_json["spectrum"] = spectrum
-    e2e_cs_json["route-ndoes"] = selected_route
+    e2e_cs_json["route-nodes"] = selected_route
     print("2_e2e_cs_json: "+str(e2e_cs_json))
     
     # creates a list of domain-CSs and adds thir information in the e2e_cs data object
@@ -477,6 +476,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     iter_sips = iter(sips_route) #iter is used to work using pairs of elements
     print("creating the domain CS objects for the e2e_cs_json")
     for sip_item in iter_sips:
+        print("sip_item: " +str(sip_item))
+        print("sip_item[context_uuid]: " + str(sip_item["context_uuid"]) + " - next(iter_sips[context_uuid]): " +  str(next(iter_sips["context_uuid"])))
         # checks that each pair of sips belongs to the same owner, otherwise does not generate the cs_info
         if sip_item["context_uuid"] == next(iter_sips["context_uuid"]):
             cs_info = {}

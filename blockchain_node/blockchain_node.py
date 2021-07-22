@@ -269,7 +269,7 @@ def context_to_blockchain(context_json):
 
 # gets specific context info and returns a JSON
 def get_context_from_blockchain(context_ID):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context information (sips, ndoes and links).' )
+    #settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain context information (sips, nodes and links).' )
     response = settings.transport_contract.functions.getContextTemplate(context_ID).call()
     context_json = {}
     context_json["uuid"] =  context_ID
