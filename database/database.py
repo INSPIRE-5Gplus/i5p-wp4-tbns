@@ -123,8 +123,9 @@ def get_element(element_id, selected_db):
 
 # add domain_CS info into the context_db
 def add_cs(cs_response):
+    #TODO: once the CS works, check the structure used by the SDN controller to save the CS info and apply it here.
     settings.logger.info("Added local CS element.")
-    cs_list = context_db["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"]
+    cs_list = context_db[0]["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"]
     cs_list.append(cs_response)
-    context_db["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"] = cs_list
+    context_db[0]["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"] = cs_list
     pass
