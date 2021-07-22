@@ -496,7 +496,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 # if the two sips belong to two different domains, it passes to the next item.
                 continue
     e2e_cs_json["domain-cs"] = cs_list
-    print("3_e2e_cs_json: "+str(e2e_cs_json))
     
     # saves the first version of the new e2e_cs data object
     mutex_e2e_csdb_access.acquire()
@@ -508,35 +507,29 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
-            print("Sending domain CS request to the local SDN controller.")
+            #print("Sending domain CS request to the local SDN controller.")
             response = sdn_mapper.instantiate_connectivity_service(cs_item, spectrum, e2e_cs_json["capacity"])
             if response[1] == 200 and response[0]["status"] == "DEPLOYED":
-                print("Saving domain CS in the local database.")
-                print("deployed_cs: " + str(response[0]))
                 #saves the domain CS information
                 mutex_local_csdb_access.acquire()
                 db.add_cs(response[0])
                 mutex_local_csdb_access.release()
-                print("Saving (updating) e2e_cs data object")
                 # saves the reference domain CS information int eh E2E CS data object.
                 mutex_e2e_csdb_access.acquire()
                 e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
-                print("4_e2e_cs: "+str(e2e_cs))
                 for domain_cs_item in e2e_cs["domain-cs"]:
                     if domain_cs_item["uuid"] == cs_item["uuid"]:
                         domain_cs_item["status"] = "DEPLOYED"
                         break
-                print("5_e2e_cs: "+str(e2e_cs))
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
-                print("Everything updated.")
             else:
                 #TODO: manage this error
                 print("ERROR requesting local domain CS.")
                 return e2e_cs_json,400
         else:
             print("Distributing domain CS request to the BL.")
-            response = bl_mapper.instantiate_blockchain_cs(cs_item["address_owner"], cs_item, spectrum, e2e_cs_json["capacity"])
+            response = bl_mapper.instantiate_blockchain_cs(cs_item["address-owner"], cs_item, spectrum, e2e_cs_json["capacity"])
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
     print("Waiting all the domains CS from other domains to be deployed.")
