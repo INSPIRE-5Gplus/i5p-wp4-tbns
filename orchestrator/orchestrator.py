@@ -432,16 +432,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         print("sips_route: "+str(sips_route))
         print("spectrums_available: "+str(spectrums_available))
         print("internal_links_route: "+str(internal_links_route))
-        """
-        Example of idl_route = [
-            {"link-option-uuid", "available_spectrum"},
-            {"link-option-uuid":"uuid", "available_spectrum":[[low-freq, up-freq],[low-freq, up-freq]]}
-        ]
-        Example of spectrums_available = [
-        "available_spectrum":[[low-freq, up-freq],[low-freq, up-freq]]},
-        "available_spectrum":[[low-freq, up-freq],[low-freq, up-freq]]}
-        ]
-        """
 
         if sips_route == [] and spectrums_available == []:
             print("No spectrum availability in NEP. Looking for the next route.")
@@ -454,7 +444,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             spectrums_available.append(new_spectrum)
         
         print("spectrums_available: "+str(spectrums_available))
-
         print("capacity: " + str(capacity))
         # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
         selected_spectrum = vl_computation.spectrum_assignment(spectrums_available, capacity)
@@ -474,6 +463,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         e2e_cs_json["status"]  = "ERROR - no route available."
         return e2e_cs_json, 200
 
+    print("selected_route: " + str(selected_route))
     # adds more generic info into the e2e_cs data object
     spectrum = {}
     spectrum["lower-frequency"] = selected_spectrum[0]

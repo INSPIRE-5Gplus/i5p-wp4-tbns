@@ -462,19 +462,18 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
             if nep_item["direction"] == "OUTPUT":
               #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
               available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
-              print("available_spectrum: " + str(available_spectrum))
               
               # checks spectrum availability with respect requested capacity & gathers spectrums for the final slot selection.
               availability = False
               available_spec_list = []
               for available_item in available_spectrum:
-                print("available_item: "+ str(available_item))
                 available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
-                # checks if this NEP has enough available spectrum  to fit the requested capacity
+                
+                # checks if this NEP has at least one slot with enough available spectrum
                 if (available_diff >= capacity):
                   availability = True
-                  break
-                  # gathers spectrum info, so later the final spectrum can be selected among all the neps.
+                
+                # gathers spectrum info, so later the final spectrum can be selected among all the neps.
                 new_available = []
                 new_available.append(available_item["lower-frequency"])
                 new_available.append(available_item["upper-frequency"])
@@ -484,6 +483,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               new_spectrum["available-spectrum"] = available_spec_list
               route_spectrum.append(new_spectrum)
 
+              # if it's false, returns no available slot in one of the neps in the route. Based on the previous "if (available_diff >= capacity)"
               if availability == False:
                 # if False, the NEP is not good, and another route is necessary
                 print("This NEP has not enough available spectrum for the requested capacity.")
