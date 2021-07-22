@@ -350,9 +350,16 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                     new_nep_inpout["direction"] = "INPUT"
                     route_neps.append(new_nep_inpout)
                     # keeps the IDL spectrum availability so later we can validate the route spectrum continuity
+                    available_spec_list = []
+                    for available_spec_item in link_option_item["available-spectrum"]:
+                      new_available = []
+                      new_available.append(available_spec_item["lower-frequency"])
+                      new_available.append(available_spec_item["upper-frequency"])
+                      available_spec_list.append(new_available)
+
                     new_idl = {}
                     new_idl["link-option-uuid"] = link_option_item["uuid"]
-                    new_idl["available-spectrum"] = link_option_item["available-spectrum"]
+                    new_idl["available-spectrum"] = available_spec_list
                     route_interdominlinks.append(new_idl)
                     neps_found = True
                     break
@@ -406,7 +413,7 @@ Example of route_neps = [
   ]
 Example of route_interdominlinks = [
     {"link-option-uuid", "available_spectrum"},
-    {"link-option-uuid", "available_spectrum"}
+    {"link-option-uuid":"uuid", "available_spectrum":[[low-freq, up-freq],[low-freq, up-freq]]}
   ]
 """
 # based on the NEPs route, it looks for the corresponding SIPs to define the CSs
@@ -455,15 +462,28 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
             if nep_item["direction"] == "OUTPUT":
               #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
               available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
-              # checks if this NEP has enough available spectrum  to fit the requested capacity
+              
+              # checks spectrum availability with respect requested capacity & gathers spectrums for the final slot selection.
               availability = False
+              available_spec_list = []
               for available_item in available_spectrum:
                 available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+                # checks if this NEP has enough available spectrum  to fit the requested capacity
                 if (available_diff >= capacity):
                   availability = True
                   break
-              # if False, the NEp is not good, and another route is necessary
+                  # gathers spectrum info, so later the final spectrum can be selected among all the neps.
+                new_available = []
+                new_available.append(available_item["lower-frequency"])
+                new_available.append(available_item["upper-frequency"])
+                available_spec_list.append(new_available)
+                
+              new_spectrum = {}
+              new_spectrum["available-spectrum"] = available_spec_list
+              route_spectrum.append(new_spectrum)
+
               if availability == False:
+                # if False, the NEP is not good, and another route is necessary
                 print("This NEP has not enough available spectrum for the requested capacity.")
                 route_sips = []
                 route_spectrum = []
@@ -471,8 +491,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
                 internal_neps = []
                 return route_sips, route_spectrum, route_links, internal_neps
 
-              # adds the spectrum_info of each internal NEP to solve the spectrum continuity later
-              route_spectrum.append(available_spectrum)
 
             # adds the links to require their usage (only done in transparent abstraction mode)
             if os.environ.get("ABSTRACION_MODEL") == "transparent" and idx < (len(route_neps)-1):
@@ -505,7 +523,17 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   sip_item["blockchain_owner"] = response_json["owner"]
   route_sips.insert(0, sip_item)
   # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
-  route_spectrum.insert(0, sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  available_spec_list = []
+  for available_item in sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]:
+    new_available = []
+    new_available.append(available_item["lower-frequency"])
+    new_available.append(available_item["upper-frequency"])
+    available_spec_list.append(new_available)
+
+  new_spectrum = {}
+  new_spectrum["available-spectrum"] = available_spec_list
+  route_spectrum.insert(0, new_spectrum)
+  
   
   # adds the last SIP in the route_sips
   print("Adding the last sip")
@@ -524,7 +552,16 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   sip_item["blockchain_owner"] = response_json["owner"]
   route_sips.append(sip_item)
   # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
-  route_spectrum.append(sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  available_spec_list = []
+  for available_item in sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]:
+    new_available = []
+    new_available.append(available_item["lower-frequency"])
+    new_available.append(available_item["upper-frequency"])
+    available_spec_list.append(new_available)
+
+  new_spectrum = {}
+  new_spectrum["available-spectrum"] = available_spec_list
+  route_spectrum.append(new_spectrum)
   
   return route_sips, route_spectrum, route_links, internal_neps
 
@@ -551,9 +588,10 @@ Example of internal_neps = [
 """
 # Spectrum assignment --> We look for the exact-Fit, otherwise the Best-Fit
 def spectrum_assignment(spectrum_list, capacity):
-  #spectrum = [[UUU,YYY],[ZZZ, TTT]]
+  #spectrum_list = [[UUU,YYY],[ZZZ, TTT]]
   # it checks the availability of all the involved inter-domain links and extract the 
   # common available spectrum bigger than 75GHz
+  #TODO: the error is on a missing for loop as we deal with a list of lists
   ref_spectrum = spectrum_list[0]
   for idx, spectrum_item in enumerate(spectrum_list):
     # different than the first item as its the initial reference

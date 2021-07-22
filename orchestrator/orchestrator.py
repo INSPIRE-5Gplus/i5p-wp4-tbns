@@ -432,26 +432,32 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         print("sips_route: "+str(sips_route))
         print("spectrums_available: "+str(spectrums_available))
         print("internal_links_route: "+str(internal_links_route))
+        """
+        Example of idl_route = [
+            {"link-option-uuid", "available_spectrum"},
+            {"link-option-uuid":"uuid", "available_spectrum":[[low-freq, up-freq],[low-freq, up-freq]]}
+        ]
+        Example of spectrums_available = [
+        "available_spectrum":[[low-freq, up-freq],[low-freq, up-freq]]},
+        "available_spectrum":[[low-freq, up-freq],[low-freq, up-freq]]}
+        ]
+        """
+
         if sips_route == [] and spectrums_available == []:
             print("No spectrum availability in NEP. Looking for the next route.")
             continue
         # generates available spectrums list from interdomain links & internal neps
         print("adding the IDLs spectrum available")
-        for interdomainlink_item in idl_route:
-            spectrums_available.append(interdomainlink_item["available-spectrum"])
+        for idl_item in idl_route:
+            new_spectrum = {}
+            new_spectrum["available-spectrum"] = idl_item["available-spectrum"]
+            spectrums_available.append(new_spectrum)
+        
         print("spectrums_available: "+str(spectrums_available))
-        # prepares the spectrum slots available into a list of pair values.
-        spectrums_list = []
-        for spectrum_nep_item in spectrums_available:
-            for spectrum_item in spectrum_nep_item:
-                spectrum_slot = []
-                spectrum_slot.append(spectrum_item["lower-frequency"])
-                spectrum_slot.append(spectrum_item["upper-frequency"])
-                spectrums_list.append(spectrum_slot)
-        print("spectrums_list: " + str(spectrums_list))
+
         print("capacity: " + str(capacity))
         # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
-        selected_spectrum = vl_computation.spectrum_assignment(spectrums_list, capacity)
+        selected_spectrum = vl_computation.spectrum_assignment(spectrums_available, capacity)
         print("selected_spectrum: "+str(selected_spectrum))
 
         # rsa done is complete or if empty, starts with the next route
