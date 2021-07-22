@@ -423,7 +423,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_links = []        # used only in transparent abstraction mode
   internal_neps = []
   domain_context = {}
-  print("starting the nep2sip_route_mapping procedure")
   # maps intermediate NEPs to intermediate SIPs
   for idx, nep_item  in enumerate(route_neps):
     # get the specific context to discover the correct SIP to use attached to the link under study

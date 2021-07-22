@@ -474,8 +474,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     # creates a list of domain-CSs and adds thir information in the e2e_cs data object
     cs_list = []
     #iter_sips = iter(sips_route) #iter is used to work using pairs of elements
-    print("creating the domain CS objects for the e2e_cs_json")
+    print("Creating the domain CS objects for the e2e_cs_json")
     #for sip_item in iter_sips:
+    print("sips_route: " + str(sips_route))
     for idx, sip_item in enumerate(sips_route):
         print("sip_item: " +str(sip_item))
         print("sip_item[context_uuid]: " + str(sip_item["context_uuid"]) + " - next(iter_sips[context_uuid]): " +  str(sips_route[idx+1]["context_uuid"]))
@@ -483,17 +484,25 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         if sip_item["context_uuid"] == sips_route[idx+1]["context_uuid"]:
             cs_info = {}
             internal_links = []
+            print("A")
             cs_info["uuid"] = str(uuid.uuid4())
+            print("B")
             cs_info["context-uuid"] = sip_item["context_uuid"]
-            cs_info["address_owner"] = sip_item["address_owner"]
+            print("C")
+            cs_info["address-owner"] = sip_item["blockchain_owner"]
+            print("D")
             cs_info["status"] = "INSTANTIATING"
+            print("E")
             cs_info["sip-source"] = sip_item["uuid"]
+            print("F")
             cs_info["sip-destination"] = sips_route[idx+1]["uuid"]
-            
+            print("G")
             # adds the list of internal (constrained) links for the current domain CS
             # NOTE: ONLY accessed in transparent abstraction mode
-            if internal_links_route and os.environ.get("ABSTRACION_MODEL") == "transparent":
+            if internal_links_route != [] and os.environ.get("ABSTRACION_MODEL") == "transparent":
+                print("internal_links_route: " + str(internal_links_route))
                 for link_item in internal_links_route:
+                    print("link_item[context_uuid]: " + str(link_item["context_uuid"]) + " - sip_item[context_uuid]: " + str(sip_item["context_uuid"]))
                     if link_item["context_uuid"] == sip_item["context_uuid"]:
                         internal_links.append(link_item["uuid"])
             cs_info["internal-links"] = internal_links
