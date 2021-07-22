@@ -593,12 +593,11 @@ def spectrum_assignment(spectrum_list, capacity):
   #spectrum_list = [[UUU,YYY],[ZZZ, TTT]]
   # it checks the availability of all the involved inter-domain links and extract the 
   # common available spectrum bigger than 75GHz
-  #TODO: the error is on a missing for loop as we deal with a list of lists
-  ref_spectrum = spectrum_list[0]
+  ref_spectrum = spectrum_list[0]["available-spectrum"]
   for idx, spectrum_item in enumerate(spectrum_list):
     # different than the first item as its the initial reference
-      if idx != 0:
-          ref_spectrum = intersections(ref_spectrum,spectrum_item)
+    if idx != 0:
+      ref_spectrum = intersections(ref_spectrum,spectrum_item["available-spectrum"])
 
   # among all the possibilities, keeps those bigger or equal than 75GHz
   final_spectrum_options = []
