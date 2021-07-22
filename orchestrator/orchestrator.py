@@ -297,6 +297,7 @@ def update_connectivity_service_from_blockchain(event_json):
         if found_cs == True:
             break
     mutex_e2e_csdb_access.release()
+    print("e2e_cs_item_updated: " + str(e2e_cs_item))
     print("Incoming updated domains CS from Bl is saved.")
 
 """
@@ -503,7 +504,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     mutex_e2e_csdb_access.release()
     
     # distribuïm domain CSs requests
-    print("cs_list: " + str(cs_list))
+    #print("cs_list: " + str(cs_list))
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
@@ -528,7 +529,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 print("ERROR requesting local domain CS.")
                 return e2e_cs_json,400
         else:
-            print("Distributing domain CS request to the BL.")
             response = bl_mapper.instantiate_blockchain_cs(cs_item["address-owner"], cs_item, spectrum, e2e_cs_json["capacity"])
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
@@ -537,7 +537,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         e2e_cs_ready = True
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
-        for domainCS_item in e2e_cs["domain-CS"]:
+        for domainCS_item in e2e_cs["domain-cs"]:
             print("domainCS_item[status]: "+str(domainCS_item["status"]))
             if domainCS_item["status"] != "DEPLOYED":
                 e2e_cs_ready = False
@@ -545,6 +545,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
     
+    print("e2e_cs: " + str(e2e_cs))
     #prepare the new occupied spectrum information item
     freq_const = {}
     freq_const["adjustment-granularity"] = "G_6_25GHZ"

@@ -507,16 +507,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
         break
 
   # adds the FIRST SIP in the route_sips
-  #TODO: improve the code using the get_sip(uuid) function, to removes for loops.
-  print("Adding the first sip")
-  #response = bl_mapper.get_context_from_blockchain(e2e_cs_request["source"]["context-uuid"])
-  #for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
-  #      if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
-  #        print("first sip_item: " +str(sip_item))
-  #        sip_item["blockchain_owner"] = response['blockchain_owner']
-  #        route_sips.insert(0, sip_item)
-  #        # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
-  #        route_spectrum.insert(0, sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  #print("Adding the first sip")
   sip_uuid = e2e_cs_request["source"]["context_uuid"]+":"+e2e_cs_request["source"]["sip_uuid"]
   response_json = bl_mapper.get_sip(sip_uuid)
   sip_item = response_json["sip_info"]
@@ -537,15 +528,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   
   
   # adds the last SIP in the route_sips
-  print("Adding the last sip")
-  #response = bl_mapper.get_context_from_blockchain(e2e_cs_request["destination"]["context_uuid"])
-  #for sip_item in response[0]["context"]["tapi-common:context"]["service-interface-point"]:
-  #      if sip_item["uuid"] == e2e_cs_request["source"]["sip_uuid"]:
-  #        print("last sip_item: " +str(sip_item))
-  #        sip_item["blockchain_owner"] = response['blockchain_owner']
-  #        route_sips.append(sip_item)
-  #        # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
-  #        route_spectrum.append(sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"])
+  #print("Adding the last sip")
   sip_uuid = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["sip_uuid"]
   response_json = bl_mapper.get_sip(sip_uuid)
   sip_item = response_json["sip_info"]
