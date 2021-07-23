@@ -609,8 +609,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             print("NEP belonging to an IDL.")
             # composes the uuids based on the asbtraction model is being used.
             if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
-                node_involved_1 = nep_item["context_uuid"]+":"+nep_item["nep_uuid"]
-                node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["nep_uuid"]
+                node_involved_1 = nep_item["context_uuid"]+":"+nep_item["node_uuid"]
+                node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["node_uuid"]
             else:
                 node_involved_1 = nep_item["context_uuid"]+":"+nep_item["context_uuid"]
                 node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["context_uuid"]
