@@ -569,18 +569,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             temp_list.append(new_ocuppied_item)
             requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = temp_list
             # modifies the value in the available-spectrum key in the nep info
-            print("requested_nep: " + str(requested_nep))
-            print("type requested_nep: " + str(type(requested_nep)))
             print("----------------------------------------------------- BLOCKED HERE!!")
-            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]))
-            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]))
-            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]))
             occupied_slots = []
             available_slots = []
-            low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]["lower-frequency"]
-            up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]["upper-frequency"]
-            print("low_suportable: "+ str(low_suportable))
-            print("up_suportable: "+str(up_suportable))
+            # there only a single element in the "supportable-spectrum" block info.
+            low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
+            up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
             supportable_range = []
             supportable_range.append(low_suportable)
             supportable_range.append(up_suportable)
