@@ -610,11 +610,15 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             # composes the uuids based on the asbtraction model is being used.
             if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
                 print("Using transparent/vlink model")
+                print("nep_item: " + str(nep_item))
                 node_involved_1 = nep_item["context_uuid"]+":"+nep_item["nep_uuid"]
+                print(node_involved_1)
                 node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["nep_uuid"]
+                print(node_involved_2)
             else:
                 node_involved_1 = nep_item["context_uuid"]+":"+nep_item["context_uuid"]
                 node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["context_uuid"]
+            
             # first updates the occupied spectrum in the right phsyical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
             occupied_slots = []
             print("e2e_topology_json[interdomain-links]: " + str(e2e_topology_json["interdomain-links"]))
