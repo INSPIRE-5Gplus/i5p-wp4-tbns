@@ -619,20 +619,17 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             occupied_slots = []
             for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
                 spectrum_added = False
-                print("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
-                print("node_involved_1: " + str(node_involved_1) + " - node_involved_2: " + str(node_involved_2))
                 if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
-                    print("Inside_1")
                     for link_option_item in idl_item["link-options"]:
                         print("link_option_item[nodes-direction][node-1]: " + str(link_option_item["nodes-direction"]["node-1"]) + " - link_option_item[nodes-direction][node-2]: " + str(link_option_item["nodes-direction"]["node-1"]))
                         if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
-                            print("Inside_2")
                             for physical_option_item in link_option_item["physical-options"]:
                                 # IDL physical-option being used found
                                 print("physical_option_item: " + str(physical_option_item))
                                 if physical_option_item["node-edge-point"][0]["nep-uuid"] == nep_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == neps_route[idx+1]["nep_uuid"]:
-                                    print("inside_3")
-                                    physical_option_item["occupied-spectrum"] = new_ocuppied_item
+                                    new_occupied_list = []
+                                    new_occupied_list.append(new_ocuppied_item)
+                                    physical_option_item["occupied-spectrum"] = new_occupied_list
                                     print("physical_option_item[occupied-spectrum]: " + str(physical_option_item["occupied-spectrum"]))
                                     spectrum_added = True
 
@@ -640,7 +637,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                                     print("inside_4")
                                     low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
                                     print("low_freq: " + str(low_freq))
-                                    up_freq = physical_option_item["occupied-spectrum"[0]]["upper-frequency"]
+                                    up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
                                     print("up_freq: " + str(up_freq))
                                     print("Added the occupied_spectrum")
                                     occupied_slots.append([low_freq,up_freq])
