@@ -636,16 +636,16 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                                 if physical_option_item["occupied-spectrum"] != []:
                                     print("inside_4")
                                     low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
-                                    print("low_freq: " + str(low_freq))
                                     up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
-                                    print("up_freq: " + str(up_freq))
                                     print("Added the occupied_spectrum")
                                     occupied_slots.append([low_freq,up_freq])
-
-                        if spectrum_added and occupied_slots:
+                        print("outside_4")
+                        if spectrum_added and occupied_slots!=[]:
                             print("occupied_slots: "+ str(occupied_slots))
                             low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
+                            print("low_suportable: "+ str(low_suportable))
                             up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
+                            print("up_suportable: " + str(up_suportable))
                             supportable_slot = [low_suportable, up_suportable]
                             print("supportable_slot: " + str(supportable_slot))
                             available_slots = vl_computation.available_spectrum(supportable_slot, occupied_slots)
