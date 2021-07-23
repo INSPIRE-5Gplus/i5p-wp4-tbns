@@ -563,6 +563,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             # updates the internal NEPsinformation
             # gets the nep info
             requested_uuid = nep_item["context_uuid"]+":"+nep_item["node_uuid"]+":"+nep_item["nep_uuid"]
+            print(requested_uuid)
             requested_nep = bl_mapper.get_nep(requested_uuid)
             print("1_requested NEP :" +str(requested_nep))
             # modifies the occupied-spectrum key
