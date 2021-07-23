@@ -666,32 +666,28 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     # update the spectrum information for each SIP used in the route
     print("Updating available spectrums in the SIPs of each SDN Context.")
     for sip_item in sips_route:
-        print("inside_1")
+        # gets the sip element from the BL
         sip_uuid = sip_item["context_uuid"] + ":" + sip_item["uuid"]
-        print("sip_uuid: " + str(sip_uuid))
         response = bl_mapper.get_sip(sip_uuid)
-        print("response: " + str(response))
         sip_json = response["sip_info"]
-        print("sip_json: " + str(sip_json))
+
         # adds the occupied spectrum info
         occ_spec = []
-        print("new_occupied_item: " + str(new_ocuppied_item))
         occ_spec.append(new_ocuppied_item)
-        print("occ_spec: " + str(occ_spec))
         sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"] = occ_spec
-        print("sip_occ_spec: " + str(sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"]))
+        print("sip_json: " + str(sip_json))
 
         # generate the new ranges of available spectrum for this sip
         available_slots = []
         occupied_slots = []
         print("inside_2")
-        low_suportable = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"]["lower-frequency"]
+        low_suportable = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
         print("low_supportable: " + str(low_suportable))
-        upp_suportable = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"]["upper-frequency"]
+        upp_suportable = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
         print("upp_suportable: " + str(upp_suportable))
-        low_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"]["lower-frequency"]
+        low_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"][0]["lower-frequency"]
         print("low_occupied: " + str(low_occupied))
-        upp_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"]["upper-frequency"]
+        upp_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"][0]["upper-frequency"]
         print("upp_occupied: " + str(upp_occupied))
         supportable_range = [low_suportable, upp_suportable]
         print("supportable_range: " + str(supportable_range))
