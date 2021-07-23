@@ -191,6 +191,27 @@ def update_e2e_topology(e2e_topo):
 
     return '{"msg":"E2E topology updated in the BL."}', 200
 
+# updates the specified link-option in the e2e_topology (set of IDLs)
+def update_link_option(linkoption_json):
+    id = linkoption_json["uuid"]
+    dir = linkoption_json["direction"]
+    nodesdir = json.dumps(linkoption_json["nodes-direction"])
+    lpn = json.dumps(linkoption_json["layer-protocol-name"])
+    phyopt = json.dumps(linkoption_json["physical-options"])
+    sup = json.dumps(linkoption_json["supportable-spectrum"])
+    av = json.dumps(linkoption_json["available-spectrum"])
+    
+    # generates transaction
+    tx_hash = settings.transport_contract.functions.updateLinkOption(id, dir, nodesdir, lpn, phyopt, sup, av).transact()
+    
+    # Wait for transaction to be mined and check it's in the blockchain (get)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    
+    msg = {}
+    msg["msg"] = "Everything OK"
+        
+    return msg, 200
+
 # distributes the domain SDN context with the other peers
 def context_to_blockchain(context_json):
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local SDN context information with Blockchain peers.')

@@ -639,7 +639,7 @@ def intersections(a,b):
 
 #Fins the available_spectrum looking the differente beteen the supportable_spectrum(a) and the occupied_spectrum(b)
 #https://stackoverflow.com/questions/51905210/python-delete-subinterval-from-an-interval
-def availabe_spectrum(a,b):
+def available_spectrum(a,b):
   d = []
   i=a[0]
   j=a[1]
