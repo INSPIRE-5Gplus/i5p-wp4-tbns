@@ -549,9 +549,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     freq_const["adjustment-granularity"] = "G_6_25GHZ"
     freq_const["grid-type"] = "FLEX"
     new_ocuppied_item = {}
+    new_ocuppied_item["frequency-constraint"] =  freq_const
     new_ocuppied_item["lower-frequency"] = e2e_cs_json["spectrum"]["lower-frequency"]
     new_ocuppied_item["upper-frequency"] = e2e_cs_json["spectrum"]["upper-frequency"]
-    new_ocuppied_item["frequency-constraint"] =  freq_const
     print("new_ocuppied_itemw: " +str(new_ocuppied_item))
 
     settings.logger.debug("Updating data objects in DDBBs.")
@@ -572,6 +572,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             print("requested_nep: " + str(requested_nep))
             print("type requested_nep: " + str(type(requested_nep)))
             print("----------------------------------------------------- BLOCKED HERE!!")
+            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]))
+            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]))
+            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]))
             occupied_slots = []
             available_slots = []
             low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]["lower-frequency"]
