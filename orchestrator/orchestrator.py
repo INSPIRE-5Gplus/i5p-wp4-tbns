@@ -570,6 +570,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             temp_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
             temp_list.append(new_ocuppied_item)
             requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = temp_list
+            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]))
             # modifies the value in the available-spectrum key in the nep info
             low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]["lower-frequency"]
             up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]["upper-frequency"]
@@ -596,7 +597,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                     available_slots_json.append(new_available_item)
                 requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
             else:
-                print("There is a problem with the occupied spectrums.")
+                print("There is a problem with the occupied spectrums. They are empty, why?")
             # sends the new info to the BL
             print("2_requested NEP :" +str(requested_nep))
             response_update = bl_mapper.update_nep(requested_uuid, requested_nep)

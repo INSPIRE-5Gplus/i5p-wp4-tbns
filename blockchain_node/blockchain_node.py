@@ -220,7 +220,6 @@ def context_to_blockchain(context_json):
         neps_uuid_list = []
         for nep_item in node_item["owned-node-edge-point"]:
             bl_nep_uuid = context_json["id"]+":"+node_item["uuid"]+":"+nep_item["uuid"]
-            print(bl_nep_uuid)
             nep_string = json.dumps(nep_item)
             tx_hash = settings.transport_contract.functions.addNep(bl_nep_uuid, nep_string).transact()
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
@@ -398,10 +397,7 @@ def update_sip(sip_id, sip_json):
 # returns a specific NEP info
 def get_nep(index):
     response = settings.transport_contract.functions.getNep(index).call()
-    print(str(type(response)))
-    nep_json = response.loads()
-    print(str(nep_json))
-    print(str(type(nep_json)))
+    nep_json = json.loads(response)
     return nep_json
 
 # updates a specific NEP info in the BL
