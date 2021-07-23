@@ -617,8 +617,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             
             # first updates the occupied spectrum in the right phsyical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
             occupied_slots = []
-            print("e2e_topology_json: " + str(e2e_topology_json))
-            for idl_item in e2e_topology_json["interdomain-links"]:
+            for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
                 spectrum_added = False
                 print("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
                 print("node_involved_1: " + str(node_involved_1) + " - node_involved_2: " + str(node_involved_2))
