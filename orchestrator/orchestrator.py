@@ -630,7 +630,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                             for physical_option_item in link_option_item["physical-options"]:
                                 # IDL physical-option being used found
                                 print("physical_option_item: " + str(physical_option_item))
-                                if physical_option_item["node-edge_point"][0]["nep-uuid"] == nep_item["nep_uuid"] and physical_option_item["node-edge_point"][1]["nep_uuid"] == neps_route[idx+1]["nep_uuid"]:
+                                if physical_option_item["node-edge-point"][0]["nep-uuid"] == nep_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep_uuid"] == neps_route[idx+1]["nep_uuid"]:
                                     physical_option_item["occupied-spectrum"] = new_ocuppied_item
                                     spectrum_added = True
 
