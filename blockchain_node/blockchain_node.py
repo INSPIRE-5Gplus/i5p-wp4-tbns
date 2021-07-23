@@ -111,17 +111,17 @@ def update_blockchain_slice(subnet_json):
 ###################################### BLOCKCHAIN MAPPER FOR IDLs, SDN CONTEXT & CSs #######################################
 # distributes the domain associated inter-domain links (IDL) with the other peers
 def interdomainlinks_to_blockchain(idl_json, e2e_topology):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes known IDLs & updates the e2e topology element saved in the Blockchain.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes known IDLs & updates the e2e topology element saved in the Blockchain.')
     idl_string = json.dumps(idl_json)
     e2e_topology_string = json.dumps(e2e_topology)
     
     # Add a connectivity service template to make it available for other domains
     tx_hash = settings.transport_contract.functions.addIDLContext(idl_string, e2e_topology_string).transact()
-    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new IDL done.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Transaction for new IDL done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction receipt.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Transaction receipt.')
 
     msg = {}
     msg["msg"] = "Everything OK"
@@ -160,7 +160,7 @@ def get_idl_id(index):
 # returns IDLs information from blockchain
 def get_e2etopology_from_blockchain():
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
-    settings.logger.info('BLOCKCHAIN_MAPPER: Requests Blockchain E2E Topology information.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Requests Blockchain E2E Topology information.')
     response = settings.transport_contract.functions.getE2EContext().call()
     if (not response):
         context_json = "empty"
@@ -185,7 +185,7 @@ def get_linkOption_from_blockchain(link_option_uuid):
 
 # update e2e_topology in the BL
 def update_e2e_topology(e2e_topo):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Updating E2E Topology.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Updating E2E Topology.')
     e2e_string = json.dumps(e2e_topo)
     response = settings.transport_contract.functions.updateE2EContext(e2e_string).call()
 
@@ -214,7 +214,7 @@ def update_link_option(linkoption_json):
 
 # distributes the domain SDN context with the other peers
 def context_to_blockchain(context_json):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes local SDN context information with Blockchain peers.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes local SDN context information with Blockchain peers.')
     id_string = context_json["id"]
     name_context = context_json["name_context"]
     nw_topo_serv = context_json["nw_topo_serv"]
@@ -224,7 +224,7 @@ def context_to_blockchain(context_json):
     link_uuid_list = []
     
     # Distributes the sips in the SDN context.
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing SIPs.') 
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributing SIPs.') 
     for sip_item in json.loads(context_json["sip"]):
         bl_sip_uuid = context_json["id"]+":"+sip_item["uuid"]
         sip_string = json.dumps(sip_item)
@@ -234,7 +234,7 @@ def context_to_blockchain(context_json):
         sip_uuid_list.append(sip_item["uuid"])
     
     # Distributes the nodes and their NEPs in the SDN context.
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Node.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributing Node.')
     node_topo = json.loads(context_json["node_topo"])
     for node_item in node_topo:
         #TODO: distribution of NEPS for each node
@@ -253,9 +253,9 @@ def context_to_blockchain(context_json):
     
     # Distributes the links in the SDN context if there are.
     if json.loads(context_json["link_topo"]) == []:
-        settings.logger.info('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
+        settings.logger.debug('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
     else:
-        settings.logger.info('BLOCKCHAIN_MAPPER: Distributing Links.')
+        settings.logger.debug('BLOCKCHAIN_MAPPER: Distributing Links.')
         for link_item in json.loads(context_json["link_topo"]):
             bl_link_uuid = context_json["id"]+":"+link_item["uuid"]
             link_string = json.dumps(link_item)
@@ -265,23 +265,12 @@ def context_to_blockchain(context_json):
             link_uuid_list.append(link_item["uuid"])
     
     # Add a connectivity service template to make it available for other domains
-    settings.logger.info('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, json.dumps(sip_uuid_list), nw_topo_serv, topo_metadata, json.dumps(node_uuid_list), json.dumps(link_uuid_list)).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: Transaction for new context done.')
-
-    #rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
-    #settings.logger.info('BLOCKCHAIN_MAPPER: topology_event.' + str(rich_logs))
-
-    #response = settings.transport_contract.functions.getContextTemplate(str(context_json["id"])).call()
-    #create json to send back to the user the initial instantiation request info.
-    #deployment_response = {}
-    #deployment_response["log"] = rich_logs[0]['args']['log']
-    #deployment_response["status"] = rich_logs[0]['args']['status']
-    #deployment_response["owner"] = rich_logs[0]['args']['requester']
-    #print(str(deployment_response))
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Transaction for new context done.')
 
     msg = {}
     msg["msg"] = "Everything OK"
@@ -430,7 +419,7 @@ def update_nep(nep_id, nep_json):
 
 # requests the deployment of a CS between domains
 def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to configure connectivity service in the Blockchain')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes request to configure connectivity service in the Blockchain')
     cs_string = json.dumps(cs_json)
     spectrum_string = json.dumps(spectrum)
     capacity_string = json.dumps(capacity)
@@ -456,7 +445,7 @@ def terminate_blockchain_cs(ref_cs):
 
 # NOTE: requests to update a connectivity service element in the Blockchain
 def update_blockchain_cs(cs_json):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Updates connectivity service element within the Blockchain.')
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Updates connectivity service element within the Blockchain.')
     cs_uuid = cs_json["cs_info"]['uuid']
     cs_string = json.dumps(cs_json)
     cs_status = cs_json["cs_info"]['status']
