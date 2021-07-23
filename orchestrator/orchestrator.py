@@ -297,8 +297,6 @@ def update_connectivity_service_from_blockchain(event_json):
         if found_cs == True:
             break
     mutex_e2e_csdb_access.release()
-    print("e2e_cs_item_updated: " + str(e2e_cs_item))
-    print("Incoming updated domains CS from Bl is saved.")
 
 """
 Example E2E_CS request 
@@ -533,6 +531,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
     print("Waiting all the domains CS from other domains to be deployed.")
+    e2e_cs_ready = False
     while  e2e_cs_ready == False:
         e2e_cs_ready = True
         mutex_e2e_csdb_access.acquire()
@@ -543,6 +542,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 e2e_cs_ready = False
                 break
         mutex_e2e_csdb_access.release()
+        print("Sleeping 10s")
         time.sleep(10)  # awaits 10 seconds before it checks again
     
     print("e2e_cs: " + str(e2e_cs))
@@ -698,6 +698,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
+    settings.logger.info("ORCH: E2E CS request processed.")
     print("The last print!!!! ou yeah!")
     
     return e2e_cs_json,200
