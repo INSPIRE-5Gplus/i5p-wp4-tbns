@@ -544,7 +544,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
     
-    print("e2e_cs: " + str(e2e_cs))
     #prepare the new occupied spectrum information item
     freq_const = {}
     freq_const["adjustment-granularity"] = "G_6_25GHZ"
@@ -553,7 +552,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     new_ocuppied_item["frequency-constraint"] =  freq_const
     new_ocuppied_item["lower-frequency"] = e2e_cs_json["spectrum"]["lower-frequency"]
     new_ocuppied_item["upper-frequency"] = e2e_cs_json["spectrum"]["upper-frequency"]
-    print("new_ocuppied_itemw: " +str(new_ocuppied_item))
 
     settings.logger.debug("Updating data objects in DDBBs.")
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
@@ -669,7 +667,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     print("Updating available spectrums in the SIPs of each SDN Context.")
     for sip_item in sips_route:
         print("inside_1")
-        sip_json = json.loads(sip_item["sip_info"])
+        sip_uuid = sip_item["context_uuid"] + ":" + sip_item["uuid"]
+        print("sip_uuid: " + str(sip_uuid))
+        response = bl_mapper.get_sip(sip_uuid)
+        print("response: " + response)
+        sip_json = response["sip_info"]
         print("sip_json: " + str(sip_json))
         # adds the occupied spectrum info
         occ_spec = []
