@@ -621,35 +621,24 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 spectrum_added = False
                 if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
                     for link_option_item in idl_item["link-options"]:
-                        print("link_option_item[nodes-direction][node-1]: " + str(link_option_item["nodes-direction"]["node-1"]) + " - link_option_item[nodes-direction][node-2]: " + str(link_option_item["nodes-direction"]["node-1"]))
                         if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
                             for physical_option_item in link_option_item["physical-options"]:
                                 # IDL physical-option being used found
-                                print("physical_option_item: " + str(physical_option_item))
                                 if physical_option_item["node-edge-point"][0]["nep-uuid"] == nep_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == neps_route[idx+1]["nep_uuid"]:
                                     new_occupied_list = []
                                     new_occupied_list.append(new_ocuppied_item)
                                     physical_option_item["occupied-spectrum"] = new_occupied_list
-                                    print("physical_option_item[occupied-spectrum]: " + str(physical_option_item["occupied-spectrum"]))
                                     spectrum_added = True
 
                                 if physical_option_item["occupied-spectrum"] != []:
-                                    print("inside_4")
                                     low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
                                     up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
-                                    print("Added the occupied_spectrum")
                                     occupied_slots.append([low_freq,up_freq])
-                        print("outside_4")
                         if spectrum_added and occupied_slots!=[]:
-                            print("occupied_slots: "+ str(occupied_slots))
                             low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
-                            print("low_suportable: "+ str(low_suportable))
                             up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
-                            print("up_suportable: " + str(up_suportable))
                             supportable_slot = [low_suportable, up_suportable]
-                            print("supportable_slot: " + str(supportable_slot))
                             available_slots = vl_computation.available_spectrum(supportable_slot, occupied_slots)
-                            print("available_slots: "+str(available_slots))
                             available_slots_json = []
                             for slot_item in available_slots:
                                 #append pair of available frequency slots to the list
@@ -665,6 +654,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                             break
                 if spectrum_added:
                     print("Saving and distributing the updated link-option info.")
+                    print("link_option_item: " + str(link_option_item))
                     response = bl_mapper.update_link_option(link_option_item)
                     break   
         
@@ -678,25 +668,38 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     # update the spectrum information for each SIP used in the route
     print("Updating available spectrums in the SIPs of each SDN Context.")
     for sip_item in sips_route:
+        print("inside_1")
         sip_json = json.loads(sip_item["sip_info"])
+        print("sip_json: " + str(sip_json))
         # adds the occupied spectrum info
         occ_spec = []
+        print("new_occupied_item: " + str(new_ocuppied_item))
         occ_spec.append(new_ocuppied_item)
+        print("occ_spec: " + str(occ_spec))
         sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"] = occ_spec
+        print("sip_occ_spec: " + str(sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"]))
 
         # generate the new ranges of available spectrum for this sip
         available_slots = []
         occupied_slots = []
+        print("inside_2")
         low_suportable = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"]["lower-frequency"]
+        print("low_supportable: " + str(low_suportable))
         upp_suportable = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"]["upper-frequency"]
+        print("upp_suportable: " + str(upp_suportable))
         low_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"]["lower-frequency"]
+        print("low_occupied: " + str(low_occupied))
         upp_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"]["upper-frequency"]
+        print("upp_occupied: " + str(upp_occupied))
         supportable_range = [low_suportable, upp_suportable]
+        print("supportable_range: " + str(supportable_range))
         occupied_slots.append([low_occupied, upp_occupied])
+        print("occupied_slots: " + str(occupied_slots))
         available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
         print("available_slots: "+str(available_slots))
         available_slots_json = []
         for slot_item in available_slots:
+            print("inside_3")
             #append pair of available frequency slots to the list
             freq_const = {}
             freq_const["adjustment-granularity"] = "G_6_25GHZ"
@@ -706,9 +709,10 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             new_available_item["lower-frequency"] = slot_item[0]
             new_available_item["upper-frequency"] = slot_item[1]
             available_slots_json.append(new_available_item)
-        requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
+        sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
         sip_id = sip_item["context_uuid"]+":"+sip_json["uuid"]
         print("Updating SIP in the BL.")
+        print("sip_json: " + str(sip_json))
         response = bl_mapper.update_sip(sip_id, sip_json)  
 
 
@@ -719,6 +723,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     settings.logger.info("ORCH: E2E CS request processed.")
+    print("e2e_cs_json: " + str(e2e_cs_json))
     print("The last print!!!! ou yeah!")
     
     return e2e_cs_json,200
