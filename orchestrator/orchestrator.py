@@ -670,7 +670,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         sip_uuid = sip_item["context_uuid"] + ":" + sip_item["uuid"]
         print("sip_uuid: " + str(sip_uuid))
         response = bl_mapper.get_sip(sip_uuid)
-        print("response: " + response)
+        print("response: " + str(response))
         sip_json = response["sip_info"]
         print("sip_json: " + str(sip_json))
         # adds the occupied spectrum info
