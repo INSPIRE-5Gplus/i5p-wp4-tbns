@@ -563,23 +563,25 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             # updates the internal NEPsinformation
             # gets the nep info
             requested_uuid = nep_item["context_uuid"]+":"+nep_item["node_uuid"]+":"+nep_item["nep_uuid"]
-            print(requested_uuid)
             requested_nep = bl_mapper.get_nep(requested_uuid)
-            print("1_requested NEP :" +str(requested_nep))
             # modifies the occupied-spectrum key
             temp_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
             temp_list.append(new_ocuppied_item)
             requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = temp_list
-            print(str(requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]))
             # modifies the value in the available-spectrum key in the nep info
+            print("----------------------------------------------------- BLOCKED HERE!!")
+            occupied_slots = []
+            available_slots = []
             low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]["lower-frequency"]
             up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]["upper-frequency"]
             supportable_range = [low_suportable, up_suportable]
-            occupied_slots = []
-            available_slots = []
             occupied_spectrum = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
+            print("low_suportable: "+ str(low_suportable))
+            print("up_suportable: "+str(up_suportable))
+            print("supportable_range: "+ str(supportable_range))
+            print("occupied_spectrum: " +str(occupied_spectrum))
             for spectrum_item in occupied_spectrum:
-                occupied_slots.append([spectrum_item["lower-frequency"], spectrum_item["upper-frequency"]])
+                occupied_slots.append([spectrum_item["lower-frequency"],spectrum_item["upper-frequency"]])
             print("occupied_slots: "+str(occupied_slots))
             if occupied_slots:
                 available_slots = vl_computation.availabe_spectrum(supportable_range, occupied_slots)
