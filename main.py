@@ -478,7 +478,7 @@ def request_e2e_cs():
 @app.route('/pdl-transport/connectivity_service', methods=['GET'])
 def get_e2e_cs():
   e2e_cs_json = db.get_elements("e2e_cs")
-  return e2e_cs_json, 200
+  return json.dumps(e2e_cs_json), 200
 
 # TODO: terminate E2E CS
 
