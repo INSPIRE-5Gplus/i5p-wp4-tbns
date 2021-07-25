@@ -124,7 +124,7 @@ Generated CS request
 def instantiate_connectivity_service(cs_info_json, spectrum, capacitiy):
   settings.logger.info("SDN_MAPPER: Arrived a requests to deploy a local CS.")
   #TODO: once the JSON for the requests i identified, update the code below
-  settings.logger.debug("SDN_MAPPER: CS information: " + str(cs_info_json))
+  settings.logger.debug("SDN_MAPPER: CS information: " + str(cs_info_json) + " / Capacity: " + str(capacitiy) + "/ Spectrum: " + str(spectrum))
   """
   #var with the json to add into the request
   cs_json = {}
