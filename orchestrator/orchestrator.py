@@ -614,7 +614,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 node_involved_1 = nep_item["context_uuid"]+":"+nep_item["context_uuid"]
                 node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["context_uuid"]
             
-            # first updates the occupied spectrum in the right phsyical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
+            # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
             occupied_slots = []
             for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
                 spectrum_added = False
@@ -661,15 +661,21 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # update the spectrum information for each SIP used in the route
     #settings.logger.debug("Updating available spectrums in the SIPs of each SDN Context.")
+    settings.logger.debug("Saving and distributing the updated SIPs info.")
     for sip_item in sips_route:
         # gets the sip element from the BL
+        print("A")
         sip_uuid = sip_item["context_uuid"] + ":" + sip_item["uuid"]
+        print("sip_uuid: " +str(sip_uuid))
         response = bl_mapper.get_sip(sip_uuid)
+        print("response: " +str(response))
         sip_json = response["sip_info"]
+        settings.logger.debug("SIP to udpate: " + str(sip_json))
 
         # adds the occupied spectrum info
         occ_spec = []
         occ_spec.append(new_ocuppied_item)
+        print("occ_spec: " + str(occ_spec))
         sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"] = occ_spec
 
         # generate the new ranges of available spectrum for this sip
@@ -680,8 +686,10 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         low_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"][0]["lower-frequency"]
         upp_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"][0]["upper-frequency"]
         supportable_range = [low_suportable, upp_suportable]
+        print("supportable_range: " + str(supportable_range))
         occupied_slots.append([low_occupied, upp_occupied])
         available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
+        print("available_slots: " + str(available_slots))
 
         available_slots_json = []
         for slot_item in available_slots:
@@ -695,8 +703,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             new_available_item["upper-frequency"] = slot_item[1]
             available_slots_json.append(new_available_item)
         sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
-        sip_id = sip_item["context_uuid"]+":"+sip_json["uuid"]
-        response = bl_mapper.update_sip(sip_id, sip_json)  
+        response = bl_mapper.update_sip(sip_uuid, sip_json)  
 
 
     # saves the e2e_cs data object to confirm full deployment.
