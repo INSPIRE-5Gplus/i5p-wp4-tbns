@@ -126,13 +126,6 @@ def get_context():
   response = db.get_element("", "context")
   return response, 200
 
-#prints local E2E graph
-@app.route('/print_e2econtext', methods=['GET'])
-def draw_graph():
-  incoming_data = request.json
-  vl_computation.paint_graph(incoming_data["labels"])
-  return {"msg":"Abstracted topology using " + os.environ.get("ABSTRACION_MODEL") + " model."}, 200
-
 """
 Example of the json to pass:
   {
@@ -424,6 +417,13 @@ def get_all_contexts():
   else:
     return response[0], response[1]
 
+#prints local E2E graph
+@app.route('/print_e2econtext', methods=['GET'])
+def draw_graph():
+  incoming_data = request.json
+  vl_computation.paint_graph(incoming_data["labels"])
+  return {"msg":"Abstracted topology using " + os.environ.get("ABSTRACION_MODEL") + " model."}, 200
+
 """
 Example E2E_CS request 
   {
@@ -474,6 +474,11 @@ def request_e2e_cs():
   return response, 200
 
 # TODO: get E2E CSs
+# requests a the E2E CS data objects
+@app.route('/pdl-transport/connectivity_service', methods=['GET'])
+def get_e2e_cs():
+  e2e_cs_json = db.get_elements("e2e_cs")
+  return e2e_cs_json, 200
 
 # TODO: terminate E2E CS
 
