@@ -200,12 +200,20 @@ def update_link_option(linkoption_json):
     phyopt = json.dumps(linkoption_json["physical-options"])
     sup = json.dumps(linkoption_json["supportable-spectrum"])
     av = json.dumps(linkoption_json["available-spectrum"])
+    print(id)
+    print(dir)
+    print(nodesdir)
+    print(lpn)
+    print(phyopt)
+    print(sup)
+    print(av)
     
     # generates transaction
     tx_hash = settings.transport_contract.functions.updateLinkOption(id, dir, nodesdir, lpn, phyopt, sup, av).transact()
-    
+    print("After updating link-option")
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    print("After the tx_receipt")
     
     msg = {}
     msg["msg"] = "Everything OK"
