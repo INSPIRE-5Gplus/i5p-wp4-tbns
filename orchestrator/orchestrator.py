@@ -666,18 +666,14 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     settings.logger.debug("Saving and distributing the updated SIPs info.")
     for sip_item in sips_route:
         # gets the sip element from the BL
-        print("A")
         sip_uuid = sip_item["context_uuid"] + ":" + sip_item["uuid"]
-        print("sip_uuid: " +str(sip_uuid))
         response = bl_mapper.get_sip(sip_uuid)
-        print("response: " +str(response))
         sip_json = response["sip_info"]
         settings.logger.debug("SIP to udpate: " + str(sip_json))
 
         # adds the occupied spectrum info
         occ_spec = []
         occ_spec.append(new_ocuppied_item)
-        print("occ_spec: " + str(occ_spec))
         sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"] = occ_spec
 
         # generate the new ranges of available spectrum for this sip
@@ -688,10 +684,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         low_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"][0]["lower-frequency"]
         upp_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"][0]["upper-frequency"]
         supportable_range = [low_suportable, upp_suportable]
-        print("supportable_range: " + str(supportable_range))
         occupied_slots.append([low_occupied, upp_occupied])
         available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
-        print("available_slots: " + str(available_slots))
 
         available_slots_json = []
         for slot_item in available_slots:
@@ -712,8 +706,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
-    settings.logger.debug("ORCH: E2E CS request processed.")
-    settings.logger.debug("e2e_cs_json: " + str(e2e_cs_json))
+    settings.logger.info("ORCH: E2E CS request processed.")
+    settings.logger.info("e2e_cs_json: " + str(e2e_cs_json))
     
     return e2e_cs_json,200
 
