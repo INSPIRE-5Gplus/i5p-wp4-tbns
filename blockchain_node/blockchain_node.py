@@ -203,7 +203,6 @@ def update_link_option(linkoption_json):
     
     # generates transaction
     tx_hash = settings.transport_contract.functions.updateLinkOption(id, dir, nodesdir, lpn, phyopt, sup, av).transact()
-    
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
@@ -420,6 +419,7 @@ def update_nep(nep_id, nep_json):
 # requests the deployment of a CS between domains
 def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes request to configure connectivity service in the Blockchain')
+    settings.logger.info("SDN_MAPPER: CS information: " + str(cs_json) + " / Capacity: " + str(capacity) + "/ Spectrum: " + str(spectrum))
     cs_string = json.dumps(cs_json)
     spectrum_string = json.dumps(spectrum)
     capacity_string = json.dumps(capacity)
