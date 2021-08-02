@@ -440,7 +440,7 @@ def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     return deployment_response, 200
 
 # TODO: requests the termination of a CS between domains
-def terminate_blockchain_cs(ref_cs):
+def terminate_blockchain_cs(cs_ref, address):
     pass
 
 # NOTE: requests to update a connectivity service element in the Blockchain

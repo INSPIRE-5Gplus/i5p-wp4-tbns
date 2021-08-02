@@ -474,13 +474,26 @@ def request_e2e_cs():
   return response, 200
 
 # TODO: get E2E CSs
-# requests a the E2E CS data objects
+# requests all the E2E CS data objects
 @app.route('/pdl-transport/connectivity_service', methods=['GET'])
-def get_e2e_cs():
-  e2e_cs_json = db.get_elements("e2e_cs")
+def get_all_e2e_cs():
+  e2e_cs_list_json = db.get_elements("e2e_cs")
+  return json.dumps(e2e_cs_list_json), 200
+
+# requests specific E2E CS data objects by ID
+@app.route('/pdl-transport/connectivity_service/<cs_uuid>', methods=['GET'])
+def get_e2e_cs(cs_uuid):
+  e2e_cs_json = db.get_element(cs_uuid, "e2e_cs")
   return json.dumps(e2e_cs_json), 200
 
 # TODO: terminate E2E CS
+@app.route('/pdl-transport/connectivity_service/terminate/<cs_uuid>', methods=['POST'])
+def request_e2e_cs(cs_uuid):
+  settings.logger.info('Received E2E CS deployment request.')
+  settings.executor.submit(orch.terminate_e2e_connectivity_service, cs_uuid)
+  response = {}
+  response['log'] = "Request accepted, terminating the E2E CS with id: ." + str(cs_uuid)
+  return response, 200
 
 #####################################################################################################
 #######################               MAIN SERVER FUNCTION                    #######################

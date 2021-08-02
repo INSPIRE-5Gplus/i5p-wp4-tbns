@@ -51,157 +51,159 @@ def get_connectivity_service(cs_ID):
 #sends request to deploy a connectivity service
 """
 Incoming CS information
-{
+cs_info_json = {
   "uuid": "uuid_CS",
-  "address_owner": "address_owner",
-  "sips": [
-      "uuid_sip",
-      "uuid_sip"
-  ],
-  "capacity": {
-      "value": 150,
-      "unit": "GHz"
-  },
-  "spectrum_slot": {
-      "low-freq": 191700000,
-      "high-freq": 196100000
-  },
-  "constrained_links": [
-    "uuid",
-    "uuid
+  "context-uuid" : "uuid,
+  "address-owner": "blockchain-peer_address",
+  "status": "INSTANTIATING/DEPLOYED/TERMINATED",
+  "sip-source": "sip_uuid",
+  "sip-destination": "sip_uuid",
+  "internal-links":[
+    "link_uuid",
+    "link_uuid"
   ]
-}
+},
+spectrum = {
+  "lower-frequency": 191700000,
+  "upper-frequency": 106100000
+},
+capacity = {
+  "value": 75,
+  "unit": "GHz"
+},
 Generated CS request
 {
-  "tapi-connectivity:input": {
-    "connectivity-constraint": {
-      "connectivity-direction": "UNIDIRECTIONAL",
-      "requested-capacity": {
-        "total-size": {
-          "unit": "GHz",
-          "value": 50
-        }
-      }
-    },
-    "end-point": [
-      {
-        "layer-protocol-name": "PHOTONIC_MEDIA",
-        "layer-protocol-qualifier": "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC",
-        "local-id": "291796d9-a492-5837-9ccb-24389339d18a",
-        "protection-role": "WORK",
-        "role": "UNKNOWN",
-        "service-interface-point": {
-          "service-interface-point-uuid": "291796d9-a492-5837-9ccb-24389339d18a"
+  "tapi-connectivity:connectivity-service": [
+    {
+      "uuid": "650a02db-4bf2-4ff0-a477-a589fca170a2",
+      "connectivity-constraint": {
+        "requested-capacity": {
+          "total-size": {
+            "value": 50,
+            "unit": "GHz"
+          }
         },
-        "tapi-photonic-media:media-channel-connectivity-service-end-point-spec": {
-          "mc-config": {
-            "spectrum": {
-              "frequency-constraint": {
-                "adjustment-granularity": "G_6_25GHZ",
-                "grid-type": "FLEX"
-              },
-              "lower-frequency": 193275000,
-              "upper-frequency": 193325000
+        "connectivity-direction": "UNIDIRECTIONAL"
+      },
+      "end-point": [
+        {
+          "service-interface-point": {
+            "service-interface-point-uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"
+          },
+          "layer-protocol-name": "PHOTONIC_MEDIA",
+          "layer-protocol-qualifier": "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC",
+          "local-id": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb",
+          "tapi-photonic-media:media-channel-connectivity-service-end-point-spec": {
+            "mc-config": {
+              "spectrum": {
+                "frequency-constraint": {
+                  "adjustment-granularity": "G_6_25GHZ",
+                  "grid-type": "FLEX"
+                },
+                "lower-frequency": 191775000,
+                "upper-frequency": 191825000
+              }
             }
           }
+        },
+        {
+          "service-interface-point": {
+            "service-interface-point-uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"
+          },
+          "layer-protocol-name": "PHOTONIC_MEDIA",
+          "layer-protocol-qualifier": "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC",
+          "local-id": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"
         }
-      },
-      {
-        "layer-protocol-name": "PHOTONIC_MEDIA",
-        "layer-protocol-qualifier": "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC",
-        "local-id": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac",
-        "protection-role": "WORK",
-        "role": "UNKNOWN",
-        "service-interface-point": {
-          "service-interface-point-uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"
-        }
-      }
-    ]
-  }
+      ],
+      "include-link": [
+          "40de8a74-ab17-5880-aefe-2482b48c4ece",
+          "bec726c9-9d6f-5047-a3f6-47d53a52fcf9",
+          "8ddcc1a9-2286-5486-876e-0c6e2317557a"
+      ]
+    }
+  ]
 }
 """
 # assegurar que el json a enviar és el que comença amb "tapi-connectivity:input"
-def instantiate_connectivity_service(cs_info_json, spectrum,capacity):
+def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
   settings.logger.info("SDN_MAPPER: Arrived a requests to deploy a local CS.")
-  #TODO: once the JSON for the requests i identified, update the code below
   settings.logger.info("SDN_MAPPER: CS information: " + str(cs_info_json) + " / Capacity: " + str(capacity) + "/ Spectrum: " + str(spectrum))
-  """
-  #var with the json to add into the request
-  cs_json = {}
-  tapi_connectivity_cs = {}
-  connectivity_constraint = {}
-  topology_constraint = {}
-  included_links = []
-  req_capacity = {}
-  tapi_connectivity_cs["uuid"] = cs_info_json["uuid"]
-
-  # generating the key_json "connectivity-constraint"  
-  req_capacity["total-size"] = cs_info_json["capacity"]
-  connectivity_constraint["requested-capacity"] = req_capacity
-  connectivity_constraint["connectivity-direction"] = "UNIDIRECTIONAL"
-  tapi_connectivity_cs["connectivity-constraint"] = connectivity_constraint
-
-  # generating the key_json "topology-constraint"
-  for link_item in cs_info_json["constrained_links"]:
-    included_links.append(link_item)
-  topology_constraint["inslude-link"] = included_links
-  tapi_connectivity_cs["topology-constraint"] = topology_constraint
-
-  # generating the key_json "end-point"
-  endpoint_list = []
-  for sip_item in cs_info_json["sips"]:
-      endpoint_item = {}
-      sip = {}
-      freq_constraint = {}
-      spectrum = {}
-      mc_config = {}
-      
-      endpoint_item["layer-protocol-name"] = "PHOTONIC_MEDIA"
-      endpoint_item["layer-protocol-qualifier"] = "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
-      endpoint_item["local-id"] = sip_item
-      endpoint_item["protection-role"] = "WORK"      #NOTE: ask if is is still used
-      endpoint_item["role"] = "UNKNOWN"              #NOTE: ask if is is still used
-
-      sip["service-interface-point-uuid"] = sip_item
-      endpoint_item["service-interface-point"] = sip
-
-      freq_constraint["adjustment-granularity"] = "G_75GHZ"        #NOTE: inform OLS owner about this granularity
-      freq_constraint["grid-type"] = "FLEX"
-      spectrum["frequency-constraint"] = freq_constraint
-      spectrum["lower-frequency"] = cs_info_json["spectrum_slot"]["low-freq"]
-      spectrum["upper-frequency"] = cs_info_json["spectrum_slot"]["high-freq"]
-      mc_config["spectrum"] = spectrum
-      endpoint_item["tapi-photonic-media:media-channel-connectivity-service-end-point-spec"] = mc_config
-
-      endpoint_list.append(endpoint_item)
-  cs_json["end-point"] = endpoint_list
   
-  # all data is in the json
-  cs_json["tapi-connectivity:input"] = tapi_connectivity_cs
+  # JSON creation for the request.
+  request_json = {}
+  tapi_cs_list = []
+  cs_json = {}
+  con_constraint = {}
+  req_capacity = {}
+  endpoint = []
+
+  cs_json["uuid"] = cs_info_json["uuid"]
+
+  total_size = capacity
+  req_capacity["total-size"] = total_size
+  con_constraint["requested-capacity"] = req_capacity
+  con_constraint["connectivity-direction"] = "UNIDIRECTIONAL"
+  cs_json["connectivity-constraint"] = con_constraint
+
+  endpoint_item = {}
+  sip_uuid = {}
+  sip_uuid["service-interface-point-uuid"] = cs_info_json["sip-source"]
+  endpoint_item["service-interface-point"] = sip_uuid
+  endpoint_item["layer-protocol-name"]  = "PHOTONIC_MEDIA"
+  endpoint_item["layer-protocol-qualifier"] = "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+  endpoint_item["local-id"] = cs_info_json["sip-source"]
+  freq_const = {}
+  freq_const["adjustment-granularity"] = "G_6_25GHZ"
+  freq_const["grid-type"] = "FLEX"
+  spec = {}
+  spec["frequency-constraint"] = freq_const
+  spec["lower-frequency"] = spectrum["lower-frequency"]
+  spec["upper-frequency"] = spectrum["upper-frequency"]
+  mc_config = {}
+  mc_config["spectrum"] = spec
+  tpmmccsps = {}
+  tpmmccsps["mc-config"] = mc_config
+  endpoint_item["tapi-photonic-media:media-channel-connectivity-service-end-point-spec"] = tpmmccsps
+  endpoint.append(endpoint_item)
+
+  endpoint_item = {}
+  sip_uuid = {}
+  sip_uuid["service-interface-point-uuid"] = cs_info_json["sip-destination"]
+  endpoint_item["service-interface-point"] = sip_uuid
+  endpoint_item["layer-protocol-name"]  ="PHOTONIC_MEDIA"
+  endpoint_item["layer-protocol-qualifier"] = "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+  endpoint_item["local-id"] = cs_info_json["sip-destination"]
+  endpoint.append(endpoint_item)
+  cs_json["end-point"] = endpoint
+
+  if os.environ.get("ABSTRACION_MODEL") == "transparent":
+    cs_json["include-link"] = cs_info_json["internal-links"]
+  else:
+    cs_json["include-link"] = []
+
+  tapi_cs_list.append(cs_json)
+  request_json["tapi-connectivity:connectivity-service"] = tapi_cs_list
+   
 
   # sending request
   #url = "http://10.1.7.80:8182/restconf/config/context/connectivity-service/6e0abcf9-037c-4b0a-b444-fe37a09f46ea/"
   #data_dumps = '{"uuid":"6e0abcf9-037c-4b0a-b444-fe37a09f46ea","end-point":[{"service-interface-point":{"service-interface-point-uuid":"fdd57f63-cc36-5a75-97f8-6968c1a39cac"},"layer-protocol-name":"DSR","layer-protocol-qualifier":"tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"},{"service-interface-point":{"service-interface-point-uuid":"ff6fefd6-25c3-556a-8337-edda612bfbd6"},"layer-protocol-name":"DSR","layer-protocol-qualifier":"tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"}],"connectivity-constraint":{"connectivity-direction":"UNIDIRECTIONAL","requested-capacity":{"total-size":{"value":5,"unit":"GBPS"}}}}'
   url = get_nsm_url() + "/restconf/data/tapi-common:context/tapi-connectivity:connectivity-context"
-  data_dumps = json.dumps(cs_json)
+  data_dumps = json.dumps(request_json)
   response = requests.post(url, headers=JSON_CONTENT_HEADER, data=data_dumps)
-  """
-  """
+
+  
   if response.status_code == 200:
-      #return_json = {}
-      #return_json['instance_id'] = "6e0abcf9-037c-4b0a-b444-fe37a09f46ea"
-      return_json['status'] = "READY"
+    cs_info_json["status"] = "DEPLOYED"
+    return cs_info_json, 200
   else:
-      return response.text, response.status_code
-  """
-  #return response.text, response.status_code
-  #return_json = {}
-  #return_json['instance_id'] = cs_info_json["uuid"] instance???
-  cs_info_json["status"] = "DEPLOYED"
-  return cs_info_json, 200
+
+    return {"msg": "ERROR requesting CS to the SDN Controller."}, response.status_code
+
+
 
 #TODO: sends request to terminate a connectivity service
-def terminate_connectivity_service():
+def terminate_connectivity_service(cs_uuid):
     #url = get_nsm_url() #TODO: check the API
     #response = requests.get(url, headers=JSON_CONTENT_HEADER)
     #return response.text, response.status_code

@@ -339,9 +339,8 @@ Example E2E_CS data object
       "lower-frequency": 191850000
     },
     "route-nodes":[
-      "node_uuid",
-      "node_uuid",
-      "node_uuid
+        {context_uuid, node_uuid, nep_uuid, sip_uuid},
+        {context_uuid, node_uuid, nep_uuid, sip_uuid}
     ]
     "domain-cs":[
       {
@@ -430,6 +429,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         sips_route = response_sip_mapped[0]
         spectrums_available = response_sip_mapped[1]
         internal_links_route = response_sip_mapped[2]
+        complete_route_nodes = response_sip_mapped[3]
         settings.logger.debug("sips_route: "+str(sips_route))
         settings.logger.debug("spectrums_available: "+str(spectrums_available))
         settings.logger.debug("internal_links_route: "+str(internal_links_route))
@@ -454,7 +454,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             settings.logger.info("No spectrum continuity. Looking for the next route.")
             continue
         else:
-            selected_route = route_item
+            selected_route = complete_route_nodes
             break
     
     # if no route is found, returns to inform
@@ -709,7 +709,220 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     settings.logger.info("ORCH: E2E CS request processed.")
     settings.logger.info("e2e_cs_json: " + str(e2e_cs_json))
     
-    return e2e_cs_json,200
+    #return e2e_cs_json,200
+
+# manages the termination of an E2E CS
+#TODO: pensar com gestionar els returns tant d'aqui com de l'instantiate per quan es faci el test amb l'script de poisson.
+def terminate_e2e_connectivity_service(cs_uuid):
+    settings.logger.info("ORCH: Received E2E request info to terminate CS. Let's process it.")   
+    # gets the e2e CS to terminate
+    e2e_cs_json = db.get_element(cs_uuid, "e2e_cs")
+                
+    # distribuïm domain CSs requests
+    settings.logger.debug("cs_list: " + str(e2e_cs_json["domain-cs"]))
+    for cs_item in e2e_cs_json["domain-cs"]:
+        # decide whether the CS is for the local domain SDN controller or another domain
+        if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
+            settings.logger.debug("Sending domain CS request to the local SDN controller.")
+            response = sdn_mapper.terminate_connectivity_service(cs_item["uuid"])
+            if response[1] == 200 and response[0]["status"] == "TERMINATED":
+                #TODO: update local domain CS information
+                mutex_local_csdb_access.acquire()
+                #update here
+                cs_info = {}
+                cs_info["uuid"] = cs_item["uuid"]
+                cs_info["status"] = "TERMINATED"
+                db.update_cs(cs_info)
+                mutex_local_csdb_access.release()
+                
+                # saves the reference domain CS information in the E2E CS data object.
+                mutex_e2e_csdb_access.acquire()
+                e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+                for domain_cs_item in e2e_cs["domain-cs"]:
+                    if domain_cs_item["uuid"] == cs_item["uuid"]:
+                        domain_cs_item["status"] = "TERMINATED"
+                        break
+                db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+                mutex_e2e_csdb_access.release()
+            else:
+                #TODO: manage this error
+                settings.logger.error("ERROR requesting local domain CS.")
+                return e2e_cs_json,400
+        else:
+            response = bl_mapper.terminate_blockchain_cs(cs_item["uuid"], cs_item["address-owner"])
+    
+    # deployment management to validate all domain CSs composing the E2E CS are READY
+    settings.logger.debug("Waiting all the domains CS from other domains to be terminated.")
+    e2e_cs_terminated = False
+    while  e2e_cs_terminated == False:
+        e2e_cs_terminated = True
+        mutex_e2e_csdb_access.acquire()
+        e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+        for domainCS_item in e2e_cs["domain-cs"]:
+            if domainCS_item["status"] != "TERMINATED":
+                e2e_cs_terminated = False
+                break
+        mutex_e2e_csdb_access.release()
+        time.sleep(10)  # awaits 10 seconds before it checks again
+
+    
+    # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
+    response = bl_mapper.get_e2etopology_from_blockchain()
+    e2e_topology_json = response[0]
+    if e2e_topology_json == "empty":
+        return {"msg":"There is no e2e_topology to work with."}
+    else:
+        # prepares the intedomain-links to compare the existing with the new ones in the IDL json
+        for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
+            linkoptions_list = []
+            for linkoption_uuid_item in idl_item["link-options"]:
+                response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
+                linkoptions_list.append(response[0])
+            idl_item["link-options"] = linkoptions_list
+    
+    settings.logger.debug("Updating data objects in DDBBs.")
+    # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
+    #settings.logger.debug("Updating available spectrums in the internal NEPs of each SDN Context and the IDLs.")
+    for idx, route_item in enumerate(e2e_cs_json["route-nodes"]):
+        if route_item["sip_uuid"] == "":
+            settings.logger.debug("Internal NEP: updating the NEP info.")
+            # updates the internal NEPsinformation
+            # gets the nep info
+            requested_uuid = route_item["context_uuid"]+":"+route_item["node_uuid"]+":"+route_item["nep_uuid"]
+            requested_nep = bl_mapper.get_nep(requested_uuid)
+            
+            # modifies the occupied-spectrum key
+            spec_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
+
+            for spec_idx, spectrum_item in enumerate(spec_list):
+                if spectrum_item["lower-frequency"] == e2e_cs_json["spectrumm"]["lower-frequency"] and spectrum_item["upper-frequency"] == e2e_cs_json["spectrum"]["upper-frequency"]:
+                    found_index = spec_idx
+                    break
+            
+            # removes the occupied slot
+            del spec_list[found_index]
+
+            requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = spec_list
+            # modifies the value in the available-spectrum key in the nep info
+
+            occupied_slots = []
+            available_slots = []
+            # there only a single element in the "supportable-spectrum" block info.
+            low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
+            up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
+            supportable_range = []
+            supportable_range.append(low_suportable)
+            supportable_range.append(up_suportable)
+            occupied_spectrum = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
+            if occupied_spectrum != []:
+                for spectrum_item in occupied_spectrum:
+                    occupied_slots.append([spectrum_item["lower-frequency"],spectrum_item["upper-frequency"]])
+            if occupied_slots != []:
+                available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
+                available_slots_json = []
+                for slot_item in available_slots:
+                    #append pair of available frequency slots to the list
+                    freq_const = {}
+                    freq_const["adjustment-granularity"] = "G_6_25GHZ"
+                    freq_const["grid-type"] = "FLEX"
+                    new_available_item = {}
+                    new_available_item["frequency-constraint"] =  freq_const
+                    new_available_item["lower-frequency"] = slot_item[0]
+                    new_available_item["upper-frequency"] = slot_item[1]
+                    available_slots_json.append(new_available_item)
+                requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
+            else:
+                # if no occupied slots, then available equals supportable
+                av_spec = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]
+                requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = av_spec
+            
+            # sends the new info to the BL
+            response_update = bl_mapper.update_nep(requested_uuid, requested_nep)
+            if response_update[1]!= 200:
+                settings.logger.error("Error when saving updated data object.")
+                pass
+        else:
+            if idx < (len(e2e_cs_json["route-nodes"])-1):
+                #These NEPs are update in the IDL files and later in their corresponding SIPs in the SDN contexts.
+                settings.logger.debug("NEP belonging to an IDL.")
+                # composes the uuids based on the asbtraction model is being used.
+                if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
+                    node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
+                    node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["node_uuid"]
+                else:
+                    node_involved_1 = route_item["context_uuid"]+":"+route_item["context_uuid"]
+                    node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["context_uuid"]
+                
+                # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
+                occupied_slots = []
+                for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
+                    spectrum_removed = False
+                    if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
+                        for link_option_item in idl_item["link-options"]:
+                            if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
+                                for physical_option_item in link_option_item["physical-options"]:
+                                    # IDL physical-option being used found
+                                    if physical_option_item["node-edge-point"][0]["nep-uuid"] == route_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == route_item[idx+1]["nep_uuid"]:
+                                        physical_option_item["occupied-spectrum"] = []
+                                        spectrum_removed = True
+                                    # the other occupied spectrums are added (if there are) to calculate the IDL available spectrum
+                                    if physical_option_item["occupied-spectrum"] != []:
+                                        low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
+                                        up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
+                                        occupied_slots.append([low_freq,up_freq])
+                            if spectrum_removed and occupied_slots!=[]:
+                                low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
+                                up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
+                                supportable_slot = [low_suportable, up_suportable]
+                                available_slots = vl_computation.available_spectrum(supportable_slot, occupied_slots)
+                                available_slots_json = []
+                                for slot_item in available_slots:
+                                    #append pair of available frequency slots to the list
+                                    freq_const = {}
+                                    freq_const["adjustment-granularity"] = "G_6_25GHZ"
+                                    freq_const["grid-type"] = "FLEX"
+                                    new_available_item = {}
+                                    new_available_item["frequency-constraint"] =  freq_const
+                                    new_available_item["lower-frequency"] = slot_item[0]
+                                    new_available_item["upper-frequency"] = slot_item[1]
+                                    available_slots_json.append(new_available_item)
+                                link_option_item["available-spectrum"] = available_slots_json
+                                break
+                            else:
+                                link_option_item["available-spectrum"] = link_option_item["supportable-spectrum"]
+                    if spectrum_removed:
+                        settings.logger.debug("Saving and distributing the updated link-option info.")
+                        settings.logger.debug("link_option_item: " + str(link_option_item))
+                        response = bl_mapper.update_link_option(link_option_item)
+                        break   
+
+    
+            # update the spectrum information for each SIP used in the route
+            #settings.logger.debug("Updating available spectrums in the SIPs of each SDN Context.")
+            # gets the sip element from the BL
+            sip_uuid = route_item["context_uuid"] + ":" + route_item["sip_uuid"]
+            response = bl_mapper.get_sip(sip_uuid)
+            sip_json = response["sip_info"]
+            settings.logger.debug("SIP to udpate: " + str(sip_json))
+
+            # empties the occupied spectrum info
+            sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"] = []
+
+            # no CS means available spectrum euqal to the supportable
+            sup_spectrum = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"]
+            sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"] = sup_spectrum
+            response = bl_mapper.update_sip(sip_uuid, sip_json)  
+
+    # saves the e2e_cs data object to confirm full deployment.
+    e2e_cs_json["status"]  = "TERMINATED"
+    mutex_e2e_csdb_access.acquire()
+    db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
+    mutex_e2e_csdb_access.release()
+    settings.logger.info("ORCH: E2E CS request processed.")
+    settings.logger.info("e2e_cs_json: " + str(e2e_cs_json))
+    
+    #return e2e_cs_json,200
+    return 200
 
 ################################### E2E NETWORK SLICE INSTANCES FUNCTIONS #######################################
 # NOTE: returns all the e2e slice instances (E2E NSI)
