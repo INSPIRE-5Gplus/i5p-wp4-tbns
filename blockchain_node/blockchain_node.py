@@ -214,7 +214,6 @@ def update_link_option(linkoption_json):
 # distributes the domain SDN context with the other peers
 def context_to_blockchain(context_json):
     settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes local SDN context information with Blockchain peers.')
-    print(str(context_json))
     id_string = context_json["id"]
     name_context = context_json["name_context"]
     nw_topo_serv = context_json["nw_topo_serv"]
@@ -224,41 +223,45 @@ def context_to_blockchain(context_json):
     link_uuid_list = []
     
     # Distributes the sips in the SDN context.
-    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributing SIPs.') 
+    counter_sip = 0
     for sip_item in json.loads(context_json["sip"]):
         bl_sip_uuid = context_json["id"]+":"+sip_item["uuid"]
         settings.logger.debug(' SIP_uuid: ' + str(bl_sip_uuid)) 
         sip_string = json.dumps(sip_item)
         tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, sip_string).transact()
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-        
         sip_uuid_list.append(sip_item["uuid"])
+        counter_sip = counter_sip + 1
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributed SIPs. Total number: ' + str(counter_sip))
     
     # Distributes the nodes and their NEPs in the SDN context.
-    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributing Nodes.')
     node_topo = json.loads(context_json["node_topo"])
+    counter_node = 0
     for node_item in node_topo:
         # distribution of NEPS for each node
         neps_uuid_list = []
+        counter_nep = 0
         for nep_item in node_item["owned-node-edge-point"]:
             bl_nep_uuid = context_json["id"]+":"+node_item["uuid"]+":"+nep_item["uuid"]
             nep_string = json.dumps(nep_item)
-            settings.logger.debug(' NEP_uuid: ' + str(bl_nep_uuid))
             tx_hash = settings.transport_contract.functions.addNep(bl_nep_uuid, nep_string).transact()
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
             neps_uuid_list.append(nep_item["uuid"])
+            counter_nep = counter_nep + 1
+        settings.logger.debug('BLOCKCHAIN_MAPPER: Distributed NEPs. Total number: ' + str(counter_nep))
 
-        bl_node_uuid = context_json["id"]+":"+node_item["uuid"]   
-        settings.logger.debug(' NODE_uuid: ' + str(bl_node_uuid))     
+        bl_node_uuid = context_json["id"]+":"+node_item["uuid"]     
         tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item["name"]), json.dumps(neps_uuid_list)).transact()
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
         node_uuid_list.append(node_item["uuid"])
+        counter_node = counter_node + 1
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributed Nodes. Total number: ' + str(counter_node))
     
     # Distributes the links in the SDN context if there are.
     if json.loads(context_json["link_topo"]) == []:
         settings.logger.debug('BLOCKCHAIN_MAPPER: There are NO Links to distribute.')
     else:
-        settings.logger.debug('BLOCKCHAIN_MAPPER: Distributing Links.')
+        counter_link = 0
         for link_item in json.loads(context_json["link_topo"]):
             bl_link_uuid = context_json["id"]+":"+link_item["uuid"]
             settings.logger.debug('Link_uuid: ' +str(bl_link_uuid))
@@ -267,6 +270,8 @@ def context_to_blockchain(context_json):
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
             
             link_uuid_list.append(link_item["uuid"])
+            counter_link = counter_link + 1
+        settings.logger.debug('BLOCKCHAIN_MAPPER: Distributed Links. Total number: ' + str(counter_link))
     
     # Add a connectivity service template to make it available for other domains
     settings.logger.debug('BLOCKCHAIN_MAPPER: Triggering transaction for new context.')
