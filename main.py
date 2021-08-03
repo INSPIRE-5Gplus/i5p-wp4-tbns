@@ -488,8 +488,8 @@ def get_e2e_cs(cs_uuid):
 
 # TODO: terminate E2E CS
 @app.route('/pdl-transport/connectivity_service/terminate/<cs_uuid>', methods=['POST'])
-def request_e2e_cs(cs_uuid):
-  settings.logger.info('Received E2E CS deployment request.')
+def request_terminate_e2e_cs(cs_uuid):
+  settings.logger.info('Received E2E CS terminate request.')
   settings.executor.submit(orch.terminate_e2e_connectivity_service, cs_uuid)
   response = {}
   response['log'] = "Request accepted, terminating the E2E CS with id: ." + str(cs_uuid)
