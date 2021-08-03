@@ -79,10 +79,18 @@ def handle_transport_event(event):
         event_json["cs_info"] = json.loads(event['args']['sdn_info'])
         event_json["status"] = event['args']['status']
         settings.executor.submit(orch.update_connectivity_service_from_blockchain, event_json)
-    elif (event['args']['status'] == "REMOVE" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
-        pass
-    elif (event['args']['status'] == "REMOVED" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
-        pass
+    elif (event['args']['status'] == "TERMINATING" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
+        settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO TERMINATE A CS")
+        event_json["owner"] = json.loads(event['args']['owner'])
+        event_json["uuid"] = json.loads(event['args']['id'])
+        event_json["status"] = json.loads(event['args']['status'])
+        settings.executor.submit(orch.terminate_local_connectivity_service, event_json)
+    elif (event['args']['status'] == "TERMINATED" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
+        settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO UPDATE A TERMINATED CS")
+        event_json["owner"] = json.loads(event['args']['owner'])
+        event_json["uuid"] = json.loads(event['args']['id'])
+        event_json["status"] = json.loads(event['args']['status'])
+        settings.executor.submit(orch.update_terminate_from_blockchain, event_json)
     elif (event['args']['status'] == "ERROR"):
         print("An error has occurred in another domain!!")
     else:

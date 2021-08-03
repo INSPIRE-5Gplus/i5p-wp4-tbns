@@ -298,6 +298,37 @@ def update_connectivity_service_from_blockchain(event_json):
             break
     mutex_e2e_csdb_access.release()
 
+# manages a local connectivity service configuration process
+def terminate_local_connectivity_service(event_json):
+    settings.logger.info("ORCH: Received request to terminate a local CS: " +str(event_json["uuid"]))
+    response = sdn_mapper.terminate_connectivity_service(str(event_json["uuid"]))
+    if response[1] == 200:
+        event_json['status'] = response[0]["status"] # must be TERMINATED
+        mutex_local_csdb_access.acquire()
+        db.update_cs(event_json)
+        mutex_local_csdb_access.release()
+    else:
+        settings.logger.error("ERROR terminating local domain CS.")
+        event_json['status'] = "ERROR"
+    
+    response = bl_mapper.update_blockchain_terminate_cs(event_json)
+
+# updates a CS information belonging to another domain (Blockchain)
+def update_terminate_from_blockchain(event_json):
+    settings.logger.info("ORCH: Updating connectivity services information from another domain.")
+    mutex_e2e_csdb_access.acquire()
+    e2e_cs_list = db.get_elements("e2e_cs")
+    for e2e_cs_item in e2e_cs_list:
+        for domain_cs_item in e2e_cs_item["domain-cs"]:
+            if domain_cs_item["uuid"] == event_json["id"]:
+                domain_cs_item["status"] = event_json["status"]
+                db.update_db(e2e_cs_item["uuid"], e2e_cs_item, "e2e_cs")
+                found_cs = True
+                break
+        if found_cs == True:
+            break
+    mutex_e2e_csdb_access.release()
+
 """
 Example E2E_CS request 
     {
@@ -749,7 +780,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 settings.logger.error("ERROR requesting local domain CS.")
                 return e2e_cs_json,400
         else:
-            response = bl_mapper.terminate_blockchain_cs(cs_item["uuid"], cs_item["address-owner"])
+            response = bl_mapper.terminate_blockchain_cs(cs_item["address-owner"], cs_item["uuid"])
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
     settings.logger.debug("Waiting all the domains CS from other domains to be terminated.")

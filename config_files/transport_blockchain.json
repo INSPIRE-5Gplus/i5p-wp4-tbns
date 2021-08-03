@@ -1,5 +1,5 @@
 {
-    "contract_address":"0xbD9B3c22E88b5C91D960b3ECDCd93eA2E7975b01",
+    "contract_address":"0x484E7b4e76876460299854C12232F923717a230E",
     "abi":[
         {
             "anonymous": false,
@@ -976,6 +976,30 @@
         {
             "inputs": [
                 {
+                    "internalType": "address",
+                    "name": "_contextOwner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
+            "name": "terminateConnectivityService",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
                     "internalType": "string",
                     "name": "_id",
                     "type": "string"
@@ -1108,6 +1132,30 @@
                 }
             ],
             "name": "updateSip",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_status",
+                    "type": "string"
+                }
+            ],
+            "name": "updateTerminatedConnectivityService",
             "outputs": [
                 {
                     "internalType": "bool",

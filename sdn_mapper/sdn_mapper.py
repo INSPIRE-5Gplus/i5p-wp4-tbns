@@ -128,7 +128,6 @@ Generated CS request
 def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
   settings.logger.info("SDN_MAPPER: Arrived a requests to deploy a local CS.")
   settings.logger.info("SDN_MAPPER: CS information: " + str(cs_info_json) + " / Capacity: " + str(capacity) + "/ Spectrum: " + str(spectrum))
-  
   # JSON creation for the request.
   request_json = {}
   tapi_cs_list = []
@@ -183,28 +182,42 @@ def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
 
   tapi_cs_list.append(cs_json)
   request_json["tapi-connectivity:connectivity-service"] = tapi_cs_list
-   
 
+  print(str(request_json))
+   
+  """
   # sending request
-  #url = "http://10.1.7.80:8182/restconf/config/context/connectivity-service/6e0abcf9-037c-4b0a-b444-fe37a09f46ea/"
-  #data_dumps = '{"uuid":"6e0abcf9-037c-4b0a-b444-fe37a09f46ea","end-point":[{"service-interface-point":{"service-interface-point-uuid":"fdd57f63-cc36-5a75-97f8-6968c1a39cac"},"layer-protocol-name":"DSR","layer-protocol-qualifier":"tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"},{"service-interface-point":{"service-interface-point-uuid":"ff6fefd6-25c3-556a-8337-edda612bfbd6"},"layer-protocol-name":"DSR","layer-protocol-qualifier":"tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"}],"connectivity-constraint":{"connectivity-direction":"UNIDIRECTIONAL","requested-capacity":{"total-size":{"value":5,"unit":"GBPS"}}}}'
   url = get_nsm_url() + "/restconf/data/tapi-common:context/tapi-connectivity:connectivity-context"
   data_dumps = json.dumps(request_json)
   response = requests.post(url, headers=JSON_CONTENT_HEADER, data=data_dumps)
+  settings.logger.info("SDN_MAPPER: CS deployment request:")
 
   
-  if response.status_code == 200:
+  if response.status_code == 201:
     cs_info_json["status"] = "DEPLOYED"
     return cs_info_json, 200
   else:
-
     return {"msg": "ERROR requesting CS to the SDN Controller."}, response.status_code
+  """
+  cs_info_json["status"] = "DEPLOYED"
+  return cs_info_json, 200
 
-
-
-#TODO: sends request to terminate a connectivity service
+# sends request to terminate a connectivity service
 def terminate_connectivity_service(cs_uuid):
-    #url = get_nsm_url() #TODO: check the API
-    #response = requests.get(url, headers=JSON_CONTENT_HEADER)
-    #return response.text, response.status_code
-    pass
+  settings.logger.info("SDN_MAPPER: Arrived a requests to terminate a local CS: " + str(cs_uuid))
+  """
+  # sending request
+  url = get_nsm_url() + "restconf/data/tapi-common:context/tapi-connectivity:connectivity-context/connectivity-service="+str(cs_uuid)
+  response = requests.delete(url)
+  settings.logger.info("SDN_MAPPER: CS deployment request:")
+
+  if response.status_code == 204:
+    cs_info_json = {}
+    cs_info_json["status"] = "TERMINATED"
+    return cs_info_json, 200
+  else:
+    return {"msg": "ERROR requesting CS to the SDN Controller."}, response.status_code
+  """
+  cs_info_json = {}
+  cs_info_json["status"] = "TERMINATED"
+  return cs_info_json, 200

@@ -439,11 +439,7 @@ def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     
     return deployment_response, 200
 
-# TODO: requests the termination of a CS between domains
-def terminate_blockchain_cs(cs_ref, address):
-    pass
-
-# NOTE: requests to update a connectivity service element in the Blockchain
+# requests to update a connectivity service element in the Blockchain
 def update_blockchain_cs(cs_json):
     settings.logger.debug('BLOCKCHAIN_MAPPER: Updates connectivity service element within the Blockchain.')
     cs_uuid = cs_json["cs_info"]['uuid']
@@ -451,6 +447,43 @@ def update_blockchain_cs(cs_json):
     cs_status = cs_json["cs_info"]['status']
     # distribute the updated domain CS information
     tx_hash = settings.transport_contract.functions.updateConnectivityService(cs_uuid, cs_string, cs_status).transact()
+    # Wait for transaction to be mined and check it's in the blockchain (get)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    
+    #listen the event associated to the transaction receipt
+    rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
+
+    deployment_response = {}
+    deployment_response["log"] = rich_logs[0]['args']['log']
+    deployment_response["status"] = rich_logs[0]['args']['status']
+    return deployment_response, 200
+
+# requests the termination of a CS between domains
+def terminate_blockchain_cs(address, cs_ref):
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes request to terminate connectivity service in the Blockchain')
+    
+    # instantiate slice-subnet
+    tx_hash = settings.transport_contract.functions.terminateConnectivityService(address, cs_ref).transact()
+    # Wait for transaction to be added and check it's in the blockchain (get)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    
+    #listen the event associated to the transaction receipt
+    rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
+    
+    #create json to send back to the user the initial instantiation request info.
+    deployment_response = {}
+    deployment_response["log"] = rich_logs[0]['args']['log']
+    deployment_response["status"] = rich_logs[0]['args']['status']
+    
+    return deployment_response, 200
+
+# requests to update a connectivity service element in the Blockchain
+def update_blockchain_terminate_cs(cs_json):
+    settings.logger.debug('BLOCKCHAIN_MAPPER: Updates connectivity service element within the Blockchain.')
+    cs_uuid = cs_json['uuid']
+    cs_status = cs_json['status']
+    # distribute the updated domain CS information
+    tx_hash = settings.transport_contract.functions.updateTerminatedConnectivityService(cs_uuid, cs_status).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
