@@ -14,6 +14,7 @@ def init_logging():
     # Create a custom logger
     logger = logging.getLogger('PDL-Slicing/Transport')
     logger.setLevel(logging.DEBUG)
+    
 
     # Create handlers
     c_handler = logging.StreamHandler()
