@@ -106,11 +106,18 @@ def idl_to_bl(idl_json):
             e2e_nodes_list.append(node_item)
         e2e_topo["nodes-list"] = e2e_nodes_list
         
-        
+        # decomposing the IDLs info to not surpass the characters limit/transaction (it implies many more transactions)
         for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
             linkoptions_uuid_list = []
             temp_idl_item = {}
             for linkoption_item in idl_item["link-options"]:
+                physicaloptionsuuid_list = []
+                for physicaloption_item in linkoption_item["physical-options"]:
+                    phyopt_uuid = str(uuid.uuid4())
+                    response = bl_mapper.phyoption_to_blockchain(phyopt_uuid, physicaloption_item)
+                    physicaloptionsuuid_list.append(phyopt_uuid)
+                
+                linkoption_item["physical-options"] = physicaloptionsuuid_list
                 linkoptions_uuid_list.append(linkoption_item["uuid"])
                 response = bl_mapper.linkoption_to_blockchain(linkoption_item)
             
@@ -410,8 +417,16 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
+
+                phyoptions_list = []
+                for phyoption_uuid_item in response["physical-options"]:
+                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
+                    phyoptions_list.append(response_phy["phyopt_info"])
+
+                response["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
+    settings.logger.debug("ORCH: e2e_topology_json: " +str(e2e_topology_json))
     
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = str(uuid.uuid4())
@@ -808,6 +823,13 @@ def terminate_e2e_connectivity_service(cs_uuid):
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
+
+                phyoptions_list = []
+                for phyoption_uuid_item in response["physical-options"]:
+                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
+                    phyoptions_list.append(response_phy["phyopt_info"])
+
+                response["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
     

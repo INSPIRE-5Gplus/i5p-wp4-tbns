@@ -147,6 +147,20 @@ def linkoption_to_blockchain(linkoption_json):
         
     return msg, 200
 
+# distributes the physical-options to the BL
+def phyoption_to_blockchain(phyopt_uuid, physicaloption_item):
+    id = phyopt_uuid
+    phyopt_info = json.dumps(physicaloption_item)
+    tx_hash = settings.transport_contract.functions.addPhyOption(id, phyopt_info).transact()
+    
+    # Wait for transaction to be mined and check it's in the blockchain (get)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    
+    msg = {}
+    msg["msg"] = "Everything OK"
+        
+    return msg, 200
+
 # returns the number of slice-subnets (NSTs) in the blockchain db
 def get_idl_counter():
     response = settings.transport_contract.functions.getIDLContextCount().call()
@@ -181,6 +195,15 @@ def get_linkOption_from_blockchain(link_option_uuid):
     linkoption_json["physical-options"] = json.loads(response[3])
     linkoption_json["supportable-spectrum"] = json.loads(response[4])
     linkoption_json["available-spectrum"] = json.loads(response[5])
+    return linkoption_json, 200
+
+# returns a link-option belonging to an IDL from blockchain
+def get_physicalOption_from_blockchain(phy_option_uuid):
+    # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
+    response = settings.transport_contract.functions.getLinkOption(phy_option_uuid).call()
+    linkoption_json = {}
+    linkoption_json["uuid"] = phy_option_uuid
+    linkoption_json["phyopt_info"] = json.loads(response[0])
     return linkoption_json, 200
 
 # update e2e_topology in the BL
@@ -226,7 +249,6 @@ def context_to_blockchain(context_json):
     counter_sip = 0
     for sip_item in json.loads(context_json["sip"]):
         bl_sip_uuid = context_json["id"]+":"+sip_item["uuid"]
-        settings.logger.debug(' SIP_uuid: ' + str(bl_sip_uuid)) 
         sip_string = json.dumps(sip_item)
         tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, sip_string).transact()
         tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
@@ -264,7 +286,6 @@ def context_to_blockchain(context_json):
         counter_link = 0
         for link_item in json.loads(context_json["link_topo"]):
             bl_link_uuid = context_json["id"]+":"+link_item["uuid"]
-            settings.logger.debug('Link_uuid: ' +str(bl_link_uuid))
             link_string = json.dumps(link_item)
             tx_hash = settings.transport_contract.functions.addLink(bl_link_uuid, link_string).transact()
             tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
