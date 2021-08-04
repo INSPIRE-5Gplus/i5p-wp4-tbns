@@ -104,6 +104,854 @@
                   ] ,
                   "occupied-spectrum": [
                   ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "0dc07b22-b4fe-5696-a5cc-0380ccfdff45"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f52c26a-3075-56b6-9c7e-baf17b32640d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "027ebff5-c827-5e15-9533-e5deb2982ed3"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f37f02e-4d0c-5370-a8f3-d407ca2f7aa7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "1a0e537a-eb99-56bb-9586-8e1b67d518b3"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6213dd3f-a418-5d9f-bf36-c1a9ef7bdfef"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "677fcac7-1e03-5671-b381-f020d7769c00"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "47d43115-10e4-5ce0-abe9-1f6c6a9fc09d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3926f456-2a80-5d06-9e41-f0478dff704b"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "199833d5-9845-5e6b-908e-909da308fb5e"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "24dca1e3-c7fa-5774-b095-e88b3c002281"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3734175d-fe01-5b7b-8e0c-621fc84486ba"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "7ac7c491-81c5-5b6e-a291-93ddf64f37d1"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "548b359e-07a3-529b-840f-492670f5f369"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cf639687-11a6-520e-9eb6-baa9b3596d07"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f974375d-0373-5d63-a61e-e655cb5b784f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "dedb8ce1-42fd-5144-a760-fb22a2b7fd07"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3e5b926a-ac65-5185-ba77-60b1bf95dc2a"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "782fc541-898f-5c86-8607-b6376fa4fc7c"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64ee9df5-d4bb-54f2-963a-f5dd5374da3d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "529c0628-f351-5365-8716-a11d12ddb7f7"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "37e76ac0-4be6-504d-996c-26ce81284434"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "dd54729c-dea7-554e-be34-8740752af52b"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67bbebae-e8e5-5883-911d-8f8087c85a51"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e6ccb883-b2b7-559b-8b6b-96e32711e201"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5f705cf4-9f91-548b-964e-d7fcf60ca995"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "030155b2-589b-54b1-9865-792c3a4d543a"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "748dcf6b-0406-5ba6-83bb-cccd185e9c7b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e6cf4d95-df4d-5d8f-8772-58c65de7b7ae"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "52713594-9eab-5c84-ab93-1d3ca42b6d5b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "321f0375-bb32-5164-bdb9-93c11affa923"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1b82ae9c-15d4-5d38-9813-187d9b3c337c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "eb2b966f-13e6-5bdb-accd-d1e0a5494246"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "ab2151be-ecb9-5e3b-990a-1787136ba5f4"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cd56d2f8-6b35-5422-a484-29d8d7e82ad6"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3a15931c-edaf-50b2-8443-2b3f63dcbf32"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "a026b98b-96cc-5b08-85b8-387144ede783"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4afc7dd2-7133-573e-aa96-4bc43863be4e"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c03c1def-2b5b-584d-8e9b-be878ec28385"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8aa272bf-194e-5d34-84e8-38b5385946ee"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "1e3447e3-87ed-5a5d-b878-fd075dc2666e"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "40f5c9d6-9149-5e1f-a454-0f63dd61d241"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c9c0ce4b-f336-5ef8-b10d-8712d8fdf769"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "66162919-d4ff-5b81-a909-3bc8579d5398"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "02f2b673-43a3-51bf-ac2b-f545025510d2"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8ca669ca-fd62-5573-a293-f394084c13ba"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "21539f2c-ee65-5132-85d9-d9c8fced5dc7"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "619bf512-3a73-588d-81a6-c970ed407398"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "7158b63a-3f28-531d-8200-c95ea91493ff"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9845434c-3c8f-5283-a083-7bb01cdf09c3"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "ccb5fa78-8223-5aca-a64e-6851d1161d0d"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6aeff602-13f8-5571-b135-f53224a5a67b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bd7cf81e-4c6c-5a29-a0f2-c933511dd4a1"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0b8a4985-c64a-5b68-abad-0dc77375d9c7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bb203a33-3df1-5142-81e0-ec8b289c64cf"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid":  "7b655b55-f204-56b4-af91-b422fabc91ec"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "b7b6b9a6-76cc-5f46-b970-f27119b7f2ea"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a6f43377-411a-5a14-ab98-b073d014139f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c8067dd5-4cef-5110-845f-d4b12a3bba3a"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f4383a58-4866-55a4-8c20-3d3c29be78f8"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "a157167b-9f79-5d83-8410-b3166fddb1fc"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64085aac-6515-5bbc-ae21-349215749159"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c047ef47-b410-5a4c-8d22-506d532395f6"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f9b8e8bd-185a-5d4d-808b-f9b35980354c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "54758d8d-03f4-5b72-908b-6b4afcc18143"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "db55f3e8-1fa0-5450-a474-38b85946e832"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "02ab2fb8-e389-5507-b031-b162add67e86"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38393cca-95ea-580e-ad6e-a7f97071ea3f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "d3152389-7b38-5ad3-a2a6-875871de89cf"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a3e63fa-d715-516a-8737-ccc020749256"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "83f7dbe8-602e-5f46-8521-3699dd658926"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a6795c0-90d3-562a-b279-dc30b8fb10b5"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "6fa659fd-7379-5e98-bf2c-2907f398ac1f"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0ba618f3-8df9-583b-bacb-56921fd45640"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cb8a523e-47dc-551e-b669-f94ed66bab88"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a1710c4e-7028-56bc-b06a-ae85e19792e0"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "aa4e3304-0fcf-57f1-95b8-94250a9bba29"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b82bd63-3dc6-5512-8193-9691a6f2587f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "dbd18647-308c-5c45-baf1-749f90295a1a"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "791b7e1d-1e39-5bcd-a17c-48b48c513ed6"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3436fe79-5cd2-53f0-88d4-52f47e170d36"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38ba3037-c082-52b9-a4c3-70115ee3cca5"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "01e09178-4f03-541f-98c0-0c06bb5f9b75"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "be448c94-1947-5657-891e-11169d5a1325"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "2e697614-3baf-5674-9c2b-873a175e9835"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "d2fe8c11-71c4-5809-9d99-196e54f46a52"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e9ec8e79-27c3-5af6-94a3-68fa2fb0340f"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid":  "67fc1916-2e55-5b4c-972f-318021714a3f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3d0192d4-2193-5908-8d7d-ef45788d6086"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "949a95c9-c4c9-51ba-a3f6-05c438798330"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bc48723c-1cc1-507e-8f2c-506a7667899b"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5d253f0e-872e-5b4f-bdb5-530768611f9f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "eab52bbf-fef3-5718-96d3-7ce33d0a64df"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "46425940-6fdd-5b14-a1db-287d7650362d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "75589c24-0b00-555d-bedd-c65a8124370c"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f46b7ec5-493b-5a38-aecb-f1b721f7f261"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "d11ab760-54e1-5a71-bb07-167f85367e87"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6d5dddb2-ae4a-5d29-bb7e-a8c18e71e076"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3d1d63ed-18ff-5217-8d9b-9fc11563c0e1"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "771f3a61-565d-5002-b1d0-861f42891b3d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e785cbca-5c97-5f0c-abde-efb1be4978bc"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f06dfbbe-79ba-529f-8a6f-830de38840cc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "965aefd2-5743-5612-9dec-46257dc752eb"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "00fca81c-08cf-5452-86c1-cf75b0526adc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cffabbd3-6c31-5f67-bb85-728c8a28b7ce"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "817a8bae-45a0-5560-8fe2-8bb0407bc4bb"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
                 }
               ],
               "supportable-spectrum": [
@@ -213,6 +1061,854 @@
                       "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
                       "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
                       "nep-uuid": "4e1e89bc-0289-5e62-95d0-6c3b237f6822"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f52c26a-3075-56b6-9c7e-baf17b32640d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "0dc07b22-b4fe-5696-a5cc-0380ccfdff45"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f37f02e-4d0c-5370-a8f3-d407ca2f7aa7"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "027ebff5-c827-5e15-9533-e5deb2982ed3"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6213dd3f-a418-5d9f-bf36-c1a9ef7bdfef"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "1a0e537a-eb99-56bb-9586-8e1b67d518b3"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "47d43115-10e4-5ce0-abe9-1f6c6a9fc09d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "677fcac7-1e03-5671-b381-f020d7769c00"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "199833d5-9845-5e6b-908e-909da308fb5e"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3926f456-2a80-5d06-9e41-f0478dff704b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3734175d-fe01-5b7b-8e0c-621fc84486ba"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "24dca1e3-c7fa-5774-b095-e88b3c002281"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "548b359e-07a3-529b-840f-492670f5f369"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "7ac7c491-81c5-5b6e-a291-93ddf64f37d1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f974375d-0373-5d63-a61e-e655cb5b784f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cf639687-11a6-520e-9eb6-baa9b3596d07"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3e5b926a-ac65-5185-ba77-60b1bf95dc2a"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "dedb8ce1-42fd-5144-a760-fb22a2b7fd07"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64ee9df5-d4bb-54f2-963a-f5dd5374da3d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "782fc541-898f-5c86-8607-b6376fa4fc7c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "37e76ac0-4be6-504d-996c-26ce81284434"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "529c0628-f351-5365-8716-a11d12ddb7f7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67bbebae-e8e5-5883-911d-8f8087c85a51"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "dd54729c-dea7-554e-be34-8740752af52b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5f705cf4-9f91-548b-964e-d7fcf60ca995"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e6ccb883-b2b7-559b-8b6b-96e32711e201"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "748dcf6b-0406-5ba6-83bb-cccd185e9c7b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "030155b2-589b-54b1-9865-792c3a4d543a"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "52713594-9eab-5c84-ab93-1d3ca42b6d5b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e6cf4d95-df4d-5d8f-8772-58c65de7b7ae"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1b82ae9c-15d4-5d38-9813-187d9b3c337c"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "321f0375-bb32-5164-bdb9-93c11affa923"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "ab2151be-ecb9-5e3b-990a-1787136ba5f4"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "eb2b966f-13e6-5bdb-accd-d1e0a5494246"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3a15931c-edaf-50b2-8443-2b3f63dcbf32"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cd56d2f8-6b35-5422-a484-29d8d7e82ad6"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4afc7dd2-7133-573e-aa96-4bc43863be4e"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "a026b98b-96cc-5b08-85b8-387144ede783"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8aa272bf-194e-5d34-84e8-38b5385946ee"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c03c1def-2b5b-584d-8e9b-be878ec28385"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "40f5c9d6-9149-5e1f-a454-0f63dd61d241"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "1e3447e3-87ed-5a5d-b878-fd075dc2666e"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "66162919-d4ff-5b81-a909-3bc8579d5398"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c9c0ce4b-f336-5ef8-b10d-8712d8fdf769"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8ca669ca-fd62-5573-a293-f394084c13ba"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "02f2b673-43a3-51bf-ac2b-f545025510d2"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "619bf512-3a73-588d-81a6-c970ed407398"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "21539f2c-ee65-5132-85d9-d9c8fced5dc7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9845434c-3c8f-5283-a083-7bb01cdf09c3"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "7158b63a-3f28-531d-8200-c95ea91493ff"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6aeff602-13f8-5571-b135-f53224a5a67b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "ccb5fa78-8223-5aca-a64e-6851d1161d0d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0b8a4985-c64a-5b68-abad-0dc77375d9c7"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bd7cf81e-4c6c-5a29-a0f2-c933511dd4a1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid":  "7b655b55-f204-56b4-af91-b422fabc91ec"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bb203a33-3df1-5142-81e0-ec8b289c64cf"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a6f43377-411a-5a14-ab98-b073d014139f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "b7b6b9a6-76cc-5f46-b970-f27119b7f2ea"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f4383a58-4866-55a4-8c20-3d3c29be78f8"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c8067dd5-4cef-5110-845f-d4b12a3bba3a"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64085aac-6515-5bbc-ae21-349215749159"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "a157167b-9f79-5d83-8410-b3166fddb1fc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f9b8e8bd-185a-5d4d-808b-f9b35980354c"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "c047ef47-b410-5a4c-8d22-506d532395f6"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "db55f3e8-1fa0-5450-a474-38b85946e832"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "54758d8d-03f4-5b72-908b-6b4afcc18143"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38393cca-95ea-580e-ad6e-a7f97071ea3f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "02ab2fb8-e389-5507-b031-b162add67e86"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a3e63fa-d715-516a-8737-ccc020749256"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "d3152389-7b38-5ad3-a2a6-875871de89cf"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a6795c0-90d3-562a-b279-dc30b8fb10b5"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "83f7dbe8-602e-5f46-8521-3699dd658926"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0ba618f3-8df9-583b-bacb-56921fd45640"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "6fa659fd-7379-5e98-bf2c-2907f398ac1f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a1710c4e-7028-56bc-b06a-ae85e19792e0"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cb8a523e-47dc-551e-b669-f94ed66bab88"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b82bd63-3dc6-5512-8193-9691a6f2587f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "aa4e3304-0fcf-57f1-95b8-94250a9bba29"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "791b7e1d-1e39-5bcd-a17c-48b48c513ed6"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "dbd18647-308c-5c45-baf1-749f90295a1a"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38ba3037-c082-52b9-a4c3-70115ee3cca5"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3436fe79-5cd2-53f0-88d4-52f47e170d36"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "be448c94-1947-5657-891e-11169d5a1325"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "01e09178-4f03-541f-98c0-0c06bb5f9b75"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "d2fe8c11-71c4-5809-9d99-196e54f46a52"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "2e697614-3baf-5674-9c2b-873a175e9835"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid":  "67fc1916-2e55-5b4c-972f-318021714a3f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e9ec8e79-27c3-5af6-94a3-68fa2fb0340f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "949a95c9-c4c9-51ba-a3f6-05c438798330"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3d0192d4-2193-5908-8d7d-ef45788d6086"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5d253f0e-872e-5b4f-bdb5-530768611f9f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bc48723c-1cc1-507e-8f2c-506a7667899b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "46425940-6fdd-5b14-a1db-287d7650362d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "eab52bbf-fef3-5718-96d3-7ce33d0a64df"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f46b7ec5-493b-5a38-aecb-f1b721f7f261"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "75589c24-0b00-555d-bedd-c65a8124370c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6d5dddb2-ae4a-5d29-bb7e-a8c18e71e076"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "d11ab760-54e1-5a71-bb07-167f85367e87"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "771f3a61-565d-5002-b1d0-861f42891b3d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "3d1d63ed-18ff-5217-8d9b-9fc11563c0e1"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f06dfbbe-79ba-529f-8a6f-830de38840cc"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "e785cbca-5c97-5f0c-abde-efb1be4978bc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "00fca81c-08cf-5452-86c1-cf75b0526adc"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "965aefd2-5743-5612-9dec-46257dc752eb"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "817a8bae-45a0-5560-8fe2-8bb0407bc4bb"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "cffabbd3-6c31-5f67-bb85-728c8a28b7ce"
                     }
                   ] ,
                   "occupied-spectrum": [
@@ -339,6 +2035,854 @@
                   ] ,
                   "occupied-spectrum": [
                   ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f52c26a-3075-56b6-9c7e-baf17b32640d"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f52c26a-3075-56b6-9c7e-baf17b32640d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f37f02e-4d0c-5370-a8f3-d407ca2f7aa7"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f37f02e-4d0c-5370-a8f3-d407ca2f7aa7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6213dd3f-a418-5d9f-bf36-c1a9ef7bdfef"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6213dd3f-a418-5d9f-bf36-c1a9ef7bdfef"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "47d43115-10e4-5ce0-abe9-1f6c6a9fc09d"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "47d43115-10e4-5ce0-abe9-1f6c6a9fc09d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "199833d5-9845-5e6b-908e-909da308fb5e"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "199833d5-9845-5e6b-908e-909da308fb5e"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3734175d-fe01-5b7b-8e0c-621fc84486ba"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3734175d-fe01-5b7b-8e0c-621fc84486ba"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "548b359e-07a3-529b-840f-492670f5f369"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "548b359e-07a3-529b-840f-492670f5f369"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f974375d-0373-5d63-a61e-e655cb5b784f"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f974375d-0373-5d63-a61e-e655cb5b784f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3e5b926a-ac65-5185-ba77-60b1bf95dc2a"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3e5b926a-ac65-5185-ba77-60b1bf95dc2a"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64ee9df5-d4bb-54f2-963a-f5dd5374da3d"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64ee9df5-d4bb-54f2-963a-f5dd5374da3d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "37e76ac0-4be6-504d-996c-26ce81284434"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "37e76ac0-4be6-504d-996c-26ce81284434"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67bbebae-e8e5-5883-911d-8f8087c85a51"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67bbebae-e8e5-5883-911d-8f8087c85a51"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5f705cf4-9f91-548b-964e-d7fcf60ca995"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5f705cf4-9f91-548b-964e-d7fcf60ca995"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "748dcf6b-0406-5ba6-83bb-cccd185e9c7b"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "748dcf6b-0406-5ba6-83bb-cccd185e9c7b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "52713594-9eab-5c84-ab93-1d3ca42b6d5b"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "52713594-9eab-5c84-ab93-1d3ca42b6d5b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1b82ae9c-15d4-5d38-9813-187d9b3c337c"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1b82ae9c-15d4-5d38-9813-187d9b3c337c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "ab2151be-ecb9-5e3b-990a-1787136ba5f4"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "ab2151be-ecb9-5e3b-990a-1787136ba5f4"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3a15931c-edaf-50b2-8443-2b3f63dcbf32"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3a15931c-edaf-50b2-8443-2b3f63dcbf32"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4afc7dd2-7133-573e-aa96-4bc43863be4e"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4afc7dd2-7133-573e-aa96-4bc43863be4e"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8aa272bf-194e-5d34-84e8-38b5385946ee"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8aa272bf-194e-5d34-84e8-38b5385946ee"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "40f5c9d6-9149-5e1f-a454-0f63dd61d241"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "40f5c9d6-9149-5e1f-a454-0f63dd61d241"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "66162919-d4ff-5b81-a909-3bc8579d5398"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "66162919-d4ff-5b81-a909-3bc8579d5398"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8ca669ca-fd62-5573-a293-f394084c13ba"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8ca669ca-fd62-5573-a293-f394084c13ba"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "619bf512-3a73-588d-81a6-c970ed407398"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "619bf512-3a73-588d-81a6-c970ed407398"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9845434c-3c8f-5283-a083-7bb01cdf09c3"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9845434c-3c8f-5283-a083-7bb01cdf09c3"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6aeff602-13f8-5571-b135-f53224a5a67b"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6aeff602-13f8-5571-b135-f53224a5a67b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0b8a4985-c64a-5b68-abad-0dc77375d9c7"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0b8a4985-c64a-5b68-abad-0dc77375d9c7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b655b55-f204-56b4-af91-b422fabc91ec"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b655b55-f204-56b4-af91-b422fabc91ec"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a6f43377-411a-5a14-ab98-b073d014139f"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a6f43377-411a-5a14-ab98-b073d014139f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f4383a58-4866-55a4-8c20-3d3c29be78f8"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f4383a58-4866-55a4-8c20-3d3c29be78f8"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64085aac-6515-5bbc-ae21-349215749159"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64085aac-6515-5bbc-ae21-349215749159"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f9b8e8bd-185a-5d4d-808b-f9b35980354c"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f9b8e8bd-185a-5d4d-808b-f9b35980354c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "db55f3e8-1fa0-5450-a474-38b85946e832"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "db55f3e8-1fa0-5450-a474-38b85946e832"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38393cca-95ea-580e-ad6e-a7f97071ea3f"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38393cca-95ea-580e-ad6e-a7f97071ea3f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a3e63fa-d715-516a-8737-ccc020749256"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a3e63fa-d715-516a-8737-ccc020749256"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a6795c0-90d3-562a-b279-dc30b8fb10b5"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a6795c0-90d3-562a-b279-dc30b8fb10b5"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0ba618f3-8df9-583b-bacb-56921fd45640"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0ba618f3-8df9-583b-bacb-56921fd45640"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a1710c4e-7028-56bc-b06a-ae85e19792e0"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a1710c4e-7028-56bc-b06a-ae85e19792e0"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b82bd63-3dc6-5512-8193-9691a6f2587f"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b82bd63-3dc6-5512-8193-9691a6f2587f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "791b7e1d-1e39-5bcd-a17c-48b48c513ed6"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "791b7e1d-1e39-5bcd-a17c-48b48c513ed6"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38ba3037-c082-52b9-a4c3-70115ee3cca5"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38ba3037-c082-52b9-a4c3-70115ee3cca5"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "be448c94-1947-5657-891e-11169d5a1325"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "be448c94-1947-5657-891e-11169d5a1325"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "d2fe8c11-71c4-5809-9d99-196e54f46a52"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "d2fe8c11-71c4-5809-9d99-196e54f46a52"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67fc1916-2e55-5b4c-972f-318021714a3f"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67fc1916-2e55-5b4c-972f-318021714a3f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "949a95c9-c4c9-51ba-a3f6-05c438798330"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "949a95c9-c4c9-51ba-a3f6-05c438798330"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5d253f0e-872e-5b4f-bdb5-530768611f9f"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5d253f0e-872e-5b4f-bdb5-530768611f9f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "46425940-6fdd-5b14-a1db-287d7650362d"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "46425940-6fdd-5b14-a1db-287d7650362d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f46b7ec5-493b-5a38-aecb-f1b721f7f261"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f46b7ec5-493b-5a38-aecb-f1b721f7f261"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6d5dddb2-ae4a-5d29-bb7e-a8c18e71e076"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6d5dddb2-ae4a-5d29-bb7e-a8c18e71e076"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "771f3a61-565d-5002-b1d0-861f42891b3d"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "771f3a61-565d-5002-b1d0-861f42891b3d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f06dfbbe-79ba-529f-8a6f-830de38840cc"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f06dfbbe-79ba-529f-8a6f-830de38840cc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "00fca81c-08cf-5452-86c1-cf75b0526adc"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "00fca81c-08cf-5452-86c1-cf75b0526adc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "817a8bae-45a0-5560-8fe2-8bb0407bc4bb"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "817a8bae-45a0-5560-8fe2-8bb0407bc4bb"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
                 }
               ],
               "supportable-spectrum": [
@@ -448,6 +2992,854 @@
                       "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
                       "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
                       "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f52c26a-3075-56b6-9c7e-baf17b32640d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f52c26a-3075-56b6-9c7e-baf17b32640d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f37f02e-4d0c-5370-a8f3-d407ca2f7aa7"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1f37f02e-4d0c-5370-a8f3-d407ca2f7aa7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6213dd3f-a418-5d9f-bf36-c1a9ef7bdfef"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6213dd3f-a418-5d9f-bf36-c1a9ef7bdfef"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "47d43115-10e4-5ce0-abe9-1f6c6a9fc09d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "47d43115-10e4-5ce0-abe9-1f6c6a9fc09d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "199833d5-9845-5e6b-908e-909da308fb5e"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "199833d5-9845-5e6b-908e-909da308fb5e"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3734175d-fe01-5b7b-8e0c-621fc84486ba"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3734175d-fe01-5b7b-8e0c-621fc84486ba"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "548b359e-07a3-529b-840f-492670f5f369"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "548b359e-07a3-529b-840f-492670f5f369"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f974375d-0373-5d63-a61e-e655cb5b784f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f974375d-0373-5d63-a61e-e655cb5b784f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3e5b926a-ac65-5185-ba77-60b1bf95dc2a"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3e5b926a-ac65-5185-ba77-60b1bf95dc2a"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64ee9df5-d4bb-54f2-963a-f5dd5374da3d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64ee9df5-d4bb-54f2-963a-f5dd5374da3d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "37e76ac0-4be6-504d-996c-26ce81284434"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "37e76ac0-4be6-504d-996c-26ce81284434"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67bbebae-e8e5-5883-911d-8f8087c85a51"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67bbebae-e8e5-5883-911d-8f8087c85a51"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5f705cf4-9f91-548b-964e-d7fcf60ca995"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5f705cf4-9f91-548b-964e-d7fcf60ca995"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "748dcf6b-0406-5ba6-83bb-cccd185e9c7b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "748dcf6b-0406-5ba6-83bb-cccd185e9c7b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "52713594-9eab-5c84-ab93-1d3ca42b6d5b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "52713594-9eab-5c84-ab93-1d3ca42b6d5b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1b82ae9c-15d4-5d38-9813-187d9b3c337c"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "1b82ae9c-15d4-5d38-9813-187d9b3c337c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "ab2151be-ecb9-5e3b-990a-1787136ba5f4"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "ab2151be-ecb9-5e3b-990a-1787136ba5f4"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3a15931c-edaf-50b2-8443-2b3f63dcbf32"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "3a15931c-edaf-50b2-8443-2b3f63dcbf32"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4afc7dd2-7133-573e-aa96-4bc43863be4e"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4afc7dd2-7133-573e-aa96-4bc43863be4e"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8aa272bf-194e-5d34-84e8-38b5385946ee"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8aa272bf-194e-5d34-84e8-38b5385946ee"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "40f5c9d6-9149-5e1f-a454-0f63dd61d241"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "40f5c9d6-9149-5e1f-a454-0f63dd61d241"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "66162919-d4ff-5b81-a909-3bc8579d5398"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "66162919-d4ff-5b81-a909-3bc8579d5398"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8ca669ca-fd62-5573-a293-f394084c13ba"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "8ca669ca-fd62-5573-a293-f394084c13ba"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "619bf512-3a73-588d-81a6-c970ed407398"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "619bf512-3a73-588d-81a6-c970ed407398"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9845434c-3c8f-5283-a083-7bb01cdf09c3"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9845434c-3c8f-5283-a083-7bb01cdf09c3"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6aeff602-13f8-5571-b135-f53224a5a67b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6aeff602-13f8-5571-b135-f53224a5a67b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0b8a4985-c64a-5b68-abad-0dc77375d9c7"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0b8a4985-c64a-5b68-abad-0dc77375d9c7"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b655b55-f204-56b4-af91-b422fabc91ec"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b655b55-f204-56b4-af91-b422fabc91ec"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a6f43377-411a-5a14-ab98-b073d014139f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a6f43377-411a-5a14-ab98-b073d014139f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f4383a58-4866-55a4-8c20-3d3c29be78f8"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f4383a58-4866-55a4-8c20-3d3c29be78f8"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64085aac-6515-5bbc-ae21-349215749159"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "64085aac-6515-5bbc-ae21-349215749159"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f9b8e8bd-185a-5d4d-808b-f9b35980354c"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f9b8e8bd-185a-5d4d-808b-f9b35980354c"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "db55f3e8-1fa0-5450-a474-38b85946e832"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "db55f3e8-1fa0-5450-a474-38b85946e832"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38393cca-95ea-580e-ad6e-a7f97071ea3f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38393cca-95ea-580e-ad6e-a7f97071ea3f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a3e63fa-d715-516a-8737-ccc020749256"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a3e63fa-d715-516a-8737-ccc020749256"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a6795c0-90d3-562a-b279-dc30b8fb10b5"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "4a6795c0-90d3-562a-b279-dc30b8fb10b5"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0ba618f3-8df9-583b-bacb-56921fd45640"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "0ba618f3-8df9-583b-bacb-56921fd45640"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a1710c4e-7028-56bc-b06a-ae85e19792e0"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "a1710c4e-7028-56bc-b06a-ae85e19792e0"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b82bd63-3dc6-5512-8193-9691a6f2587f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7b82bd63-3dc6-5512-8193-9691a6f2587f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "791b7e1d-1e39-5bcd-a17c-48b48c513ed6"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "791b7e1d-1e39-5bcd-a17c-48b48c513ed6"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38ba3037-c082-52b9-a4c3-70115ee3cca5"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "38ba3037-c082-52b9-a4c3-70115ee3cca5"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "be448c94-1947-5657-891e-11169d5a1325"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "be448c94-1947-5657-891e-11169d5a1325"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "d2fe8c11-71c4-5809-9d99-196e54f46a52"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "d2fe8c11-71c4-5809-9d99-196e54f46a52"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67fc1916-2e55-5b4c-972f-318021714a3f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "67fc1916-2e55-5b4c-972f-318021714a3f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "949a95c9-c4c9-51ba-a3f6-05c438798330"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "949a95c9-c4c9-51ba-a3f6-05c438798330"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5d253f0e-872e-5b4f-bdb5-530768611f9f"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "5d253f0e-872e-5b4f-bdb5-530768611f9f"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "46425940-6fdd-5b14-a1db-287d7650362d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "46425940-6fdd-5b14-a1db-287d7650362d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f46b7ec5-493b-5a38-aecb-f1b721f7f261"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f46b7ec5-493b-5a38-aecb-f1b721f7f261"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6d5dddb2-ae4a-5d29-bb7e-a8c18e71e076"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "6d5dddb2-ae4a-5d29-bb7e-a8c18e71e076"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "771f3a61-565d-5002-b1d0-861f42891b3d"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "771f3a61-565d-5002-b1d0-861f42891b3d"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f06dfbbe-79ba-529f-8a6f-830de38840cc"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "f06dfbbe-79ba-529f-8a6f-830de38840cc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "00fca81c-08cf-5452-86c1-cf75b0526adc"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "00fca81c-08cf-5452-86c1-cf75b0526adc"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "817a8bae-45a0-5560-8fe2-8bb0407bc4bb"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "817a8bae-45a0-5560-8fe2-8bb0407bc4bb"
                     }
                   ] ,
                   "occupied-spectrum": [
