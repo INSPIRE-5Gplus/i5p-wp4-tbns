@@ -1,0 +1,482 @@
+{
+    "e2e-topology": {
+      "nodes-list": [
+        "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+        "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "0bd7908e-c22b-574d-8bba-396d060e2611:bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "3d89bd76-e54d-5fab-9787-eb609f291ee0:bc1cfe05-af20-59e7-85b8-eb096253c769"
+      ],
+      "interdomain-links": [
+        {
+          "name": "D1:Blanes-D2:Vic",
+          "nodes-involved": [
+            "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+            "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769"
+          ],
+          "link-options": [
+            {
+              "uuid": "f7f5cdef-8bb0-42c4-a315-bbc852b0a193",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                "node-2": "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "39030ade-eb0f-5c5d-9ada-8180bf599ff6"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "b3671088-cc06-5dfa-87b4-bfed433191bd"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "8d23fa0b-e14a-5121-bfa7-0c979ee85704"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "4e1e89bc-0289-5e62-95d0-6c3b237f6822"
+                    },
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ],
+              "supportable-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ],
+              "available-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ]
+            },
+            {
+              "uuid": "c5174040-26df-4950-8cf3-47ac8115f2ae",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "226b9166-974e-57ff-821d-2f24e5a71b00:bc1cfe05-af20-59e7-85b8-eb096253c769",
+                "node-2": "0bd7908e-c22b-574d-8bba-396d060e2611:69c1ef5e-0d4a-5fb7-b729-b494313d3dc5"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "39030ade-eb0f-5c5d-9ada-8180bf599ff6"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "b3671088-cc06-5dfa-87b4-bfed433191bd"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "8d23fa0b-e14a-5121-bfa7-0c979ee85704"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+                      "nep-uuid": "4e1e89bc-0289-5e62-95d0-6c3b237f6822"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ],
+              "supportable-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ],
+              "available-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "D1:Ripoll-D3:SeuUrgell",
+          "nodes-involved": [
+            "0bd7908e-c22b-574d-8bba-396d060e2611:bc1cfe05-af20-59e7-85b8-eb096253c769",
+            "3d89bd76-e54d-5fab-9787-eb609f291ee0:bc1cfe05-af20-59e7-85b8-eb096253c769"
+          ],
+          "link-options": [
+            {
+              "uuid": "278c061e-b8c1-4379-9161-99ec4b8e9ace",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "0bd7908e-c22b-574d-8bba-396d060e2611:bc1cfe05-af20-59e7-85b8-eb096253c769",
+                "node-2": "3d89bd76-e54d-5fab-9787-eb609f291ee0:bc1cfe05-af20-59e7-85b8-eb096253c769"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
+                    },
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ],
+              "supportable-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ],
+              "available-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ]
+            },
+            {
+              "uuid": "14bdd482-7ebb-40f6-b15e-33ea62ef6d24",
+              "direction": "UNIDIRECTIONAL",
+              "nodes-direction": {
+                "node-1": "3d89bd76-e54d-5fab-9787-eb609f291ee0:bc1cfe05-af20-59e7-85b8-eb096253c769",
+                "node-2": "0bd7908e-c22b-574d-8bba-396d060e2611:bc1cfe05-af20-59e7-85b8-eb096253c769"
+              },
+              "layer-protocol-name": [
+                "PHOTONIC_MEDIA"
+              ],
+              "physical-options": [
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "e94c8112-d8a5-5093-a38d-21abd25de985"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "7a8cb6c3-7b60-59b5-b2f5-609e297eda85"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "9ad36838-fb70-51d0-ab82-79bc4598c937"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                },
+                {
+                  "node-edge-point":[
+                    {
+                      "context-uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
+                    },
+                    {
+                      "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+                      "node-uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+                      "nep-uuid": "14b7d0b3-c174-5313-8be1-f1e25a45cbc8"
+                    }
+                  ] ,
+                  "occupied-spectrum": [
+                  ]
+                }
+              ],
+              "supportable-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ],
+              "available-spectrum": [
+                {
+                  "lower-frequency": 191700000,
+                  "upper-frequency": 196100000,
+                  "frequency-constraint": {
+                    "adjustment-granularity": "G_50GHZ",
+                    "grid-type": "DWDM"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
