@@ -166,7 +166,6 @@ def vlink_abstraction(local_context):
 
 # creates the initial e2e graph with its local domain information
 def add_context_e2e_graph(context_json):
-  settings.logger.debug("VL_COMP: Adding external context to local E2E graph.")
   for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
     settings.logger.debug("VL_COMP: Topology within the received context.")
     # adds all the nodes in the abstracted topology
@@ -200,11 +199,13 @@ def add_context_e2e_graph(context_json):
               e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
         else:
           e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
-      settings.logger.debug("VL_COMP: External context links added.")      
+      settings.logger.debug("VL_COMP: External context links added.")  
+
+  settings.logger.info("VL_COMP: External SDN context added.")
 
 # updates the e2e graph by adding new domains and itner-domains links.
 def add_idl_e2e_graph(e2e_json):
-  settings.logger.debug("VL_COMP: Adding IDLs to the local E2E Context graph.")
+  #settings.logger.debug("VL_COMP: Adding IDLs to the local E2E Context graph.")
   # adds all the SDN domains defined in the json
   for domain_item in e2e_json["e2e-topology"]["nodes-list"]:
     e2e_topology_graph.add_node(domain_item)
@@ -241,6 +242,7 @@ def add_idl_e2e_graph(e2e_json):
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
   settings.logger.debug("VL_COMP: Added Edges to E2E Graph.")
+  settings.logger.info("VL_COMP: Set of IDLs added.")
 
 # paints the graph
 def paint_graph(labels):

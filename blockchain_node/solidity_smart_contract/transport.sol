@@ -18,6 +18,15 @@ contract transport {
     mapping(string => linkOptions) public linkOptions_list;
     string[] public linkOptionsIds;
     uint linkOptionsCount;
+    
+    struct physicalOptions{
+        //string id;
+        string phyopt_info;
+        address contextOwner;
+    }
+    mapping(string => physicalOptions) public physicalOptions_list;
+    string[] public physicalOptionsIds;
+    uint physicalOptionsCount;
 
     /*##### DOMAIN CONTEXT INFORMATION  plus SIPs, Nodes and Links #####*/
     struct DomainContext{
@@ -119,11 +128,20 @@ contract transport {
         
         return true;
     }
+    // adds a new physical-option fo the e2e topology
+    function addPhyOption(string memory _id, string memory _phyopt_info) public returns (bool){
+        physicalOptions_list[_id].phyopt_info = _phyopt_info;
+        physicalOptions_list[_id].contextOwner = msg.sender;  //the peer uploading the template info is the owner
+        physicalOptionsIds.push(_id);
+        physicalOptionsCount ++;
+        
+        return true;
+    }
     // gets the information of a single context template
     function getE2EContext() public view returns (string memory){
         return e2e_topology;
     }
-    // gets the information of a single sip
+    // gets the information of a single linkOption
     function getLinkOption(string memory _id) public view returns (string memory, string memory, string memory, string memory, string memory, string memory){
         string memory dir = linkOptions_list[_id].direction;
         string memory nodesdir = linkOptions_list[_id].nodes_direction;
@@ -132,6 +150,11 @@ contract transport {
         string memory sup = linkOptions_list[_id].sup_spectrum;
         string memory av = linkOptions_list[_id].av_spectrum;
         return (dir, nodesdir, lpn, phyopt, sup, av);
+    }
+    // gets the information of a single physicalOption
+    function getPhyOption(string memory _id) public view returns (string memory){
+        string memory phyopt_info = physicalOptions_list[_id].phyopt_info;
+        return (phyopt_info);
     }
     // update e2e_topology
     function updateE2EContext(string memory _e2e_topology) public returns (bool){
@@ -307,7 +330,7 @@ contract transport {
         emit topology_response(msg.sender, _log, _status);
         return true;
     }
-        // generates an event to deploy a connectivity service
+    // generates an event to deploy a connectivity service
     function terminateConnectivityService(address _contextOwner, string memory _id) public returns (bool){
         string memory _status = "TERMINATING";
         string memory _log = "Connectivity Service requested.";
