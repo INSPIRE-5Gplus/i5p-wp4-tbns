@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x88E807450020d346d138626238f4104871f16765",
+    "contract_address":"0x31309EFCa08E00E7F7f5fd04fe5DC6F256FD3Cf5",
     "abi":[
         {
             "anonymous": false,
@@ -614,6 +614,30 @@
                 },
                 {
                     "internalType": "string",
+                    "name": "_phyopt_info",
+                    "type": "string"
+                }
+            ],
+            "name": "addPhyOption",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
                     "name": "sip_info",
                     "type": "string"
                 }
@@ -850,6 +874,25 @@
                     "type": "string"
                 }
             ],
+            "name": "getPhyOption",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                }
+            ],
             "name": "getSIP",
             "outputs": [
                 {
@@ -962,6 +1005,49 @@
                 {
                     "internalType": "string",
                     "name": "av_spectrum",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "contextOwner",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "physicalOptionsIds",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "name": "physicalOptions_list",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "phyopt_info",
                     "type": "string"
                 },
                 {
