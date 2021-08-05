@@ -430,9 +430,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 settings.logger.info("ORCH: response: " + str(response))
                 phyoptions_list = []
                 for phyoption_uuid_item in response[0]["physical-options"]:
-                    phyopt_uuid = linkoption_uuid_item + ":" + phyoption_uuid_item
-                    settings.logger.info("ORCH: phyopt_uuid: " + str(phyopt_uuid))
-                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyopt_uuid)
+                    settings.logger.info("ORCH: phyopt_uuid: " + str(phyoption_uuid_item))
+                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
                     settings.logger.info("ORCH: response_phy: " + str(response_phy))
                     phyoptions_list.append(response_phy[0]["phyopt_info"])
 
@@ -839,8 +838,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
 
                 phyoptions_list = []
                 for phyoption_uuid_item in response[0]["physical-options"]:
-                    phyopt_uuid = response[0]["uuid"] + ":" + phyoption_uuid_item
-                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyopt_uuid)
+                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
                     phyoptions_list.append(response_phy[0]["phyopt_info"])
 
                 response[0]["physical-options"] = phyoptions_list
