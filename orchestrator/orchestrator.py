@@ -421,11 +421,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
                 settings.logger.info("ORCH: response: " + str(response))
                 phyoptions_list = []
-                for phyoption_uuid_item in response["physical-options"]:
+                for phyoption_uuid_item in response[0]["physical-options"]:
                     phyopt_uuid = linkoption_uuid_item + "-" + phyoption_uuid_item
                     response_phy = bl_mapper.get_physicalOption_from_blockchain(phyopt_uuid)
                     settings.logger.info("ORCH: Getting physical-options: " + str(phyopt_uuid))
-                    phyoptions_list.append(response_phy["phyopt_info"])
+                    phyoptions_list.append(response_phy[0]["phyopt_info"])
 
                 response["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
@@ -829,10 +829,10 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
 
                 phyoptions_list = []
-                for phyoption_uuid_item in response["physical-options"]:
+                for phyoption_uuid_item in response[0]["physical-options"]:
                     phyopt_uuid = response["uuid"] + "-" + phyoption_uuid_item
                     response_phy = bl_mapper.get_physicalOption_from_blockchain(phyopt_uuid)
-                    phyoptions_list.append(response_phy["phyopt_info"])
+                    phyoptions_list.append(response_phy[0]["phyopt_info"])
 
                 response["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
