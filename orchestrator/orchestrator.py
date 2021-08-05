@@ -113,7 +113,7 @@ def idl_to_bl(idl_json):
             for linkoption_item in idl_item["link-options"]:
                 physicaloptionsuuid_list = []
                 for physicaloption_item in linkoption_item["physical-options"]:
-                    phyopt_uuid = str(uuid.uuid4())
+                    phyopt_uuid = linkoption_item["uuid"] + "-" + str(uuid.uuid4())
                     response = bl_mapper.phyoption_to_blockchain(phyopt_uuid, physicaloption_item)
                     physicaloptionsuuid_list.append(phyopt_uuid)
                 
@@ -420,7 +420,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
                 phyoptions_list = []
                 for phyoption_uuid_item in response["physical-options"]:
-                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
+                    phyopt_uuid = response["uuid"] + "-" + phyoption_uuid_item
+                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyopt_uuid)
                     phyoptions_list.append(response_phy["phyopt_info"])
 
                 response["physical-options"] = phyoptions_list
@@ -826,7 +827,8 @@ def terminate_e2e_connectivity_service(cs_uuid):
 
                 phyoptions_list = []
                 for phyoption_uuid_item in response["physical-options"]:
-                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
+                    phyopt_uuid = response["uuid"] + "-" + phyoption_uuid_item
+                    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyopt_uuid)
                     phyoptions_list.append(response_phy["phyopt_info"])
 
                 response["physical-options"] = phyoptions_list
