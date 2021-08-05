@@ -151,6 +151,14 @@ def idl_to_bl(idl_json):
             if found_existing_idl == False:
                 temp_idl_item = {}
                 for linkoption_item in idl_item["link-options"]:
+                    physicaloptionsuuid_list = []
+                    for physicaloption_item in linkoption_item["physical-options"]:
+                        phyopt_uuid = linkoption_item["uuid"] + "-" + str(uuid.uuid4())
+                        response = bl_mapper.phyoption_to_blockchain(phyopt_uuid, physicaloption_item)
+                        settings.logger.info("ORCH: Sending phyoption with id: " + str(phyopt_uuid))
+                        physicaloptionsuuid_list.append(phyopt_uuid)
+                    
+                    linkoption_item["physical-options"] = physicaloptionsuuid_list
                     linkoptions_uuid_list.append(linkoption_item["uuid"])
                     response = bl_mapper.linkoption_to_blockchain(linkoption_item)
 
