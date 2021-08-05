@@ -419,10 +419,10 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
-
+                settings.logger.info("ORCH: response: " + str(response))
                 phyoptions_list = []
                 for phyoption_uuid_item in response["physical-options"]:
-                    phyopt_uuid = response["uuid"] + "-" + phyoption_uuid_item
+                    phyopt_uuid = linkoption_uuid_item + "-" + phyoption_uuid_item
                     response_phy = bl_mapper.get_physicalOption_from_blockchain(phyopt_uuid)
                     settings.logger.info("ORCH: Getting physical-options: " + str(phyopt_uuid))
                     phyoptions_list.append(response_phy["phyopt_info"])
