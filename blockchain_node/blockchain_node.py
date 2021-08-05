@@ -201,6 +201,7 @@ def get_linkOption_from_blockchain(link_option_uuid):
 def get_physicalOption_from_blockchain(phy_option_uuid):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
     response = settings.transport_contract.functions.getLinkOption(phy_option_uuid).call()
+    settings.logger.info("BLOCKAHIN_MAPPER: Physical-option item: " + str(response))
     linkoption_json = {}
     linkoption_json["uuid"] = phy_option_uuid
     linkoption_json["phyopt_info"] = json.loads(response[0])
