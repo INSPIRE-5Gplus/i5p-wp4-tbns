@@ -305,7 +305,7 @@ def update_connectivity_service_from_blockchain(event_json):
     e2e_cs_list = db.get_elements("e2e_cs")
     for e2e_cs_item in e2e_cs_list:
         for domain_cs_item in e2e_cs_item["domain-cs"]:
-            if domain_cs_item["uuid"] == event_json["id"]:
+            if domain_cs_item["uuid"] == event_json["uuid"]:
                 domain_cs_item["status"] = "DEPLOYED"
                 db.update_db(e2e_cs_item["uuid"], e2e_cs_item, "e2e_cs")
                 found_cs = True
@@ -336,7 +336,7 @@ def update_terminate_from_blockchain(event_json):
     e2e_cs_list = db.get_elements("e2e_cs")
     for e2e_cs_item in e2e_cs_list:
         for domain_cs_item in e2e_cs_item["domain-cs"]:
-            if domain_cs_item["uuid"] == event_json["id"]:
+            if domain_cs_item["uuid"] == event_json["uuid"]:
                 domain_cs_item["status"] = event_json["status"]
                 db.update_db(e2e_cs_item["uuid"], e2e_cs_item, "e2e_cs")
                 found_cs = True
