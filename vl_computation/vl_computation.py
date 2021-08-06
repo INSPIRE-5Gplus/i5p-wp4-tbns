@@ -167,7 +167,7 @@ def vlink_abstraction(local_context):
 # creates the initial e2e graph with its local domain information
 def add_context_e2e_graph(context_json):
   for topology_item in context_json["tapi-common:context"]["tapi-topology:topology-context"]["topology"]:
-    settings.logger.debug("VL_COMP: Topology within the received context.")
+    #settings.logger.debug("VL_COMP: Topology within the received context.")
     # adds all the nodes in the abstracted topology
     for node_item in topology_item["node"]:
       #NOTE: the context-uuid is used to differentiate between nodes of different domains with equal uuid
@@ -268,14 +268,14 @@ def find_path(src, dst):
 
   # calculates the route based on the virtual link weights. For the other abstraction models, the edges weight is 1.
   if os.environ.get("ABSTRACION_MODEL") == "vlink":
-    settings.logger.debug("Calculating routes for the VLINK")
+    settings.logger.debug("VL_COMP: Calculating routes for the VLINK")
     simple_path_list = ([p for p in nx.all_shortest_paths(e2e_topology_graph, source=src, target=dst, weight='weight')])
     simple_path_list.sort(key=len)
   else:
-    simple_path_list = ([p for p in nx.all_shortest_paths(e2e_topology_graph, source=src, target=dst)])
-    #simple_path_list = ([p for p in nx.all_simple_paths(e2e_topology_graph, source=src, target=dst)])
+    #simple_path_list = ([p for p in nx.all_shortest_paths(e2e_topology_graph, source=src, target=dst)])
+    simple_path_list = ([p for p in nx.all_simple_paths(e2e_topology_graph, source=src, target=dst)])
     simple_path_list.sort(key=len)
-  settings.logger.debug("All the routes: " + str(simple_path_list))
+  settings.logger.debug("VL_COMP: All the routes: " + str(simple_path_list))
   #if there are less than 20 paths, we take them all.
   if len(simple_path_list) < K:
     K = len(simple_path_list)
@@ -371,16 +371,16 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
               if neps_found:
                 break
               else:
-                settings.logger.info("WARNING - Link-option not good. Check another route")
+                settings.logger.info("VL_COMP: WARNING - Link-option not good. Check another route")
                 route_neps = []
                 route_interdominlinks = []
                 return route_neps, route_interdominlinks
           else:
-            settings.logger.debug("Looking if the next link is the good one it must be checked.")
+            settings.logger.debug("VL_COMP: Looking if the next link is the good one it must be checked.")
           if neps_found:
             break
         if neps_found == False:
-          settings.logger.info("ERROR - NO link was found with this information.")
+          settings.logger.info("VL_COMP: ERROR - NO link was found with this information.")
           route_neps = []
           route_interdominlinks = []
           return route_neps, route_interdominlinks
@@ -537,7 +537,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_node_item["node_uuid"] = route_neps[0]["node_uuid"]
   route_node_item["nep_uuid"] = route_neps[0]["nep_uuid"]
   route_node_item["sip_uuid"] = e2e_cs_request["source"]["sip_uuid"]
-  route_nodes_info.append(route_node_item)
+  route_nodes_info.insert(0, route_node_item)
   
   # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
   available_spec_list = []
@@ -569,7 +569,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_node_item["sip_uuid"] = e2e_cs_request["source"]["sip_uuid"]
   route_nodes_info.append(route_node_item)
   
-
   # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
   available_spec_list = []
   for available_item in sip_item["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"]:

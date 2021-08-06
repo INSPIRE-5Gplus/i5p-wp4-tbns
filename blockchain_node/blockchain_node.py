@@ -453,7 +453,7 @@ def update_nep(nep_id, nep_json):
 # requests the deployment of a CS between domains
 def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes request to configure connectivity service in the Blockchain')
-    settings.logger.info("SDN_MAPPER: CS information: " + str(cs_json) + " / Capacity: " + str(capacity) + "/ Spectrum: " + str(spectrum))
+    settings.logger.info("BLOCKCHAIN_MAPPER: CS information: " + str(cs_json) + " / Capacity: " + str(capacity) + "/ Spectrum: " + str(spectrum))
     cs_string = json.dumps(cs_json)
     spectrum_string = json.dumps(spectrum)
     capacity_string = json.dumps(capacity)

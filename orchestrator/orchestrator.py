@@ -438,7 +438,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 response[0]["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
-    settings.logger.debug("ORCH: e2e_topology_json: " +str(e2e_topology_json))
+    #settings.logger.debug("ORCH: e2e_topology_json: " +str(e2e_topology_json))
     
     # assigns initial CS data object information
     e2e_cs_json["uuid"] = str(uuid.uuid4())
@@ -469,7 +469,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # we find the k-shortest path (K=7)
     route_nodes_list = vl_computation.find_path(src, dst)
-    settings.logger.debug("The best 20 routes are: " + str(route_nodes_list))
+    settings.logger.debug("ORCH: The best 20 routes are: " + str(route_nodes_list))
 
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
@@ -477,8 +477,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
         idl_route = response_nep_mapped[1]
-        settings.logger.debug("neps_route: " + str(neps_route))
-        settings.logger.debug("idl_route: "+str(idl_route))
+        #ettings.logger.debug("neps_route: " + str(neps_route))
+        #settings.logger.debug("idl_route: "+str(idl_route))
         if neps_route == [] and idl_route == []:
             settings.logger.info("No NEP or link available in the itnerdomain links. Looking for the next route.")
             continue
@@ -488,9 +488,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         spectrums_available = response_sip_mapped[1]
         internal_links_route = response_sip_mapped[2]
         complete_route_nodes = response_sip_mapped[3]
-        settings.logger.debug("sips_route: "+str(sips_route))
-        settings.logger.debug("spectrums_available: "+str(spectrums_available))
-        settings.logger.debug("internal_links_route: "+str(internal_links_route))
+        #settings.logger.debug("sips_route: "+str(sips_route))
+        #settings.logger.debug("spectrums_available: "+str(spectrums_available))
+        #settings.logger.debug("internal_links_route: "+str(internal_links_route))
 
         if sips_route == [] and spectrums_available == []:
             settings.logger.debug("No spectrum availability in NEP. Looking for the next route.")
@@ -501,11 +501,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             new_spectrum["available-spectrum"] = idl_item["available-spectrum"]
             spectrums_available.append(new_spectrum)
         
-        settings.logger.debug("spectrums_available: "+str(spectrums_available))
-        settings.logger.debug("capacity: " + str(capacity))
+        #settings.logger.debug("spectrums_available: "+str(spectrums_available))
+        #settings.logger.debug("capacity: " + str(capacity))
         # checks if there is a common spectrum slot based on the available in all the neps and interdomain links in the route
         selected_spectrum = vl_computation.spectrum_assignment(spectrums_available, capacity)
-        settings.logger.debug("selected_spectrum: "+str(selected_spectrum))
+        settings.logger.debug("ORCH: selected_spectrum: "+str(selected_spectrum))
 
         # rsa done is complete or if empty, starts with the next route
         if selected_spectrum == []:
@@ -521,7 +521,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         e2e_cs_json["status"]  = "ERROR - no route available."
         return e2e_cs_json, 200
 
-    settings.logger.debug("selected_route: " + str(selected_route))
+    settings.logger.debug("ORCH: selected_route: " + str(selected_route))
     # adds more generic info into the e2e_cs data object
     spectrum = {}
     spectrum["lower-frequency"] = selected_spectrum[0]
@@ -587,10 +587,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 settings.logger.error("ERROR requesting local domain CS.")
                 return e2e_cs_json,400
         else:
+            settings.logger.debug("Distribute domain CS request to deploy in the Blockchain.")
             response = bl_mapper.instantiate_blockchain_cs(cs_item["address-owner"], cs_item, spectrum, e2e_cs_json["capacity"])
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
-    settings.logger.debug("Waiting all the domains CS from other domains to be deployed.")
+    settings.logger.debug("ORCH: Waiting all the domains CS from other domains to be deployed.")
     e2e_cs_ready = False
     while  e2e_cs_ready == False:
         e2e_cs_ready = True
@@ -614,10 +615,10 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     settings.logger.debug("Updating data objects in DDBBs.")
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
-    settings.logger.debug("Updating available spectrums in the internal NEPs of each SDN Context and the IDLs.")
+    #settings.logger.debug("Updating available spectrums in the internal NEPs of each SDN Context and the IDLs.")
     for idx, nep_item in enumerate(neps_route):
         if "type_link" not in nep_item.keys() and nep_item["direction"] == "OUTPUT":
-            settings.logger.debug("Internal NEP: updating a NEP belonging to an SDN context.")
+            settings.logger.debug("ORCH: Internal NEP: updating a NEP belonging to an SDN context.")
             # updates the internal NEPsinformation
             # gets the nep info
             requested_uuid = nep_item["context_uuid"]+":"+nep_item["node_uuid"]+":"+nep_item["nep_uuid"]
@@ -654,7 +655,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                     available_slots_json.append(new_available_item)
                 requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
             else:
-                settings.logger.error("There is a problem with the occupied spectrums. They are empty, why?")
+                settings.logger.error("ORCH: There is a problem with the occupied spectrums. They are empty, why?")
             
             # sends the new info to the BL
             response_update = bl_mapper.update_nep(requested_uuid, requested_nep)
@@ -665,7 +666,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         elif "type_link" in nep_item.keys() and idx < (len(neps_route)-1):
             if nep_item["link_uuid"] == neps_route[idx+1]["link_uuid"]:
                 #These NEPs are update in the IDL files and later in their corresponding SIPs in the SDN contexts.
-                settings.logger.debug("NEP belonging to an IDL.")
+                settings.logger.debug("ORCH: NEP belonging to an IDL.")
                 # composes the uuids based on the asbtraction model is being used.
                 if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
                     node_involved_1 = nep_item["context_uuid"]+":"+nep_item["node_uuid"]
@@ -712,22 +713,22 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                                 link_option_item["available-spectrum"] = available_slots_json
                                 break
                     if spectrum_added:
-                        settings.logger.debug("Saving and distributing the updated link-option info.")
-                        settings.logger.debug("link_option_item: " + str(link_option_item))
+                        #settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
+                        #settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
                         response = bl_mapper.update_link_option(link_option_item)
                         break   
         else:
-            settings.logger.debug("This NEP is neither an internal output or in an IDL.")
+            settings.logger.debug("ORCH: This NEP is neither an internal output or in an IDL.")
     
     # update the spectrum information for each SIP used in the route
     #settings.logger.debug("Updating available spectrums in the SIPs of each SDN Context.")
-    settings.logger.debug("Saving and distributing the updated SIPs info.")
+    settings.logger.debug("ORCH: Saving and distributing the updated SIPs info.")
     for sip_item in sips_route:
         # gets the sip element from the BL
         sip_uuid = sip_item["context_uuid"] + ":" + sip_item["uuid"]
         response = bl_mapper.get_sip(sip_uuid)
         sip_json = response["sip_info"]
-        settings.logger.debug("SIP to udpate: " + str(sip_json))
+        #settings.logger.debug("ORCH: SIP to udpate: " + str(sip_json))
 
         # adds the occupied spectrum info
         occ_spec = []
@@ -765,7 +766,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     settings.logger.info("ORCH: E2E CS request processed.")
-    settings.logger.info("e2e_cs_json: " + str(e2e_cs_json))
+    settings.logger.info("ORCH: e2e_cs_json: " + str(e2e_cs_json))
     
     #return e2e_cs_json,200
 
@@ -777,11 +778,11 @@ def terminate_e2e_connectivity_service(cs_uuid):
     e2e_cs_json = db.get_element(cs_uuid, "e2e_cs")
                 
     # distribuïm domain CSs requests
-    settings.logger.debug("cs_list: " + str(e2e_cs_json["domain-cs"]))
+    settings.logger.debug("ORCH: cs_list: " + str(e2e_cs_json["domain-cs"]))
     for cs_item in e2e_cs_json["domain-cs"]:
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
-            settings.logger.debug("Sending domain CS request to the local SDN controller.")
+            settings.logger.debug("ORCH: Sending domain CS request to the local SDN controller.")
             response = sdn_mapper.terminate_connectivity_service(cs_item["uuid"])
             if response[1] == 200 and response[0]["status"] == "TERMINATED":
                 #TODO: update local domain CS information
@@ -804,13 +805,14 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 mutex_e2e_csdb_access.release()
             else:
                 #TODO: manage this error
-                settings.logger.error("ERROR requesting local domain CS.")
+                settings.logger.error("ORCH: ERROR requesting local domain CS.")
                 return e2e_cs_json,400
         else:
+            settings.logger.debug("ORCH: Distribute domain CS request to terminate in the Blockchain.")
             response = bl_mapper.terminate_blockchain_cs(cs_item["address-owner"], cs_item["uuid"])
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
-    settings.logger.debug("Waiting all the domains CS from other domains to be terminated.")
+    settings.logger.debug("ORCH: Waiting all the domains CS from other domains to be terminated.")
     e2e_cs_terminated = False
     while  e2e_cs_terminated == False:
         e2e_cs_terminated = True
@@ -823,34 +825,41 @@ def terminate_e2e_connectivity_service(cs_uuid):
         mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
 
-    
     # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
     response = bl_mapper.get_e2etopology_from_blockchain()
+    print("ORCH: response: " + str(response[0]))
     e2e_topology_json = response[0]
     if e2e_topology_json == "empty":
         return {"msg":"There is no e2e_topology to work with."}
     else:
-        # prepares the intedomain-links to compare the existing with the new ones in the IDL json
+        print("ORCH: e2e_topology_json[e2e-topology][interdomain-links]: " + str(e2e_topology_json["e2e-topology"]["interdomain-links"]))
+        # prepares the interdomain-links to compare the existing with the new ones in the IDL json
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
             linkoptions_list = []
+            print("ORCH: dl_item[link-options]: " + str(idl_item["link-options"]))
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
+                print("ORCH: response: " + str(response))
 
                 phyoptions_list = []
+                print("ORCH: response[0][physical-options]: " + str(response[0]["physical-options"]))
                 for phyoption_uuid_item in response[0]["physical-options"]:
                     response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
                     phyoptions_list.append(response_phy[0]["phyopt_info"])
 
+                print("ORCH: phyoptions_list: " +str(phyoptions_list))
                 response[0]["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
     
-    settings.logger.debug("Updating data objects in DDBBs.")
+    print("ORCH: e2e_topology_json: " + str(e2e_topology_json))
+    print("ORCH: type e2e_topology_json: " + str(type(e2e_topology_json)))
+    settings.logger.debug("ORCH: Updating data objects in DDBBs.")
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
     #settings.logger.debug("Updating available spectrums in the internal NEPs of each SDN Context and the IDLs.")
     for idx, route_item in enumerate(e2e_cs_json["route-nodes"]):
         if route_item["sip_uuid"] == "":
-            settings.logger.debug("Internal NEP: updating the NEP info.")
+            settings.logger.debug("ORCH: Internal NEP: updating the NEP info.")
             # updates the internal NEPsinformation
             # gets the nep info
             requested_uuid = route_item["context_uuid"]+":"+route_item["node_uuid"]+":"+route_item["nep_uuid"]
@@ -864,7 +873,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                     found_index = spec_idx
                     break
             
-            # removes the occupied slot
+            # removes the occupied slot (out of the previous condition to not modify the list while reading it)
             del spec_list[found_index]
 
             requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = spec_list
@@ -872,7 +881,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
 
             occupied_slots = []
             available_slots = []
-            # there only a single element in the "supportable-spectrum" block info.
+            # there is only a single element in the "supportable-spectrum" block info.
             low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
             up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
             supportable_range = []
@@ -904,12 +913,12 @@ def terminate_e2e_connectivity_service(cs_uuid):
             # sends the new info to the BL
             response_update = bl_mapper.update_nep(requested_uuid, requested_nep)
             if response_update[1]!= 200:
-                settings.logger.error("Error when saving updated data object.")
+                settings.logger.error("ORCH: Error when saving updated data object.")
                 pass
         else:
             if idx < (len(e2e_cs_json["route-nodes"])-1):
                 #These NEPs are update in the IDL files and later in their corresponding SIPs in the SDN contexts.
-                settings.logger.debug("NEP belonging to an IDL.")
+                settings.logger.debug("ORCH: NEP belonging to an IDL.")
                 # composes the uuids based on the asbtraction model is being used.
                 if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
                     node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
@@ -956,8 +965,8 @@ def terminate_e2e_connectivity_service(cs_uuid):
                             else:
                                 link_option_item["available-spectrum"] = link_option_item["supportable-spectrum"]
                     if spectrum_removed:
-                        settings.logger.debug("Saving and distributing the updated link-option info.")
-                        settings.logger.debug("link_option_item: " + str(link_option_item))
+                        settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
+                        settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
                         response = bl_mapper.update_link_option(link_option_item)
                         break   
 
@@ -968,7 +977,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
             sip_uuid = route_item["context_uuid"] + ":" + route_item["sip_uuid"]
             response = bl_mapper.get_sip(sip_uuid)
             sip_json = response["sip_info"]
-            settings.logger.debug("SIP to udpate: " + str(sip_json))
+            settings.logger.debug("ORCH: SIP to udpate: " + str(sip_json))
 
             # empties the occupied spectrum info
             sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["occupied-spectrum"] = []
@@ -984,7 +993,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     settings.logger.info("ORCH: E2E CS request processed.")
-    settings.logger.info("e2e_cs_json: " + str(e2e_cs_json))
+    settings.logger.debug("ORCH: e2e_cs_json: " + str(e2e_cs_json))
     
     #return e2e_cs_json,200
     return 200
