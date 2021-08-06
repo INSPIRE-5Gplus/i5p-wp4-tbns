@@ -467,7 +467,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         src = e2e_cs_request["source"]["context_uuid"]+":"+e2e_cs_request["source"]["node_uuid"]
         dst = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["node_uuid"]
     else:
-        settings.logger.info("ORCH: ERROR!!!")
+        settings.logger.info("ORCH: ERROR Creating the uuids to find the physical options in the e2e topology.")
 
     # we find the k-shortest path (K=7)
     route_nodes_list = vl_computation.find_path(src, dst)
@@ -924,13 +924,17 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 #These NEPs are update in the IDL files and later in their corresponding SIPs in the SDN contexts.
                 settings.logger.debug("ORCH: NEP belonging to an IDL.")
                 # composes the uuids based on the asbtraction model is being used.
-                if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
+                if str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
                     node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
                     node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["node_uuid"]
-                else:
+                elif str(os.environ.get("ABSTRACION_MODEL")) == "vlink":
+                    node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
+                    node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["node_uuid"]
+                elif str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
                     node_involved_1 = route_item["context_uuid"]+":"+route_item["context_uuid"]
                     node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["context_uuid"]
-                
+                else:
+                    settings.logger.info("ORCH: ERROR Creating the uuids to find the physical options in the e2e topology.")
                 # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
                 print("node_involved_1: "+str(node_involved_1))
                 print("node_involved_2: "+str(node_involved_2))
