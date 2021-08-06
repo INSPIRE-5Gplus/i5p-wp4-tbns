@@ -150,8 +150,8 @@ def linkoption_to_blockchain(linkoption_json):
 # distributes the physical-options to the BL
 def phyoption_to_blockchain(phyopt_uuid, physicaloption_json):
     phyopt_info = json.dumps(physicaloption_json)
-    settings.logger.info("BLOCKAHIN_MAPPER: phyopt_uuid: " + str(phyopt_uuid))
-    settings.logger.info("BLOCKAHIN_MAPPER: phyopt_info: " + str(phyopt_info))
+    #settings.logger.info("BLOCKAHIN_MAPPER: phyopt_uuid: " + str(phyopt_uuid))
+    #settings.logger.info("BLOCKAHIN_MAPPER: phyopt_info: " + str(phyopt_info))
     tx_hash = settings.transport_contract.functions.addPhyOption(phyopt_uuid, phyopt_info).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
@@ -201,9 +201,9 @@ def get_linkOption_from_blockchain(link_option_uuid):
 # returns a link-option belonging to an IDL from blockchain
 def get_physicalOption_from_blockchain(phy_option_uuid):
     # TODO: IMPROVE this function when solidity will allow to return an array of strings (or multidimensional elements like json).
-    settings.logger.info("BLOCKAHIN_MAPPER: Physical-option uuid: " + str(phy_option_uuid))
+    #settings.logger.info("BLOCKAHIN_MAPPER: Physical-option uuid: " + str(phy_option_uuid))
     response = settings.transport_contract.functions.getPhyOption(phy_option_uuid).call()
-    settings.logger.info("BLOCKAHIN_MAPPER: Physical-option item: " + str(response))
+    #settings.logger.info("BLOCKAHIN_MAPPER: Physical-option item: " + str(response))
     linkoption_json = {}
     linkoption_json["uuid"] = phy_option_uuid
     linkoption_json["phyopt_info"] = json.loads(response)

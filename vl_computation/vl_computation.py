@@ -268,11 +268,12 @@ def find_path(src, dst):
 
   # calculates the route based on the virtual link weights. For the other abstraction models, the edges weight is 1.
   if os.environ.get("ABSTRACION_MODEL") == "vlink":
-    print("Calculating routes for the VLINK")
+    settings.logger.debug("Calculating routes for the VLINK")
     simple_path_list = ([p for p in nx.all_shortest_paths(e2e_topology_graph, source=src, target=dst, weight='weight')])
     simple_path_list.sort(key=len)
   else:
-    simple_path_list = ([p for p in nx.all_simple_paths(e2e_topology_graph, source=src, target=dst)])
+    simple_path_list = ([p for p in nx.all_shortest_paths(e2e_topology_graph, source=src, target=dst)])
+    #simple_path_list = ([p for p in nx.all_simple_paths(e2e_topology_graph, source=src, target=dst)])
     simple_path_list.sort(key=len)
   settings.logger.debug("All the routes: " + str(simple_path_list))
   #if there are less than 20 paths, we take them all.

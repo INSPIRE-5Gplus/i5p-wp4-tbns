@@ -115,7 +115,7 @@ def idl_to_bl(idl_json):
                 for physicaloption_item in linkoption_item["physical-options"]:
                     phyopt_uuid = linkoption_item["uuid"] + ":" + str(uuid.uuid4())
                     response = bl_mapper.phyoption_to_blockchain(phyopt_uuid, physicaloption_item)
-                    settings.logger.info("ORCH: Sending phyoption with id: " + str(phyopt_uuid))
+                    #settings.logger.debug("ORCH: Sending phyoption with id: " + str(phyopt_uuid))
                     physicaloptionsuuid_list.append(phyopt_uuid)
                 
                 linkoption_item["physical-options"] = physicaloptionsuuid_list
@@ -155,7 +155,7 @@ def idl_to_bl(idl_json):
                     for physicaloption_item in linkoption_item["physical-options"]:
                         phyopt_uuid = linkoption_item["uuid"] + ":" + str(uuid.uuid4())
                         response = bl_mapper.phyoption_to_blockchain(phyopt_uuid, physicaloption_item)
-                        settings.logger.info("ORCH: Sending phyoption with id: " + str(phyopt_uuid))
+                        #settings.logger.debug("ORCH: Sending phyoption with id: " + str(phyopt_uuid))
                         physicaloptionsuuid_list.append(phyopt_uuid)
                     
                     linkoption_item["physical-options"] = physicaloptionsuuid_list
@@ -422,17 +422,17 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         return {"msg":"There is no e2e_topology to work with."}
     else:
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
-        settings.logger.info("ORCH: Getting link-options.")
+        settings.logger.debug("ORCH: Getting link-options.")
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
-                settings.logger.info("ORCH: response: " + str(response))
+                #settings.logger.info("ORCH: response: " + str(response))
                 phyoptions_list = []
                 for phyoption_uuid_item in response[0]["physical-options"]:
-                    settings.logger.info("ORCH: phyopt_uuid: " + str(phyoption_uuid_item))
+                    #settings.logger.info("ORCH: phyopt_uuid: " + str(phyoption_uuid_item))
                     response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
-                    settings.logger.info("ORCH: response_phy: " + str(response_phy))
+                    #settings.logger.info("ORCH: response_phy: " + str(response_phy))
                     phyoptions_list.append(response_phy[0]["phyopt_info"])
 
                 response[0]["physical-options"] = phyoptions_list
