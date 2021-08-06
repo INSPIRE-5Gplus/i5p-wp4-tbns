@@ -220,15 +220,29 @@ def update_e2e_topology(e2e_topo):
 # updates the specified link-option in the e2e_topology (set of IDLs)
 def update_link_option(linkoption_json):
     id = linkoption_json["uuid"]
-    dir = linkoption_json["direction"]
-    nodesdir = json.dumps(linkoption_json["nodes-direction"])
-    lpn = json.dumps(linkoption_json["layer-protocol-name"])
-    phyopt = json.dumps(linkoption_json["physical-options"])
-    sup = json.dumps(linkoption_json["supportable-spectrum"])
+    #dir = linkoption_json["direction"]
+    #nodesdir = json.dumps(linkoption_json["nodes-direction"])
+    #lpn = json.dumps(linkoption_json["layer-protocol-name"])
+    #phyopt = json.dumps(linkoption_json["physical-options"])
+    #sup = json.dumps(linkoption_json["supportable-spectrum"])
     av = json.dumps(linkoption_json["available-spectrum"])
     
     # generates transaction
-    tx_hash = settings.transport_contract.functions.updateLinkOption(id, dir, nodesdir, lpn, phyopt, sup, av).transact()
+    tx_hash = settings.transport_contract.functions.updateLinkOption(id, av).transact()
+    # Wait for transaction to be mined and check it's in the blockchain (get)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    
+    msg = {}
+    msg["msg"] = "Everything OK"
+        
+    return msg, 200
+
+# updates the specified physical-option in the e2e_topology (set of IDls)
+def update_physical_option(phyopt_uuid, phyopt_json):
+    phyopt = json.dumps(phyopt_json)
+    
+    # generates transaction
+    tx_hash = settings.transport_contract.functions.updatePhyOption(phyopt_uuid, phyopt).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     

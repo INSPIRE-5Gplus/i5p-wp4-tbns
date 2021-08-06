@@ -114,6 +114,7 @@ def idl_to_bl(idl_json):
                 physicaloptionsuuid_list = []
                 for physicaloption_item in linkoption_item["physical-options"]:
                     phyopt_uuid = linkoption_item["uuid"] + ":" + str(uuid.uuid4())
+                    physicaloption_item["uuid"] = phyopt_uuid
                     response = bl_mapper.phyoption_to_blockchain(phyopt_uuid, physicaloption_item)
                     #settings.logger.debug("ORCH: Sending phyoption with id: " + str(phyopt_uuid))
                     physicaloptionsuuid_list.append(phyopt_uuid)
@@ -154,6 +155,7 @@ def idl_to_bl(idl_json):
                     physicaloptionsuuid_list = []
                     for physicaloption_item in linkoption_item["physical-options"]:
                         phyopt_uuid = linkoption_item["uuid"] + ":" + str(uuid.uuid4())
+                        physicaloption_item["uuid"] = phyopt_uuid
                         response = bl_mapper.phyoption_to_blockchain(phyopt_uuid, physicaloption_item)
                         #settings.logger.debug("ORCH: Sending phyoption with id: " + str(phyopt_uuid))
                         physicaloptionsuuid_list.append(phyopt_uuid)
@@ -688,6 +690,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                                         new_occupied_list = []
                                         new_occupied_list.append(new_ocuppied_item)
                                         physical_option_item["occupied-spectrum"] = new_occupied_list
+                                        response = bl_mapper.update_physical_option(physical_option_item["uuid"], physical_option_item)
                                         spectrum_added = True
 
                                     if physical_option_item["occupied-spectrum"] != []:
@@ -715,6 +718,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                     if spectrum_added:
                         #settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
                         #settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
+                        #used to update only the available-spectrum the other keys will never bemodified.
                         response = bl_mapper.update_link_option(link_option_item)
                         break   
         else:
@@ -938,6 +942,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                                     # IDL physical-option being used found
                                     if physical_option_item["node-edge-point"][0]["nep-uuid"] == route_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == route_item[idx+1]["nep_uuid"]:
                                         physical_option_item["occupied-spectrum"] = []
+                                        response = bl_mapper.update_physical_option(physical_option_item["uuid"], physical_option_item)
                                         spectrum_removed = True
                                     # the other occupied spectrums are added (if there are) to calculate the IDL available spectrum
                                     if physical_option_item["occupied-spectrum"] != []:
@@ -967,6 +972,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                     if spectrum_removed:
                         settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
                         settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
+                        #used to update only the available-spectrum the other keys will never bemodified.
                         response = bl_mapper.update_link_option(link_option_item)
                         break   
 

@@ -1,5 +1,5 @@
 {
-    "contract_address":"0x1b58CA3B3b27AA66D63EA27166beE8B17f5d8689",
+    "contract_address":"0xBe9e9f75c765A0D5a7d08614577CEFdCe3a2b1F3",
     "abi":[
         {
             "anonymous": false,
@@ -1140,31 +1140,6 @@
                 },
                 {
                     "internalType": "string",
-                    "name": "_dir",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_nodesdir",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_lpn",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_phyopt",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_sup",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
                     "name": "_av",
                     "type": "string"
                 }
@@ -1194,6 +1169,30 @@
                 }
             ],
             "name": "updateNep",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_id",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_phyopt_info",
+                    "type": "string"
+                }
+            ],
+            "name": "updatePhyOption",
             "outputs": [
                 {
                     "internalType": "bool",

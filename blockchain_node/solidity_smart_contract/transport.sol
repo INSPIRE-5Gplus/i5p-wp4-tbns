@@ -162,15 +162,21 @@ contract transport {
         e2e_topology = _e2e_topology;
         return true;
     }
-    // update a link-option
-    function updateLinkOption(string memory _id, string memory _dir, string memory _nodesdir, string memory _lpn, string memory _phyopt, string memory _sup, string memory _av) public returns (bool){
+    // update a link-option available-spectrum inof, the other params will never be modified.
+    function updateLinkOption(string memory _id, string memory _av) public returns (bool){
         //the _id is a composition of the context uuid, the node uuid and the nep uuid
-        linkOptions_list[_id].direction = _dir;
-        linkOptions_list[_id].nodes_direction = _nodesdir;
-        linkOptions_list[_id].lay_prot_name = _lpn;
-        linkOptions_list[_id].physical_options = _phyopt;
-        linkOptions_list[_id].sup_spectrum = _sup;
+        //linkOptions_list[_id].direction = _dir;
+        //linkOptions_list[_id].nodes_direction = _nodesdir;
+        //linkOptions_list[_id].lay_prot_name = _lpn;
+        //linkOptions_list[_id].physical_options = _phyopt;
+        //linkOptions_list[_id].sup_spectrum = _sup;
         linkOptions_list[_id].av_spectrum = _av;
+        return true;
+    }
+    // adds a new physical-option fo the e2e topology
+    function updatePhyOption(string memory _id, string memory _phyopt_info) public returns (bool){
+        physicalOptions_list[_id].phyopt_info = _phyopt_info;
+        
         return true;
     }
 
