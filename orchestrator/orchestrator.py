@@ -926,13 +926,13 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 # composes the uuids based on the asbtraction model is being used.
                 if str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
                     node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
-                    node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["node_uuid"]
+                    node_involved_2 = e2e_cs_json["route-nodes"][idx+1]["context_uuid"]+":"+e2e_cs_json["route-nodes"][idx+1]["node_uuid"]
                 elif str(os.environ.get("ABSTRACION_MODEL")) == "vlink":
                     node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
-                    node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["node_uuid"]
+                    node_involved_2 = e2e_cs_json["route-nodes"][idx+1]["context_uuid"]+":"+e2e_cs_json["route-nodes"][idx+1]["node_uuid"]
                 elif str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
                     node_involved_1 = route_item["context_uuid"]+":"+route_item["context_uuid"]
-                    node_involved_2 = route_item[idx+1]["context_uuid"]+":"+route_item[idx+1]["context_uuid"]
+                    node_involved_2 = e2e_cs_json["route-nodes"][idx+1]["context_uuid"]+":"+e2e_cs_json["route-nodes"][idx+1]["context_uuid"]
                 else:
                     settings.logger.info("ORCH: ERROR Creating the uuids to find the physical options in the e2e topology.")
                 # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
