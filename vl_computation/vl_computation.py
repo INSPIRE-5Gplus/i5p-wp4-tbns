@@ -532,10 +532,23 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   sip_item["blockchain_owner"] = response_json["owner"]
   route_sips.insert(0, sip_item)
   
+  response_json = bl_mapper.get_node(e2e_cs_request["source"]["context_uuid"], e2e_cs_request["source"]["node_uuid"])
+  found_nep = False
+  for node_item in response_json:
+    for nep_item in node_item["owned-node-edge-point"]:
+      for sip_item2 in nep_item["mapped-service-interface-point"]:
+        if sip_item2["service-interface-point-uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+          nep_uuid = nep_item["uuid"]
+          found_nep = True
+          break
+      if found_nep == True:
+        break
+    if found_nep == True:
+      break
   route_node_item = {}
-  route_node_item["context_uuid"] = route_neps[0]["context_uuid"]
-  route_node_item["node_uuid"] = route_neps[0]["node_uuid"]
-  route_node_item["nep_uuid"] = route_neps[0]["nep_uuid"]
+  route_node_item["context_uuid"] = e2e_cs_request["source"]["context_uuid"]
+  route_node_item["node_uuid"] = e2e_cs_request["source"]["node_uuid"]
+  route_node_item["nep_uuid"] = nep_uuid
   route_node_item["sip_uuid"] = e2e_cs_request["source"]["sip_uuid"]
   route_nodes_info.insert(0, route_node_item)
   
@@ -551,7 +564,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   new_spectrum["available-spectrum"] = available_spec_list
   route_spectrum.insert(0, new_spectrum)
   
-  
   # adds the last SIP in the route_sips, the info in the nodes route and the spectrum info
   #print("Adding the last sip")
   sip_uuid = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["sip_uuid"]
@@ -561,12 +573,24 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   sip_item["blockchain_owner"] = response_json["owner"]
   route_sips.append(sip_item)
   
-  size_neps = len(route_neps)
+  response_json = bl_mapper.get_node(e2e_cs_request["destination"]["context_uuid"], e2e_cs_request["destination"]["node_uuid"])
+  found_nep = False
+  for node_item in response_json:
+    for nep_item in node_item["owned-node-edge-point"]:
+      for sip_item2 in nep_item["mapped-service-interface-point"]:
+        if sip_item2["service-interface-point-uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+          nep_uuid = nep_item["uuid"]
+          found_nep = True
+          break
+      if found_nep == True:
+        break
+    if found_nep == True:
+      break
   route_node_item = {}
-  route_node_item["context_uuid"] = route_neps[size_neps-1]["context_uuid"]
-  route_node_item["node_uuid"] = route_neps[size_neps-1]["node_uuid"]
-  route_node_item["nep_uuid"] = route_neps[size_neps-1]["nep_uuid"]
-  route_node_item["sip_uuid"] = e2e_cs_request["source"]["sip_uuid"]
+  route_node_item["context_uuid"] = e2e_cs_request["destination"]["context_uuid"]
+  route_node_item["node_uuid"] = e2e_cs_request["destination"]["node_uuid"]
+  route_node_item["nep_uuid"] = nep_uuid
+  route_node_item["sip_uuid"] = e2e_cs_request["destination"]["sip_uuid"]
   route_nodes_info.append(route_node_item)
   
   # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
