@@ -533,11 +533,18 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_sips.insert(0, sip_item)
   
   response_json = bl_mapper.get_node(e2e_cs_request["source"]["context_uuid"], e2e_cs_request["source"]["node_uuid"])
+  print("response_json: "+str(response_json))
   found_nep = False
   for node_item in response_json:
+    print("node_item: "+str(node_item))
     for nep_item in node_item["owned-node-edge-point"]:
+      print("nep_item: "+str(nep_item))
       for sip_item2 in nep_item["mapped-service-interface-point"]:
+        print("sip_item2: "+str(sip_item2))
+        print("sip_item2[service-interface-point-uuid]: "+str(sip_item2["service-interface-point-uuid"]))
+        print("e2e_cs_request[source][sip_uuid]: " +str(e2e_cs_request["source"]["sip_uuid"]))
         if sip_item2["service-interface-point-uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+          print("nep_item[uuid]: "+str(nep_item["uuid"]))
           nep_uuid = nep_item["uuid"]
           found_nep = True
           break
@@ -545,6 +552,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
         break
     if found_nep == True:
       break
+  print("nep_uuid: "+ str(nep_uuid))
   route_node_item = {}
   route_node_item["context_uuid"] = e2e_cs_request["source"]["context_uuid"]
   route_node_item["node_uuid"] = e2e_cs_request["source"]["node_uuid"]
@@ -578,7 +586,10 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   for node_item in response_json:
     for nep_item in node_item["owned-node-edge-point"]:
       for sip_item2 in nep_item["mapped-service-interface-point"]:
-        if sip_item2["service-interface-point-uuid"] == e2e_cs_request["source"]["sip_uuid"]:
+        print("sip_item2: "+str(sip_item2))
+        print("sip_item2[service-interface-point-uuid]: "+str(sip_item2["service-interface-point-uuid"]))
+        print("e2e_cs_request[source][sip_uuid]: " +str(e2e_cs_request["destination"]["sip_uuid"]))
+        if sip_item2["service-interface-point-uuid"] == e2e_cs_request["destination"]["sip_uuid"]:
           nep_uuid = nep_item["uuid"]
           found_nep = True
           break
