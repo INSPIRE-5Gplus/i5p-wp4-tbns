@@ -763,8 +763,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             available_slots_json.append(new_available_item)
         sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
         response = bl_mapper.update_sip(sip_uuid, sip_json) 
-        response = bl_mapper.get_sip(sip_uuid)
-        settings.logger.debug("ORCH: SIP updated: " + str(response["sip_info"]))
 
     # saves the e2e_cs data object to confirm full deployment.
     e2e_cs_json["status"]  = "DEPLOYED"
@@ -833,27 +831,21 @@ def terminate_e2e_connectivity_service(cs_uuid):
 
     # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
     response = bl_mapper.get_e2etopology_from_blockchain()
-    print("ORCH: response: " + str(response[0]))
     e2e_topology_json = response[0]
     if e2e_topology_json == "empty":
         return {"msg":"There is no e2e_topology to work with."}
     else:
-        print("ORCH: e2e_topology_json[e2e-topology][interdomain-links]: " + str(e2e_topology_json["e2e-topology"]["interdomain-links"]))
         # prepares the interdomain-links to compare the existing with the new ones in the IDL json
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
             linkoptions_list = []
-            print("ORCH: dl_item[link-options]: " + str(idl_item["link-options"]))
             for linkoption_uuid_item in idl_item["link-options"]:
                 response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
-                print("ORCH: response: " + str(response))
 
                 phyoptions_list = []
-                print("ORCH: response[0][physical-options]: " + str(response[0]["physical-options"]))
                 for phyoption_uuid_item in response[0]["physical-options"]:
                     response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
                     phyoptions_list.append(response_phy[0]["phyopt_info"])
 
-                print("ORCH: phyoptions_list: " +str(phyoptions_list))
                 response[0]["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
@@ -879,7 +871,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
             print("spec_list: "+str(spec_list))
 
             for spec_idx, spectrum_item in enumerate(spec_list):
-                if spectrum_item["lower-frequency"] == e2e_cs_json["spectrumm"]["lower-frequency"] and spectrum_item["upper-frequency"] == e2e_cs_json["spectrum"]["upper-frequency"]:
+                if spectrum_item["lower-frequency"] == e2e_cs_json["spectrum"]["lower-frequency"] and spectrum_item["upper-frequency"] == e2e_cs_json["spectrum"]["upper-frequency"]:
                     found_index = spec_idx
                     break
             
