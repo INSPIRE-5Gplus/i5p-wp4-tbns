@@ -762,7 +762,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             new_available_item["upper-frequency"] = slot_item[1]
             available_slots_json.append(new_available_item)
         sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
-        response = bl_mapper.update_sip(sip_uuid, sip_json)  
+        response = bl_mapper.update_sip(sip_uuid, sip_json) 
+        response = bl_mapper.get_sip(sip_uuid)
+        settings.logger.debug("ORCH: SIP updated: " + str(response["sip_info"]))
 
     # saves the e2e_cs data object to confirm full deployment.
     e2e_cs_json["status"]  = "DEPLOYED"
@@ -868,10 +870,13 @@ def terminate_e2e_connectivity_service(cs_uuid):
             # updates the internal NEPsinformation
             # gets the nep info
             requested_uuid = route_item["context_uuid"]+":"+route_item["node_uuid"]+":"+route_item["nep_uuid"]
+            print("requested_uuid: " + str(requested_uuid))
             requested_nep = bl_mapper.get_nep(requested_uuid)
+            print("requested_nep: "+str(requested_nep))
             
             # modifies the occupied-spectrum key
             spec_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
+            print("spec_list: "+str(spec_list))
 
             for spec_idx, spectrum_item in enumerate(spec_list):
                 if spectrum_item["lower-frequency"] == e2e_cs_json["spectrumm"]["lower-frequency"] and spectrum_item["upper-frequency"] == e2e_cs_json["spectrum"]["upper-frequency"]:
@@ -880,24 +885,30 @@ def terminate_e2e_connectivity_service(cs_uuid):
             
             # removes the occupied slot (out of the previous condition to not modify the list while reading it)
             del spec_list[found_index]
-
             requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = spec_list
-            # modifies the value in the available-spectrum key in the nep info
+            print("requested_nep: "+str(requested_nep))
 
+            # modifies the value in the available-spectrum key in the nep info
             occupied_slots = []
             available_slots = []
             # there is only a single element in the "supportable-spectrum" block info.
             low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
             up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
+            print("low_suportable: "+str(low_suportable))
+            print("up_suportable: "+str(up_suportable))
             supportable_range = []
             supportable_range.append(low_suportable)
             supportable_range.append(up_suportable)
+            print("supportable_range: "+str(supportable_range))
             occupied_spectrum = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
+            print("occupied_spectrum: "+str(occupied_spectrum))
             if occupied_spectrum != []:
                 for spectrum_item in occupied_spectrum:
                     occupied_slots.append([spectrum_item["lower-frequency"],spectrum_item["upper-frequency"]])
+                print("occupied_slots: "+str(occupied_slots))
             if occupied_slots != []:
                 available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
+                print("available_slots: "+str(available_slots))
                 available_slots_json = []
                 for slot_item in available_slots:
                     #append pair of available frequency slots to the list
@@ -910,10 +921,12 @@ def terminate_e2e_connectivity_service(cs_uuid):
                     new_available_item["upper-frequency"] = slot_item[1]
                     available_slots_json.append(new_available_item)
                 requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
+                print("requested_nep: "+str(requested_nep))
             else:
                 # if no occupied slots, then available equals supportable
                 av_spec = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]
                 requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = av_spec
+                print("requested_nep: "+str(requested_nep))
             
             # sends the new info to the BL
             response_update = bl_mapper.update_nep(requested_uuid, requested_nep)

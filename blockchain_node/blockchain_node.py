@@ -447,7 +447,7 @@ def get_sip(index):
 # updates a specific NEP info in the BL
 def update_sip(sip_id, sip_json):
     sip_string = json.dumps(sip_json)
-    tx_hash = settings.transport_contract.functions.updateNep(sip_id, sip_string).transact()
+    tx_hash = settings.transport_contract.functions.updateSip(sip_id, sip_string).transact()
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     return sip_id, 200
 
