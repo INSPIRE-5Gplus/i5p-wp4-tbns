@@ -870,6 +870,11 @@ def terminate_e2e_connectivity_service(cs_uuid):
             spec_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
             print("spec_list: "+str(spec_list))
 
+            #only thos NEPs being input will enter in this if as there's no need to update their occupied spectrum.
+            if spec_list == []:
+                # no need to do anything, let's go for the next NEP.
+                continue
+
             for spec_idx, spectrum_item in enumerate(spec_list):
                 if spectrum_item["lower-frequency"] == e2e_cs_json["spectrum"]["lower-frequency"] and spectrum_item["upper-frequency"] == e2e_cs_json["spectrum"]["upper-frequency"]:
                     found_index = spec_idx
