@@ -857,7 +857,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
             idl_item["link-options"] = linkoptions_list
     
     print("ORCH: e2e_topology_json: " + str(e2e_topology_json))
-    print("ORCH: type e2e_topology_json: " + str(type(e2e_topology_json)))
+    print("ORCH: e2e_cs_json: " + str(e2e_cs_json))
     settings.logger.debug("ORCH: Updating data objects in DDBBs.")
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
     #settings.logger.debug("Updating available spectrums in the internal NEPs of each SDN Context and the IDLs.")
@@ -945,6 +945,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                     if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
                         print("idl_item[link-options]: "+str(idl_item["link-options"]))
                         for link_option_item in idl_item["link-options"]:
+                            print("link_option_item: " + str(link_option_item))
                             if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
                                 print("link_option_item[physical-options]: "+str(link_option_item["physical-options"]))
                                 for physical_option_item in link_option_item["physical-options"]:
@@ -1004,6 +1005,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
             # no CS means available spectrum euqal to the supportable
             sup_spectrum = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["supportable-spectrum"]
             sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]["available-spectrum"] = sup_spectrum
+            settings.logger.debug("ORCH: Updated SIP: " + str(sip_json))
             response = bl_mapper.update_sip(sip_uuid, sip_json)  
 
     # saves the e2e_cs data object to confirm full deployment.
