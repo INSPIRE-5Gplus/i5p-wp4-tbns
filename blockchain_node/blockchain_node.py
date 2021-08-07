@@ -453,12 +453,9 @@ def update_sip(sip_id, sip_json):
 
 # gets a complete NODe info
 def get_node(context_uuid, node_uuid):
-    print("BL-  context_uuid: "+str(context_uuid))
-    print("BL - node_uuid: "+str(node_uuid))
     # the nodes info comes in a 2-step process, first the node and then its neps
     node_ref = context_uuid+":"+node_uuid
     node_response = settings.transport_contract.functions.getNode(node_ref).call()
-    print("BL - node_response: "+str(node_response))
     node_element = {}
     node_element["uuid"] = node_uuid
     node_element["name"] = json.loads(node_response[0])
@@ -469,7 +466,6 @@ def get_node(context_uuid, node_uuid):
         nep_esponse = settings.transport_contract.functions.getNep(nep_ref).call()
         string_neps_list.append(json.loads(nep_esponse))
     node_element["owned-node-edge-point"] = string_neps_list
-    print("BL - node_item: "+str(node_element))
     return node_element
 
 # returns a specific NEP info
