@@ -509,7 +509,7 @@ def get_nepBL(nep_uuid):
 
 # get E2E topology (from BL)
 @app.route('/pdl-transport/e2e-topology', methods=['GET'])
-def get_nepBL():
+def get_e2etopologyBL():
   # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
   response = bl_mapper.get_e2etopology_from_blockchain()
   e2e_topology_json = response[0]
