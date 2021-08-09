@@ -275,7 +275,7 @@ def find_path(src, dst):
     #simple_path_list = ([p for p in nx.all_shortest_paths(e2e_topology_graph, source=src, target=dst)])
     simple_path_list = ([p for p in nx.all_simple_paths(e2e_topology_graph, source=src, target=dst)])
     simple_path_list.sort(key=len)
-  settings.logger.debug("VL_COMP: All the routes: " + str(simple_path_list))
+  #settings.logger.debug("VL_COMP: All the routes: " + str(simple_path_list))
   #if there are less than 20 paths, we take them all.
   if len(simple_path_list) < K:
     K = len(simple_path_list)

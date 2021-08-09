@@ -443,7 +443,7 @@ Example E2E_CS request
     }
   }
 """
-# requests a CS based on a set of two SIPs and a capacity
+# deploy E2E CS (use E2E_CS request defined above)
 @app.route('/pdl-transport/connectivity_service', methods=['POST'])
 def request_e2e_cs():
   settings.logger.info('Received E2E CS deployment request.')
@@ -473,7 +473,7 @@ def request_e2e_cs():
   response['log'] = "Request accepted, creating the E2E CS."
   return response, 200
 
-# TODO: get E2E CSs
+# get E2E CSs
 # requests all the E2E CS data objects
 @app.route('/pdl-transport/connectivity_service', methods=['GET'])
 def get_all_e2e_cs():
@@ -486,7 +486,7 @@ def get_e2e_cs(cs_uuid):
   e2e_cs_json = db.get_element(cs_uuid, "e2e_cs")
   return json.dumps(e2e_cs_json), 200
 
-# TODO: terminate E2E CS
+# terminate E2E CS
 @app.route('/pdl-transport/connectivity_service/terminate/<cs_uuid>', methods=['POST'])
 def request_terminate_e2e_cs(cs_uuid):
   settings.logger.info('Received E2E CS terminate request.')
@@ -494,6 +494,43 @@ def request_terminate_e2e_cs(cs_uuid):
   response = {}
   response['log'] = "Request accepted, terminating the E2E CS with id: ." + str(cs_uuid)
   return response, 200
+
+# get SIP info (from BL)
+@app.route('/pdl-transport/sip/<sip_uuid>', methods=['GET'])
+def get_sipBL(sip_uuid):
+  response = bl_mapper.get_sip(sip_uuid)
+  return response, 200
+
+# get NEP info (from BL)
+@app.route('/pdl-transport/nep/<nep_uuid>', methods=['GET'])
+def get_nepBL(nep_uuid):
+  response = bl_mapper.get_nep(nep_uuid)
+  return response, 200
+
+# get E2E topology (from BL)
+@app.route('/pdl-transport/e2e-topology', methods=['GET'])
+def get_nepBL():
+  # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
+  response = bl_mapper.get_e2etopology_from_blockchain()
+  e2e_topology_json = response[0]
+  if e2e_topology_json == "empty":
+      return {"msg":"There is no e2e_topology to work with."}
+  else:
+      # prepares the interdomain-links to compare the existing with the new ones in the IDL json
+      for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
+          linkoptions_list = []
+          for linkoption_uuid_item in idl_item["link-options"]:
+              response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
+
+              phyoptions_list = []
+              for phyoption_uuid_item in response[0]["physical-options"]:
+                  response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
+                  phyoptions_list.append(response_phy[0]["phyopt_info"])
+
+              response[0]["physical-options"] = phyoptions_list
+              linkoptions_list.append(response[0])
+          idl_item["link-options"] = linkoptions_list
+  return e2e_topology_json, 200
 
 #####################################################################################################
 #######################               MAIN SERVER FUNCTION                    #######################
