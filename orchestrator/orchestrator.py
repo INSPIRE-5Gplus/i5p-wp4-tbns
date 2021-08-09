@@ -952,18 +952,14 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 occupied_slots = []
                 for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
                     spectrum_removed = False
-                    print("idl_item[nodes-involved]: "+ str(idl_item["nodes-involved"]))
                     if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
-                        print("idl_item[link-options]: "+str(idl_item["link-options"]))
                         for link_option_item in idl_item["link-options"]:
-                            print("link_option_item: " + str(link_option_item))
                             if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
-                                print("link_option_item[physical-options]: "+str(link_option_item["physical-options"]))
                                 for physical_option_item in link_option_item["physical-options"]:
                                     # IDL physical-option being used found
                                     print(str(physical_option_item["node-edge-point"][0]["nep-uuid"]) +" - "+ str(physical_option_item["node-edge-point"][1]["nep-uuid"]))
-                                    print(str(route_item["nep_uuid"]) +" - "+ str(route_item[idx+1]["nep_uuid"]))
-                                    if physical_option_item["node-edge-point"][0]["nep-uuid"] == route_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == route_item[idx+1]["nep_uuid"]:
+                                    print(str(route_item["nep_uuid"]) +" - "+ str(route_nodes_list[idx+1]["nep_uuid"]))
+                                    if physical_option_item["node-edge-point"][0]["nep-uuid"] == route_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == route_nodes_list[idx+1]["nep_uuid"]:
                                         physical_option_item["occupied-spectrum"] = []
                                         print("Updating Physical option: " + str(physical_option_item))
                                         response = bl_mapper.update_physical_option(physical_option_item["uuid"], physical_option_item)
