@@ -862,13 +862,13 @@ def terminate_e2e_connectivity_service(cs_uuid):
             # updates the internal NEPsinformation
             # gets the nep info
             requested_uuid = route_item["context_uuid"]+":"+route_item["node_uuid"]+":"+route_item["nep_uuid"]
-            print("requested_uuid: " + str(requested_uuid))
+            #settings.logger.debug("requested_uuid: " + str(requested_uuid))
             requested_nep = bl_mapper.get_nep(requested_uuid)
-            print("requested_nep: "+str(requested_nep))
+            #settings.logger.debug("requested_nep: "+str(requested_nep))
             
             # modifies the occupied-spectrum key
             spec_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
-            print("spec_list: "+str(spec_list))
+            #settings.logger.debug("spec_list: "+str(spec_list))
 
             #only thos NEPs being input will enter in this if as there's no need to update their occupied spectrum.
             if spec_list == []:
@@ -883,7 +883,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
             # removes the occupied slot (out of the previous condition to not modify the list while reading it)
             del spec_list[found_index]
             requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = spec_list
-            print("requested_nep: "+str(requested_nep))
+            #settings.logger.debug("requested_nep: "+str(requested_nep))
 
             # modifies the value in the available-spectrum key in the nep info
             occupied_slots = []
@@ -891,21 +891,21 @@ def terminate_e2e_connectivity_service(cs_uuid):
             # there is only a single element in the "supportable-spectrum" block info.
             low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
             up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
-            print("low_suportable: "+str(low_suportable))
-            print("up_suportable: "+str(up_suportable))
+            #settings.logger.debug("low_suportable: "+str(low_suportable))
+            #settings.logger.debug("up_suportable: "+str(up_suportable))
             supportable_range = []
             supportable_range.append(low_suportable)
             supportable_range.append(up_suportable)
-            print("supportable_range: "+str(supportable_range))
+            #settings.logger.debug("supportable_range: "+str(supportable_range))
             occupied_spectrum = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
-            print("occupied_spectrum: "+str(occupied_spectrum))
+            #settings.logger.debug("occupied_spectrum: "+str(occupied_spectrum))
             if occupied_spectrum != []:
                 for spectrum_item in occupied_spectrum:
                     occupied_slots.append([spectrum_item["lower-frequency"],spectrum_item["upper-frequency"]])
-                print("occupied_slots: "+str(occupied_slots))
+                #settings.logger.debug("occupied_slots: "+str(occupied_slots))
             if occupied_slots != []:
                 available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
-                print("available_slots: "+str(available_slots))
+                #settings.logger.debug("available_slots: "+str(available_slots))
                 available_slots_json = []
                 for slot_item in available_slots:
                     #append pair of available frequency slots to the list
@@ -918,12 +918,12 @@ def terminate_e2e_connectivity_service(cs_uuid):
                     new_available_item["upper-frequency"] = slot_item[1]
                     available_slots_json.append(new_available_item)
                 requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
-                print("requested_nep: "+str(requested_nep))
+                #settings.logger.debug("requested_nep: "+str(requested_nep))
             else:
                 # if no occupied slots, then available equals supportable
                 av_spec = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]
                 requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = av_spec
-                print("requested_nep: "+str(requested_nep))
+                #settings.logger.debug("requested_nep: "+str(requested_nep))
             
             # sends the new info to the BL
             response_update = bl_mapper.update_nep(requested_uuid, requested_nep)
@@ -990,14 +990,14 @@ def terminate_e2e_connectivity_service(cs_uuid):
                             else:
                                 #settings.logger.debug("link_option_item[supportable-spectrum]: "+str(link_option_item["supportable-spectrum"]))
                                 link_option_item["available-spectrum"] = link_option_item["supportable-spectrum"]
+                                break
                     if spectrum_removed:
                         #settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
                         #settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
-                        #used to update only the available-spectrum the other keys will never bemodified.
+                        # used to update only the available-spectrum the other keys will never be modified.
                         response = bl_mapper.update_link_option(link_option_item)
                         break   
 
-    
             # update the spectrum information for each SIP used in the route
             #settings.logger.debug("Updating available spectrums in the SIPs of each SDN Context.")
             # gets the sip element from the BL

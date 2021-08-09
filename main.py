@@ -495,17 +495,19 @@ def request_terminate_e2e_cs(cs_uuid):
   response['log'] = "Request accepted, terminating the E2E CS with id: ." + str(cs_uuid)
   return response, 200
 
+
+#TODO: [link-option][available-spectrum] update when temrinated CS.
 # get SIP info (from BL)
 @app.route('/pdl-transport/sip/<sip_uuid>', methods=['GET'])
 def get_sipBL(sip_uuid):
   response = bl_mapper.get_sip(sip_uuid)
-  return response, 200
+  return str(response), 200
 
 # get NEP info (from BL)
 @app.route('/pdl-transport/nep/<nep_uuid>', methods=['GET'])
 def get_nepBL(nep_uuid):
   response = bl_mapper.get_nep(nep_uuid)
-  return response, 200
+  return str(response), 200
 
 # get E2E topology (from BL)
 @app.route('/pdl-transport/e2e-topology', methods=['GET'])
