@@ -44,7 +44,7 @@ def get_slice_subnet_instance(instance_ID):
 
 # sends request to deploy a slice-subnet template (NST) to the NSM
 def instantiate_slice_subnet(data_json):
-    settings.logger.info('SUBNET_MAPPER: Starts local deployment (TIME 2): ' + str(time.time_ns()))
+    #settings.logger.info('SUBNET_MAPPER: Starts local deployment (TIME 2): ' + str(time.time_ns()))
     settings.logger.info("SUBNET_MAPPER: Requests local slice-subnet deployment.")
     data_dumps = json.dumps(data_json)  
     url = get_nsm_url() + "/requests"

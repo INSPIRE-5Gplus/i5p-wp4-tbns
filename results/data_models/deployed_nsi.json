@@ -1,0 +1,89 @@
+[
+    {
+        "name": "template_test",
+        "slice_subnets":[
+            {
+                "nst_ref": "9a5f9644-bd3c-492f-b96c-2c679f920207"
+            },
+            {
+                "nst_ref": "3011346f-a394-498a-ae5e-8bfdd6ab772b"
+            }
+        ],
+        "instantiation_params":{
+            "slice_vl":[
+                {
+                    "nst_ref_src": "9a5f9644-bd3c-492f-b96c-2c679f920207",
+                    "nst_ref_dst": "3011346f-a394-498a-ae5e-8bfdd6ab772b",
+                    "direction": "bidirectional"
+                }
+            ]
+        }
+    },
+    {
+        "id": "a42cbdb0-be7c-4fdd-a72d-05adf71a4b13",
+        "log": "E2E Network Slice INSTANTIATED.",
+        "name": "template_test",
+        "status": "INSTANTIATED",
+        "slice_subnets": [
+            {
+                "blockchain_owner": "0x0EF37a13111ff512C6E3ddDdd631070493F900e8",
+                "id": "0e8a5037-9387-4685-8594-fe0260211eb0",
+                "log": "Slice-subnet (from another domain) INSTANTIATED.",
+                "name": "NST_3subnets",
+                "nst_ref": "9a5f9644-bd3c-492f-b96c-2c679f920207",
+                "price": 1,
+                "status": "INSTANTIATED",
+                "unit": "eth",
+                "vendor": "5GTango",
+                "version": "3.0",
+                "nvficp_cidr": "10.121.0.0/24",
+                "nfvicp_sip": "Core:1"
+            },
+            {
+                    "id": "6757ef15-4da4-4269-b0c5-b9ce0ba5860e",
+                "instance_id": "54087628-9609-45d1-90c0-b8baa1df2547",
+                "log": "Slice_subnet instantiated.",
+                "name": "NST_3subnets",
+                "nst_ref": "3011346f-a394-498a-ae5e-8bfdd6ab772b",
+                "price": 4,
+                "request_id": "26ddd9d6-3327-422e-b4c3-6703c794d99e",
+                "status": "INSTANTIATED",
+                "unit": "eth",
+                "vendor": "5GTango",
+                "version": "3.0",
+                "nvficp_cidr": "10.121.0.1/24",
+                "nfvicp_sip": "Edge:1"
+            }
+        ],
+        "slice_vls":[
+            {
+                "vl_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "source_sip": "Edge:1",
+                "destination_sip": "Core:1",
+                "cidr_1":"10.121.0.0/24",
+                "cidr_2":"10.121.0.1/24",
+                "direction": "Bidirectional/Unidirectional",
+                "status": "CONFIGURING/READY/REMOVED",
+                "cs_list": [
+                    {
+                        "domain_manager": "Edge",
+                        "source_sip": "Edge:1",
+                        "destination_sip": "Core:1",
+                        "destination_cidr": "10.121.0.0/24",
+                        "id": "blablabla",
+                        "status": "CONFIGURING,READY/REMOVED",
+                        "blockchain_owner": "XXXXXXX"
+                    },
+                    {
+                        "domain_manager": "Core",
+                        "source_sip": "Core:1",
+                        "destination_sip": "Edge:1",
+                        "destination_cidr": "10.121.0.1/24",
+                        "instance_id": "blablabla",
+                        "status": "CONFIGURING,READY/REMOVED"
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -427,6 +427,7 @@ def draw_graph():
 """
 Example E2E_CS request 
   {
+    "cs_uuid": "uuid", #temporal for the tests
     "source": {
         "context_uuid": "uuid",
         "node_uuid": "uuid",
@@ -495,8 +496,6 @@ def request_terminate_e2e_cs(cs_uuid):
   response['log'] = "Request accepted, terminating the E2E CS with id: ." + str(cs_uuid)
   return response, 200
 
-
-#TODO: [link-option][available-spectrum] update when temrinated CS.
 # get SIP info (from BL)
 @app.route('/pdl-transport/sip/<sip_uuid>', methods=['GET'])
 def get_sipBL(sip_uuid):

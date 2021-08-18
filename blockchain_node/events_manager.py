@@ -16,14 +16,14 @@ def slice_event_loop(slice_event_filter, poll_interval):
 def handle_sliceInstance_event(event):
     event_json = {}
     if (event['args']['status'] == "INSTANTIATING"):
-        settings.logger.info('SLICE_EVENT_MNGR: Received Blockchain event (TIME 3): ' + str(time.time_ns()))
+        #settings.logger.info('SLICE_EVENT_MNGR: Received Blockchain event (TIME 3): ' + str(time.time_ns()))
         settings.logger.info("SLICE_EVENT_MNGR: INSTANTIATING EVENT")
         event_json['nst_ref'] = event['args']['templateId']
         event_json["id"] = event['args']['instanceId']
         event_json["status"] = event['args']['status']
         settings.executor.submit(orch.instantiate_local_slicesubnet, event_json)
     elif (event['args']['status'] == "INSTANTIATED"):
-        settings.logger.info('SLICE_EVENT_MNGR: Received Blockchain event (TIME 3): ' + str(time.time_ns()))
+        #settings.logger.info('SLICE_EVENT_MNGR: Received Blockchain event (TIME 3): ' + str(time.time_ns()))
         settings.logger.info("SLICE_EVENT_MNGR: INSTANTIATED EVENT")
         event_json['instanceId'] = event['args']['instanceId']
         event_json['status'] = event['args']['status']

@@ -1,0 +1,123 @@
+curl --request POST \
+  --url http://10.1.7.80:8182/restconf/config/context/connectivity-service/6e0abcf9-037c-4b0a-b444-fe37a09f46ea/ \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"uuid": "6e0abcf9-037c-4b0a-b444-fe37a09f46ea",
+	"end-point": [
+		{
+			"service-interface-point": {
+				"service-interface-point-uuid": "fdd57f63-cc36-5a75-97f8-6968c1a39cac"
+			},
+			"layer-protocol-name": "DSR",
+			"layer-protocol-qualifier": "tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+		},
+		{
+			"service-interface-point": {
+				"service-interface-point-uuid": "ff6fefd6-25c3-556a-8337-edda612bfbd6"
+			},
+			"layer-protocol-name": "DSR",
+			"layer-protocol-qualifier": "tapi-dsr:DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+		}
+	],
+	"connectivity-constraint": {
+		"connectivity-direction": "UNIDIRECTIONAL",
+		"requested-capacity": {
+			"total-size": {
+				"value": 5,
+				"unit": "GBPS"
+			}
+		}
+	}
+}
+'
+
+curl --request DELETE   --url http://10.1.7.84:8182/restconf/config/context/connectivity-service/6e0abcf9-037c-4b0a-b444-fe37a09f46ea
+
+********************************************************************
+{
+  "uuid": "6e0abcf9-037c-4b0a-b444-fe37a09f46eb",
+  "end-point": [
+    {
+      "service-interface-point": {
+        "service-interface-point-uuid": "35d55070-50af-5218-b86f-80fd9ee3c9a9"
+      },
+      "layer-protocol-name": "DSR",
+      "layer-protocol-qualifier": "DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+    },
+    {
+      "service-interface-point": {
+        "service-interface-point-uuid": "10df03ef-c91c-511f-9123-ae932a168dd1"
+      },
+      "layer-protocol-name": "DSR",
+      "layer-protocol-qualifier": "DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+    }
+  ],
+  "connectivity-constraint": {
+    "connectivity-direction": "UNIDIRECTIONAL",
+    "requested-capacity": {
+      "total-size": {
+        "value": 5,
+        "unit": "GBPS"
+      }
+    }
+  }
+}
+********************************************************************
+{
+	"uuid": "6e0abcf9-037c-4b0a-b444-fe37a09f46ec",
+	"end-point": [
+		{
+			"service-interface-point": {
+				"service-interface-point-uuid": "36792796-9f66-5de9-a904-0957a64871dd"
+			},
+			"layer-protocol-name": "DSR",
+			"layer-protocol-qualifier": "DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+		},
+		{
+			"service-interface-point": {
+				"service-interface-point-uuid": "12291904-9843-5ca6-b2a6-3b6fc6d040c8"
+			},
+			"layer-protocol-name": "DSR",
+			"layer-protocol-qualifier": "DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+		}
+	],
+	"connectivity-constraint": {
+		"connectivity-direction": "UNIDIRECTIONAL",
+		"requested-capacity": {
+			"total-size": {
+				"value": 5,
+				"unit": "GBPS"
+			}
+		}
+	}
+}
+********************************************************************
+{
+	"uuid": "6e0abcf9-037c-4b0a-b444-fe37a09f46ed",
+	"end-point": [
+		{
+			"service-interface-point": {
+				"service-interface-point-uuid": "882173f6-f7e1-5e8f-b320-f668f83257f0"
+			},
+			"layer-protocol-name": "DSR",
+			"layer-protocol-qualifier": "DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+		},
+		{
+			"service-interface-point": {
+				"service-interface-point-uuid": "ff6fefd6-25c3-556a-8337-edda612bfbd6"
+			},
+			"layer-protocol-name": "DSR",
+			"layer-protocol-qualifier": "DIGITAL_SIGNAL_TYPE_10_GigE_WAN"
+		}
+	],
+	"connectivity-constraint": {
+		"connectivity-direction": "UNIDIRECTIONAL",
+		"requested-capacity": {
+			"total-size": {
+				"value": 5,
+				"unit": "GBPS"
+			}
+		}
+	}
+}
+

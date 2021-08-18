@@ -1,0 +1,46 @@
+TEST DESCRIPTION:
+Deployment of two slice-subnets placed in the edge and core domains, and interconnected by a unidirectional Connectivity Service through an optical domain.
+Both slice-subnets are composed by 3 NSs, each with 2 VNFs.
+
+********           ***********           ********
+*      *           *         *           *      *
+* Edge ************* Optical ************* Core *
+*      *           *         *           *      *
+********           ***********           ********
+         
+
+
+2021-01-14 12:11:54,996 - ORCH: request deploy an E2E Network Slice (TIME 1A):        1610622714996804800
+2021-01-14 12:11:55,514 - BLOCKCHAIN_MAPPER: Starts Blockchain deployment (TIME 3):   1610622715514304300
+2021-01-14 12:11:56,508 - SUBNET_MAPPER: Starts local deployment (TIME 2):            1610622716508193700
+***************************************************** CORE NODE ******************************************************************
+2021-01-14 12:12:02,230 - SLICE_EVENT_MNGR: Received Blockchain event (TIME 3):       1610622722230879400
+2021-01-14 12:12:02,235 - ORCH: STARTTING LOCAL DEPLOYMENT (TIME 2):                  1610622722235759700
+2021-01-14 12:21:00,328 - SUBNET_MAPPER: Finished local deployment (TIME 2):          1610623260328995800    (EDGE NODE)
+2021-01-14 12:21:12,617 - ORCH: FINISHING LOCAL DEPLOYMENT (TIME 2):                  1610623272617844400
+2021-01-14 12:21:12,618 - BLOCKCHAIN_MAPPER: Updating info local deployment (TIME 3): 1610623272618840700
+***************************************************** CORE NODE ******************************************************************
+2021-01-14 12:21:14,517 - SLICE_EVENT_MNGR: Received Blockchain event (TIME 3):       1610623274517039200
+2021-01-14 12:21:14,552 - ORCH: SUBNETS READY, GOING FOR THE CSs (TIME 1):            1610623274552906600
+2021-01-14 12:21:15,037 - ORCH: THE PATH DESIGNED: ['Edge', 'Optical', 'Core']
+2021-01-14 12:21:15,059 - SDN_MAPPER: Starts LOCAL CS deployment (TIME 5):            1610623275059127000
+2021-01-14 12:21:17,005 - SDN_MAPPER: Finished LOCAL CS deployment (TIME 5):          1610623277005505000
+2021-01-14 12:21:17,005 - BLOCKCHAIN_MAPPER: INSTANTIATING CS IN BLOCKCHAIN (TIME 4): 1610623277005505000
+************************************************ OPTICAL NODE ********************************************************************
+2021-01-14 12:21:26,387 - TRANSPORT_EVENT_MNGR: CS REQUEST FROM BL (TIME 4):          1610623286387320200
+2021-01-14 12:21:26,391 - SDN_MAPPER: Starts LOCAL CS deployment (TIME 5):            1610623286391309200
+2021-01-14 12:21:28,462 - SDN_MAPPER: Finished LOCAL CS deployment (TIME 5):          1610623288462190100
+2021-01-14 12:21:28,466 - BLOCKCHAIN_MAPPER: UPDATING CS IN BLOCKCHAIN (TIME 4):      1610623288466135200
+************************************************ OPTICAL NODE ********************************************************************
+2021-01-14 12:21:34,713 - TRANSPORT_EVENT_MNGR: CS READY FROM BL (TIME 4):            1610623294713424500
+2021-01-14 12:21:34,761 - ORCH: VLs READY (TIME 1):                                   1610623294761297100
+2021-01-14 12:21:34,767 - ORCH: E2E READY (TIME 1A):                                  1610623294767243500
+
+
+TOTAL TIME (1A) --> 580 sec
+COMPUTING DEPLOYMENT TIME (2) --> 544 sec (edge) || 550 (core)
+COMPUTING BLOCKCHAIN TIME (3) --> 6,5 + 1,9 = 8,4 sec
+NETWORK BLOCKCHAIN TIME (4) --> 9,3 + 6,3 = 15,6 sec
+TOTAL BLOCKCHAIN TIME (3 + 4) --> 8,4 + 15,6 = 24 sec
+NETWORK DEPLOYMENT TIME (5) --> 1,9 sec (edge-optical) + 2,1 sec (optical-core) = 4 sec
+

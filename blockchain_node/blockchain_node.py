@@ -52,7 +52,7 @@ def get_slice_id(index):
 
 # NOTE: requests the deployment of a slice-subnet template (NST) from another domain
 def deploy_blockchain_slice(ref_slice_subnet):
-    settings.logger.info('BLOCKCHAIN_MAPPER: Starts Blockchain deployment (TIME 3): ' + str(time.time_ns()))
+    #settings.logger.info('BLOCKCHAIN_MAPPER: Starts Blockchain deployment (TIME 3): ' + str(time.time_ns()))
     settings.logger.info('BLOCKCHAIN_MAPPER: Distributes request to deploy slice-subnet in the Blockchain: ' + str(ref_slice_subnet))
     # instantiate slice-subnet
     tx_hash = settings.slice_contract.functions.instantiateSlice(str(ref_slice_subnet["id"]), ref_slice_subnet["nst_ref"]).transact()
@@ -91,7 +91,7 @@ def terminate_blockchain_slice(ref_slice_subnet):
 
 # NOTE: requests to update a slice-subnet element in the Blockchain
 def update_blockchain_slice(subnet_json):
-    settings.logger.info("BLOCKCHAIN_MAPPER: Updating information about local deployment (TIME 3): " + str(time.time_ns()))
+    #settings.logger.info("BLOCKCHAIN_MAPPER: Updating information about local deployment (TIME 3): " + str(time.time_ns()))
     settings.logger.info('BLOCKCHAIN_MAPPER: Updates slice-subnet element inside Blockchain. Element ID: ' + str(subnet_json))
     # Add a service
     tx_hash = settings.slice_contract.functions.updateInstance(subnet_json['id'], subnet_json['status'], subnet_json['log']).transact()

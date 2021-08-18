@@ -350,6 +350,7 @@ def update_terminate_from_blockchain(event_json):
 """
 Example E2E_CS request 
     {
+        "cs_uuid": "uuid", #temporal for the tests
         "source": {
             "context_uuid": "uuid",
             "node_uuid": "uuid",
@@ -408,7 +409,6 @@ Example E2E_CS data object
   }
 """
 # manages the creation of an E2E CS
-#TODO: Create the JSON to send the request to the SDN Controllers.
 def instantiate_e2e_connectivity_service(e2e_cs_request):
     settings.logger.info("ORCH: Received E2E request info. Let's process it.")
     # defines e2e CS data object parameters
@@ -443,7 +443,8 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     #settings.logger.debug("ORCH: e2e_topology_json: " +str(e2e_topology_json))
     
     # assigns initial CS data object information
-    e2e_cs_json["uuid"] = str(uuid.uuid4())
+    #e2e_cs_json["uuid"] = str(uuid.uuid4())
+    e2e_cs_json["uuid"] = e2e_cs_request["cs_uuid"]         #temporal for the tests
     e2e_cs_json["source"] = e2e_cs_request["source"]
     e2e_cs_json["destination"] = e2e_cs_request["destination"]
     e2e_cs_json["status"]  = "INSTANTIATING"
@@ -519,10 +520,20 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # if no route is found, returns to inform
     if selected_route == []:
-        settings.logger.error("ERROR - NO route available between these two SIPs.")
-        e2e_cs_json["status"]  = "ERROR - no route available."
-        return e2e_cs_json, 200
+        settings.logger.error("ERROR - NO spectrum in any of the possible routes.")
+        e2e_cs_json["spectrum"] = ""
+        e2e_cs_json["route-nodes"] = ""
+        e2e_cs_json["domain-cs"] = ""
+        e2e_cs_json["status"]  = "ERROR"
+        e2e_cs_json['description'] = "No spectrum"
 
+         # saves the first version of the new e2e_cs data object
+        mutex_e2e_csdb_access.acquire()
+        db.add_element(e2e_cs_json, "e2e_cs")
+        mutex_e2e_csdb_access.release()
+
+        return e2e_cs_json, 200
+    
     #settings.logger.debug("ORCH: selected_route: " + str(selected_route))
     # adds more generic info into the e2e_cs data object
     spectrum = {}
@@ -563,7 +574,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     db.add_element(e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     
-    # distribuïm domain CSs requests
+    # distributing domain CSs requests
     #settings.logger.debug("cs_list: " + str(cs_list))
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
@@ -587,6 +598,14 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             else:
                 #TODO: manage this error
                 settings.logger.error("ERROR requesting local domain CS.")
+                mutex_e2e_csdb_access.acquire()
+                e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+                for domain_cs_item in e2e_cs["domain-cs"]:
+                    if domain_cs_item["uuid"] == cs_item["uuid"]:
+                        domain_cs_item["status"] = "ERROR"
+                        break
+                db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+                mutex_e2e_csdb_access.release()
                 return e2e_cs_json,400
         else:
             settings.logger.debug("Distribute domain CS request to deploy in the Blockchain.")
@@ -600,7 +619,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
         for domainCS_item in e2e_cs["domain-cs"]:
-            if domainCS_item["status"] != "DEPLOYED":
+            if domainCS_item["status"] == "INSTANTIATING":
                 e2e_cs_ready = False
                 break
         mutex_e2e_csdb_access.release()
@@ -614,6 +633,85 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     new_ocuppied_item["frequency-constraint"] =  freq_const
     new_ocuppied_item["lower-frequency"] = e2e_cs_json["spectrum"]["lower-frequency"]
     new_ocuppied_item["upper-frequency"] = e2e_cs_json["spectrum"]["upper-frequency"]
+
+    # Validates all domain CS status, otherwise terminates deployed domain CS to release resources.
+    mutex_e2e_csdb_access.acquire()
+    e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+    found_error = False
+    for domainCS_item in e2e_cs["domain-cs"]:
+        if domainCS_item["status"] == "ERROR":
+            found_error = True
+    mutex_e2e_csdb_access.release()
+    if found_error == True:
+        for cs_item in e2e_cs["domain-cs"]:
+            # decide whether the CS is for the local domain SDN controller or another domain
+            if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
+                settings.logger.debug("ORCH: Sending domain CS request to the local SDN controller.")
+                response = sdn_mapper.terminate_connectivity_service(cs_item["uuid"])
+                if response[1] == 200 and response[0]["status"] == "TERMINATED":
+                    #update local domain CS information
+                    mutex_local_csdb_access.acquire()
+                    cs_info = {}
+                    cs_info["uuid"] = cs_item["uuid"]
+                    cs_info["status"] = "TERMINATED"
+                    db.update_cs(cs_info)
+                    mutex_local_csdb_access.release()
+                    
+                    # saves the reference domain CS information in the E2E CS data object.
+                    mutex_e2e_csdb_access.acquire()
+                    e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+                    for domain_cs_item in e2e_cs["domain-cs"]:
+                        if domain_cs_item["uuid"] == cs_item["uuid"]:
+                            domain_cs_item["status"] = "TERMINATED"
+                            break
+                    db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+                    mutex_e2e_csdb_access.release()
+                elif response[1] == 200 and response[0]["status"] == "ERROR":
+                    #update local domain CS information
+                    mutex_local_csdb_access.acquire()
+                    cs_info = {}
+                    cs_info["uuid"] = cs_item["uuid"]
+                    cs_info["status"] = "ERROR"
+                    db.update_cs(cs_info)
+                    mutex_local_csdb_access.release()
+
+                    # saves the reference domain CS information in the E2E CS data object.
+                    mutex_e2e_csdb_access.acquire()
+                    e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+                    for domain_cs_item in e2e_cs["domain-cs"]:
+                        if domain_cs_item["uuid"] == cs_item["uuid"]:
+                            domain_cs_item["status"] = "ERROR"
+                            break
+                    db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+                    mutex_e2e_csdb_access.release()
+                else:
+                    settings.logger.error("ORCH: ERROR requesting local terminate domain CS.")
+                    return e2e_cs_json,400
+            else:
+                settings.logger.debug("ORCH: Distribute domain CS request to terminate in the Blockchain.")
+                response = bl_mapper.terminate_blockchain_cs(cs_item["address-owner"], cs_item["uuid"])
+        
+        # deployment management to validate all domain CSs composing the E2E CS are READY
+        settings.logger.info("ORCH: Waiting all the domains CS from other domains to be terminated.")
+        e2e_cs_terminated = False
+        while  e2e_cs_terminated == False:
+            e2e_cs_terminated = True
+            mutex_e2e_csdb_access.acquire()
+            e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+            for domainCS_item in e2e_cs["domain-cs"]:
+                if domainCS_item["status"] != "TERMINATED" or domainCS_item["status"] != "ERROR":
+                    e2e_cs_terminated = False
+                    break
+            mutex_e2e_csdb_access.release()
+            time.sleep(10)  # awaits 10 seconds before it checks again
+        
+        e2e_cs["status"]  = "ERROR"
+        e2e_cs['description'] = "Deployment Error"
+        mutex_e2e_csdb_access.acquire()
+        db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+        mutex_e2e_csdb_access.release()
+
+        return e2e_cs, 200
 
     settings.logger.info("Updating data objects in DDBBs.")
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
@@ -766,6 +864,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # saves the e2e_cs data object to confirm full deployment.
     e2e_cs_json["status"]  = "DEPLOYED"
+    e2e_cs_json['description'] = "OK"
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
@@ -775,7 +874,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     #return e2e_cs_json,200
 
 # manages the termination of an E2E CS
-#TODO: pensar com gestionar els returns tant d'aqui com de l'instantiate per quan es faci el test amb l'script de poisson.
 def terminate_e2e_connectivity_service(cs_uuid):
     settings.logger.info("ORCH: Received E2E request info to terminate CS. Let's process it.")   
     # gets the e2e CS to terminate
@@ -789,9 +887,8 @@ def terminate_e2e_connectivity_service(cs_uuid):
             settings.logger.debug("ORCH: Sending domain CS request to the local SDN controller.")
             response = sdn_mapper.terminate_connectivity_service(cs_item["uuid"])
             if response[1] == 200 and response[0]["status"] == "TERMINATED":
-                #TODO: update local domain CS information
+                #update local domain CS information
                 mutex_local_csdb_access.acquire()
-                #update here
                 cs_info = {}
                 cs_info["uuid"] = cs_item["uuid"]
                 cs_info["status"] = "TERMINATED"
@@ -807,9 +904,26 @@ def terminate_e2e_connectivity_service(cs_uuid):
                         break
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
+            elif response[1] == 200 and response[0]["status"] == "ERROR":
+                #update local domain CS information
+                mutex_local_csdb_access.acquire()
+                cs_info = {}
+                cs_info["uuid"] = cs_item["uuid"]
+                cs_info["status"] = "ERROR"
+                db.update_cs(cs_info)
+                mutex_local_csdb_access.release()
+
+                # saves the reference domain CS information in the E2E CS data object.
+                mutex_e2e_csdb_access.acquire()
+                e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+                for domain_cs_item in e2e_cs["domain-cs"]:
+                    if domain_cs_item["uuid"] == cs_item["uuid"]:
+                        domain_cs_item["status"] = "ERROR"
+                        break
+                db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+                mutex_e2e_csdb_access.release()
             else:
-                #TODO: manage this error
-                settings.logger.error("ORCH: ERROR requesting local domain CS.")
+                settings.logger.error("ORCH: ERROR requesting local terminate domain CS.")
                 return e2e_cs_json,400
         else:
             settings.logger.debug("ORCH: Distribute domain CS request to terminate in the Blockchain.")
@@ -823,11 +937,26 @@ def terminate_e2e_connectivity_service(cs_uuid):
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
         for domainCS_item in e2e_cs["domain-cs"]:
-            if domainCS_item["status"] != "TERMINATED":
+            if domainCS_item["status"] != "TERMINATED" or domainCS_item["status"] != "ERROR":
                 e2e_cs_terminated = False
                 break
         mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
+
+    #checks if any domain-CS had an error, and updates the E2E CS.
+    found_error = False
+    e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+    for domainCS_item in e2e_cs["domain-cs"]:
+        if domainCS_item["status"] != "ERROR":
+            found_error = True
+            break
+    if found_error == True:
+        e2e_cs["status"]  = "ERROR"
+        e2e_cs["description"]  = "Error terminating"
+        mutex_e2e_csdb_access.acquire()
+        db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
+        mutex_e2e_csdb_access.release()
+        return e2e_cs, 200
 
     # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
     response = bl_mapper.get_e2etopology_from_blockchain()
@@ -1017,6 +1146,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
 
     # saves the e2e_cs data object to confirm full deployment.
     e2e_cs_json["status"]  = "TERMINATED"
+    e2e_cs_json["description"] = "OK"
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
@@ -1036,7 +1166,7 @@ def get_e2e_slice_instances():
 # NOTE: manages all the E2E slice instantiation process
 # NOTE: add the E2E CS process using the already working process.
 def instantiate_e2e_slice(incoming_data):
-    settings.logger.info("ORCH: Received request to deploy an E2E Network Slice (TIME 1): " + str(time.time_ns()))
+    #settings.logger.info("ORCH: Received request to deploy an E2E Network Slice (TIME 1): " + str(time.time_ns()))
     # creates the NSI instance object based on the request
     nsi_element = {}
     nsi_element["id"] = str(uuid.uuid4()) #ID for the E2E slice object
@@ -1125,7 +1255,7 @@ def instantiate_e2e_slice(incoming_data):
                         slice_subnet_item['status'] = jsonresponse['status']
                         slice_subnet_item['log'] = "Slice_subnet instantiated."
                         subnets_instantiated = subnets_instantiated + 1
-                        settings.logger.info('SUBNET_MAPPER: Finished local deployment (TIME 2): ' + str(time.time_ns()))
+                        #settings.logger.info('SUBNET_MAPPER: Finished local deployment (TIME 2): ' + str(time.time_ns()))
             elif(slice_subnet_item['status'] == 'INSTANTIATED'):
                 # all slice-subnets deployed in other domains, are updated by the blockchain event thread.
                 subnets_instantiated = subnets_instantiated + 1
@@ -1137,7 +1267,7 @@ def instantiate_e2e_slice(incoming_data):
         if (subnets_instantiated == len(nsi_element['slice_subnets'])):
             all_subnets_ready = True
     
-    settings.logger.info("ORCH: SUBNETS READY, GOING FOR THE CSs (TIME 1): " + str(time.time_ns()))
+    #settings.logger.info("ORCH: SUBNETS READY, GOING FOR THE CSs (TIME 1): " + str(time.time_ns()))
     # *************************
     # NOTE: HARDCODED SIPS
     # TODO: think how to get them in real deployments coming from the orchestrators (NFVO, SDN) below.
@@ -1352,7 +1482,7 @@ def instantiate_e2e_slice(incoming_data):
         if vl_ready == len(nsi_element['slice_vls']):
             all_vl_ready = True   
     #------------------------------------------------------------------------------
-    settings.logger.info("ORCH: VLs READY (TIME 1): " + str(time.time_ns()))
+    #settings.logger.info("ORCH: VLs READY (TIME 1): " + str(time.time_ns()))
     nsi_element["status"] = "INSTANTIATED"
     nsi_element["log"] = "E2E Network Slice INSTANTIATED."
 
@@ -1361,11 +1491,11 @@ def instantiate_e2e_slice(incoming_data):
     db.update_db(nsi_element["id"], nsi_element, "slices")
     mutex_slice2db_access.release()
     settings.logger.info('E2E Network Slice INSTANTIATED. E2E Slice ID: ' + str(nsi_element["id"]))
-    settings.logger.info("ORCH: E2E READY (TIME 1): " + str(time.time_ns()))
+    #settings.logger.info("ORCH: E2E READY (TIME 1): " + str(time.time_ns()))
 
 # NOTE: manages a local slice-subnet instantiation process
 def instantiate_local_slicesubnet(subnet_json):
-    settings.logger.info("ORCH: STARTTING LOCAL DEPLOYMENT (TIME 2): " + str(time.time_ns()))
+    #settings.logger.info("ORCH: STARTTING LOCAL DEPLOYMENT (TIME 2): " + str(time.time_ns()))
     settings.logger.info("ORCH: Received slice-subnet from Blockchain request. NST Ref:: " +str(subnet_json['nst_ref']))
     
     #gets specific NST information
@@ -1418,7 +1548,7 @@ def instantiate_local_slicesubnet(subnet_json):
     subnet_element['status'] = jsonresponse['status']
     subnet_element['log'] = "Slice-subnet instantiated."
 
-    settings.logger.info("ORCH: FINISHING LOCAL DEPLOYMENT (TIME 2): " + str(time.time_ns()))
+    #settings.logger.info("ORCH: FINISHING LOCAL DEPLOYMENT (TIME 2): " + str(time.time_ns()))
     response = bl_mapper.update_blockchain_slice(subnet_element)
     if response[1] != 200:
         # TODO: exception/error management
