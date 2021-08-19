@@ -421,6 +421,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     response = bl_mapper.get_e2etopology_from_blockchain()
     e2e_topology_json = response[0]
     if e2e_topology_json == "empty":
+        settings.logger.info("ORC - ERROR There is no e2e_topology to work with.")
         return {"msg":"There is no e2e_topology to work with."}
     else:
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
@@ -520,7 +521,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # if no route is found, returns to inform
     if selected_route == []:
-        settings.logger.error("ERROR - NO spectrum in any of the possible routes.")
+        settings.logger.error("ORCH - ERROR, NO spectrum in any of the possible routes.")
         e2e_cs_json["spectrum"] = ""
         e2e_cs_json["route-nodes"] = ""
         e2e_cs_json["domain-cs"] = ""
@@ -596,8 +597,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
             else:
-                #TODO: manage this error
-                settings.logger.error("ERROR requesting local domain CS.")
+                settings.logger.error("ORCH - ERROR requesting local domain CS.")
                 mutex_e2e_csdb_access.acquire()
                 e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
                 for domain_cs_item in e2e_cs["domain-cs"]:
@@ -606,7 +606,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                         break
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
-                return e2e_cs_json,400
         else:
             settings.logger.debug("Distribute domain CS request to deploy in the Blockchain.")
             response = bl_mapper.instantiate_blockchain_cs(cs_item["address-owner"], cs_item, spectrum, e2e_cs_json["capacity"])
@@ -686,7 +685,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                     mutex_e2e_csdb_access.release()
                 else:
                     settings.logger.error("ORCH: ERROR requesting local terminate domain CS.")
-                    return e2e_cs_json,400
             else:
                 settings.logger.debug("ORCH: Distribute domain CS request to terminate in the Blockchain.")
                 response = bl_mapper.terminate_blockchain_cs(cs_item["address-owner"], cs_item["uuid"])
@@ -710,7 +708,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         mutex_e2e_csdb_access.acquire()
         db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
         mutex_e2e_csdb_access.release()
-
+        settings.logger.info("ORC - ERROR in a domain CS instantiation.")
         return e2e_cs, 200
 
     settings.logger.info("Updating data objects in DDBBs.")
@@ -923,8 +921,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
             else:
-                settings.logger.error("ORCH: ERROR requesting local terminate domain CS.")
-                return e2e_cs_json,400
+                settings.logger.error("ORCH - ERROR requesting local terminate domain CS.")
         else:
             settings.logger.debug("ORCH: Distribute domain CS request to terminate in the Blockchain.")
             response = bl_mapper.terminate_blockchain_cs(cs_item["address-owner"], cs_item["uuid"])
@@ -937,7 +934,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
         for domainCS_item in e2e_cs["domain-cs"]:
-            if domainCS_item["status"] != "TERMINATED" or domainCS_item["status"] != "ERROR":
+            if domainCS_item["status"] != "TERMINATED" and domainCS_item["status"] != "ERROR":
                 e2e_cs_terminated = False
                 break
         mutex_e2e_csdb_access.release()
@@ -947,7 +944,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
     found_error = False
     e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
     for domainCS_item in e2e_cs["domain-cs"]:
-        if domainCS_item["status"] != "ERROR":
+        if domainCS_item["status"] == "ERROR":
             found_error = True
             break
     if found_error == True:
@@ -956,12 +953,14 @@ def terminate_e2e_connectivity_service(cs_uuid):
         mutex_e2e_csdb_access.acquire()
         db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
         mutex_e2e_csdb_access.release()
+        settings.logger.info("ORCH: Error on a DOMAIN CS termination.")
         return e2e_cs, 200
 
     # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
     response = bl_mapper.get_e2etopology_from_blockchain()
     e2e_topology_json = response[0]
     if e2e_topology_json == "empty":
+        settings.logger.info("ORCH: Error - There is no e2e_topology to work with.")
         return {"msg":"There is no e2e_topology to work with."}
     else:
         # prepares the interdomain-links to compare the existing with the new ones in the IDL json
