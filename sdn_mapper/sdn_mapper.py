@@ -184,7 +184,7 @@ def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
   request_json["tapi-connectivity:connectivity-service"] = tapi_cs_list
   print(str(request_json))
    
-  
+  """
   # sending request
   url = get_nsm_url() + "/restconf/data/tapi-common:context/tapi-connectivity:connectivity-context"
   data_dumps = json.dumps(request_json)
@@ -196,13 +196,15 @@ def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
     return cs_info_json, 200
   else:
     return {"msg": "ERROR requesting CS to the SDN Controller."}, response.status_code
-  
-  #cs_info_json["status"] = "DEPLOYED"
-  #return cs_info_json, 200
+  """
+  time.sleep(0.25)
+  cs_info_json["status"] = "DEPLOYED"
+  return cs_info_json, 200
 
 # sends request to terminate a connectivity service
 def terminate_connectivity_service(cs_uuid):
   settings.logger.info("SDN_MAPPER: Arrived a requests to terminate a local CS: " + str(cs_uuid))
+  """
   # sending request
   url = get_nsm_url() + "/restconf/data/tapi-common:context/tapi-connectivity:connectivity-context/connectivity-service="+str(cs_uuid)
   response = requests.delete(url)
@@ -214,7 +216,8 @@ def terminate_connectivity_service(cs_uuid):
     return cs_info_json, 200
   else:
     return {"msg": "ERROR requesting CS to the SDN Controller."}, response.status_code
-  
-  #cs_info_json = {}
-  #cs_info_json["status"] = "TERMINATED"
-  #return cs_info_json, 200
+  """
+  time.sleep(0.25)
+  cs_info_json = {}
+  cs_info_json["status"] = "TERMINATED"
+  return cs_info_json, 200
