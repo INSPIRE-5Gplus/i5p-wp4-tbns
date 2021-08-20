@@ -182,7 +182,6 @@ def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
 
   tapi_cs_list.append(cs_json)
   request_json["tapi-connectivity:connectivity-service"] = tapi_cs_list
-
   print(str(request_json))
    
   
@@ -190,8 +189,7 @@ def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
   url = get_nsm_url() + "/restconf/data/tapi-common:context/tapi-connectivity:connectivity-context"
   data_dumps = json.dumps(request_json)
   response = requests.post(url, headers=JSON_CONTENT_HEADER, data=data_dumps)
-  settings.logger.info("SDN_MAPPER: CS deployment request:")
-
+  settings.logger.info("SDN_MAPPER: CS deployment request: " + str(data_dumps))
   
   if response.status_code == 201:
     cs_info_json["status"] = "DEPLOYED"
@@ -203,7 +201,6 @@ def instantiate_connectivity_service(cs_info_json, spectrum, capacity):
   #return cs_info_json, 200
 
 # sends request to terminate a connectivity service
-#TODO: ERROR IS HERE!!!!
 def terminate_connectivity_service(cs_uuid):
   settings.logger.info("SDN_MAPPER: Arrived a requests to terminate a local CS: " + str(cs_uuid))
   # sending request
