@@ -1,4 +1,4 @@
-import math, sys, threading, time, requests, random, uuid
+import math, sys, threading, time, requests, random, uuid, json
 from time import sleep
 from dataclasses import dataclass
 
@@ -156,6 +156,7 @@ class Connectivity:
         self.start_time = millis()
         while n_connections < self.max_connections:
             s_next = poisson_wait_time(lmb)
+            print("Wait " + str(s_next) + "seconds for the next E2E CS request.")
             time.sleep(s_next)
             connection = ConnectivityServiceData(inter_arrival_time=s_next)
             next_thread = threading.Thread(target=self.connectivity, args=(connection, ))
@@ -168,7 +169,7 @@ class Connectivity:
         connection.start_TS = millis()
         self.n_threads = self.n_threads + 1
         
-        #TODO: gestionar endpoints input i output entre llistes availabe i occupied. PENSAR-HI!!!
+        print("NEW E2E CS between the following Nodes/SIPs (Source & Destination):")
         try:
             directions_D2 = ['INPUT,OUTPUT']
             selectedD2_direction = random.choice(directions_D2)
@@ -177,8 +178,8 @@ class Connectivity:
                 #cs_uuid, endpoint = random.choice(list(self.endpoints['available'].items()))
                 endpointD2_ref = random.choice(self.endpointsD2['available_input'])
                 endpoint_ref = random.choice(self.endpoints['available_output'])
-                src = endpointD2_ref
-                dst = endpoint_ref
+                dst = endpointD2_ref
+                src = endpoint_ref
                 
                 #del self.endpoints['available'][cs_uuid]
                 for idx, endpoint_item in enumerate(self.endpointsD2['available_input']):
@@ -207,8 +208,8 @@ class Connectivity:
                 #cs_uuid, endpoint = random.choice(list(self.endpoints['available'].items()))
                 endpoint_ref = random.choice(self.endpoints['available_input'])
                 endpointD2_ref = random.choice(self.endpointsD2['available_output'])
-                src = endpoint_ref
-                dst = endpointD2_ref
+                dst = endpoint_ref
+                src = endpointD2_ref
                 
                 #del self.endpoints['available'][cs_uuid]
                 for idx, endpoint_item in enumerate(self.endpoints['available_input']):
@@ -238,6 +239,8 @@ class Connectivity:
             endpoint_dst = {'context_uuid': 'c', 'nep_uuid': 'd', 'sip_uuid': 'e'}
             print('No SIPs available: {}'.format(cs_uuid))
 
+        print(str(src))
+        print(str(dst))
         #src = endpoint[0]
         #src = endpoint_src
         #dst = endpoint[1]
@@ -253,25 +256,33 @@ class Connectivity:
         #response = requests.post(url, json={"uuid": cs_uuid, "src": src, "dst": dst, "capacity": capacity})
         cs_json = {"cs_uuid": cs_uuid,"source": src, "destination": dst, "capacity": {"value": capacity,"unit": "GHz"}}
         print('CS JSON Request: ' + str(cs_json))
+        print("URL: " + str(url))
         response = requests.post(url, json=cs_json)
+        print("POST response: "+str(response.text) + "with status: " + str(response.status_code))
         connection.end_TS = millis()
 
-        #TODO: fer un while+get(uuid) per trobar quan estigui tot llest/error i seguir amb el codi de sota
         #response["description"] = [OK, No Spectrum, No route]
         # waiting E2E CS deployment finishes
+        time.sleep(40)  # awaits 20 seconds before it starts tocheck
         print("ORCH: Waiting the E2E CS request final response.")
         while True:
             url = "http://" + ip + "/pdl-transport/connectivity_service/"+str(cs_uuid)
             response = requests.get(url)
-            if response.json()["status"] == "DEPLOYED" or response.json()["status"] == "ERROR":
+            print("GET response: "+str(response.text))
+            response_json = json.loads(response.text)
+            if response_json["status"] == []:
+                pass
+            elif response_json["status"] == "DEPLOYED" or response_json["status"] == "ERROR":
                 break
+            else:
+                pass
             time.sleep(10)  # awaits 10 seconds before it checks again
 
         # print(response.status_code)
         #if response.status_code != 201:        # ERROR CASE
-        if response.json()["status"] == "ERROR":
-            print('Error cs: {} -> {}'.format(cs_uuid, response.json()['description']))
-            connection.result = response.json()['description']
+        if response_json["status"] == "ERROR":
+            print('Error cs: {} -> {}'.format(cs_uuid, response_json['description']))
+            connection.result = response_json['description']
             self.log.append(connection)
             #del self.endpoints['occupied'][connection.uuid]
             #self.endpoints['available'][connection.uuid] = endpoint
@@ -307,7 +318,7 @@ class Connectivity:
             return 0
         else:                                  # SUCCESSFUL CASE
             print('Successful cs: {}'.format(cs_uuid))
-            connection.result = response.json()['description']
+            connection.result = response_json['description']
 
         self.log.append(connection)
         s_next = poisson_wait_time(mu)
@@ -320,12 +331,15 @@ class Connectivity:
 
     def delete_cs(self, connection):
         start_ht = millis()
+        print("Wait " + str(connection.inter_arrival_time) + "seconds for the next E2E CS request terminate.")
         time.sleep(connection.inter_arrival_time)
         self.total_holding_time = self.total_holding_time + connection.inter_arrival_time
         check_ht = millis() - start_ht
         if check_ht/1000 < 1:
             connection.ber = False
-
+        
+        print("Request to terminate E2E CS with ID: "+ str(connection.uuid))
+        
         connection.start_TS = millis()
         try:
             #endpoints = self.endpointsD2['occupied'][connection.uuid]
@@ -358,7 +372,7 @@ class Connectivity:
 
         url = "http://" + ip + "/pdl-transport/connectivity_service/terminate/" + connection.uuid
         print('SEND delete cs: {}'.format(connection.uuid))
-        response = requests.delete(url)
+        response = requests.post(url, data='')
         connection.end_TS = millis()
 
         # waiting E2E CS termination finishes
@@ -366,17 +380,19 @@ class Connectivity:
         while True:
             url = "http://" + ip + "/pdl-transport/connectivity_service/"+str(connection.uuid)
             response = requests.get(url)
-            if response.json()["status"] == "TERMINATED" or response.json()["status"] == "ERROR":
+            print("GET response: "+str(response.text))
+            response_json = json.loads(response.text)
+            if response_json["status"] == "TERMINATED" or response_json["status"] == "ERROR":
                 break
             time.sleep(10)  # awaits 10 seconds before it checks again
 
-        if response.json()["status"] == "ERROR":
-            print('Error delete cs: {} -> {}'.format(connection.uuid, response.json()['description']))
-            connection.result = response.json()['description']
+        if response_json["status"] == "ERROR":
+            print('Error delete cs: {} -> {}'.format(connection.uuid, response_json['description']))
+            connection.result = response_json['description']
             print(response.content)
         else:
             print('Successful delete cs: {}'.format(connection.uuid))
-            connection.result = response.json()['description']
+            connection.result = response_json['description']
             #del self.endpoints['occupied'][connection.uuid]
             #self.endpoints['available'][connection.uuid] = endpoints            
             for idx, occupied_item in enumerate(self.endpointsD2['occupied_input']):
@@ -468,11 +484,11 @@ class Connectivity:
         print('WRITTEN')
 
 # sys.argv[1] = IP@ to send the requests
-# sys.argv[2] = Inter arrival time in seconds
-# sys.argv[3] = Holding time in seconds
+# sys.argv[2] = Inter arrival time in seconds  (1/lambda)
+# sys.argv[3] = Holding time in seconds (1/mu)  --> always must be bigger than 1/lambda otherwise, it will lose requests for sure.
 # sys.argv[4] = total number of requests
 if __name__ == "__main__":
-    ip = '172.17.0.2:4900'
+    ip = 'localhost:4441'
     lmb_inv = float(sys.argv[1])
     mu_inv = float(sys.argv[2])
     connections = float(sys.argv[3])
