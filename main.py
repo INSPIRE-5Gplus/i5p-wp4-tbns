@@ -486,7 +486,9 @@ def get_all_e2e_cs():
 def get_e2e_cs(cs_uuid):
   e2e_cs_json = db.get_element(cs_uuid, "e2e_cs")
   if e2e_cs_json == []:
-    return [], 200
+    msg = {}
+    msg["status"] = []
+    return msg, 200
   else:
     return json.dumps(e2e_cs_json), 200
 
