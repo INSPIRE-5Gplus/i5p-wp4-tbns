@@ -371,16 +371,16 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
               if neps_found:
                 break
               else:
-                settings.logger.info("VL_COMP: WARNING - Link-option not good. Check another route")
+                settings.logger.info("VL_COMP: Link-option not good. Check another route")
                 route_neps = []
                 route_interdominlinks = []
                 return route_neps, route_interdominlinks
           else:
-            settings.logger.debug("VL_COMP: Looking if the next link is the good one it must be checked.")
+            settings.logger.debug("VL_COMP: Looking if the next link is the good one.")
           if neps_found:
             break
         if neps_found == False:
-          settings.logger.info("VL_COMP: ERROR - NO link was found with this information.")
+          settings.logger.info("VL_COMP: NO link FOUND with this information.")
           route_neps = []
           route_interdominlinks = []
           return route_neps, route_interdominlinks

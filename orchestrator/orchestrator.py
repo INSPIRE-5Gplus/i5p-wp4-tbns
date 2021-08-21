@@ -414,6 +414,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     # defines e2e CS data object parameters
     e2e_cs_json = {}
     selected_spectrum = []
+    selected_route = []
     sips_route = []
     internal_links_route = []
     
@@ -484,7 +485,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         #ettings.logger.debug("neps_route: " + str(neps_route))
         #settings.logger.debug("idl_route: "+str(idl_route))
         if neps_route == [] and idl_route == []:
-            settings.logger.info("No NEP or link available in the itnerdomain links. Looking for the next route.")
+            settings.logger.info("ORCH: No NEP or link available in the itnerdomain links. Looking for the next route.")
             continue
         # identifies the SIP used for each NEP in the route
         response_sip_mapped = vl_computation.nep2sip_route_mapping(neps_route, e2e_cs_request, capacity)
