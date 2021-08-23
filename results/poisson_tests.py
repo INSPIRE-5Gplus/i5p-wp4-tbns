@@ -440,7 +440,7 @@ class Connectivity:
         delete_error = 0
         no_ber = 0
         self.log.sort(key=lambda x: x.start_TS, reverse=False)
-        with open('results/log_{}_a{}_h{}_c{}.csv'.format(millis(), lmb_inv, mu_inv, connections), 'w') as filehandle:
+        with open('log_{}_a{}_h{}_c{}.csv'.format(millis(), lmb_inv, mu_inv, connections), 'w') as filehandle:
             print('WRITING log')
             filehandle.write("Parameters:\n  -N connections: %s\n  -Inter arrival rate: %s(s)\n  -Holding time: %s(s)\n" % (self.max_connections, lmb_inv, mu_inv))
             for connection in self.log:
