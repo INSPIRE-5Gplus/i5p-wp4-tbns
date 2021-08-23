@@ -11,7 +11,7 @@ from config_files import settings
 from vl_computation import vl_computation
 
 
-# mutex used to ensure a single access to each one of the three local DB (slices, blockchain_subnets, connectivity services)
+# mutex used to ensure a single access to each one of the different local DDBBs
 mutex_slice2db_access = Lock()
 mutex_slice2blockchaindb_access = Lock()
 mutex_local_csdb_access = Lock()
@@ -289,7 +289,7 @@ def get_all_contexts():
 def instantiate_local_connectivity_service(event_json):
     settings.logger.info("ORCH: Received request to deploy a local CS: " +str(event_json["cs_info"]["uuid"]))
     response = sdn_mapper.instantiate_connectivity_service(event_json["cs_info"], event_json["spectrum"], event_json["capacity"])
-    if response[1] == 200:  
+    if response[1] == 200:
         mutex_local_csdb_access.acquire()
         db.add_cs(response[0])
         mutex_local_csdb_access.release()
@@ -304,17 +304,23 @@ def instantiate_local_connectivity_service(event_json):
 def update_connectivity_service_from_blockchain(event_json):
     settings.logger.info("ORCH: Updating connectivity services information from another domain.")
     mutex_e2e_csdb_access.acquire()
+    print("MUTEX ACQUIRED")
     e2e_cs_list = db.get_elements("e2e_cs")
+    print(e2e_cs_list)
     for e2e_cs_item in e2e_cs_list:
         for domain_cs_item in e2e_cs_item["domain-cs"]:
+            print('domain_cs_item[uuid]: ' + str(domain_cs_item["uuid"]) + " - event_json[uuid]: " + str(event_json["uuid"]))
             if domain_cs_item["uuid"] == event_json["uuid"]:
+                print("FOUND element to updated")
                 domain_cs_item["status"] = "DEPLOYED"
                 db.update_db(e2e_cs_item["uuid"], e2e_cs_item, "e2e_cs")
+                print("ELEMENT UPDATED")
                 found_cs = True
                 break
         if found_cs == True:
             break
     mutex_e2e_csdb_access.release()
+    print("MUTEX RELEASED")
 
 # manages a local connectivity service configuration process
 def terminate_local_connectivity_service(event_json):
@@ -618,12 +624,14 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         e2e_cs_ready = True
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
+        mutex_e2e_csdb_access.release()
         for domainCS_item in e2e_cs["domain-cs"]:
             if domainCS_item["status"] == "INSTANTIATING":
+                print("domainCS_item: " + str(domainCS_item))
                 e2e_cs_ready = False
                 break
-        mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
+        print("**************************************RESTART WHILE******************************************")
     
     #prepare the new occupied spectrum information item
     freq_const = {}
