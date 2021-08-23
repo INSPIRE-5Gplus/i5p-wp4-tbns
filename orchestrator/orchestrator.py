@@ -304,18 +304,13 @@ def instantiate_local_connectivity_service(event_json):
 def update_connectivity_service_from_blockchain(event_json):
     settings.logger.info("ORCH: Updating connectivity services information from another domain.")
     mutex_e2e_csdb_access.acquire()
-    print("MUTEX ACQUIRED")
     e2e_cs_list = db.get_elements("e2e_cs")
     found_cs = False
     for e2e_cs_item in e2e_cs_list:
-        print("e2e_cs_item: "+ str(e2e_cs_item))
         for domain_cs_item in e2e_cs_item["domain-cs"]:
-            print('domain_cs_item[uuid]: ' + str(domain_cs_item["uuid"]) + " - event_json[uuid]: " + str(event_json["uuid"]))
             if domain_cs_item["uuid"] == event_json["uuid"]:
-                print("FOUND element to updated")
                 domain_cs_item["status"] = "DEPLOYED"
                 db.update_db(e2e_cs_item["uuid"], e2e_cs_item, "e2e_cs")
-                print("ELEMENT UPDATED")
                 found_cs = True
                 break
         if found_cs == True:
@@ -323,7 +318,6 @@ def update_connectivity_service_from_blockchain(event_json):
     if found_cs == False:
         settings.logger.info("ORCH: ERROR - Domain CS not found, error in code that creates the E2E CS['domain-cs'].")
     mutex_e2e_csdb_access.release()
-    print("MUTEX RELEASED")
 
 # manages a local connectivity service configuration process
 def terminate_local_connectivity_service(event_json):
@@ -585,7 +579,6 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     # saves the first version of the new e2e_cs data object
     mutex_e2e_csdb_access.acquire()
-    print("NEW e2e_cs_json: " + str(e2e_cs_json))
     db.add_element(e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     
@@ -628,21 +621,17 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     settings.logger.info("ORCH: Waiting all the domains CS from other domains to be deployed.")
     e2e_cs_ready = False
     while  e2e_cs_ready == False:
-        print("**************************************START WHILE******************************************")
+        settings.logger.debug("ORCH: WHILE LOOP TO CHECK DOMAIN CS in E2E CS.")
         e2e_cs_ready = True
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
-        print("DB_e2e_cs: "+str(e2e_cs))
         mutex_e2e_csdb_access.release()
         for domainCS_item in e2e_cs["domain-cs"]:
             if domainCS_item["status"] == "INSTANTIATING":
-                print("domainCS_item: " + str(domainCS_item))
                 e2e_cs_ready = False
                 break
         time.sleep(10)  # awaits 10 seconds before it checks again
         
-    
-    print("OUT OF THE WHILE LOOP")
     #prepare the new occupied spectrum information item
     freq_const = {}
     freq_const["adjustment-granularity"] = "G_6_25GHZ"

@@ -376,7 +376,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                 route_interdominlinks = []
                 return route_neps, route_interdominlinks
           else:
-            settings.logger.debug("VL_COMP: Looking if the next link is the good one.")
+            settings.logger.debug("VL_COMP: Looking if the next IDL is the good one.")
           if neps_found:
             break
         if neps_found == False:

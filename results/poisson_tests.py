@@ -268,7 +268,8 @@ class Connectivity:
         while True:
             url = "http://" + ip + "/pdl-transport/connectivity_service/"+str(cs_uuid)
             response = requests.get(url)
-            print("GET response: "+str(response.text))
+            print("GET RESPONSE: " + str(response))
+            print("GET response.text: "+str(response.text))
             response_json = json.loads(response.text)
             if response_json["status"] == []:
                 pass
