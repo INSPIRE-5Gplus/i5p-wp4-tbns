@@ -484,14 +484,15 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
+        settings.logger.debug("ROUTE ITEM: " + str(route_item))
         # maps the route from the nodes to the neps involved.
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
         idl_route = response_nep_mapped[1]
-        #ettings.logger.debug("neps_route: " + str(neps_route))
-        #settings.logger.debug("idl_route: "+str(idl_route))
+        settings.logger.debug("neps_route: " + str(neps_route))
+        settings.logger.debug("idl_route: "+str(idl_route))
         if neps_route == [] and idl_route == []:
-            settings.logger.info("ORCH: No NEP or link available in the itnerdomain links. Looking for the next route.")
+            settings.logger.info("ORCH: No NEP or link available in the IDLs. Looking for the next route.")
             continue
         # identifies the SIP used for each NEP in the route
         response_sip_mapped = vl_computation.nep2sip_route_mapping(neps_route, e2e_cs_request, capacity)
@@ -499,9 +500,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         spectrums_available = response_sip_mapped[1]
         internal_links_route = response_sip_mapped[2]
         complete_route_nodes = response_sip_mapped[3]
-        #settings.logger.debug("sips_route: "+str(sips_route))
-        #settings.logger.debug("spectrums_available: "+str(spectrums_available))
-        #settings.logger.debug("internal_links_route: "+str(internal_links_route))
+        settings.logger.debug("sips_route: "+str(sips_route))
+        settings.logger.debug("spectrums_available: "+str(spectrums_available))
+        settings.logger.debug("internal_links_route: "+str(internal_links_route))
 
         if sips_route == [] and spectrums_available == []:
             settings.logger.debug("No spectrum availability in NEP. Looking for the next route.")

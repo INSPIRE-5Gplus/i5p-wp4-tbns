@@ -191,14 +191,17 @@ def add_context_e2e_graph(context_json):
         node_src = str(context_json["tapi-common:context"]["uuid"]+":"+node1)
         node_dst = str(context_json["tapi-common:context"]["uuid"]+":"+node2)
 
-        # add edge with weight only for VLINK mode
+        # add unidirectional edges
         if os.environ.get("ABSTRACION_MODEL") == "vlink":
+          # Each edge has a weight when using the VLINK mode
           for link_info in link_item["name"]:
             if link_info["value-name"] == "weight":
               weight_info = link_info["value"]
               e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+              e2e_topology_graph.add_edge(node_dst, node_src, weight = weight_info, link_uuid = l_uuid, context = cont, topology=topo, n1=node2, nep1=node_edge_point2, n2=node1, nep2=node_edge_point1)
         else:
           e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
+          e2e_topology_graph.add_edge(node_dst, node_src, link_uuid = l_uuid, context = cont, topology=topo, n1=node2, nep1=node_edge_point2, n2=node1, nep2=node_edge_point1)
       settings.logger.debug("VL_COMP: External context links added.")  
 
   settings.logger.info("VL_COMP: External SDN context added.")
@@ -213,6 +216,7 @@ def add_idl_e2e_graph(e2e_json):
   settings.logger.debug("VL_COMP: Nodes added, adding links to E2E graph")
   # add the links interconnecting the SDN domains defined in the json IF 
   for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
+    settings.logger.debug("IDL NAME: " +str(interdomain_link_item["name"]))
     # adding FIRST unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][0]
     node_2 = interdomain_link_item["nodes-involved"][1]
@@ -227,6 +231,8 @@ def add_idl_e2e_graph(e2e_json):
         e2e_topology_graph.add_edge(node_1, node_2, weight=1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+      settings.logger.debug("FIRST LINK-OPTION: " +str(interdomain_link_item["link-options"][0]["uuid"]))
+    
     # adding SECOND unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][1]
     node_2 = interdomain_link_item["nodes-involved"][0]
@@ -241,6 +247,8 @@ def add_idl_e2e_graph(e2e_json):
         e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+      settings.logger.debug("SECOND LINK-OPTION: " +str(interdomain_link_item["link-options"][1]["uuid"]))
+  
   settings.logger.debug("VL_COMP: Added Edges to E2E Graph.")
   settings.logger.info("VL_COMP: Set of IDLs added.")
 
@@ -302,7 +310,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
     neps_found = False
     # as long as the current route_item is not the last, enters as it works in pairs.
     if idx < (len(route)-1):
-      # gets the data of the edge
+      # gets the data of the edge defined by the source & destination
       response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])
       # link belongs to an interdomain link
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
@@ -387,7 +395,6 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       else:
         ##settings.logger.debug("NEPs belonging to an internal link")
         # link belongs to a context
-        
         new_nep_output = {}
         new_nep_output["link_uuid"] = response[0]["link_uuid"]
         new_nep_output["context_uuid"] = response[0]["context"]

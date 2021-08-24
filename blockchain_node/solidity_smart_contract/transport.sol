@@ -301,7 +301,7 @@ contract transport {
     }
 
     /*##### CONNECTIVITY SERVICE INSTANCES FUNCTIONS #####*/
-    // generates an event to deploy a connectivity service
+    // generates an event to deploy a DOMAIN CS
     function instantiateConnectivityService(address _contextOwner, string memory _id, string memory _cs_info, string memory _spectrum, string memory _capacity) public returns (bool){
         string memory _status = "NEW";
         string memory _log = "Connectivity Service requested.";
@@ -323,7 +323,7 @@ contract transport {
         emit topology_response(msg.sender, _log, _status);
         return true;
     }
-    // generates an event to deploy a connectivity service
+    // generates an event to update a deployed DOMAIN CS
     function updateConnectivityService(string memory _id, string memory _cs_info, string memory _status) public returns (bool){
         string memory _log = "Connectivity Service Updated.";
         CSInstance_list[_id].cs_info = _cs_info;
@@ -336,7 +336,7 @@ contract transport {
         emit topology_response(msg.sender, _log, _status);
         return true;
     }
-    // generates an event to deploy a connectivity service
+    // generates an event to terminate a DOMAIN CS
     function terminateConnectivityService(address _contextOwner, string memory _id) public returns (bool){
         string memory _status = "TERMINATING";
         string memory _log = "Connectivity Service requested.";
@@ -348,7 +348,7 @@ contract transport {
         emit topology_response(msg.sender, _log, _status);
         return true;
     }
-    // generates an event to deploy a connectivity service
+    // generates an event to update a terminate DOMAIN CS
     function updateTerminatedConnectivityService(string memory _id, string memory _status) public returns (bool){
         string memory _log = "Connectivity Service Terminated.";
         CSInstance_list[_id].status = _status;
