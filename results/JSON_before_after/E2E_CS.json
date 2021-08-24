@@ -1,0 +1,397 @@
+//DEPLOYED E2E CS
+[
+  {
+    "uuid": "8961d68b-31ba-43a3-91e2-6f8d9883e323",
+    "source": {
+      "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+      "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+      "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"
+    },
+    "destination": {
+      "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+      "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+      "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"
+    },
+    "status": "TERMINATED",
+    "capacity": {
+      "value": 75,
+      "unit": "GHz"
+    },
+    "spectrum": {
+      "lower-frequency": 191700000,
+      "upper-frequency": 191775000
+    },
+    "route-nodes": [
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "cc1458fa-ccb7-561e-8915-a729d09f2822",
+        "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "89937add-3380-58ab-94ff-9b2fb4efbeeb",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "70c1ae5e-1db0-5269-996b-a529e99a0f0d",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "987eaf2a-c7f6-5ae5-922b-8a15e5796cdc",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+        "nep_uuid": "025217d1-19d2-5618-8f98-4c22d18465e0",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+        "nep_uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b",
+        "sip_uuid": "d7ee402b-7f9e-5468-86ec-113c5ec22707"
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b",
+        "sip_uuid": "ce525139-c58a-5ee7-a527-94e344d8fa5e"
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "70c1ae5e-1db0-5269-996b-a529e99a0f0d",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "89937add-3380-58ab-94ff-9b2fb4efbeeb",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "cc1458fa-ccb7-561e-8915-a729d09f2822",
+        "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"
+      }
+    ],
+    "domain-cs": [
+      {
+        "uuid": "7e6973e4-4e39-4d76-8e21-2e0345d6bc55",
+        "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "address-owner": "0xfE11e734E112715aE0643755406eD7703c0599e4",
+        "status": "TERMINATED",
+        "sip-source": "79516f5e-55a0-5671-977a-1f5cc934e700",
+        "sip-destination": "d7ee402b-7f9e-5468-86ec-113c5ec22707",
+        "internal-links": [
+          "71505848-d2b3-57dd-8069-295ce111ec61",
+          "eb2c8d8c-f527-5aa5-9a2a-9f479e713706"
+        ]
+      },
+      {
+        "uuid": "ed58a345-2776-4180-966e-523cae4a4992",
+        "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "address-owner": "0xeDCe95297065BCAF4776a7403AbA7985aBb57F34",
+        "status": "TERMINATED",
+        "sip-source": "ce525139-c58a-5ee7-a527-94e344d8fa5e",
+        "sip-destination": "aade6001-f00b-5e2f-a357-6a0a9d3de870",
+        "internal-links": [
+          "6e576b11-cafa-5ca7-a79a-ba013f523900"
+        ]
+      }
+    ],
+    "description": "OK"
+  },
+  {
+    "uuid": "89f43813-f006-41c2-8ba8-ce639ad433f7",
+    "source": {
+      "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+      "node_uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+      "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"
+    },
+    "destination": {
+      "context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+      "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+      "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"
+    },
+    "status": "TERMINATED",
+    "capacity": {
+      "value": 225,
+      "unit": "GHz"
+    },
+    "spectrum": {
+      "lower-frequency": 191700000,
+      "upper-frequency": 191925000
+    },
+    "route-nodes": [
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+        "nep_uuid": "9477cbd0-f2e1-5b80-8a51-2d893ab63633",
+        "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+        "nep_uuid": "029b7900-ad9e-52ec-b204-b0389c83dffa",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+        "nep_uuid": "51a6ec77-4422-5fe1-ae25-3e4e58e491f5",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+        "nep_uuid": "8f9ca18a-1736-57b3-97d4-c9b5f5bb3611",
+        "sip_uuid": "9e9dc37f-326c-531c-9812-d6be26294c97"
+      },
+      {
+        "context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "845e72b6-fe13-5e13-aa98-6e1907c0374e",
+        "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"
+      },
+      {
+        "context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "6336a0d4-2007-5c32-b842-f6f40cf93965",
+        "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"
+      }
+    ],
+    "domain-cs": [
+      {
+        "uuid": "2da7efef-df1e-449c-b40e-9fa019b0f09c",
+        "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "address-owner": "0xeDCe95297065BCAF4776a7403AbA7985aBb57F34",
+        "status": "TERMINATED",
+        "sip-source": "367b19b1-3172-54d8-bdd4-12d3ac5604f6",
+        "sip-destination": "9e9dc37f-326c-531c-9812-d6be26294c97",
+        "internal-links": [
+          "bdd79860-1088-50f5-bd79-5222ca27ab12"
+        ]
+      },
+      {
+        "uuid": "fb4a8506-ad01-4ce0-af96-61c86638547e",
+        "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+        "address-owner": "0x9A4C8CB0079C3377aF5E5FDaC246677645F33363",
+        "status": "TERMINATED",
+        "sip-source": "291796d9-a492-5837-9ccb-24389339d18a",
+        "sip-destination": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb",
+        "internal-links": [
+          
+        ]
+      }
+    ],
+    "description": "OK"
+  }
+]
+
+//TERMINATED E2E CS
+[
+  {
+    "uuid": "8961d68b-31ba-43a3-91e2-6f8d9883e323",
+    "source": {
+      "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+      "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+      "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"
+    },
+    "destination": {
+      "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+      "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+      "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"
+    },
+    "status": "TERMINATED",
+    "capacity": {
+      "value": 75,
+      "unit": "GHz"
+    },
+    "spectrum": {
+      "lower-frequency": 191700000,
+      "upper-frequency": 191775000
+    },
+    "route-nodes": [
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "cc1458fa-ccb7-561e-8915-a729d09f2822",
+        "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "89937add-3380-58ab-94ff-9b2fb4efbeeb",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "70c1ae5e-1db0-5269-996b-a529e99a0f0d",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "987eaf2a-c7f6-5ae5-922b-8a15e5796cdc",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+        "nep_uuid": "025217d1-19d2-5618-8f98-4c22d18465e0",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "node_uuid": "69c1ef5e-0d4a-5fb7-b729-b494313d3dc5",
+        "nep_uuid": "bcb246d4-37b9-5a77-b88b-c27fc3d2c16b",
+        "sip_uuid": "d7ee402b-7f9e-5468-86ec-113c5ec22707"
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "df00a549-9a86-5d57-be3e-3a05767fe26b",
+        "sip_uuid": "ce525139-c58a-5ee7-a527-94e344d8fa5e"
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "bc1cfe05-af20-59e7-85b8-eb096253c769",
+        "nep_uuid": "70c1ae5e-1db0-5269-996b-a529e99a0f0d",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "89937add-3380-58ab-94ff-9b2fb4efbeeb",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "cc1458fa-ccb7-561e-8915-a729d09f2822",
+        "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"
+      }
+    ],
+    "domain-cs": [
+      {
+        "uuid": "7e6973e4-4e39-4d76-8e21-2e0345d6bc55",
+        "context-uuid": "0bd7908e-c22b-574d-8bba-396d060e2611",
+        "address-owner": "0xfE11e734E112715aE0643755406eD7703c0599e4",
+        "status": "TERMINATED",
+        "sip-source": "79516f5e-55a0-5671-977a-1f5cc934e700",
+        "sip-destination": "d7ee402b-7f9e-5468-86ec-113c5ec22707",
+        "internal-links": [
+          "71505848-d2b3-57dd-8069-295ce111ec61",
+          "eb2c8d8c-f527-5aa5-9a2a-9f479e713706"
+        ]
+      },
+      {
+        "uuid": "ed58a345-2776-4180-966e-523cae4a4992",
+        "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "address-owner": "0xeDCe95297065BCAF4776a7403AbA7985aBb57F34",
+        "status": "TERMINATED",
+        "sip-source": "ce525139-c58a-5ee7-a527-94e344d8fa5e",
+        "sip-destination": "aade6001-f00b-5e2f-a357-6a0a9d3de870",
+        "internal-links": [
+          "6e576b11-cafa-5ca7-a79a-ba013f523900"
+        ]
+      }
+    ],
+    "description": "OK"
+  },
+  {
+    "uuid": "89f43813-f006-41c2-8ba8-ce639ad433f7",
+    "source": {
+      "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+      "node_uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+      "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"
+    },
+    "destination": {
+      "context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+      "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+      "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"
+    },
+    "status": "TERMINATED",
+    "capacity": {
+      "value": 225,
+      "unit": "GHz"
+    },
+    "spectrum": {
+      "lower-frequency": 191700000,
+      "upper-frequency": 191925000
+    },
+    "route-nodes": [
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+        "nep_uuid": "9477cbd0-f2e1-5b80-8a51-2d893ab63633",
+        "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "5c9809bc-33a9-5214-ab03-b256457b4b46",
+        "nep_uuid": "029b7900-ad9e-52ec-b204-b0389c83dffa",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+        "nep_uuid": "51a6ec77-4422-5fe1-ae25-3e4e58e491f5",
+        "sip_uuid": ""
+      },
+      {
+        "context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "node_uuid": "f8fa6c3a-1840-5d2d-939d-d231cd9c50f1",
+        "nep_uuid": "8f9ca18a-1736-57b3-97d4-c9b5f5bb3611",
+        "sip_uuid": "9e9dc37f-326c-531c-9812-d6be26294c97"
+      },
+      {
+        "context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "845e72b6-fe13-5e13-aa98-6e1907c0374e",
+        "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"
+      },
+      {
+        "context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+        "node_uuid": "589df6c1-90e1-51f5-bda4-b4cd6b2d01e4",
+        "nep_uuid": "6336a0d4-2007-5c32-b842-f6f40cf93965",
+        "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"
+      }
+    ],
+    "domain-cs": [
+      {
+        "uuid": "2da7efef-df1e-449c-b40e-9fa019b0f09c",
+        "context-uuid": "226b9166-974e-57ff-821d-2f24e5a71b00",
+        "address-owner": "0xeDCe95297065BCAF4776a7403AbA7985aBb57F34",
+        "status": "TERMINATED",
+        "sip-source": "367b19b1-3172-54d8-bdd4-12d3ac5604f6",
+        "sip-destination": "9e9dc37f-326c-531c-9812-d6be26294c97",
+        "internal-links": [
+          "bdd79860-1088-50f5-bd79-5222ca27ab12"
+        ]
+      },
+      {
+        "uuid": "fb4a8506-ad01-4ce0-af96-61c86638547e",
+        "context-uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3",
+        "address-owner": "0x9A4C8CB0079C3377aF5E5FDaC246677645F33363",
+        "status": "TERMINATED",
+        "sip-source": "291796d9-a492-5837-9ccb-24389339d18a",
+        "sip-destination": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb",
+        "internal-links": [
+          
+        ]
+      }
+    ],
+    "description": "OK"
+  }
+]

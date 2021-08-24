@@ -1,0 +1,164 @@
+//NEP AFTER DEPLOYED E2E CS
+{
+    "uuid": "029b7900-ad9e-52ec-b204-b0389c83dffa",
+    "layer-protocol-name": "PHOTONIC_MEDIA",
+    "supported-cep-layer-protocol-qualifier": [
+        "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+    ],
+    "link-port-direction": "BIDIRECTIONAL",
+    "link-port-role": "SYMMETRIC",
+    "name": [
+        {
+        "value-name": "local-name",
+        "value": "node_4_port_5"
+        },
+        {
+        "value-name": "cttc.ols.node-name",
+        "value": "node_4"
+        },
+        {
+        "value-name": "cttc.ols.nodeid",
+        "value": "10.1.1.114"
+        },
+        {
+        "value-name": "cttc.ols.ifid",
+        "value": "5"
+        },
+        {
+        "value-name": "cttc.ols.name",
+        "value": "node_4_port_5"
+        },
+        {
+        "value-name": "cttc.gmpls.id",
+        "value": "10.1.1.114:5"
+        },
+        {
+        "value-name": "cttc.ols.port-type",
+        "value": "network"
+        },
+        {
+        "value-name": "layer-protocol-name",
+        "value": "PHOTONIC_MEDIA"
+        },
+        {
+        "value-name": "layer-protocol-qualifier",
+        "value": "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+        }
+    ],
+    "tapi-photonic-media:media-channel-node-edge-point-spec": {
+        "mc-pool": {
+        "supportable-spectrum": [
+            {
+            "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+            },
+            "lower-frequency": 191325000,
+            "upper-frequency": 196150000
+            }
+        ],
+        "available-spectrum": [
+            {
+            "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+            },
+            "lower-frequency": 191325000,
+            "upper-frequency": 191700000
+            },
+            {
+            "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+            },
+            "lower-frequency": 191925000,
+            "upper-frequency": 196150000
+            }
+        ],
+        "occupied-spectrum": [
+            {
+            "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+            },
+            "lower-frequency": 191700000,
+            "upper-frequency": 191925000
+            }
+        ]
+        }
+    }
+}
+
+//NEP AFTER TERMINATED E2E CS
+{
+    "uuid": "029b7900-ad9e-52ec-b204-b0389c83dffa",
+    "layer-protocol-name": "PHOTONIC_MEDIA",
+    "supported-cep-layer-protocol-qualifier": [
+      "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+    ],
+    "link-port-direction": "BIDIRECTIONAL",
+    "link-port-role": "SYMMETRIC",
+    "name": [
+      {
+        "value-name": "local-name",
+        "value": "node_4_port_5"
+      },
+      {
+        "value-name": "cttc.ols.node-name",
+        "value": "node_4"
+      },
+      {
+        "value-name": "cttc.ols.nodeid",
+        "value": "10.1.1.114"
+      },
+      {
+        "value-name": "cttc.ols.ifid",
+        "value": "5"
+      },
+      {
+        "value-name": "cttc.ols.name",
+        "value": "node_4_port_5"
+      },
+      {
+        "value-name": "cttc.gmpls.id",
+        "value": "10.1.1.114:5"
+      },
+      {
+        "value-name": "cttc.ols.port-type",
+        "value": "network"
+      },
+      {
+        "value-name": "layer-protocol-name",
+        "value": "PHOTONIC_MEDIA"
+      },
+      {
+        "value-name": "layer-protocol-qualifier",
+        "value": "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+      }
+    ],
+    "tapi-photonic-media:media-channel-node-edge-point-spec": {
+      "mc-pool": {
+        "supportable-spectrum": [
+          {
+            "frequency-constraint": {
+              "adjustment-granularity": "G_6_25GHZ",
+              "grid-type": "FLEX"
+            },
+            "lower-frequency": 191325000,
+            "upper-frequency": 196150000
+          }
+        ],
+        "available-spectrum": {
+          "frequency-constraint": {
+            "adjustment-granularity": "G_6_25GHZ",
+            "grid-type": "FLEX"
+          },
+          "lower-frequency": 191325000,
+          "upper-frequency": 196150000
+        },
+        "occupied-spectrum": [
+          
+        ]
+      }
+    }
+}

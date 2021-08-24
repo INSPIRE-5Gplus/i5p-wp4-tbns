@@ -574,8 +574,8 @@ if __name__ == '__main__':
   worker_transport_blockchain_events.start()
 
   # RUN THREAD POOL TO MANAGE INCOMING TASKS
-  settings.logger.info('Thread pool created with 5 workers')
-  workers = 5
+  settings.logger.info('Thread pool created with 20 workers')
+  workers = 20
   settings.init_thread_pool(workers)
 
   # RUN MAIN SERVER THREAD

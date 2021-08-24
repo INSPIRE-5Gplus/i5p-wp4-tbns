@@ -239,8 +239,8 @@ class Connectivity:
             endpoint_dst = {'context_uuid': 'c', 'nep_uuid': 'd', 'sip_uuid': 'e'}
             print('No SIPs available: {}'.format(cs_uuid))
 
-        print(str(src))
-        print(str(dst))
+        #print(str(src))
+        #print(str(dst))
         #src = endpoint[0]
         #src = endpoint_src
         #dst = endpoint[1]
@@ -256,20 +256,20 @@ class Connectivity:
         #response = requests.post(url, json={"uuid": cs_uuid, "src": src, "dst": dst, "capacity": capacity})
         cs_json = {"cs_uuid": cs_uuid,"source": src, "destination": dst, "capacity": {"value": capacity,"unit": "GHz"}}
         print('CS JSON Request: ' + str(cs_json))
-        print("URL: " + str(url))
+        #print("URL: " + str(url))
         response = requests.post(url, json=cs_json)
-        print("POST response: "+str(response.text) + "with status: " + str(response.status_code))
+        #print("POST response: "+str(response.text) + "with status: " + str(response.status_code))
         connection.end_TS = millis()
 
         #response["description"] = [OK, No Spectrum, No route]
         # waiting E2E CS deployment finishes
         time.sleep(40)  # awaits 20 seconds before it starts tocheck
-        print("ORCH: Waiting the E2E CS request final response.")
+        print("Waiting the E2E CS deployment with id: " + str(cs_uuid))
         while True:
             url = "http://" + ip + "/pdl-transport/connectivity_service/"+str(cs_uuid)
             response = requests.get(url)
-            print("GET RESPONSE: " + str(response))
-            print("GET response.text: "+str(response.text))
+            #print("WHILE LOOP FOR CS id: " + str(cs_uuid))
+            #print("GET response.text: "+str(response.text))
             response_json = json.loads(response.text)
             if response_json["status"] == []:
                 pass
@@ -339,7 +339,7 @@ class Connectivity:
         if check_ht/1000 < 1:
             connection.ber = False
         
-        print("Request to terminate E2E CS with ID: "+ str(connection.uuid))
+        #print("Request to terminate E2E CS with ID: "+ str(connection.uuid))
         
         connection.start_TS = millis()
         try:
@@ -377,11 +377,11 @@ class Connectivity:
         connection.end_TS = millis()
 
         # waiting E2E CS termination finishes
-        print("ORCH: Waiting the E2E CS request final response.")
+        print("Waiting the E2E CS termination with id: " + str(connection.uuid))
         while True:
             url = "http://" + ip + "/pdl-transport/connectivity_service/"+str(connection.uuid)
             response = requests.get(url)
-            print("GET response: "+str(response.text))
+            #print("GET response: "+str(response.text))
             response_json = json.loads(response.text)
             if response_json["status"] == "TERMINATED" or response_json["status"] == "ERROR":
                 break

@@ -1,0 +1,134 @@
+// SIP AFTER DEPLOYED E2E CS
+{
+    "sip_info": {
+      "uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6",
+      "layer-protocol-name": "PHOTONIC_MEDIA",
+      "supported-layer-protocol-qualifier": [
+        "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+      ],
+      "administrative-state": "UNLOCKED",
+      "operational-state": "ENABLED",
+      "name": [
+        {
+          "value-name": "cttc.ols.client-port",
+          "value": "node_4_port_13"
+        },
+        {
+          "value-name": "cttc.ols.ifid",
+          "value": "13"
+        },
+        {
+          "value-name": "cttc.gmpls.ifid",
+          "value": "10.1.1.114:13"
+        },
+        {
+          "value-name": "ols-id",
+          "value": "156"
+        },
+        {
+          "value-name": "local-name",
+          "value": "node_4_port_13-output"
+        }
+      ],
+      "direction": "OUTPUT",
+      "tapi-photonic-media:media-channel-service-interface-point-spec": {
+        "mc-pool": {
+          "supportable-spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+              }
+            }
+          ],
+          "available-spectrum": [
+            {
+              "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+              },
+              "lower-frequency": 191925000,
+              "upper-frequency": 196100000
+            }
+          ],
+          "occupied-spectrum": [
+            {
+              "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+              },
+              "lower-frequency": 191700000,
+              "upper-frequency": 191925000
+            }
+          ]
+        }
+      }
+    },
+    "owner": "0xeDCe95297065BCAF4776a7403AbA7985aBb57F34"
+}
+
+//SIP AFTER TERMINATED E2E CS
+{
+    "sip_info": {
+      "uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6",
+      "layer-protocol-name": "PHOTONIC_MEDIA",
+      "supported-layer-protocol-qualifier": [
+        "tapi-photonic-media:PHOTONIC_LAYER_QUALIFIER_NMC"
+      ],
+      "administrative-state": "UNLOCKED",
+      "operational-state": "ENABLED",
+      "name": [
+        {
+          "value-name": "cttc.ols.client-port",
+          "value": "node_4_port_13"
+        },
+        {
+          "value-name": "cttc.ols.ifid",
+          "value": "13"
+        },
+        {
+          "value-name": "cttc.gmpls.ifid",
+          "value": "10.1.1.114:13"
+        },
+        {
+          "value-name": "ols-id",
+          "value": "156"
+        },
+        {
+          "value-name": "local-name",
+          "value": "node_4_port_13-output"
+        }
+      ],
+      "direction": "OUTPUT",
+      "tapi-photonic-media:media-channel-service-interface-point-spec": {
+        "mc-pool": {
+          "supportable-spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+              }
+            }
+          ],
+          "available-spectrum": [
+            {
+              "lower-frequency": 191700000,
+              "upper-frequency": 196100000,
+              "frequency-constraint": {
+                "adjustment-granularity": "G_6_25GHZ",
+                "grid-type": "FLEX"
+              }
+            }
+          ],
+          "occupied-spectrum": [
+            
+          ]
+        }
+      }
+    },
+    "owner": "0xeDCe95297065BCAF4776a7403AbA7985aBb57F34"
+}
