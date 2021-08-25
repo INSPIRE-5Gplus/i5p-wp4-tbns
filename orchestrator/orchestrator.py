@@ -489,9 +489,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
         neps_route = response_nep_mapped[0]
         idl_route = response_nep_mapped[1]
+        idl_count = response_nep_mapped[2]
         settings.logger.debug("neps_route: " + str(neps_route))
         settings.logger.debug("idl_route: "+str(idl_route))
-        if neps_route == [] and idl_route == []:
+        if neps_route != [] and idl_count == 0:
+            pass
+        elif neps_route == [] and idl_route == []:
             settings.logger.info("ORCH: No NEP or link available in the IDLs. Looking for the next route.")
             continue
         # identifies the SIP used for each NEP in the route
@@ -507,11 +510,14 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         if sips_route == [] and spectrums_available == []:
             settings.logger.debug("No spectrum availability in NEP. Looking for the next route.")
             continue
-        # generates available spectrums list from interdomain links & internal neps
-        for idl_item in idl_route:
-            new_spectrum = {}
-            new_spectrum["available-spectrum"] = idl_item["available-spectrum"]
-            spectrums_available.append(new_spectrum)
+        
+        #if any IDL is used, adds its spectrum info.
+        if idl_count != 0:
+            # generates available spectrums list from interdomain links & internal neps
+            for idl_item in idl_route:
+                new_spectrum = {}
+                new_spectrum["available-spectrum"] = idl_item["available-spectrum"]
+                spectrums_available.append(new_spectrum)
         
         #settings.logger.debug("spectrums_available: "+str(spectrums_available))
         #settings.logger.debug("capacity: " + str(capacity))

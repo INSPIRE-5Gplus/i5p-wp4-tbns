@@ -1,27 +1,35 @@
 curl -i -H "Content-Type: application/json" -X POST -d '' http://localhost:4441/pdl-transport/connectivity_service
 
-Vic - Blanes
-{'cs_uuid': '34d71b87-68dd-486d-ac3c-a9a2a5c8ca0f', 'source': {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "71941e6f-0f69-53d4-820e-f4efc5d3364b"}, 'destination': {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, 'capacity': {'value': 75, 'unit': 'GHz'}}
-Blanes - Vic
-{'cs_uuid': '9803a2ac-9007-472b-a7ee-41b4c0d79b1f', 'source': {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, 'destination': {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "fc7d3da3-31c2-5f7a-868c-fe824919a2e4"}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+Vic - Blanes: NOT OK
+{"cs_uuid": "34d71b87-68dd-486d-ac3c-a9a2a5c8ca0f", "source": {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "71941e6f-0f69-53d4-820e-f4efc5d3364b"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, "capacity": {"value": 75, "unit": "GHz"}}
+Blanes - Vic: OK
+{"cs_uuid": "9803a2ac-9007-472b-a7ee-41b4c0d79b1f", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, "destination": {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "fc7d3da3-31c2-5f7a-868c-fe824919a2e4"}, "capacity": {"value": 375, "unit": "GHz"}}
 
-Ripoll - Seu urgell
-{'cs_uuid': 'e46d0aa7-05dc-4c5f-abf2-592acceaf33d', 'source': {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"}, 'destination': {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"}, 'capacity': {'value': 300, 'unit': 'GHz'}}
-Seu urgell - ripoll
-{'cs_uuid': 'c9fabe2c-40e5-4101-8c10-8396ecb62a30', 'source': {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"}, 'destination': {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+Ripoll - Seu urgell: OK
+{"cs_uuid": "e46d0aa7-05dc-4c5f-abf2-592acceaf33d", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"}, "destination": {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"}, "capacity": {"value": 300, "unit": "GHz"}}
+Seu urgell - Ripoll:NOT OK
+{"cs_uuid": "c9fabe2c-40e5-4101-8c10-8396ecb62a30", "source": {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"}, "capacity": {"value": 525, "unit": "GHz"}}
 
-Manresa - Solsona
-{'cs_uuid': '949fc5fd-cbc8-4099-a7a9-e01c714cc896', 'source': {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"}, 'destination': {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, 'capacity': {'value': 150, 'unit': 'GHz'}}
-Solsona - Manresa
-{'cs_uuid': '4189b82d-34aa-4b1d-9b6c-7e3d35f8c4d9', 'source': {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, 'destination': {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "50296d99-58cc-5ce7-82f5-fc8ee4eec2ec"}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+Manresa - Solsona: OK
+{"cs_uuid": "949fc5fd-cbc8-4099-a7a9-e01c714cc896", "source": {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"}, "destination": {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, "capacity": {"value": 150, "unit": "GHz"}}
+Solsona - Manresa: NOT OK
+{"cs_uuid": "4189b82d-34aa-4b1d-9b6c-7e3d35f8c4d9", "source": {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, "destination": {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "50296d99-58cc-5ce7-82f5-fc8ee4eec2ec"}, "capacity": {"value": 450, "unit": "GHz"}}
 
-Vilanova - Tarragona
-{'cs_uuid': 'f3432072-371a-4514-b2a6-17122dda73e0', 'source': {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "f1737854-81ef-5a98-9a27-0ae89619ba1e"}, 'destination': {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, 'capacity': {'value': 600, 'unit': 'GHz'}}
-Tarragona - Vilanova
-{'cs_uuid': 'c7e93a71-742a-4f95-84b7-92bac31037f6', 'source': {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, 'destination': {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "589c2048-0b7f-59c7-b893-514949faea32"}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+Vilanova - Tarragona: OK
+{"cs_uuid": "f3432072-371a-4514-b2a6-17122dda73e0", "source": {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "f1737854-81ef-5a98-9a27-0ae89619ba1e"}, "destination": {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 600, "unit": "GHz"}}
+Tarragona - Vilanova: NOT OK
+{"cs_uuid": "c7e93a71-742a-4f95-84b7-92bac31037f6", "source": {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, "destination": {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "589c2048-0b7f-59c7-b893-514949faea32"}, "capacity": {"value": 75, "unit": "GHz"}}
 
-Lleida - Mora Ebre
-{'cs_uuid': '2db1b728-2671-49c7-b945-94307ed59fca', 'source': {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, 'destination': {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, 'capacity': {'value': 225, 'unit': 'GHz'}}
-More Ebre - Lleida
-{'cs_uuid': 'd22366fc-bf57-4a8d-86bc-4558285df545', 'source': {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, 'destination': {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+Lleida - Mora Ebre: OK
+{"cs_uuid": "2db1b728-2671-49c7-b945-94307ed59fca", "source": {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, "destination": {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, "capacity": {"value": 225, "unit": "GHz"}}
+More Ebre - Lleida: NOT OK
+{"cs_uuid": "d22366fc-bf57-4a8d-86bc-4558285df545", "source": {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, "destination": {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
+
+
+Figueres - Blanes:
+{"cs_uuid": "e432c95e-2726-42b7-a7f4-9c47a7379a09", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, "capacity": {"value": 225, "unit": "GHz"}}
+Blanes - Figueres:
+{"cs_uuid": "9ae4808c-1b95-4560-97ac-e93414dff998", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
+
+
 

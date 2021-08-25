@@ -305,6 +305,7 @@ get_edge_data options:
 def node2nep_route_mapping(route, e2e_topology, capacity):
   route_neps = []
   route_interdominlinks = []
+  idl_counter = 0       # it allows to identify if the E2E CS is composed of a single domain CS.
   # it gets the list of neps based on the order of nodes in the route
   for idx, route_item in enumerate(route):
     neps_found = False
@@ -374,6 +375,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                     new_idl["link-option-uuid"] = link_option_item["uuid"]
                     new_idl["available-spectrum"] = available_spec_list
                     route_interdominlinks.append(new_idl)
+                    idl_counter = idl_counter + 1
                     neps_found = True
                     break
               if neps_found:
@@ -412,7 +414,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
         new_nep_inpout["direction"] = "INPUT"
         route_neps.append(new_nep_inpout)
   
-  return route_neps, route_interdominlinks
+  return route_neps, route_interdominlinks, idl_counter
 
 """
 Example of route_neps = [

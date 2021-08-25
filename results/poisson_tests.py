@@ -171,7 +171,7 @@ class Connectivity:
         
         print("NEW E2E CS between the following Nodes/SIPs (Source & Destination):")
         try:
-            directions_D2 = ['INPUT,OUTPUT']
+            directions_D2 = ['INPUT','OUTPUT']
             selectedD2_direction = random.choice(directions_D2)
             cs_uuid = str(uuid.uuid4())
             if selectedD2_direction == 'INPUT':
@@ -323,12 +323,14 @@ class Connectivity:
 
         self.log.append(connection)
         s_next = poisson_wait_time(mu)
+        
         connection = ConnectivityServiceData()
         connection.inter_arrival_time = s_next
         connection.uuid = cs_uuid
         connection.type = 'DELETE'
 
         self.delete_cs(connection)
+        
 
     def delete_cs(self, connection):
         start_ht = millis()
