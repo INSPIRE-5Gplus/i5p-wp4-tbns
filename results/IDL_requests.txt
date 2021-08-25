@@ -32,8 +32,10 @@ Blanes - Figueres:
 {"cs_uuid": "9ae4808c-1b95-4560-97ac-e93414dff998", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
 
 Figueres - Ripoll:
-{"cs_uuid": "e432c95e-2726-42b7-a7f4-9c47a7379a09", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"}, "capacity": {"value": 225, "unit": "GHz"}}
+{"cs_uuid": "ec3236f6-b1bc-493b-b96c-f14bb637c2a1", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"}, "capacity": {"value": 225, "unit": "GHz"}}
 Ripoll - Figueres:
-{"cs_uuid": "9ae4808c-1b95-4560-97ac-e93414dff998", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
+{"cs_uuid": "39eaef66-0471-45c0-8f51-20e8e8dea628", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
+
+
 
 

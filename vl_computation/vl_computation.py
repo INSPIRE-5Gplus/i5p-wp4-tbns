@@ -198,10 +198,8 @@ def add_context_e2e_graph(context_json):
             if link_info["value-name"] == "weight":
               weight_info = link_info["value"]
               e2e_topology_graph.add_edge(node_src, node_dst, weight = weight_info, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
-              e2e_topology_graph.add_edge(node_dst, node_src, weight = weight_info, link_uuid = l_uuid, context = cont, topology=topo, n1=node2, nep1=node_edge_point2, n2=node1, nep2=node_edge_point1)
         else:
           e2e_topology_graph.add_edge(node_src, node_dst, link_uuid = l_uuid, context = cont, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2)
-          e2e_topology_graph.add_edge(node_dst, node_src, link_uuid = l_uuid, context = cont, topology=topo, n1=node2, nep1=node_edge_point2, n2=node1, nep2=node_edge_point1)
       settings.logger.debug("VL_COMP: External context links added.")  
 
   settings.logger.info("VL_COMP: External SDN context added.")
@@ -217,6 +215,22 @@ def add_idl_e2e_graph(e2e_json):
   # add the links interconnecting the SDN domains defined in the json IF 
   for interdomain_link_item in e2e_json["e2e-topology"]["interdomain-links"]:
     settings.logger.debug("IDL NAME: " +str(interdomain_link_item["name"]))
+    for link_option_item in interdomain_link_item["link-options"]:
+      node_1 = link_option_item["nodes-direction"]["node-1"]
+      node_2 = link_option_item["nodes-direction"]["node-2"]
+      uuid_idl = link_option_item["uuid"]
+      response = e2e_topology_graph.has_edge(node_1, node_2)     
+      if response == True:
+        settings.logger.debug("IDL already existing.")
+        pass
+      else:
+        # add edge with weight only for VLINK mode
+        if os.environ.get("ABSTRACION_MODEL") == "vlink":
+          e2e_topology_graph.add_edge(node_1, node_2, weight=1, interdomain_link_uuid=uuid_idl)
+        else:
+          e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
+    
+    """ ## OLD CODE
     # adding FIRST unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][0]
     node_2 = interdomain_link_item["nodes-involved"][1]
@@ -231,8 +245,8 @@ def add_idl_e2e_graph(e2e_json):
         e2e_topology_graph.add_edge(node_1, node_2, weight=1, interdomain_link_uuid=uuid_idl)
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
-      settings.logger.debug("FIRST LINK-OPTION: " +str(interdomain_link_item["link-options"][0]["uuid"]))
-    
+    """  
+    """
     # adding SECOND unidirectional links for the routing process in the E2E MultiDiGraph
     node_1 = interdomain_link_item["nodes-involved"][1]
     node_2 = interdomain_link_item["nodes-involved"][0]
@@ -248,7 +262,7 @@ def add_idl_e2e_graph(e2e_json):
       else:
         e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
       settings.logger.debug("SECOND LINK-OPTION: " +str(interdomain_link_item["link-options"][1]["uuid"]))
-  
+    """
   settings.logger.debug("VL_COMP: Added Edges to E2E Graph.")
   settings.logger.info("VL_COMP: Set of IDLs added.")
 
@@ -267,7 +281,7 @@ def get_nodes():
   settings.logger.info("List of nodes: ")
   settings.logger.info(str(list(e2e_topology_graph.nodes)))
   settings.logger.info("List of edges: ")
-  settings.logger.info(str(list(e2e_topology_graph.edges)))
+  settings.logger.info(str(list(e2e_topology_graph.edges(data=True))))
 
 # computes the K-shortest simple path between two compute domains
 def find_path(src, dst):
@@ -324,7 +338,8 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
             # looks which on of the two direction link-option to take
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
-              if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
+              #if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
+              if route_item == link_option_item["node-1"] and route[idx+1] == link_option_item["node-2"]:
                 # checks if this NEP has enough available spectrum  to fit the requested capacity
                 available_spectrum = link_option_item["available-spectrum"]
                 availability = False
@@ -379,6 +394,8 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                     idl_counter = idl_counter + 1
                     neps_found = True
                     break
+              else:
+                settings.logger.debug("Looking the other link-option")
               if neps_found:
                 break
               else:
