@@ -338,8 +338,8 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
             # looks which on of the two direction link-option to take
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
-              #if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
-              if route_item == link_option_item["node-1"] and route[idx+1] == link_option_item["node-2"]:
+              if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
+              #if route_item == link_option_item["node-1"] and route[idx+1] == link_option_item["node-2"]:
                 # checks if this NEP has enough available spectrum  to fit the requested capacity
                 available_spectrum = link_option_item["available-spectrum"]
                 availability = False
