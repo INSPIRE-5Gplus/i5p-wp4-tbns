@@ -25,11 +25,15 @@ Lleida - Mora Ebre: OK
 More Ebre - Lleida: NOT OK
 {"cs_uuid": "d22366fc-bf57-4a8d-86bc-4558285df545", "source": {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, "destination": {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
 
-
+(NO IDL, rutes interns)
 Figueres - Blanes:
 {"cs_uuid": "e432c95e-2726-42b7-a7f4-9c47a7379a09", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"}, "capacity": {"value": 225, "unit": "GHz"}}
 Blanes - Figueres:
 {"cs_uuid": "9ae4808c-1b95-4560-97ac-e93414dff998", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
 
+Figueres - Ripoll:
+{"cs_uuid": "e432c95e-2726-42b7-a7f4-9c47a7379a09", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"}, "capacity": {"value": 225, "unit": "GHz"}}
+Ripoll - Figueres:
+{"cs_uuid": "9ae4808c-1b95-4560-97ac-e93414dff998", "source": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"}, "destination": {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"}, "capacity": {"value": 525, "unit": "GHz"}}
 
 

@@ -303,6 +303,7 @@ get_edge_data options:
 """
 # Based on a given route, looks for the specific NEPs involved in the inter-domain links
 def node2nep_route_mapping(route, e2e_topology, capacity):
+  settings.logger.debug("Starting the mappping from nodes to neps route.")
   route_neps = []
   route_interdominlinks = []
   idl_counter = 0       # it allows to identify if the E2E CS is composed of a single domain CS.
@@ -316,7 +317,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
       # link belongs to an interdomain link
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
       if "interdomain_link_uuid" in response[0].keys():
-        ##settings.logger.debug("NEPs belonging to an IDL (with SIPS)")
+        settings.logger.debug("NEPs belonging to an IDL (with SIPS)")
         for idl_item in e2e_topology["e2e-topology"]["interdomain-links"]:
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
@@ -395,7 +396,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
           route_interdominlinks = []
           return route_neps, route_interdominlinks
       else:
-        ##settings.logger.debug("NEPs belonging to an internal link")
+        settings.logger.debug("NEPs belonging to an internal link")
         # link belongs to a context
         new_nep_output = {}
         new_nep_output["link_uuid"] = response[0]["link_uuid"]
@@ -432,6 +433,7 @@ Example of route_interdominlinks = [
 """
 # based on the NEPs route, it looks for the corresponding SIPs to define the CSs
 def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
+  settings.logger.debug("Starting the mappping from neps to sips route.")
   route_sips = []
   route_spectrum = []
   route_links = []        # used only in transparent abstraction mode
@@ -439,6 +441,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   domain_context = {}
   # maps intermediate NEPs to intermediate SIPs
   for idx, nep_item  in enumerate(route_neps):
+    settings.logger.debug("Checking NEP item with id: " + str(nep_item["nep_uuid"]))
     # get the specific context to discover the correct SIP to use attached to the link under study
     # requests the context only when two followed neps belong to a different context.
     if domain_context == {} or nep_item["context_uuid"] != route_neps[idx-1]["context_uuid"]:
@@ -454,7 +457,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
           found_nep = True
           found_sip = False
           if 'mapped-service-interface-point' in owned_nep_item.keys():
-            ##settings.logger.debug("Client NEP")
+            settings.logger.debug("Client NEP")
             # NOTE: VNODE will only enter in here, never in the associated else as it has only neps with sips
             # looks for the SIP info associated to the nep
             for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
@@ -476,7 +479,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               if found_sip:
                 break
           else:
-            ##settings.logger.debug("Internal NEP")
+            settings.logger.debug("Internal NEP")
             # adds nep info for the complete route info (later saved in the E2E CS data object)
             route_node_item = {}
             route_node_item["context_uuid"] = nep_item["context_uuid"]
@@ -533,7 +536,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
         break
 
   # adds the FIRST SIP in the route_sips, the info to the nodes_route and the spectrum info
-  ##settings.logger.debug("Adding the first sip")
+  settings.logger.debug("Adding first SIP element.")
   sip_uuid = e2e_cs_request["source"]["context_uuid"]+":"+e2e_cs_request["source"]["sip_uuid"]
   response_json = bl_mapper.get_sip(sip_uuid)
   sip_item = response_json["sip_info"]
@@ -542,7 +545,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_sips.insert(0, sip_item)
   
   response_json = bl_mapper.get_node(e2e_cs_request["source"]["context_uuid"], e2e_cs_request["source"]["node_uuid"])
-  #settings.logger.debug("response_json: "+str(response_json))
   found_nep = False
   for nep_item in response_json["owned-node-edge-point"]:
     #settings.logger.debug("nep_item: "+str(nep_item))
@@ -557,7 +559,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
         break
     if found_nep == True:
       break
-  #settings.logger.debug("nep_uuid: "+ str(nep_uuid))
   route_node_item = {}
   route_node_item["context_uuid"] = e2e_cs_request["source"]["context_uuid"]
   route_node_item["node_uuid"] = e2e_cs_request["source"]["node_uuid"]
@@ -578,7 +579,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_spectrum.insert(0, new_spectrum)
   
   # adds the last SIP in the route_sips, the info in the nodes route and the spectrum info
-  ##settings.logger.debug("Adding the last sip")
+  settings.logger.debug("Adding the last SIP element")
   sip_uuid = e2e_cs_request["destination"]["context_uuid"]+":"+e2e_cs_request["destination"]["sip_uuid"]
   response_json = bl_mapper.get_sip(sip_uuid)
   sip_item = response_json["sip_info"]
