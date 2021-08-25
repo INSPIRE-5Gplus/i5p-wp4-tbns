@@ -1,0 +1,27 @@
+curl -i -H "Content-Type: application/json" -X POST -d '' http://localhost:4441/pdl-transport/connectivity_service
+
+Vic - Blanes
+{'cs_uuid': '34d71b87-68dd-486d-ac3c-a9a2a5c8ca0f', 'source': , 'destination': , 'capacity': {'value': 75, 'unit': 'GHz'}}
+Blanes - Vic
+{'cs_uuid': '9803a2ac-9007-472b-a7ee-41b4c0d79b1f', 'source': , 'destination': , 'capacity': {'value': 375, 'unit': 'GHz'}}
+
+Ripoll - Seu urgell
+{'cs_uuid': 'e46d0aa7-05dc-4c5f-abf2-592acceaf33d', 'source': , 'destination': , 'capacity': {'value': 300, 'unit': 'GHz'}}
+Seu urgell - ripoll
+{'cs_uuid': 'c9fabe2c-40e5-4101-8c10-8396ecb62a30', 'source': , 'destination': , 'capacity': {'value': 525, 'unit': 'GHz'}}
+
+Manresa - Solsona
+{'cs_uuid': '949fc5fd-cbc8-4099-a7a9-e01c714cc896', 'source': , 'destination': , 'capacity': {'value': 150, 'unit': 'GHz'}}
+Solsona - Manresa
+{'cs_uuid': '4189b82d-34aa-4b1d-9b6c-7e3d35f8c4d9', 'source': , 'destination': , 'capacity': {'value': 450, 'unit': 'GHz'}}
+
+Vilanova - Tarragona
+{'cs_uuid': 'f3432072-371a-4514-b2a6-17122dda73e0', 'source': , 'destination': , 'capacity': {'value': 600, 'unit': 'GHz'}}
+Tarragona - Vilanova
+{'cs_uuid': 'c7e93a71-742a-4f95-84b7-92bac31037f6', 'source': , 'destination': , 'capacity': {'value': 75, 'unit': 'GHz'}}
+
+Lleida - Mora Ebre
+{'cs_uuid': '2db1b728-2671-49c7-b945-94307ed59fca', 'source': , 'destination': , 'capacity': {'value': 225, 'unit': 'GHz'}}
+More Ebre - Lleida
+{'cs_uuid': 'd22366fc-bf57-4a8d-86bc-4558285df545', 'source': , 'destination': , 'capacity': {'value': 525, 'unit': 'GHz'}}
+
