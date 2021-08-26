@@ -317,7 +317,7 @@ get_edge_data options:
 """
 # Based on a given route, looks for the specific NEPs involved in the inter-domain links
 def node2nep_route_mapping(route, e2e_topology, capacity):
-  settings.logger.debug("Starting the mappping from nodes to neps route.")
+  settings.logger.debug("Starting the mapping from nodes to neps route.")
   route_neps = []
   route_interdominlinks = []
   idl_counter = 0       # it allows to identify if the E2E CS is composed of a single domain CS.
@@ -328,39 +328,45 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
     if idx < (len(route)-1):
       # gets the data of the edge defined by the source & destination
       response = e2e_topology_graph.get_edge_data(route_item, route[idx+1])
+      settings.logger.debug("EDGE INFO: " + str(response))
       # link belongs to an interdomain link
       #NOTE: all this could be reduced and similar to the context (else) if the OLS would manage NEP with multiple SIPs
       if "interdomain_link_uuid" in response[0].keys():
-        settings.logger.debug("NEPs belonging to an IDL (with SIPS)")
+        settings.logger.debug("VL_COMP: NEPs belonging to an IDL (with SIPS)")
         for idl_item in e2e_topology["e2e-topology"]["interdomain-links"]:
           # the correct IDL is found
           if route_item in idl_item["nodes-involved"] and route[idx+1] in idl_item["nodes-involved"]:
             # looks which on of the two direction link-option to take
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
-              if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
+              print("link_option_item[uuid]: " + str(link_option_item["uuid"]) +" - response[0][interdomain_link_uuid]: " + str(response[0]["interdomain_link_uuid"]))
               #if route_item == link_option_item["node-1"] and route[idx+1] == link_option_item["node-2"]:
+              if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
+                print("A")
                 # checks if this NEP has enough available spectrum  to fit the requested capacity
                 available_spectrum = link_option_item["available-spectrum"]
                 availability = False
                 for available_item in available_spectrum:
                   available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
                   if (available_diff >= capacity):
+                    settings.logger.debug("There is available spectrum")
                     availability = True
                     break
                 
                 # if False, the NEp is not good, and another route is necessary
                 if availability == False:
-                  #settings.logger.debug("This IDL has not enough available spectrum for the requested capacity.")
+                  settings.logger.debug("This IDL has not enough available spectrum for the requested capacity.")
                   route_neps = []
                   route_interdominlinks = []
                   return route_neps, route_interdominlinks
                 
                 #NOTE: the physical-options are a list of NEPs sharing the same spectrum to simulate a NEp with multi-sips.
                 # found the right IDL and direction, taking the first physical nep pair available among all the possibilities.
+                print("B")
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
                   if physical_option_item["occupied-spectrum"] == []:
+                    settings.logger.debug("Found free physical-option.")
                     # gets nep 1 info from the e2e_topology 6 adds it into the route-neps
                     new_nep_ouput = {}
                     new_nep_ouput["type_link"] = "IDL"
@@ -394,15 +400,17 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                     idl_counter = idl_counter + 1
                     neps_found = True
                     break
+                  else:
+                    settings.logger.debug("NO physical-option available.")
               else:
-                settings.logger.debug("Looking the other link-option")
-              if neps_found:
-                break
-              else:
-                settings.logger.info("VL_COMP: Link-option not good. Check another route")
-                route_neps = []
-                route_interdominlinks = []
-                return route_neps, route_interdominlinks
+                settings.logger.debug("VL_COMP: Looking the other link-option")
+            
+            # if nnone of the two link-options are good, we need another route.
+            if neps_found == False:
+              settings.logger.info("VL_COMP: Set of link-options not good. Check another route")
+              route_neps = []
+              route_interdominlinks = []
+              return route_neps, route_interdominlinks
           else:
             settings.logger.debug("VL_COMP: Looking if the next IDL is the good one.")
           if neps_found:
@@ -413,7 +421,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
           route_interdominlinks = []
           return route_neps, route_interdominlinks
       else:
-        settings.logger.debug("NEPs belonging to an internal link")
+        settings.logger.debug("VL_COMP: NEPs belonging to an internal link")
         # link belongs to a context
         new_nep_output = {}
         new_nep_output["link_uuid"] = response[0]["link_uuid"]
