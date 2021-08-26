@@ -1000,7 +1000,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
     #settings.logger.debug("Updating available spectrums in the internal NEPs of each SDN Context and the IDLs.")
     route_nodes_list = e2e_cs_json["route-nodes"]
     for idx, route_item in enumerate(route_nodes_list):
-        if route_item["sip_uuid"] == "":
+        if route_item["sip_uuid"] == "" and route_item["nep_direction"] == "OUTPUT":
             settings.logger.debug("ORCH: Internal NEP: updating the NEP info.")
             # updates the internal NEPsinformation
             # gets the nep info
@@ -1013,7 +1013,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
             spec_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
             #settings.logger.debug("spec_list: "+str(spec_list))
 
-            #only thos NEPs being input will enter in this if as there's no need to update their occupied spectrum.
+            #only those NEPs being input will enter in this IF as there's no need to update their occupied spectrum.
             if spec_list == []:
                 # no need to do anything, let's go for the next NEP.
                 continue
@@ -1075,7 +1075,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 pass
         else:
             if idx < (len(e2e_cs_json["route-nodes"])-1):
-                #These NEPs are update in the IDL files and later in their corresponding SIPs in the SDN contexts.
+                #These NEPs are updated in the IDL files and later in their corresponding SIPs in the SDN contexts.
                 settings.logger.debug("ORCH: NEP belonging to an IDL.")
                 # composes the uuids based on the asbtraction model is being used.
                 if str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
