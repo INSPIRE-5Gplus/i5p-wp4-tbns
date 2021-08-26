@@ -591,7 +591,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_node_item["node_uuid"] = e2e_cs_request["source"]["node_uuid"]
   route_node_item["nep_uuid"] = nep_uuid
   route_node_item["sip_uuid"] = e2e_cs_request["source"]["sip_uuid"]
-  route_node_item["nep_direction"] == "OUTPUT"
+  route_node_item["nep_direction"] = "OUTPUT"
   route_nodes_info.insert(0, route_node_item)
   
   # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
@@ -633,7 +633,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_node_item["node_uuid"] = e2e_cs_request["destination"]["node_uuid"]
   route_node_item["nep_uuid"] = nep_uuid
   route_node_item["sip_uuid"] = e2e_cs_request["destination"]["sip_uuid"]
-  route_node_item["nep_direction"] == "INPUT"
+  route_node_item["nep_direction"] = "INPUT"
   route_nodes_info.append(route_node_item)
   
   # adds the spectrum_info of each SIP (associated NEP) to solve the spectrum continuity later
