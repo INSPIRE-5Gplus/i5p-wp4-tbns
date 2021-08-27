@@ -890,6 +890,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 def terminate_e2e_connectivity_service(cs_uuid):
     settings.logger.info("ORCH: Received E2E request info to terminate CS. Let's process it.")   
     # gets the e2e CS to terminate
+    #TODO: programm a return to info0rm if an element does not exist in that list.
     e2e_cs_json = db.get_element(cs_uuid, "e2e_cs")
                 
     # distribuïm domain CSs requests
