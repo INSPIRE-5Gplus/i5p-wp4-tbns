@@ -1074,7 +1074,11 @@ def terminate_e2e_connectivity_service(cs_uuid):
             if response_update[1]!= 200:
                 settings.logger.error("ORCH: Error when saving updated data object.")
                 pass
+        elif route_item["sip_uuid"] == "" and route_item["nep_direction"] == "INPUT":
+            # the internal NEPs which are INPUT case (receivers, OUTPUT = transmitters) are not updated.
+            continue
         else:
+            settings.logger.debug("ORCH: NEP Client (SIP): updating the NEP info.")
             if idx < (len(e2e_cs_json["route-nodes"])-1):
                 #These NEPs are updated in the IDL files and later in their corresponding SIPs in the SDN contexts.
                 settings.logger.debug("ORCH: NEP belonging to an IDL.")
