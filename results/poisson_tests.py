@@ -270,7 +270,7 @@ class Connectivity:
         time.sleep(40)  # awaits 20 seconds before it starts tocheck
         print("Waiting the E2E CS deployment with id: " + str(cs_uuid))
         while True:
-            url = "http://" + ip + "/pdl-transport/connectivity_service/"+str(cs_uuid)
+            url = "http://" + ip + selected_port +  "/pdl-transport/connectivity_service/"+str(cs_uuid)
             response = requests.get(url)
             #print("WHILE LOOP FOR CS id: " + str(cs_uuid))
             #print("GET response.text: "+str(response.text))
@@ -385,7 +385,7 @@ class Connectivity:
         # waiting E2E CS termination finishes
         print("Waiting the E2E CS termination with id: " + str(connection.uuid))
         while True:
-            url = "http://" + ip + "/pdl-transport/connectivity_service/"+str(connection.uuid)
+            url = "http://" + ip + selected_port +   "/pdl-transport/connectivity_service/"+str(connection.uuid)
             response = requests.get(url)
             #print("GET response: "+str(response.text))
             response_json = json.loads(response.text)
