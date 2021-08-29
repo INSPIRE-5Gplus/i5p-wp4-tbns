@@ -232,6 +232,9 @@ class Connectivity:
                 cs_json["endpoint_info"] = endpointD2_ref
                 print("cs_json: "+ str(cs_json))
                 self.endpointsD2['occupied_output'].append(cs_json)
+
+            ports_list = ['4441','4442','4443','4444']
+            selected_port = random.choice(ports_list)
         except IndexError:
             #cs_uuid, endpoint = 'cs_error', ['a', 'b']
             cs_uuid = 'cs_error'
@@ -249,7 +252,8 @@ class Connectivity:
         capacity = random.choice([75, 150, 225, 300, 375, 450, 525, 600])
 
         #url = "http://" + ip + "/restconf/config/context/connectivity-service/" + cs_uuid
-        url = "http://" + ip + "/pdl-transport/connectivity_service"
+        url = "http://" + ip + selected_port +  "/pdl-transport/connectivity_service"
+        print("Selected port domaain (last number = domain): " + str(selected_port))
         
         # print(url)
         print('SEND cs: {}'.format(cs_uuid))
@@ -329,10 +333,10 @@ class Connectivity:
         connection.uuid = cs_uuid
         connection.type = 'DELETE'
 
-        self.delete_cs(connection)
+        self.delete_cs(connection, selected_port)
         
 
-    def delete_cs(self, connection):
+    def delete_cs(self, connection, selected_port):
         start_ht = millis()
         print("Wait " + str(connection.inter_arrival_time) + "seconds for the next E2E CS request terminate.")
         time.sleep(connection.inter_arrival_time)
@@ -373,7 +377,7 @@ class Connectivity:
             print(self.endpoints['occupied_output'])
             print(self.endpoints['occupied_input'])
 
-        url = "http://" + ip + "/pdl-transport/connectivity_service/terminate/" + connection.uuid
+        url = "http://" + ip + selected_port + "/pdl-transport/connectivity_service/terminate/" + connection.uuid
         print('SEND delete cs: {}'.format(connection.uuid))
         response = requests.post(url, data='')
         connection.end_TS = millis()
@@ -491,7 +495,8 @@ class Connectivity:
 # sys.argv[3] = Holding time in seconds (1/mu)  --> always must be bigger than 1/lambda otherwise, it will lose requests for sure.
 # sys.argv[4] = total number of requests
 if __name__ == "__main__":
-    ip = 'localhost:4441'
+    #ip = 'localhost:4441'
+    ip = 'localhost:'
     lmb_inv = float(sys.argv[1])
     mu_inv = float(sys.argv[2])
     connections = float(sys.argv[3])
