@@ -339,10 +339,9 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
             # looks which on of the two direction link-option to take
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
-              print("link_option_item[uuid]: " + str(link_option_item["uuid"]) +" - response[0][interdomain_link_uuid]: " + str(response[0]["interdomain_link_uuid"]))
+              #print("link_option_item[uuid]: " + str(link_option_item["uuid"]) +" - response[0][interdomain_link_uuid]: " + str(response[0]["interdomain_link_uuid"]))
               #if route_item == link_option_item["node-1"] and route[idx+1] == link_option_item["node-2"]:
               if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
-                print("A")
                 # checks if this NEP has enough available spectrum  to fit the requested capacity
                 available_spectrum = link_option_item["available-spectrum"]
                 availability = False
@@ -362,7 +361,6 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
                 
                 #NOTE: the physical-options are a list of NEPs sharing the same spectrum to simulate a NEp with multi-sips.
                 # found the right IDL and direction, taking the first physical nep pair available among all the possibilities.
-                print("B")
                 for physical_option_item in link_option_item["physical-options"]:
                   # the first one without occupied-spectrum is good.
                   if physical_option_item["occupied-spectrum"] == []:
@@ -416,7 +414,7 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
           if neps_found:
             break
         if neps_found == False:
-          settings.logger.info("VL_COMP: NO link FOUND with this information.")
+          settings.logger.debug("VL_COMP: NO link FOUND with this information.")
           route_neps = []
           route_interdominlinks = []
           return route_neps, route_interdominlinks
