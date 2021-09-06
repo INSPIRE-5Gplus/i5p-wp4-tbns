@@ -12,6 +12,7 @@ context_db = []
 # database for the E2E CS requested, each domain manages its requests locally
 e2e_cs_db = [] 
 
+# add element in db
 def add_element(db_element, selected_db):
     settings.logger.info("Element added into the DB %s", selected_db)
     if selected_db == "slices":
@@ -31,6 +32,7 @@ def add_element(db_element, selected_db):
         settings.logger.error("NO DB IS SELECTED")
         return {'msg':'DB not found.'}, 400
 
+# update element in db
 def update_db(element_id, db_element, selected_db):
     settings.logger.info("Updating Element in DB %s", selected_db)
     if selected_db == "slices":
@@ -59,6 +61,7 @@ def update_db(element_id, db_element, selected_db):
         settings.logger.error("NO DB IS SELECTED")
         pass
 
+# remove element in db
 def remove_element(element_id, selected_db):
     settings.logger.info("Element removed from the DB %s", selected_db)
     if selected_db == "slices":
@@ -87,6 +90,7 @@ def remove_element(element_id, selected_db):
         # TODO:error management
         pass
 
+# retrieve all elements in db
 def get_elements(selected_db):
     settings.logger.info("Retrieving elements from DB %s", selected_db)
     if selected_db == "slices":
@@ -101,6 +105,7 @@ def get_elements(selected_db):
         # TODO:error management
         pass
 
+# retrieve element in db
 def get_element(element_id, selected_db):
     settings.logger.info("Retrieveing an element from the DB %s", selected_db)
     if selected_db == "slices":
@@ -129,3 +134,13 @@ def add_cs(cs_response):
     cs_list.append(cs_response)
     context_db[0]["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"] = cs_list
     pass
+
+# updates a domainCS status info when terminated into the context_db
+def update_cs(cs_info):
+    settings.logger.info("Added local CS element.")
+    cs_list = context_db[0]["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"]
+    for cs_item in cs_list:
+        if cs_item["uuid"] == cs_info["uuid"]:
+            cs_item["status"] = cs_info["status"]
+            break
+    context_db[0]["tapi-common:context"]["tapi-connectivity:connectivity-context"]["connectivity-service"] = cs_list
