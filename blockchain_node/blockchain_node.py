@@ -13,7 +13,7 @@ def slice_to_blockchain(nst_json):
     tx_hash = settings.slice_contract.functions.addSliceTemplate(str(nst_json["id"]), nst_json["name"], nst_json["version"], nst_json["vendor"], nst_json["price"], nst_json["unit"]).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    settings.web3.eth.wait_for_transaction_receipt(tx_hash)
+    settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
     response = settings.slice_contract.functions.getSliceTemplate(str(nst_json["id"])).call()
     
@@ -58,7 +58,7 @@ def deploy_blockchain_slice(ref_slice_subnet):
     tx_hash = settings.slice_contract.functions.instantiateSlice(str(ref_slice_subnet["id"]), ref_slice_subnet["nst_ref"]).transact()
     
     # Wait for transaction to be added and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.slice_contract.events.slice_response().processReceipt(tx_receipt)
@@ -77,7 +77,7 @@ def terminate_blockchain_slice(ref_slice_subnet):
     tx_hash = settings.slice_contract.functions.terminateSlice(ref_slice_subnet['id']).transact()
     
     # Wait for transaction to be added and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.slice_contract.events.slice_response().processReceipt(tx_receipt)
@@ -97,7 +97,7 @@ def update_blockchain_slice(subnet_json):
     tx_hash = settings.slice_contract.functions.updateInstance(subnet_json['id'], subnet_json['status'], subnet_json['log']).transact()
 
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.slice_contract.events.slice_response().processReceipt(tx_receipt)
@@ -120,8 +120,8 @@ def interdomainlinks_to_blockchain(idl_json, e2e_topology):
     settings.logger.debug('BLOCKCHAIN_MAPPER: Transaction for new IDL done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST IDL  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(idl_string)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST IDL  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(idl_string)))
 
     msg = {}
     msg["msg"] = "Everything OK"
@@ -140,8 +140,8 @@ def linkoption_to_blockchain(linkoption_json):
     tx_hash = settings.transport_contract.functions.addLinkOption(id, dir, nodesdir, lpn, phyopt,sup, av).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST LinkOption  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(linkoption_json)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST LinkOption  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(linkoption_json)))
     
     msg = {}
     msg["msg"] = "Everything OK"
@@ -156,8 +156,8 @@ def phyoption_to_blockchain(phyopt_uuid, physicaloption_json):
     tx_hash = settings.transport_contract.functions.addPhyOption(phyopt_uuid, phyopt_info).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST PhysicalOption  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(physicaloption_json)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST PhysicalOption  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(physicaloption_json)))
     
     msg = {}
     msg["msg"] = "Everything OK"
@@ -232,8 +232,8 @@ def update_link_option(linkoption_json):
     # generates transaction
     tx_hash = settings.transport_contract.functions.updateLinkOption(id, av).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST LinkOption Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(linkoption_json)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST LinkOption Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(linkoption_json)))
     
     msg = {}
     msg["msg"] = "Everything OK"
@@ -247,8 +247,8 @@ def update_physical_option(phyopt_uuid, phyopt_json):
     # generates transaction
     tx_hash = settings.transport_contract.functions.updatePhyOption(phyopt_uuid, phyopt).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST PhysicalOption Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(phyopt_json)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST PhysicalOption Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(phyopt_json)))
     
     msg = {}
     msg["msg"] = "Everything OK"
@@ -272,8 +272,8 @@ def context_to_blockchain(context_json):
         bl_sip_uuid = context_json["id"]+":"+sip_item["uuid"]
         sip_string = json.dumps(sip_item)
         tx_hash = settings.transport_contract.functions.addSip(bl_sip_uuid, sip_string).transact()
-        tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-        settings.logger.debug('BLOCKCHAIN_MAPPER: COST SIP  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(sip_item)))
+        tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+        settings.logger.info('BLOCKCHAIN_MAPPER: COST SIP  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(sip_item)))
         sip_uuid_list.append(sip_item["uuid"])
         counter_sip = counter_sip + 1
     settings.logger.debug('BLOCKCHAIN_MAPPER: Distributed SIPs. Total number: ' + str(counter_sip))
@@ -289,16 +289,16 @@ def context_to_blockchain(context_json):
             bl_nep_uuid = context_json["id"]+":"+node_item["uuid"]+":"+nep_item["uuid"]
             nep_string = json.dumps(nep_item)
             tx_hash = settings.transport_contract.functions.addNep(bl_nep_uuid, nep_string).transact()
-            tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-            settings.logger.debug('BLOCKCHAIN_MAPPER: COST NEP  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(nep_item)))
+            tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+            settings.logger.info('BLOCKCHAIN_MAPPER: COST NEP  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(nep_item)))
             neps_uuid_list.append(nep_item["uuid"])
             counter_nep = counter_nep + 1
         settings.logger.debug('BLOCKCHAIN_MAPPER: Distributed NEPs. Total number: ' + str(counter_nep))
 
         bl_node_uuid = context_json["id"]+":"+node_item["uuid"]     
         tx_hash = settings.transport_contract.functions.addNode(bl_node_uuid, json.dumps(node_item["name"]), json.dumps(neps_uuid_list)).transact()
-        tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-        settings.logger.debug('BLOCKCHAIN_MAPPER: COST NODE  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(node_item)))
+        tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+        settings.logger.info('BLOCKCHAIN_MAPPER: COST NODE  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(node_item)))
         node_uuid_list.append(node_item["uuid"])
         counter_node = counter_node + 1
     settings.logger.debug('BLOCKCHAIN_MAPPER: Distributed Nodes. Total number: ' + str(counter_node))
@@ -312,8 +312,8 @@ def context_to_blockchain(context_json):
             bl_link_uuid = context_json["id"]+":"+link_item["uuid"]
             link_string = json.dumps(link_item)
             tx_hash = settings.transport_contract.functions.addLink(bl_link_uuid, link_string).transact()
-            tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-            settings.logger.debug('BLOCKCHAIN_MAPPER: COST LINK  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(link_item)))
+            tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+            settings.logger.info('BLOCKCHAIN_MAPPER: COST LINK  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(link_item)))
             
             link_uuid_list.append(link_item["uuid"])
             counter_link = counter_link + 1
@@ -324,8 +324,8 @@ def context_to_blockchain(context_json):
     tx_hash = settings.transport_contract.functions.addContextTemplate(id_string, name_context, json.dumps(sip_uuid_list), nw_topo_serv, topo_metadata, json.dumps(node_uuid_list), json.dumps(link_uuid_list)).transact()
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST CONTEXT  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(context_json)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST CONTEXT  - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(context_json)))
     settings.logger.debug('BLOCKCHAIN_MAPPER: Transaction for new context done.')
 
     msg = {}
@@ -457,8 +457,8 @@ def get_sip(index):
 def update_sip(sip_id, sip_json):
     sip_string = json.dumps(sip_json)
     tx_hash = settings.transport_contract.functions.updateSip(sip_id, sip_string).transact()
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST SIP Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(sip_json)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST SIP Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(sip_json)))
     return sip_id, 200
 
 # gets a complete NODe info
@@ -488,8 +488,8 @@ def get_nep(index):
 def update_nep(nep_id, nep_json):
     nep_string = json.dumps(nep_json)
     tx_hash = settings.transport_contract.functions.updateNep(nep_id, nep_string).transact()
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST NEP Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(nep_json)))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST NEP Update - ' + str(tx_receipt["gasUsed"]) + " - " + len(str(nep_json)))
     return nep_id, 200
 
 # requests the deployment of a CS between domains
@@ -503,9 +503,9 @@ def instantiate_blockchain_cs(address, cs_json, spectrum, capacity):
     # instantiate slice-subnet
     tx_hash = settings.transport_contract.functions.instantiateConnectivityService(address, cs_json["uuid"], cs_string, spectrum_string, capacity_string).transact()
     # Wait for transaction to be added and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     length_info = len(str(cs_json)) + len(str(spectrum)) + len(str(capacity))
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST DEPLOY_CS - ' + str(tx_receipt["gasUsed"]) + " - " + str(length_info))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST DEPLOY_CS - ' + str(tx_receipt["gasUsed"]) + " - " + str(length_info))
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
@@ -526,9 +526,9 @@ def update_blockchain_cs(cs_json):
     # distribute the updated domain CS information
     tx_hash = settings.transport_contract.functions.updateConnectivityService(cs_uuid, cs_string, cs_status).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     length_info = len(str(cs_uuid)) + len(str(cs_string)) + len(str(cs_status))
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST DEPLOY_CS Update - ' + str(tx_receipt["gasUsed"]) + " - " + str(length_info))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST DEPLOY_CS Update - ' + str(tx_receipt["gasUsed"]) + " - " + str(length_info))
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
@@ -545,8 +545,8 @@ def terminate_blockchain_cs(address, cs_ref):
     # instantiate slice-subnet
     tx_hash = settings.transport_contract.functions.terminateConnectivityService(address, cs_ref).transact()
     # Wait for transaction to be added and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST TERMINATE_CS Update - ' + str(tx_receipt["gasUsed"]) + " - " + str(cs_ref))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS Update - ' + str(tx_receipt["gasUsed"]) + " - " + str(cs_ref))
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
@@ -566,8 +566,8 @@ def update_blockchain_terminate_cs(cs_json):
     # distribute the updated domain CS information
     tx_hash = settings.transport_contract.functions.updateTerminatedConnectivityService(cs_uuid, cs_status).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
-    tx_receipt = settings.web3.eth.wait_for_transaction_receipt(tx_hash)
-    settings.logger.debug('BLOCKCHAIN_MAPPER: COST TERMINATE_CS Update - ' + str(tx_receipt["gasUsed"]) + " - " + str(cs_json))
+    tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS Update - ' + str(tx_receipt["gasUsed"]) + " - " + str(cs_json))
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)

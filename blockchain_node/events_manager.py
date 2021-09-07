@@ -53,10 +53,12 @@ def handle_transport_event(event):
     event_json = {}
     if (event['args']['status'] == "NEW_IDL" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW SET OF IDL")
+        settings.logger.info("BLOCKCHAIN_CONTEXT - " + str(datetime.now()))
         event_json = json.loads(event['args']['sdn_info'])
         settings.executor.submit(orch.add_idl_info, event_json)
     elif (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
+        settings.logger.info("BLOCKCHAIN_CONTEXT - " + str(datetime.now()))
         context_json = {}
         context_json["uuid"] =  event['args']['id']
         context_json["name_context"] =  event['args']['name_context']
@@ -68,14 +70,14 @@ def handle_transport_event(event):
         settings.executor.submit(orch.add_context_info, context_json)
     elif (event['args']['status'] == "NEW" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO CREATE A NEW CS")
-        settings.logger.info("BLOCKCHAIN_TRANSACTION - " + str(datetime.now()))
+        settings.logger.info("BLOCKCHAIN_DEPLOYMENT - " + str(datetime.now()))
         event_json["cs_info"] = json.loads(event['args']['sdn_info'])
         event_json["spectrum"] = json.loads(event['args']['name_context']) #using "name_context" key to not create more variables in the solidity SC
         event_json["capacity"] = json.loads(event['args']['topo_metadata'])#using "topo_metada" key to not create more variables in the solidity SC
         settings.executor.submit(orch.instantiate_local_connectivity_service, event_json)
     elif (event['args']['status'] == "DEPLOYED" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO UPDATE A DEPLOYED DOMAIN CS") 
-        settings.logger.info("BLOCKCHAIN_TRANSACTION - " + str(datetime.now()))   
+        settings.logger.info("BLOCKCHAIN_DEPLOYMENT - " + str(datetime.now()))   
         event_json["uuid"] = event['args']['id']
         event_json["blockchain_owner"] = event['args']['owner']
         event_json["cs_info"] = json.loads(event['args']['sdn_info'])
@@ -84,14 +86,14 @@ def handle_transport_event(event):
         settings.executor.submit(orch.update_connectivity_service_from_blockchain, event_json)
     elif (event['args']['status'] == "TERMINATING" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO TERMINATE A CS")
-        settings.logger.info("BLOCKCHAIN_TRANSACTION - " + str(datetime.now()))
+        settings.logger.info("BLOCKCHAIN_TERMINATION - " + str(datetime.now()))
         event_json["uuid"] = event['args']['id']
         event_json["owner"] = event['args']['owner']
         event_json["status"] = event['args']['status']
         settings.executor.submit(orch.terminate_local_connectivity_service, event_json)
     elif (event['args']['status'] == "TERMINATED" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO UPDATE A TERMINATED CS")
-        settings.logger.info("BLOCKCHAIN_TRANSACTION - " + str(datetime.now()))
+        settings.logger.info("BLOCKCHAIN_TERMINATION - " + str(datetime.now()))
         event_json["uuid"] = event['args']['id']
         event_json["owner"] = event['args']['owner']
         event_json["status"] = event['args']['status']

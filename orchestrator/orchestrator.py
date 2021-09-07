@@ -96,6 +96,7 @@ def idl_to_bl(idl_json):
     e2e_nodes_list = []
     
     if response[0] == "empty":
+        settings.logger.info("ORCH: FIRST IDL TO ADD.")
         e2e_topology = {}
         e2e_topo = {}
         e2e_topo["nodes-list"] = []
@@ -131,6 +132,7 @@ def idl_to_bl(idl_json):
         e2e_topo["interdomain-links"] = temp_idls
         e2e_topology["e2e-topology"] = e2e_topo
     else:
+        settings.logger.info("ORCH: ADDING ANOTHER IDL.")
         e2e_topology = response[0]
         e2e_nodes_list = e2e_topology["e2e-topology"]["nodes-list"]
         # compares the nodes in the distributed e2e topology and the intcoming IDL
