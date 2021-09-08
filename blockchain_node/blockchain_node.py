@@ -489,7 +489,7 @@ def update_nep(nep_id, nep_json):
     nep_string = json.dumps(nep_json)
     tx_hash = settings.transport_contract.functions.updateNep(nep_id, nep_string).transact()
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST NEP Update - ' + str(tx_receipt['gasUsed']) + " - " + str((nep_json))))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST NEP Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(nep_json))))
     return nep_id, 200
 
 # requests the deployment of a CS between domains
