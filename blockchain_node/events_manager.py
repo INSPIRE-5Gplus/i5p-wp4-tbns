@@ -74,7 +74,7 @@ def handle_transport_event(event):
         event_json["cs_info"] = json.loads(event['args']['sdn_info'])
         event_json["spectrum"] = json.loads(event['args']['name_context']) #using "name_context" key to not create more variables in the solidity SC
         event_json["capacity"] = json.loads(event['args']['topo_metadata'])#using "topo_metada" key to not create more variables in the solidity SC
-        settings.logger.info("TIME INSTANTIATE BLOCKCHAIN - " + str(event_json["uuid"]) + " - " + str(datetime.now()))
+        settings.logger.info("TIME INSTANTIATE BLOCKCHAIN - " + str(event_json["cs_info"]["uuid"]) + " - " + str(datetime.now()))
         settings.executor.submit(orch.instantiate_local_connectivity_service, event_json)
     elif (event['args']['status'] == "DEPLOYED" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO UPDATE A DEPLOYED DOMAIN CS") 
