@@ -606,9 +606,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
             settings.logger.info("Sending domain CS request to the local SDN controller.")
-            settings.logger.info("TIME INSTANTIATE LOCAL - " + str(cs_item["cs_uuid"]) + " - " + str(datetime.now()))
+            settings.logger.info("TIME INSTANTIATE LOCAL - " + str(cs_item["uuid"]) + " - " + str(datetime.now()))
             response = sdn_mapper.instantiate_connectivity_service(cs_item, spectrum, e2e_cs_json["capacity"])
-            settings.logger.info("TIME INSTANTIATE LOCAL - " + str(cs_item["cs_uuid"]) + " - " + str(datetime.now()))
+            settings.logger.info("TIME INSTANTIATE LOCAL - " + str(cs_item["uuid"]) + " - " + str(datetime.now()))
             if response[1] == 200 and response[0]["status"] == "DEPLOYED":
                 #saves the domain CS information
                 mutex_local_csdb_access.acquire()
@@ -635,7 +635,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 mutex_e2e_csdb_access.release()
         else:
             settings.logger.info("Distribute domain CS request to deploy in the Blockchain.")
-            settings.logger.info("TIME INSTANTIATE BLOCKCHAIN - " + str(cs_item["cs_uuid"]) + " - " + str(datetime.now()))
+            settings.logger.info("TIME INSTANTIATE BLOCKCHAIN - " + str(cs_item["uuid"]) + " - " + str(datetime.now()))
             response = bl_mapper.instantiate_blockchain_cs(cs_item["address-owner"], cs_item, spectrum, e2e_cs_json["capacity"])
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
