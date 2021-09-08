@@ -431,6 +431,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     internal_links_route = []
     
     # gets and prepares the e2e_topology (the set of IDLs definning how the SDN domains are linked)
+    settings.logger.info("ORCH: Prepares E2E topology information.")
     response = bl_mapper.get_e2etopology_from_blockchain()
     e2e_topology_json = response[0]
     if e2e_topology_json == "empty":
@@ -438,7 +439,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         return {"msg":"There is no e2e_topology to work with."}
     else:
         # prepares the intedomain-links to compare the existing with the new ones in the IDL json
-        settings.logger.info("ORCH: Getting link-options.")
+        settings.logger.debug("ORCH: Getting link-options.")
         for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
             linkoptions_list = []
             for linkoption_uuid_item in idl_item["link-options"]:
@@ -484,10 +485,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     else:
         settings.logger.info("ORCH: ERROR Creating the uuids to find the physical options in the e2e topology.")
 
+    settings.logger.info("ORCH: Calculates the 20 simplest paths.")
     # we find the k-shortest path (K=7)
     route_nodes_list = vl_computation.find_path(src, dst)
     settings.logger.debug("ORCH: The best 20 routes are: " + str(route_nodes_list))
 
+    settings.logger.info("ORCH: Looks for the TAPI elements information involved in the route.")
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     for route_item in route_nodes_list:
         settings.logger.debug("ROUTE ITEM: " + str(route_item))
@@ -590,17 +593,19 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 continue
     e2e_cs_json["domain-cs"] = cs_list
     
+    settings.logger.info("ORCH: E2E CS data object ready.")
     # saves the first version of the new e2e_cs data object
     mutex_e2e_csdb_access.acquire()
     db.add_element(e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
     
+    settings.logger.info("ORCH: Sending Domain CSs requests.")
     # distributing domain CSs requests
     settings.logger.debug("cs_list: " + str(cs_list))
     for cs_item in cs_list:
         # decide whether the CS is for the local domain SDN controller or another domain
         if cs_item["address-owner"] == str(settings.web3.eth.defaultAccount):
-            settings.logger.debug("Sending domain CS request to the local SDN controller.")
+            settings.logger.info("Sending domain CS request to the local SDN controller.")
             settings.logger.info("TIME INSTANTIATE LOCAL - " + str(cs_item["cs_uuid"]) + " - " + str(datetime.now()))
             response = sdn_mapper.instantiate_connectivity_service(cs_item, spectrum, e2e_cs_json["capacity"])
             settings.logger.info("TIME INSTANTIATE LOCAL - " + str(cs_item["cs_uuid"]) + " - " + str(datetime.now()))
@@ -629,12 +634,12 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 db.update_db(e2e_cs["uuid"], e2e_cs, "e2e_cs")
                 mutex_e2e_csdb_access.release()
         else:
-            settings.logger.debug("Distribute domain CS request to deploy in the Blockchain.")
+            settings.logger.info("Distribute domain CS request to deploy in the Blockchain.")
             settings.logger.info("TIME INSTANTIATE BLOCKCHAIN - " + str(cs_item["cs_uuid"]) + " - " + str(datetime.now()))
             response = bl_mapper.instantiate_blockchain_cs(cs_item["address-owner"], cs_item, spectrum, e2e_cs_json["capacity"])
     
     # deployment management to validate all domain CSs composing the E2E CS are READY
-    settings.logger.info("ORCH: Waiting all the domains CS from other domains to be deployed.")
+    settings.logger.info("ORCH: Waiting all the domains CS to be deployed.")
     e2e_cs_ready = False
     while  e2e_cs_ready == False:
         settings.logger.debug("ORCH: WHILE LOOP TO CHECK DOMAIN CS in E2E CS.")
@@ -647,7 +652,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 e2e_cs_ready = False
                 break
         time.sleep(10)  # awaits 10 seconds before it checks again
-        
+    
     #prepare the new occupied spectrum information item
     freq_const = {}
     freq_const["adjustment-granularity"] = "G_6_25GHZ"
@@ -736,7 +741,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         settings.logger.info("ORC - ERROR in a domain CS instantiation.")
         return e2e_cs, 200
 
-    settings.logger.info("Updating data objects in DDBBs.")
+    settings.logger.info("Domain Cs deployed, updating information in the Blockchain.")
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
     settings.logger.debug("Updating available spectrums in the internal NEPs of each SDN Context and the IDLs.")
     for idx, nep_item in enumerate(neps_route):
@@ -846,7 +851,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             settings.logger.debug("ORCH: This NEP is neither an internal output or in an IDL.")
     
     # update the spectrum information for each SIP used in the route
-    settings.logger.info("ORCH: Saving and distributing the updated SIPs info.")
+    #settings.logger.info("ORCH: Saving and distributing the updated SIPs info.")
     for sip_item in sips_route:
         # gets the sip element from the BL
         sip_uuid = sip_item["context_uuid"] + ":" + sip_item["uuid"]
