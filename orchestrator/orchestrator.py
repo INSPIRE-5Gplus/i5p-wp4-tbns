@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3.4
 
-import os, sys, logging, json, argparse, time, datetime, requests, uuid
+import os, sys, logging, json, argparse, time, requests, uuid
+from datetime import datetime
 from threading import Lock
 
 from slice_subnet_mapper import slice_subnet_mapper as slice_mapper
