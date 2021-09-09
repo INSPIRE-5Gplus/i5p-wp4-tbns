@@ -29,9 +29,16 @@ class Connectivity:
         self.end_time = -1
         self.total_holding_time = 0 # no l'entenc. borrar
         
-        #list of available NEP/SIPs in D2
-        self.endpointsD2 = {
+        #list of available NEP/SIPs in the other domains
+        self.endpoints = {
             'available_input':[
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"},
@@ -53,45 +60,7 @@ class Connectivity:
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "50296d99-58cc-5ce7-82f5-fc8ee4eec2ec"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "0e047118-5aee-5721-979e-2fece9b45fb2"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "589c2048-0b7f-59c7-b893-514949faea32"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "075a2ea8-c642-5b8b-9d32-8f97218af55c"}
-            ],
-            'available_output':[
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "fbdd154e-659e-54df-8d75-23575711978b"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "42d64587-8763-5917-bbd6-8f6a8b8d2700"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "9f65970c-24ae-5e17-b86e-d5cf25df589e"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "7e9dc6c7-63d5-5709-aaec-e1dcf243b22b"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "b2c55979-0f9b-52e3-a767-deedebe12547"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "9ce4373d-acca-5edd-b5b0-533057776a2f"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "df71fece-6979-5f50-88cb-a88e94dc684e"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "d7ee402b-7f9e-5468-86ec-113c5ec22707"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "223421ea-579e-5020-9924-0027c91e12a2"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "71941e6f-0f69-53d4-820e-f4efc5d3364b"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "f15278a8-8d93-5594-af08-18e9c4104af8"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "84e9eef3-11c2-5710-89f1-bf355cacb7c3"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "f1737854-81ef-5a98-9a27-0ae89619ba1e"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "a53e9d1e-8045-591a-8ed8-8b8164ae9d6b"}
-            ],
-            'occupied_input': [], #[{"cs_uuid": "uuid", "endpoint_info": {}}]
-            'occupied_output': [] #[{"cs_uuid": "uuid", "endpoint_info": {}}]
-        }
-        #list of available NEP/SIPs in the other domains
-        self.endpoints = {
-            'available_input':[
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "075a2ea8-c642-5b8b-9d32-8f97218af55c"},
                 {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
                 {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
                 {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
@@ -114,6 +83,28 @@ class Connectivity:
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "fbdd154e-659e-54df-8d75-23575711978b"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "42d64587-8763-5917-bbd6-8f6a8b8d2700"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "9f65970c-24ae-5e17-b86e-d5cf25df589e"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "7e9dc6c7-63d5-5709-aaec-e1dcf243b22b"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "b2c55979-0f9b-52e3-a767-deedebe12547"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "9ce4373d-acca-5edd-b5b0-533057776a2f"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "df71fece-6979-5f50-88cb-a88e94dc684e"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "d7ee402b-7f9e-5468-86ec-113c5ec22707"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "223421ea-579e-5020-9924-0027c91e12a2"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "71941e6f-0f69-53d4-820e-f4efc5d3364b"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "f15278a8-8d93-5594-af08-18e9c4104af8"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "367b19b1-3172-54d8-bdd4-12d3ac5604f6"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "84e9eef3-11c2-5710-89f1-bf355cacb7c3"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "f1737854-81ef-5a98-9a27-0ae89619ba1e"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "a53e9d1e-8045-591a-8ed8-8b8164ae9d6b"},
                 {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
                 {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
                 {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
@@ -131,15 +122,26 @@ class Connectivity:
             'occupied_input': [], #[{"cs_uuid": "uuid", "endpoint_info": {}}]
             'occupied_output': [] #[{"cs_uuid": "uuid", "endpoint_info": {}}]
         }
-        """
-        self.endpoints = {'available': {
-            'cs_01': ['tx_node-nep_1', 'rx_node-nep_1'],
-            'cs_02': ['tx_node-nep_2', 'rx_node-nep_2'],
-            'cs_03': ['tx_node-nep_3', 'rx_node-nep_3'],
-            'cs_04': ['tx_node-nep_4', 'rx_node-nep_4']},
-            'occupied': {
-            }}
-        """
+
+        # context and port relationship (domain)
+        self.ports = [
+            {
+                'context_uuid':'0bd7908e-c22b-574d-8bba-396d060e2611',
+                'port_domain': '4441'
+            },
+            {
+                'context_uuid':'226b9166-974e-57ff-821d-2f24e5a71b00',
+                'port_domain': '4442'
+            },
+            {
+                'context_uuid':'3d89bd76-e54d-5fab-9787-eb609f291ee0',
+                'port_domain': '4443'
+            },
+            {
+                'context_uuid':'627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3',
+                'port_domain': '4444'
+            }
+        ]
 
         self.max_connections = connections
         self.watcher_thread = threading.Thread(target=self.watcher_function, args=(lmb,))
@@ -171,71 +173,37 @@ class Connectivity:
         
         print("NEW E2E CS between the following Nodes/SIPs (Source & Destination):")
         try:
-            directions_D2 = ['INPUT','OUTPUT']
-            selectedD2_direction = random.choice(directions_D2)
             cs_uuid = str(uuid.uuid4())
-            if selectedD2_direction == 'INPUT':
-                #cs_uuid, endpoint = random.choice(list(self.endpoints['available'].items()))
-                endpointD2_ref = random.choice(self.endpointsD2['available_input'])
-                endpoint_ref = random.choice(self.endpoints['available_output'])
-                dst = endpointD2_ref
-                src = endpoint_ref
-                
-                #del self.endpoints['available'][cs_uuid]
-                for idx, endpoint_item in enumerate(self.endpointsD2['available_input']):
-                    if endpoint_item['sip_uuid'] == endpointD2_ref['sip_uuid']:
-                        del self.endpointsD2['available_input'][idx]
-                        break
-                for idx, endpoint_item in enumerate(self.endpoints['available_output']):
-                    if endpoint_item['sip_uuid'] == endpoint_ref['sip_uuid']:
-                        del self.endpoints['available_output'][idx]
-                        break
+            #cs_uuid, endpoint = random.choice(list(self.endpoints['available'].items()))
+            src = random.choice(self.endpoints['available_input'])
+            dst = random.choice(self.endpoints['available_output'])
+            
+            #del self.endpoints['available'][cs_uuid]
+            for idx, endpoint_item in enumerate(self.endpoints['available_input']):
+                if endpoint_item['sip_uuid'] == src['sip_uuid']:
+                    del self.endpoints['available_input'][idx]
+                    break
+            for idx, endpoint_item in enumerate(self.endpoints['available_output']):
+                if endpoint_item['sip_uuid'] == dst['sip_uuid']:
+                    del self.endpoints['available_output'][idx]
+                    break
 
-                #self.endpoints['occupied'][cs_uuid] = endpoint                
-                #self.endpointsD2['occupied_input'][cs_uuid] = endpointD2_ref
-                #self.endpoints['occupied_output'][cs_uuid] = endpoint_ref
-                cs_json = {}
-                cs_json["cs_uuid"] = cs_uuid
-                cs_json["endpoint_info"] = endpoint_ref
-                print("cs_json: " + str(cs_json))
-                self.endpoints['occupied_output'].append(cs_json)
-                cs_json = {}
-                cs_json["cs_uuid"] = cs_uuid
-                cs_json["endpoint_info"] = endpointD2_ref
-                print("cs_json: "+ str(cs_json))
-                self.endpointsD2['occupied_input'].append(cs_json)
-            else:
-                #cs_uuid, endpoint = random.choice(list(self.endpoints['available'].items()))
-                endpoint_ref = random.choice(self.endpoints['available_input'])
-                endpointD2_ref = random.choice(self.endpointsD2['available_output'])
-                dst = endpoint_ref
-                src = endpointD2_ref
-                
-                #del self.endpoints['available'][cs_uuid]
-                for idx, endpoint_item in enumerate(self.endpoints['available_input']):
-                    if endpoint_item['sip_uuid'] == endpoint_ref['sip_uuid']:
-                        del self.endpoints['available_input'][idx]
-                        break
-                for idx, endpoint_item in enumerate(self.endpointsD2['available_output']):
-                    if endpoint_item['sip_uuid'] == endpointD2_ref['sip_uuid']:
-                        del self.endpointsD2['available_output'][idx]
-                        break
-                
-                #self.endpoints['occupied'][cs_uuid] = endpoint
-                cs_json = {}
-                cs_json["cs_uuid"] = cs_uuid
-                cs_json["endpoint_info"] = endpoint_ref
-                print("cs_json: " + str(cs_json))
-                self.endpoints['occupied_input'].append(cs_json)
-                cs_json = {}
-                cs_json["cs_uuid"] = cs_uuid
-                cs_json["endpoint_info"] = endpointD2_ref
-                print("cs_json: "+ str(cs_json))
-                self.endpointsD2['occupied_output'].append(cs_json)
+            cs_json = {}
+            cs_json["cs_uuid"] = cs_uuid
+            cs_json["endpoint_info"] = src
+            print("cs_json: " + str(cs_json))
+            self.endpoints['occupied_output'].append(cs_json)
+            cs_json = {}
+            cs_json["cs_uuid"] = cs_uuid
+            cs_json["endpoint_info"] = dst
+            print("cs_json: "+ str(cs_json))
+            self.endpoints['occupied_input'].append(cs_json)
 
-            #ports_list = ['4441','4442','4443','4444']
-            #selected_port = random.choice(ports_list)
-            selected_port = '4442'
+            # select port based on the src context.
+            for port_item in self.ports:
+                if port_item["context_uuid"] == src["context_uuid"]:
+                    selected_port = port_item["port_domain"]
+        
         except IndexError:
             #cs_uuid, endpoint = 'cs_error', ['a', 'b']
             cs_uuid = 'cs_error'
@@ -245,10 +213,6 @@ class Connectivity:
 
         #print(str(src))
         #print(str(dst))
-        #src = endpoint[0]
-        #src = endpoint_src
-        #dst = endpoint[1]
-        #dst = endpoint_dst
         connection.uuid = cs_uuid
         capacity = random.choice([75, 150, 225, 300, 375, 450, 525, 600])
 
@@ -273,9 +237,8 @@ class Connectivity:
         while True:
             url = "http://" + ip + selected_port +  "/pdl-transport/connectivity_service/"+str(cs_uuid)
             response = requests.get(url)
-            #print("WHILE LOOP FOR CS id: " + str(cs_uuid))
-            #print("GET response.text: "+str(response.text))
             response_json = json.loads(response.text)
+            #response_json = {"status":"DEPLOYED", "description":"OK"}
             if response_json["status"] == []:
                 pass
             elif response_json["status"] == "DEPLOYED" or response_json["status"] == "ERROR":
@@ -285,27 +248,10 @@ class Connectivity:
             time.sleep(10)  # awaits 10 seconds before it checks again
 
         # print(response.status_code)
-        #if response.status_code != 201:        # ERROR CASE
         if response_json["status"] == "ERROR":
             print('Error cs: {} -> {}'.format(cs_uuid, response_json['description']))
             connection.result = response_json['description']
             self.log.append(connection)
-            #del self.endpoints['occupied'][connection.uuid]
-            #self.endpoints['available'][connection.uuid] = endpoint
-            for idx, occupied_item in enumerate(self.endpointsD2['occupied_input']):
-                if occupied_item["cs_uuid"] == connection.uuid:
-                    del self.endpointsD2['occupied_input'][idx]
-                    temp_list = self.endpointsD2['available_input']
-                    temp_list.append(occupied_item["endpoint_info"])
-                    self.endpointsD2['available_input'] = temp_list
-                    break
-            for idx, occupied_item in enumerate(self.endpointsD2['occupied_output']):
-                if occupied_item["cs_uuid"] == connection.uuid:
-                    del self.endpointsD2['occupied_output'][idx]
-                    temp_list = self.endpointsD2['available_output']
-                    temp_list.append(occupied_item["endpoint_info"])
-                    self.endpointsD2['available_output'] = temp_list
-                    break
             for idx, occupied_item in enumerate(self.endpoints['occupied_output']):
                 if occupied_item["cs_uuid"] == connection.uuid:
                     del self.endpoints['occupied_output'][idx]
@@ -347,34 +293,23 @@ class Connectivity:
             connection.ber = False
         
         #print("Request to terminate E2E CS with ID: "+ str(connection.uuid))
-        
         connection.start_TS = millis()
         try:
-            #endpoints = self.endpointsD2['occupied'][connection.uuid]
-            #endpointD2_ref = self.endpointsD2['occupied'][connection.uuid]
-            #endpoint_ref = self.endpoints['occupied'][connection.uuid]
-
-            for idx, occupied_item in enumerate(self.endpointsD2['occupied_input']):
-                if occupied_item["cs_uuid"] == connection.uuid:
-                    endpointD2_ref = occupied_item["endpoint_info"]
-                    break
-            for idx, occupied_item in enumerate(self.endpointsD2['occupied_output']):
-                if occupied_item["cs_uuid"] == connection.uuid:
-                    endpointD2_ref = occupied_item["endpoint_info"]
-                    break
             for idx, occupied_item in enumerate(self.endpoints['occupied_output']):
                 if occupied_item["cs_uuid"] == connection.uuid:
-                    endpoint_ref = occupied_item["endpoint_info"]
+                    endpoint_output = occupied_item["endpoint_info"]
                     break
             for idx, occupied_item in enumerate(self.endpoints['occupied_input']):
                 if occupied_item["cs_uuid"] == connection.uuid:
-                    endpoint_ref = occupied_item["endpoint_info"]
+                    endpoint_input = occupied_item["endpoint_info"]
                     break
+            
+            print("Source CS: " + str(endpoint_input))
+            print("Desctination CS: " + str(endpoint_output))
+
         except Exception as e:
             print(str(e))
             #print(self.endpoints['occupied'])
-            print(self.endpointsD2['occupied_output'])
-            print(self.endpointsD2['occupied_input'])
             print(self.endpoints['occupied_output'])
             print(self.endpoints['occupied_input'])
 
@@ -388,8 +323,8 @@ class Connectivity:
         while True:
             url = "http://" + ip + selected_port +   "/pdl-transport/connectivity_service/"+str(connection.uuid)
             response = requests.get(url)
-            #print("GET response: "+str(response.text))
             response_json = json.loads(response.text)
+            #response_json = {"status":"TERMINATED", "description":"OK"}
             if response_json["status"] == "TERMINATED" or response_json["status"] == "ERROR":
                 break
             time.sleep(10)  # awaits 10 seconds before it checks again
@@ -403,33 +338,19 @@ class Connectivity:
             connection.result = response_json['description']
             #del self.endpoints['occupied'][connection.uuid]
             #self.endpoints['available'][connection.uuid] = endpoints            
-            for idx, occupied_item in enumerate(self.endpointsD2['occupied_input']):
-                if occupied_item["cs_uuid"] == connection.uuid:
-                    del self.endpointsD2['occupied_input'][idx]
-                    temp_list = self.endpointsD2['available_input']
-                    temp_list.append(occupied_item["endpoint_info"])
-                    self.endpointsD2['available_input'] = temp_list
-                    break
-            for idx, occupied_item in enumerate(self.endpointsD2['occupied_output']):
-                if occupied_item["cs_uuid"] == connection.uuid:
-                    del self.endpointsD2['occupied_output'][idx]
-                    temp_list = self.endpointsD2['available_output']
-                    temp_list.append(occupied_item["endpoint_info"])
-                    self.endpointsD2['available_output'] = temp_list
-                    break
-            for idx, occupied_item in enumerate(self.endpoints['occupied_output']):
-                if occupied_item["cs_uuid"] == connection.uuid:
-                    del self.endpoints['occupied_output'][idx]
-                    temp_list = self.endpoints['available_output']
-                    temp_list.append(occupied_item["endpoint_info"])
-                    self.endpoints['available_output'] = temp_list
-                    break
             for idx, occupied_item in enumerate(self.endpoints['occupied_input']):
                 if occupied_item["cs_uuid"] == connection.uuid:
-                    del self.endpoints['occupied_input'][idx]
                     temp_list = self.endpoints['available_input']
                     temp_list.append(occupied_item["endpoint_info"])
                     self.endpoints['available_input'] = temp_list
+                    del self.endpoints['occupied_input'][idx]
+                    break
+            for idx, occupied_item in enumerate(self.endpoints['occupied_output']):
+                if occupied_item["cs_uuid"] == connection.uuid:
+                    temp_list = self.endpoints['available_output']
+                    temp_list.append(occupied_item["endpoint_info"])
+                    self.endpoints['available_output'] = temp_list
+                    del self.endpoints['occupied_output'][idx]
                     break
 
         self.log.append(connection)
