@@ -465,10 +465,13 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     else:
         settings.logger.info("ORCH: ERROR Creating the uuids to find the physical options in the e2e topology.")
 
-    settings.logger.info("ORCH: Calculates the 20 simplest paths.")
-    # we find the k-shortest path (K=20)
-    route_nodes_list = vl_computation.find_path(src, dst)
-    settings.logger.debug("ORCH: The best 20 routes are: " + str(route_nodes_list))
+    # if source/destination are the same node, no path computation done otherwise, we find up to the k-shortest path (K=20)
+    if e2e_cs_request["source"]["context_uuid"] == e2e_cs_request["destination"]["context_uuid"] and e2e_cs_request["source"]["node_uuid"] == e2e_cs_request["destination"]["node_uuid"]:
+        route_nodes_list = [[e2e_cs_request["source"]["node_uuid"],e2e_cs_request["destination"]["node_uuid"]]]
+    else:
+        settings.logger.info("ORCH: Calculates the 20 simplest paths.")
+        route_nodes_list = vl_computation.find_path(src, dst)
+        settings.logger.debug("ORCH: The best 20 routes are: " + str(route_nodes_list))
 
     #takes the access to modify info in the Blockchain
     mutex_transport2blockchaindb_access.acquire()
@@ -566,6 +569,9 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         mutex_e2e_csdb_access.acquire()
         db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
         mutex_e2e_csdb_access.release()
+        
+        # release the access to modify info in the Blockchain
+        mutex_transport2blockchaindb_access.release()
 
         return e2e_cs_json, 200
     
