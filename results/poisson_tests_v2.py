@@ -175,8 +175,8 @@ class Connectivity:
         try:
             cs_uuid = str(uuid.uuid4())
             #cs_uuid, endpoint = random.choice(list(self.endpoints['available'].items()))
-            src = random.choice(self.endpoints['available_input'])
-            dst = random.choice(self.endpoints['available_output'])
+            dst = random.choice(self.endpoints['available_input'])
+            src = random.choice(self.endpoints['available_output'])
             
             #del self.endpoints['available'][cs_uuid]
             for idx, endpoint_item in enumerate(self.endpoints['available_input']):

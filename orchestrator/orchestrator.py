@@ -467,6 +467,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # if source/destination are the same node, no path computation done otherwise, we find up to the k-shortest path (K=20)
     if e2e_cs_request["source"]["context_uuid"] == e2e_cs_request["destination"]["context_uuid"] and e2e_cs_request["source"]["node_uuid"] == e2e_cs_request["destination"]["node_uuid"]:
+        settings.logger.info("ORCH: Internal single-node route.")
         route_nodes_list = [[e2e_cs_request["source"]["node_uuid"],e2e_cs_request["destination"]["node_uuid"]]]
     else:
         settings.logger.info("ORCH: Calculates the 20 simplest paths.")
@@ -507,18 +508,26 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     settings.logger.info("ORCH: Looks for the TAPI elements information involved in the route.")
     for route_item in route_nodes_list:
         settings.logger.debug("ROUTE ITEM: " + str(route_item))
-        # maps the route from the nodes to the neps involved.
-        response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
-        neps_route = response_nep_mapped[0]
-        idl_route = response_nep_mapped[1]
-        idl_count = response_nep_mapped[2]
+        if e2e_cs_request["source"]["context_uuid"] == e2e_cs_request["destination"]["context_uuid"] and e2e_cs_request["source"]["node_uuid"] == e2e_cs_request["destination"]["node_uuid"]:
+            # no route as source and destination are the same node, generates mock neps_route to not generate erro in nep2sip_route_mapping funtion.
+            neps_route = [{"context_uuid":e2e_cs_request["source"]["context_uuid"], "node_uuid":e2e_cs_request["source"]["node_uuid"]},{"context_uuid":e2e_cs_request["destination"]["context_uuid"], "node_uuid":e2e_cs_request["destination"]["node_uuid"]}]
+            idl_route = []
+            idl_count = 0
+        else:
+            # maps the route from the nodes to the neps involved.
+            response_nep_mapped = vl_computation.node2nep_route_mapping(route_item, e2e_topology_json, capacity)
+            neps_route = response_nep_mapped[0]
+            idl_route = response_nep_mapped[1]
+            idl_count = response_nep_mapped[2]
         settings.logger.debug("neps_route: " + str(neps_route))
         settings.logger.debug("idl_route: "+str(idl_route))
+        
         if neps_route != [] and idl_count == 0:
             pass
         elif neps_route == [] and idl_route == []:
             settings.logger.info("ORCH: No NEP or link available in the IDLs. Looking for the next route.")
             continue
+        
         # identifies the SIP used for each NEP in the route
         response_sip_mapped = vl_computation.nep2sip_route_mapping(neps_route, e2e_cs_request, capacity)
         sips_route = response_sip_mapped[0]
@@ -591,114 +600,117 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     new_ocuppied_item["lower-frequency"] = e2e_cs_json["spectrum"]["lower-frequency"]
     new_ocuppied_item["upper-frequency"] = e2e_cs_json["spectrum"]["upper-frequency"]
     
-    # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
-    settings.logger.info("ORCH: Updating information in the Blockchain to leave resources selected for other requests.")
-    for idx, nep_item in enumerate(neps_route):
-        if "type_link" not in nep_item.keys() and nep_item["direction"] == "OUTPUT":
-            settings.logger.debug("ORCH: Internal NEP: updating a NEP belonging to an SDN context.")
-            # updates the internal NEPsinformation
-            # gets the nep info
-            requested_uuid = nep_item["context_uuid"]+":"+nep_item["node_uuid"]+":"+nep_item["nep_uuid"]
-            requested_nep = bl_mapper.get_nep(requested_uuid)
-            # modifies the occupied-spectrum key
-            temp_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
-            temp_list.append(new_ocuppied_item)
-            requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = temp_list
-            # modifies the value in the available-spectrum key in the nep info
+    if e2e_cs_request["source"]["context_uuid"] == e2e_cs_request["destination"]["context_uuid"] and e2e_cs_request["source"]["node_uuid"] == e2e_cs_request["destination"]["node_uuid"]:
+        pass
+    else:
+        # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
+        settings.logger.info("ORCH: Updating information in the Blockchain to leave resources selected for other requests.")
+        for idx, nep_item in enumerate(neps_route):
+            if "type_link" not in nep_item.keys() and nep_item["direction"] == "OUTPUT":
+                settings.logger.debug("ORCH: Internal NEP: updating a NEP belonging to an SDN context.")
+                # updates the internal NEPsinformation
+                # gets the nep info
+                requested_uuid = nep_item["context_uuid"]+":"+nep_item["node_uuid"]+":"+nep_item["nep_uuid"]
+                requested_nep = bl_mapper.get_nep(requested_uuid)
+                # modifies the occupied-spectrum key
+                temp_list = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
+                temp_list.append(new_ocuppied_item)
+                requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"] = temp_list
+                # modifies the value in the available-spectrum key in the nep info
 
-            occupied_slots = []
-            available_slots = []
-            # there only a single element in the "supportable-spectrum" block info.
-            low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
-            up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
-            supportable_range = []
-            supportable_range.append(low_suportable)
-            supportable_range.append(up_suportable)
-            occupied_spectrum = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
-            for spectrum_item in occupied_spectrum:
-                occupied_slots.append([spectrum_item["lower-frequency"],spectrum_item["upper-frequency"]])
-            if occupied_slots:
-                available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
-                available_slots_json = []
-                for slot_item in available_slots:
-                    #append pair of available frequency slots to the list
-                    freq_const = {}
-                    freq_const["adjustment-granularity"] = "G_6_25GHZ"
-                    freq_const["grid-type"] = "FLEX"
-                    new_available_item = {}
-                    new_available_item["frequency-constraint"] =  freq_const
-                    new_available_item["lower-frequency"] = slot_item[0]
-                    new_available_item["upper-frequency"] = slot_item[1]
-                    available_slots_json.append(new_available_item)
-                requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
-            else:
-                settings.logger.error("ORCH: There is a problem with the occupied spectrums. They are empty, why?")
-            
-            # sends the new info to the BL
-            response_update = bl_mapper.update_nep(requested_uuid, requested_nep)
-            if response_update[1]!= 200:
-                settings.logger.error("Error when saving updated data object.")
-                pass
-        #elif "type_link" in nep_item.keys() and nep_item["link_uuid"] == neps_route[idx+1]["link_uuid"] and idx < (len(neps_route)-1):
-        elif "type_link" in nep_item.keys() and idx < (len(neps_route)-1):
-            if nep_item["link_uuid"] == neps_route[idx+1]["link_uuid"]:
-                #These NEPs are update in the IDL files and later in their corresponding SIPs in the SDN contexts.
-                settings.logger.debug("ORCH: NEP belonging to an IDL.")
-                # composes the uuids based on the asbtraction model is being used.
-                if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
-                    node_involved_1 = nep_item["context_uuid"]+":"+nep_item["node_uuid"]
-                    node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["node_uuid"]
-                else:
-                    node_involved_1 = nep_item["context_uuid"]+":"+nep_item["context_uuid"]
-                    node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["context_uuid"]
-                
-                # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
                 occupied_slots = []
-                for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
-                    spectrum_added = False
-                    if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
-                        for link_option_item in idl_item["link-options"]:
-                            if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
-                                for physical_option_item in link_option_item["physical-options"]:
-                                    # IDL physical-option being used found
-                                    if physical_option_item["node-edge-point"][0]["nep-uuid"] == nep_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == neps_route[idx+1]["nep_uuid"]:
-                                        new_occupied_list = []
-                                        new_occupied_list.append(new_ocuppied_item)
-                                        physical_option_item["occupied-spectrum"] = new_occupied_list
-                                        response = bl_mapper.update_physical_option(physical_option_item["uuid"], physical_option_item)
-                                        spectrum_added = True
+                available_slots = []
+                # there only a single element in the "supportable-spectrum" block info.
+                low_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["lower-frequency"]
+                up_suportable = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]["upper-frequency"]
+                supportable_range = []
+                supportable_range.append(low_suportable)
+                supportable_range.append(up_suportable)
+                occupied_spectrum = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["occupied-spectrum"]
+                for spectrum_item in occupied_spectrum:
+                    occupied_slots.append([spectrum_item["lower-frequency"],spectrum_item["upper-frequency"]])
+                if occupied_slots:
+                    available_slots = vl_computation.available_spectrum(supportable_range, occupied_slots)
+                    available_slots_json = []
+                    for slot_item in available_slots:
+                        #append pair of available frequency slots to the list
+                        freq_const = {}
+                        freq_const["adjustment-granularity"] = "G_6_25GHZ"
+                        freq_const["grid-type"] = "FLEX"
+                        new_available_item = {}
+                        new_available_item["frequency-constraint"] =  freq_const
+                        new_available_item["lower-frequency"] = slot_item[0]
+                        new_available_item["upper-frequency"] = slot_item[1]
+                        available_slots_json.append(new_available_item)
+                    requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = available_slots_json
+                else:
+                    settings.logger.error("ORCH: There is a problem with the occupied spectrums. They are empty, why?")
+                
+                # sends the new info to the BL
+                response_update = bl_mapper.update_nep(requested_uuid, requested_nep)
+                if response_update[1]!= 200:
+                    settings.logger.error("Error when saving updated data object.")
+                    pass
+            #elif "type_link" in nep_item.keys() and nep_item["link_uuid"] == neps_route[idx+1]["link_uuid"] and idx < (len(neps_route)-1):
+            elif "type_link" in nep_item.keys() and idx < (len(neps_route)-1):
+                if nep_item["link_uuid"] == neps_route[idx+1]["link_uuid"]:
+                    #These NEPs are update in the IDL files and later in their corresponding SIPs in the SDN contexts.
+                    settings.logger.debug("ORCH: NEP belonging to an IDL.")
+                    # composes the uuids based on the asbtraction model is being used.
+                    if os.environ.get("ABSTRACION_MODEL") in ["transparent", "vlink"]:
+                        node_involved_1 = nep_item["context_uuid"]+":"+nep_item["node_uuid"]
+                        node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["node_uuid"]
+                    else:
+                        node_involved_1 = nep_item["context_uuid"]+":"+nep_item["context_uuid"]
+                        node_involved_2 = neps_route[idx+1]["context_uuid"]+":"+neps_route[idx+1]["context_uuid"]
+                    
+                    # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
+                    occupied_slots = []
+                    for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
+                        spectrum_added = False
+                        if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
+                            for link_option_item in idl_item["link-options"]:
+                                if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
+                                    for physical_option_item in link_option_item["physical-options"]:
+                                        # IDL physical-option being used found
+                                        if physical_option_item["node-edge-point"][0]["nep-uuid"] == nep_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == neps_route[idx+1]["nep_uuid"]:
+                                            new_occupied_list = []
+                                            new_occupied_list.append(new_ocuppied_item)
+                                            physical_option_item["occupied-spectrum"] = new_occupied_list
+                                            response = bl_mapper.update_physical_option(physical_option_item["uuid"], physical_option_item)
+                                            spectrum_added = True
 
-                                    if physical_option_item["occupied-spectrum"] != []:
-                                        low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
-                                        up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
-                                        occupied_slots.append([low_freq,up_freq])
-                            if spectrum_added and occupied_slots!=[]:
-                                low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
-                                up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
-                                supportable_slot = [low_suportable, up_suportable]
-                                available_slots = vl_computation.available_spectrum(supportable_slot, occupied_slots)
-                                available_slots_json = []
-                                for slot_item in available_slots:
-                                    #append pair of available frequency slots to the list
-                                    freq_const = {}
-                                    freq_const["adjustment-granularity"] = "G_6_25GHZ"
-                                    freq_const["grid-type"] = "FLEX"
-                                    new_available_item = {}
-                                    new_available_item["frequency-constraint"] =  freq_const
-                                    new_available_item["lower-frequency"] = slot_item[0]
-                                    new_available_item["upper-frequency"] = slot_item[1]
-                                    available_slots_json.append(new_available_item)
-                                link_option_item["available-spectrum"] = available_slots_json
-                                break
-                    if spectrum_added:
-                        settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
-                        settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
-                        #used to update only the available-spectrum the other keys will never bemodified.
-                        response = bl_mapper.update_link_option(link_option_item)
-                        break   
-        else:
-            settings.logger.debug("ORCH: This NEP is neither an internal output or in an IDL.")
-    
+                                        if physical_option_item["occupied-spectrum"] != []:
+                                            low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
+                                            up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
+                                            occupied_slots.append([low_freq,up_freq])
+                                if spectrum_added and occupied_slots!=[]:
+                                    low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
+                                    up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
+                                    supportable_slot = [low_suportable, up_suportable]
+                                    available_slots = vl_computation.available_spectrum(supportable_slot, occupied_slots)
+                                    available_slots_json = []
+                                    for slot_item in available_slots:
+                                        #append pair of available frequency slots to the list
+                                        freq_const = {}
+                                        freq_const["adjustment-granularity"] = "G_6_25GHZ"
+                                        freq_const["grid-type"] = "FLEX"
+                                        new_available_item = {}
+                                        new_available_item["frequency-constraint"] =  freq_const
+                                        new_available_item["lower-frequency"] = slot_item[0]
+                                        new_available_item["upper-frequency"] = slot_item[1]
+                                        available_slots_json.append(new_available_item)
+                                    link_option_item["available-spectrum"] = available_slots_json
+                                    break
+                        if spectrum_added:
+                            settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
+                            settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
+                            #used to update only the available-spectrum the other keys will never bemodified.
+                            response = bl_mapper.update_link_option(link_option_item)
+                            break   
+            else:
+                settings.logger.debug("ORCH: This NEP is neither an internal output or in an IDL.")
+        
     # update the spectrum information for each SIP used in the route
     settings.logger.info("ORCH: Saving and distributing the updated SIPs info.")
     for sip_item in sips_route:
@@ -1125,81 +1137,85 @@ def terminate_e2e_connectivity_service(cs_uuid):
             continue
         else:
             settings.logger.info("ORCH: Updating NEP Client (SIP) info.")
-            if idx < (len(e2e_cs_json["route-nodes"])-1):
-                #These NEPs are updated in the IDL files and later in their corresponding SIPs in the SDN contexts.
-                settings.logger.debug("ORCH: NEP belonging to an IDL.")
-                # composes the uuids based on the asbtraction model is being used.
-                if str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
-                    node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
-                    node_involved_2 = route_nodes_list[idx+1]["context_uuid"]+":"+route_nodes_list[idx+1]["node_uuid"]
-                elif str(os.environ.get("ABSTRACION_MODEL")) == "vlink":
-                    node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
-                    node_involved_2 = route_nodes_list[idx+1]["context_uuid"]+":"+route_nodes_list[idx+1]["node_uuid"]
-                elif str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
-                    node_involved_1 = route_item["context_uuid"]+":"+route_item["context_uuid"]
-                    node_involved_2 = route_nodes_list[idx+1]["context_uuid"]+":"+route_nodes_list[idx+1]["context_uuid"]
-                else:
-                    settings.logger.info("ORCH: ERROR Creating the uuids to find the physical options in the e2e topology.")
-                
-                # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
-                settings.logger.debug("node_involved_1: "+str(node_involved_1))
-                settings.logger.debug("node_involved_2: "+str(node_involved_2))
-                occupied_slots = []
-                for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
-                    spectrum_removed = False
-                    settings.logger.debug("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
-                    if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
-                        settings.logger.debug("ORCH: working with the nodes inovlved")
-                        for link_option_item in idl_item["link-options"]:
-                            settings.logger.debug("link_option_item[nodes-direction]" + str(link_option_item["nodes-direction"]))
-                            if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
-                                settings.logger.debug("ORCH: Found the link-option")
-                                for physical_option_item in link_option_item["physical-options"]:
-                                    # IDL physical-option being used found
-                                    settings.logger.debug(str(physical_option_item["node-edge-point"][0]["nep-uuid"]) +" - "+ str(physical_option_item["node-edge-point"][1]["nep-uuid"]))
-                                    settings.logger.debug(str(route_item["nep_uuid"]) +" - "+ str(route_nodes_list[idx+1]["nep_uuid"]))
-                                    if physical_option_item["node-edge-point"][0]["nep-uuid"] == route_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == route_nodes_list[idx+1]["nep_uuid"]:
-                                        physical_option_item["occupied-spectrum"] = []
-                                        settings.logger.debug("ORCH: Updating Physical option: " + str(physical_option_item))
-                                        response = bl_mapper.update_physical_option(physical_option_item["uuid"], physical_option_item)
-                                        spectrum_removed = True
-                                    # the other occupied spectrums are added (if there are) to calculate the IDL available spectrum
-                                    if physical_option_item["occupied-spectrum"] != []:
-                                        low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
-                                        up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
-                                        occupied_slots.append([low_freq,up_freq])
-                            
-                            settings.logger.debug("occupied_slots: "+ str(occupied_slots))
-                            if spectrum_removed and occupied_slots!=[]:
-                                low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
-                                up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
-                                supportable_slot = [low_suportable, up_suportable]
-                                settings.logger.debug("supportable_slot: "+ str(supportable_slot))
-                                available_slots = vl_computation.available_spectrum(supportable_slot, occupied_slots)
-                                available_slots_json = []
-                                settings.logger.debug("available_slots: "+ str(available_slots))
-                                for slot_item in available_slots:
-                                    #append pair of available frequency slots to the list
-                                    freq_const = {}
-                                    freq_const["adjustment-granularity"] = "G_6_25GHZ"
-                                    freq_const["grid-type"] = "FLEX"
-                                    new_available_item = {}
-                                    new_available_item["frequency-constraint"] =  freq_const
-                                    new_available_item["lower-frequency"] = slot_item[0]
-                                    new_available_item["upper-frequency"] = slot_item[1]
-                                    available_slots_json.append(new_available_item)
-                                link_option_item["available-spectrum"] = available_slots_json
-                                break
-                            else:
-                                settings.logger.debug("link_option_item[supportable-spectrum]: "+str(link_option_item["supportable-spectrum"]))
-                                link_option_item["available-spectrum"] = link_option_item["supportable-spectrum"]
-                                break
-                    if spectrum_removed:
-                        settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
-                        settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
-                        # used to update only the available-spectrum the other keys will never be modified.
-                        response = bl_mapper.update_link_option(link_option_item)
-                        break   
+            if e2e_cs["source"]["context_uuid"] == e2e_cs["destination"]["context_uuid"] and e2e_cs["source"]["node_uuid"] == e2e_cs["destination"]["node_uuid"]:
+                # no need to update anything related to the IDLs as the CS is done between NEPs/SIPs of the same node.
+                pass
+            else:
+                if idx < (len(e2e_cs_json["route-nodes"])-1):
+                    #These NEPs are updated in the IDL files and later in their corresponding SIPs in the SDN contexts.
+                    settings.logger.debug("ORCH: NEP belonging to an IDL.")
+                    # composes the uuids based on the asbtraction model is being used.
+                    if str(os.environ.get("ABSTRACION_MODEL")) == "transparent":
+                        node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
+                        node_involved_2 = route_nodes_list[idx+1]["context_uuid"]+":"+route_nodes_list[idx+1]["node_uuid"]
+                    elif str(os.environ.get("ABSTRACION_MODEL")) == "vlink":
+                        node_involved_1 = route_item["context_uuid"]+":"+route_item["node_uuid"]
+                        node_involved_2 = route_nodes_list[idx+1]["context_uuid"]+":"+route_nodes_list[idx+1]["node_uuid"]
+                    elif str(os.environ.get("ABSTRACION_MODEL")) == "vnode":
+                        node_involved_1 = route_item["context_uuid"]+":"+route_item["context_uuid"]
+                        node_involved_2 = route_nodes_list[idx+1]["context_uuid"]+":"+route_nodes_list[idx+1]["context_uuid"]
+                    else:
+                        settings.logger.info("ORCH: ERROR Creating the uuids to find the physical options in the e2e topology.")
+                    
+                    # first updates the occupied spectrum in the right physical link (remember the IDL trick to have multiple NEPs/SIPs as one NEP with multiple SIPs)
+                    settings.logger.debug("node_involved_1: "+str(node_involved_1))
+                    settings.logger.debug("node_involved_2: "+str(node_involved_2))
+                    occupied_slots = []
+                    for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
+                        spectrum_removed = False
+                        settings.logger.debug("idl_item[nodes-involved]: " + str(idl_item["nodes-involved"]))
+                        if node_involved_1 in idl_item["nodes-involved"] and node_involved_2 in idl_item["nodes-involved"]:
+                            settings.logger.debug("ORCH: working with the nodes inovlved")
+                            for link_option_item in idl_item["link-options"]:
+                                settings.logger.debug("link_option_item[nodes-direction]" + str(link_option_item["nodes-direction"]))
+                                if link_option_item["nodes-direction"]["node-1"] == node_involved_1 and link_option_item["nodes-direction"]["node-2"] == node_involved_2:
+                                    settings.logger.debug("ORCH: Found the link-option")
+                                    for physical_option_item in link_option_item["physical-options"]:
+                                        # IDL physical-option being used found
+                                        settings.logger.debug(str(physical_option_item["node-edge-point"][0]["nep-uuid"]) +" - "+ str(physical_option_item["node-edge-point"][1]["nep-uuid"]))
+                                        settings.logger.debug(str(route_item["nep_uuid"]) +" - "+ str(route_nodes_list[idx+1]["nep_uuid"]))
+                                        if physical_option_item["node-edge-point"][0]["nep-uuid"] == route_item["nep_uuid"] and physical_option_item["node-edge-point"][1]["nep-uuid"] == route_nodes_list[idx+1]["nep_uuid"]:
+                                            physical_option_item["occupied-spectrum"] = []
+                                            settings.logger.debug("ORCH: Updating Physical option: " + str(physical_option_item))
+                                            response = bl_mapper.update_physical_option(physical_option_item["uuid"], physical_option_item)
+                                            spectrum_removed = True
+                                        # the other occupied spectrums are added (if there are) to calculate the IDL available spectrum
+                                        if physical_option_item["occupied-spectrum"] != []:
+                                            low_freq = physical_option_item["occupied-spectrum"][0]["lower-frequency"]
+                                            up_freq = physical_option_item["occupied-spectrum"][0]["upper-frequency"]
+                                            occupied_slots.append([low_freq,up_freq])
+                                
+                                settings.logger.debug("occupied_slots: "+ str(occupied_slots))
+                                if spectrum_removed and occupied_slots!=[]:
+                                    low_suportable = link_option_item["supportable-spectrum"][0]["lower-frequency"]
+                                    up_suportable = link_option_item["supportable-spectrum"][0]["upper-frequency"]
+                                    supportable_slot = [low_suportable, up_suportable]
+                                    settings.logger.debug("supportable_slot: "+ str(supportable_slot))
+                                    available_slots = vl_computation.available_spectrum(supportable_slot, occupied_slots)
+                                    available_slots_json = []
+                                    settings.logger.debug("available_slots: "+ str(available_slots))
+                                    for slot_item in available_slots:
+                                        #append pair of available frequency slots to the list
+                                        freq_const = {}
+                                        freq_const["adjustment-granularity"] = "G_6_25GHZ"
+                                        freq_const["grid-type"] = "FLEX"
+                                        new_available_item = {}
+                                        new_available_item["frequency-constraint"] =  freq_const
+                                        new_available_item["lower-frequency"] = slot_item[0]
+                                        new_available_item["upper-frequency"] = slot_item[1]
+                                        available_slots_json.append(new_available_item)
+                                    link_option_item["available-spectrum"] = available_slots_json
+                                    break
+                                else:
+                                    settings.logger.debug("link_option_item[supportable-spectrum]: "+str(link_option_item["supportable-spectrum"]))
+                                    link_option_item["available-spectrum"] = link_option_item["supportable-spectrum"]
+                                    break
+                        if spectrum_removed:
+                            settings.logger.debug("ORCH: Saving and distributing the updated link-option info.")
+                            settings.logger.debug("ORCH: link_option_item: " + str(link_option_item))
+                            # used to update only the available-spectrum the other keys will never be modified.
+                            response = bl_mapper.update_link_option(link_option_item)
+                            break   
 
             # update the spectrum information for each SIP used in the route
             settings.logger.debug("Updating available spectrums in the SIPs of each SDN Context.")

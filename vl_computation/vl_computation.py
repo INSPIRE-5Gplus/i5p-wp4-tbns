@@ -462,103 +462,109 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   route_links = []        # used only in transparent abstraction mode
   route_nodes_info = []
   domain_context = {}
-  # maps intermediate NEPs to intermediate SIPs
-  for idx, nep_item  in enumerate(route_neps):
-    settings.logger.debug("Checking NEP item with id: " + str(nep_item["nep_uuid"]))
-    # get the specific context to discover the correct SIP to use attached to the link under study
-    # requests the context only when two followed neps belong to a different context.
-    if domain_context == {} or nep_item["context_uuid"] != route_neps[idx-1]["context_uuid"]:
-      response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
-      domain_context = response[0]['context']
-    
-    # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)
-    for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
-      # looks the neps in the node
-      found_nep = False
-      for owned_nep_item in node_item["owned-node-edge-point"]:
-        if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
-          found_nep = True
-          found_sip = False
-          if 'mapped-service-interface-point' in owned_nep_item.keys():
-            settings.logger.debug("Client NEP")
-            # NOTE: VNODE will only enter in here, never in the associated else as it has only neps with sips
-            # looks for the SIP info associated to the nep
-            for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
-              for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
-                # validates the sips_uuid and their direction coincide
-                if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
-                  # adds the sip element into the sips_route
-                  sip_item["context_uuid"] = nep_item["context_uuid"]
-                  sip_item["blockchain_owner"] = response[0]['blockchain_owner']
-                  route_sips.append(sip_item)
-                  found_sip = True
-                  route_node_item = {}
-                  route_node_item["context_uuid"] = nep_item["context_uuid"]
-                  route_node_item["node_uuid"] = nep_item["node_uuid"]
-                  route_node_item["nep_uuid"] = nep_item["nep_uuid"]
-                  route_node_item["sip_uuid"] = sip_item["uuid"]
-                  route_node_item["nep_direction"] = nep_item["direction"]
-                  route_nodes_info.append(route_node_item)
+  
+  # if source and destination are the same node, no need to clacluate internal nodes as there arent.
+  if e2e_cs_request["source"]["context_uuid"] == e2e_cs_request["destination"]["context_uuid"] and e2e_cs_request["source"]["node_uuid"] == e2e_cs_request["destination"]["node_uuid"]:
+    # does nothing and goes to the FIRST and LAST SIP (below)
+    pass
+  else:
+    # maps intermediate NEPs to intermediate SIPs
+    for idx, nep_item  in enumerate(route_neps):
+      settings.logger.debug("Checking NEP item with id: " + str(nep_item["nep_uuid"]))
+      # get the specific context to discover the correct SIP to use attached to the link under study
+      # requests the context only when two followed neps belong to a different context.
+      if domain_context == {} or nep_item["context_uuid"] != route_neps[idx-1]["context_uuid"]:
+        response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
+        domain_context = response[0]['context']
+      
+      # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)
+      for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
+        # looks the neps in the node
+        found_nep = False
+        for owned_nep_item in node_item["owned-node-edge-point"]:
+          if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
+            found_nep = True
+            found_sip = False
+            if 'mapped-service-interface-point' in owned_nep_item.keys():
+              settings.logger.debug("Client NEP")
+              # NOTE: VNODE will only enter in here, never in the associated else as it has only neps with sips
+              # looks for the SIP info associated to the nep
+              for mapped_sip_item in owned_nep_item["mapped-service-interface-point"]:
+                for sip_item in domain_context["tapi-common:context"]["service-interface-point"]:
+                  # validates the sips_uuid and their direction coincide
+                  if mapped_sip_item["service-interface-point-uuid"] == sip_item["uuid"] and nep_item["direction"]==sip_item["direction"]:
+                    # adds the sip element into the sips_route
+                    sip_item["context_uuid"] = nep_item["context_uuid"]
+                    sip_item["blockchain_owner"] = response[0]['blockchain_owner']
+                    route_sips.append(sip_item)
+                    found_sip = True
+                    route_node_item = {}
+                    route_node_item["context_uuid"] = nep_item["context_uuid"]
+                    route_node_item["node_uuid"] = nep_item["node_uuid"]
+                    route_node_item["nep_uuid"] = nep_item["nep_uuid"]
+                    route_node_item["sip_uuid"] = sip_item["uuid"]
+                    route_node_item["nep_direction"] = nep_item["direction"]
+                    route_nodes_info.append(route_node_item)
+                    break
+                if found_sip:
                   break
-              if found_sip:
-                break
-          else:
-            settings.logger.debug("Internal NEP")
-            # adds nep info for the complete route info (later saved in the E2E CS data object)
-            route_node_item = {}
-            route_node_item["context_uuid"] = nep_item["context_uuid"]
-            route_node_item["node_uuid"] = nep_item["node_uuid"]
-            route_node_item["nep_uuid"] = nep_item["nep_uuid"]
-            route_node_item["sip_uuid"] = ""
-            route_node_item["nep_direction"] = nep_item["direction"]
-            route_nodes_info.append(route_node_item)
-            # only the transmitter neps are interesting for the spectrum continuity
-            if nep_item["direction"] == "OUTPUT":
-              #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
-              available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
-              
-              # checks spectrum availability with respect requested capacity & gathers spectrums for the final slot selection.
-              availability = False
-              available_spec_list = []
-              for available_item in available_spectrum:
-                available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+            else:
+              settings.logger.debug("Internal NEP")
+              # adds nep info for the complete route info (later saved in the E2E CS data object)
+              route_node_item = {}
+              route_node_item["context_uuid"] = nep_item["context_uuid"]
+              route_node_item["node_uuid"] = nep_item["node_uuid"]
+              route_node_item["nep_uuid"] = nep_item["nep_uuid"]
+              route_node_item["sip_uuid"] = ""
+              route_node_item["nep_direction"] = nep_item["direction"]
+              route_nodes_info.append(route_node_item)
+              # only the transmitter neps are interesting for the spectrum continuity
+              if nep_item["direction"] == "OUTPUT":
+                #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
+                available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
                 
-                # checks if this NEP has at least one slot with enough available spectrum
-                if (available_diff >= capacity):
-                  availability = True
-                
-                # gathers spectrum info, so later the final spectrum can be selected among all the neps.
-                new_available = []
-                new_available.append(available_item["lower-frequency"])
-                new_available.append(available_item["upper-frequency"])
-                available_spec_list.append(new_available)
-                
-              new_spectrum = {}
-              new_spectrum["available-spectrum"] = available_spec_list
-              route_spectrum.append(new_spectrum)
+                # checks spectrum availability with respect requested capacity & gathers spectrums for the final slot selection.
+                availability = False
+                available_spec_list = []
+                for available_item in available_spectrum:
+                  available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
+                  
+                  # checks if this NEP has at least one slot with enough available spectrum
+                  if (available_diff >= capacity):
+                    availability = True
+                  
+                  # gathers spectrum info, so later the final spectrum can be selected among all the neps.
+                  new_available = []
+                  new_available.append(available_item["lower-frequency"])
+                  new_available.append(available_item["upper-frequency"])
+                  available_spec_list.append(new_available)
+                  
+                new_spectrum = {}
+                new_spectrum["available-spectrum"] = available_spec_list
+                route_spectrum.append(new_spectrum)
 
-              # if it's false, returns no available slot in one of the neps in the route. Based on the previous "if (available_diff >= capacity)"
-              if availability == False:
-                # if False, the NEP is not good, and another route is necessary
-                #settings.logger.debug("This NEP has not enough available spectrum for the requested capacity.")
-                route_sips = []
-                route_spectrum = []
-                route_links = []
-                route_nodes_info = []
-                return route_sips, route_spectrum, route_links, route_nodes_info
+                # if it's false, returns no available slot in one of the neps in the route. Based on the previous "if (available_diff >= capacity)"
+                if availability == False:
+                  # if False, the NEP is not good, and another route is necessary
+                  #settings.logger.debug("This NEP has not enough available spectrum for the requested capacity.")
+                  route_sips = []
+                  route_spectrum = []
+                  route_links = []
+                  route_nodes_info = []
+                  return route_sips, route_spectrum, route_links, route_nodes_info
 
-            # adds the links to require their usage (only done in transparent abstraction mode)
-            if os.environ.get("ABSTRACION_MODEL") == "transparent" and idx < (len(route_neps)-1):
-              next_nep = route_neps[idx+1]
-              if nep_item["link_uuid"] == next_nep["link_uuid"]:
-                link_item = {}
-                link_item["uuid"] = nep_item["link_uuid"]
-                link_item["context_uuid"] = nep_item["context_uuid"]
-                route_links.append(link_item)
+              # adds the links to require their usage (only done in transparent abstraction mode)
+              if os.environ.get("ABSTRACION_MODEL") == "transparent" and idx < (len(route_neps)-1):
+                next_nep = route_neps[idx+1]
+                if nep_item["link_uuid"] == next_nep["link_uuid"]:
+                  link_item = {}
+                  link_item["uuid"] = nep_item["link_uuid"]
+                  link_item["context_uuid"] = nep_item["context_uuid"]
+                  route_links.append(link_item)
+          if found_nep:
+            break
         if found_nep:
           break
-      if found_nep:
-        break
 
   # adds the FIRST SIP in the route_sips, the info to the nodes_route and the spectrum info
   settings.logger.debug("Adding first SIP element.")
