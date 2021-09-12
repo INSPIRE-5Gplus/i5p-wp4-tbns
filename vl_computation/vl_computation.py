@@ -468,6 +468,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
     # does nothing and goes to the FIRST and LAST SIP (below)
     pass
   else:
+    print("A")
     # maps intermediate NEPs to intermediate SIPs
     for idx, nep_item  in enumerate(route_neps):
       settings.logger.debug("Checking NEP item with id: " + str(nep_item["nep_uuid"]))
@@ -476,13 +477,17 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
       if domain_context == {} or nep_item["context_uuid"] != route_neps[idx-1]["context_uuid"]:
         response = bl_mapper.get_context_from_blockchain(nep_item["context_uuid"])
         domain_context = response[0]['context']
+        print("B")
       
       # looks into all the nodes of the incoming context-topology (we consider there is only one topology per context)
       for node_item in domain_context["tapi-common:context"]["tapi-topology:topology-context"]["topology"][0]["node"]:
         # looks the neps in the node
+        print("C")
         found_nep = False
         for owned_nep_item in node_item["owned-node-edge-point"]:
+          print("D")
           if owned_nep_item["uuid"] == nep_item["nep_uuid"]:
+            print("E")
             found_nep = True
             found_sip = False
             if 'mapped-service-interface-point' in owned_nep_item.keys():
@@ -520,6 +525,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               route_nodes_info.append(route_node_item)
               # only the transmitter neps are interesting for the spectrum continuity
               if nep_item["direction"] == "OUTPUT":
+                print("F")
                 #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
                 available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
                 
@@ -527,26 +533,31 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
                 availability = False
                 available_spec_list = []
                 for available_item in available_spectrum:
+                  print("G")
                   available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
                   
                   # checks if this NEP has at least one slot with enough available spectrum
                   if (available_diff >= capacity):
+                    print("H")
                     availability = True
                   
                   # gathers spectrum info, so later the final spectrum can be selected among all the neps.
+                  print("I")
                   new_available = []
                   new_available.append(available_item["lower-frequency"])
                   new_available.append(available_item["upper-frequency"])
                   available_spec_list.append(new_available)
-                  
+                
+                print("J")
                 new_spectrum = {}
                 new_spectrum["available-spectrum"] = available_spec_list
                 route_spectrum.append(new_spectrum)
+                print("K")
 
                 # if it's false, returns no available slot in one of the neps in the route. Based on the previous "if (available_diff >= capacity)"
                 if availability == False:
                   # if False, the NEP is not good, and another route is necessary
-                  #settings.logger.debug("This NEP has not enough available spectrum for the requested capacity.")
+                  settings.logger.debug("This NEP has not enough available spectrum for the requested capacity.")
                   route_sips = []
                   route_spectrum = []
                   route_links = []
@@ -554,16 +565,23 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
                   return route_sips, route_spectrum, route_links, route_nodes_info
 
               # adds the links to require their usage (only done in transparent abstraction mode)
+              print("L")
               if os.environ.get("ABSTRACION_MODEL") == "transparent" and idx < (len(route_neps)-1):
+                print("M")
                 next_nep = route_neps[idx+1]
+                print("N")
                 if nep_item["link_uuid"] == next_nep["link_uuid"]:
+                  print("O")
                   link_item = {}
                   link_item["uuid"] = nep_item["link_uuid"]
                   link_item["context_uuid"] = nep_item["context_uuid"]
+                  print("P")
                   route_links.append(link_item)
           if found_nep:
+            print("Break")
             break
         if found_nep:
+          print("Break")
           break
 
   # adds the FIRST SIP in the route_sips, the info to the nodes_route and the spectrum info

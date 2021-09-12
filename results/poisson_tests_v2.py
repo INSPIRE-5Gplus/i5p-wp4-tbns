@@ -83,6 +83,33 @@ class Connectivity:
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "bd512c4b-834e-5551-bbc5-0f6de0f262db"}
+            ],
+            'occupied_input': [], #[{"cs_uuid": "uuid", "endpoint_info": {}}]
+            'occupied_output': [] #[{"cs_uuid": "uuid", "endpoint_info": {}}]
+        }
+
+        """
+            'available_output':[
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "fbdd154e-659e-54df-8d75-23575711978b"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
                 {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "fbdd154e-659e-54df-8d75-23575711978b"},
@@ -119,9 +146,7 @@ class Connectivity:
                 {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
                 {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "bd512c4b-834e-5551-bbc5-0f6de0f262db"}
             ],
-            'occupied_input': [], #[{"cs_uuid": "uuid", "endpoint_info": {}}]
-            'occupied_output': [] #[{"cs_uuid": "uuid", "endpoint_info": {}}]
-        }
+        """
 
         # context and port relationship (domain)
         self.ports = [
@@ -304,8 +329,8 @@ class Connectivity:
                     endpoint_input = occupied_item["endpoint_info"]
                     break
             
-            print("Source CS: " + str(endpoint_input))
-            print("Desctination CS: " + str(endpoint_output))
+            print("Source CS: " + str(endpoint_output))
+            print("Destination CS: " + str(endpoint_input))
 
         except Exception as e:
             print(str(e))
