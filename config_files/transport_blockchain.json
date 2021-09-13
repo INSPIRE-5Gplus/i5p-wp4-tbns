@@ -1,5 +1,5 @@
 {
-    "contract_address":"0xA13Bcc2B6ABf4605E8F82811a6821E47F8788d98",
+    "contract_address":"0x4CC609Cb0C6b747f2DBa7E6956942583f0E84Dc6",
     "abi":[
         {
             "anonymous": false,
@@ -457,11 +457,6 @@
         },
         {
             "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_interdomainLink",
-                    "type": "string"
-                },
                 {
                     "internalType": "string",
                     "name": "_e2etop",

@@ -101,14 +101,14 @@ contract transport {
 
     /*##### INTER-DOMAIN LINKS FUNCTIONS #####*/
     // add a new set of interd-domain links
-    function addIDLContext(string memory _interdomainLink, string memory _e2etop)  public returns (bool){
+    function addIDLContext(string memory _e2etop)  public returns (bool){
         //string memory _log = "Inter-Domain Links distributed and E2E Topology updated";
         string memory _status = "NEW_IDL";
 
         e2e_topology = _e2etop;
 
         // generates and event for all the peers except the owner to update their E2E view
-        emit notifyTopologyActions(msg.sender, "", _status, _interdomainLink, "", "", "", "", "", "");
+        emit notifyTopologyActions(msg.sender, "", _status, "", "", "", "", "", "", "");
         
         // generates an event for the owner with the response
         //emit topology_response(msg.sender, _log, _status);

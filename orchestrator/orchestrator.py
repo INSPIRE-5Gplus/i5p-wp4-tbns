@@ -176,7 +176,7 @@ def idl_to_bl(idl_json):
         e2e_topology["e2e-topology"]["interdomain-links"]=e2e_idl_list
 
     settings.logger.info("ORCH: Local E2E graph updated, distributing it and the IDLs.")
-    response = bl_mapper.interdomainlinks_to_blockchain(idl_json, e2e_topology)
+    response = bl_mapper.interdomainlinks_to_blockchain(e2e_topology)
     if response[1] != 200:
         return ({"msg":"ERROR - Something went wrong when distributing IDL info."}, 400)
 
@@ -210,8 +210,36 @@ def context_to_bl():
 
 # adds the inter-domain links information coming from another peer to the E2E local graph
 def add_idl_info(blockchain_domain_json):
+    #print(str(blockchain_domain_json))
     settings.logger.info("ORCH: Adding inter-domain links to the E2E graph for path conmputation.")
-    vl_computation.add_idl_e2e_graph(blockchain_domain_json)
+
+    # GETS & PREPARES E2E TOPOLOGY (the set of IDLs definning how the SDN domains are linked)
+    settings.logger.info("ORCH: Prepares E2E topology information.")
+    response = bl_mapper.get_e2etopology_from_blockchain()
+    e2e_topology_json = response[0]
+    if e2e_topology_json == "empty":
+        settings.logger.info("ORC - ERROR There is no e2e_topology to work with.")
+        return {"msg":"There is no e2e_topology to work with."}
+    else:
+        # prepares the intedomain-links to compare the existing with the new ones in the IDL json
+        settings.logger.debug("ORCH: Getting link-options.")
+        for idl_item in e2e_topology_json["e2e-topology"]["interdomain-links"]:
+            linkoptions_list = []
+            for linkoption_uuid_item in idl_item["link-options"]:
+                response = bl_mapper.get_linkOption_from_blockchain(linkoption_uuid_item)
+                #settings.logger.info("ORCH: response: " + str(response))
+                #phyoptions_list = []
+                #for phyoption_uuid_item in response[0]["physical-options"]:
+                #    #settings.logger.info("ORCH: phyopt_uuid: " + str(phyoption_uuid_item))
+                #    response_phy = bl_mapper.get_physicalOption_from_blockchain(phyoption_uuid_item)
+                #    #settings.logger.info("ORCH: response_phy: " + str(response_phy))
+                #    phyoptions_list.append(response_phy[0]["phyopt_info"])
+
+                #response[0]["physical-options"] = phyoptions_list
+                linkoptions_list.append(response[0])
+            idl_item["link-options"] = linkoptions_list
+
+    vl_computation.add_idl_e2e_graph(e2e_topology_json)
 
 # adds the SDN domain context information coming from another peer to the E2E local graph
 def add_context_info(context_json):

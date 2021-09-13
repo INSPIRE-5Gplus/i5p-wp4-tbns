@@ -110,18 +110,18 @@ def update_blockchain_slice(subnet_json):
 
 ###################################### BLOCKCHAIN MAPPER FOR IDLs, SDN CONTEXT & CSs #######################################
 # distributes the domain associated inter-domain links (IDL) with the other peers
-def interdomainlinks_to_blockchain(idl_json, e2e_topology):
+def interdomainlinks_to_blockchain(e2e_topology):
     settings.logger.debug('BLOCKCHAIN_MAPPER: Distributes known IDLs & updates the e2e topology element saved in the Blockchain.')
-    idl_string = json.dumps(idl_json)
+    #idl_string = json.dumps(idl_json)
     e2e_topology_string = json.dumps(e2e_topology)
     
     # Add a connectivity service template to make it available for other domains
-    tx_hash = settings.transport_contract.functions.addIDLContext(idl_string, e2e_topology_string).transact()
+    tx_hash = settings.transport_contract.functions.addIDLContext(e2e_topology_string).transact()
     settings.logger.debug('BLOCKCHAIN_MAPPER: Transaction for new IDL done.')
     
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST IDL  - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(idl_string))))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST E2E_TOPOLOGY  - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(e2e_topology_string))))
 
     msg = {}
     msg["msg"] = "Everything OK"

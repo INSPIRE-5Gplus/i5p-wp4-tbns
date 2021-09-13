@@ -206,7 +206,7 @@ def add_context_e2e_graph(context_json):
 
 # updates the e2e graph by adding new domains and itner-domains links.
 def add_idl_e2e_graph(e2e_json):
-  #settings.logger.debug("VL_COMP: Adding IDLs to the local E2E Context graph.")
+  settings.logger.debug("VL_COMP: Adding IDLs to the local E2E Context graph.")
   # adds all the SDN domains defined in the json
   for domain_item in e2e_json["e2e-topology"]["nodes-list"]:
     e2e_topology_graph.add_node(domain_item)
@@ -229,40 +229,7 @@ def add_idl_e2e_graph(e2e_json):
           e2e_topology_graph.add_edge(node_1, node_2, weight=1, interdomain_link_uuid=uuid_idl)
         else:
           e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
-    
-    """ ## OLD CODE
-    # adding FIRST unidirectional links for the routing process in the E2E MultiDiGraph
-    node_1 = interdomain_link_item["nodes-involved"][0]
-    node_2 = interdomain_link_item["nodes-involved"][1]
-    uuid_idl = interdomain_link_item["link-options"][0]["uuid"]
-    # checks if the unidirectional ink exist already (working with multi-digraph)
-    response = e2e_topology_graph.has_edge(node_1, node_2)     
-    if response == True:
-      pass
-    else:
-      # add edge with weight only for VLINK mode
-      if os.environ.get("ABSTRACION_MODEL") == "vlink":
-        e2e_topology_graph.add_edge(node_1, node_2, weight=1, interdomain_link_uuid=uuid_idl)
-      else:
-        e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
-    """  
-    """
-    # adding SECOND unidirectional links for the routing process in the E2E MultiDiGraph
-    node_1 = interdomain_link_item["nodes-involved"][1]
-    node_2 = interdomain_link_item["nodes-involved"][0]
-    uuid_idl = interdomain_link_item["link-options"][1]["uuid"]
-    # checks if the unidirectional link exist already (working with multi-digraph)
-    response = e2e_topology_graph.has_edge(node_1, node_2)    
-    if response == True:
-      pass
-    else:
-      # add edge with weight only for VLINK mode
-      if os.environ.get("ABSTRACION_MODEL") == "vlink":
-        e2e_topology_graph.add_edge(node_1, node_2, weight = 1, interdomain_link_uuid=uuid_idl)
-      else:
-        e2e_topology_graph.add_edge(node_1, node_2, interdomain_link_uuid=uuid_idl)
-      settings.logger.debug("SECOND LINK-OPTION: " +str(interdomain_link_item["link-options"][1]["uuid"]))
-    """
+
   settings.logger.debug("VL_COMP: Added Edges to E2E Graph.")
   settings.logger.info("VL_COMP: Set of IDLs added.")
 
@@ -306,15 +273,7 @@ def find_path(src, dst):
 
   return path_nodes_list
 
-"""
-get_edge_data options:
-  context_info ->
-  (vlink)       {weight = weight_info, link_uuid = l_uuid, context=con, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2}
-  (vnode/trans) {link_uuid = l_uuid, context=con, topology=topo, n1=node1, nep1=node_edge_point1, n2=node2, nep2=node_edge_point2}
-  idl info ->
-  (vlink)       {weight=1, interdomain_link_uuid=uuid_idl}
-  (vnode/trans) {interdomain_link_uuid=uuid_idl}
-"""
+
 # Based on a given route, looks for the specific NEPs involved in the inter-domain links
 def node2nep_route_mapping(route, e2e_topology, capacity):
   settings.logger.debug("Starting the mapping from nodes to neps route.")
