@@ -55,7 +55,7 @@ def handle_transport_event(event):
     if (event['args']['status'] == "NEW_IDL" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW SET OF IDL")
         settings.logger.info("BLOCKCHAIN_IDL - " + str(datetime.now()))
-        event_json["status"] = ['args']['status']
+        event_json["status"] = event['args']['status']
         settings.executor.submit(orch.add_idl_info, event_json)
     elif (event['args']['status'] == "NEW_DOMAIN" and event['args']['owner'] != str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: NEW TOPOLOGY EVENT")
