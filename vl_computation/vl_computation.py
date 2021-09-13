@@ -339,8 +339,6 @@ def node2nep_route_mapping(route, e2e_topology, capacity):
             # looks which on of the two direction link-option to take
             for link_option_item in idl_item["link-options"]:
               # the correct direction link is found (working with multi-digraph)
-              #print("link_option_item[uuid]: " + str(link_option_item["uuid"]) +" - response[0][interdomain_link_uuid]: " + str(response[0]["interdomain_link_uuid"]))
-              #if route_item == link_option_item["node-1"] and route[idx+1] == link_option_item["node-2"]:
               if link_option_item["uuid"] == response[0]["interdomain_link_uuid"]:
                 # checks if this NEP has enough available spectrum  to fit the requested capacity
                 available_spectrum = link_option_item["available-spectrum"]
@@ -520,39 +518,27 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               route_nodes_info.append(route_node_item)
               # only the transmitter neps are interesting for the spectrum continuity
               if nep_item["direction"] == "OUTPUT":
-                print("F")
                 #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs
-                print("owned_nep_item: " + str(owned_nep_item))
                 available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
-                print("available_spectrum: " + str(available_spectrum))
                 
                 # checks spectrum availability with respect requested capacity & gathers spectrums for the final slot selection.
                 availability = False
                 available_spec_list = []
                 for available_item in available_spectrum:
-                  print("G")
-                  print("available_item: " + str(available_item))
                   available_diff = available_item["upper-frequency"] - available_item["lower-frequency"]
-                  print("available_diff: " + str(available_diff))
-                  print("capacity: " + str(capacity))
                   # checks if this NEP has at least one slot with enough available spectrum
                   if (available_diff >= capacity):
-                    print("H")
                     availability = True
                   
                   # gathers spectrum info, so later the final spectrum can be selected among all the neps.
-                  print("I")
                   new_available = []
                   new_available.append(available_item["lower-frequency"])
                   new_available.append(available_item["upper-frequency"])
                   available_spec_list.append(new_available)
                 
-                print("J")
-                print("available_spec_list: "+ str(available_spec_list))
                 new_spectrum = {}
                 new_spectrum["available-spectrum"] = available_spec_list
                 route_spectrum.append(new_spectrum)
-                print("K")
 
                 # if it's false, returns no available slot in one of the neps in the route. Based on the previous "if (available_diff >= capacity)"
                 if availability == False:
@@ -575,7 +561,6 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
           if found_nep:
             break
         if found_nep:
-          print("Break")
           break
 
   # adds the FIRST SIP in the route_sips, the info to the nodes_route and the spectrum info
