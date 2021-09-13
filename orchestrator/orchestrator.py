@@ -1122,7 +1122,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 settings.logger.debug("requested_nep: "+str(requested_nep))
             else:
                 # if no occupied slots, then available equals supportable
-                av_spec = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"][0]
+                av_spec = requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["supportable-spectrum"]
                 requested_nep["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"] = av_spec
                 settings.logger.debug("requested_nep: "+str(requested_nep))
             

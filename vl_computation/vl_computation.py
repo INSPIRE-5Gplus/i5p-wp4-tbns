@@ -521,9 +521,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               # only the transmitter neps are interesting for the spectrum continuity
               if nep_item["direction"] == "OUTPUT":
                 print("F")
-                #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs 
-                print("domain_context: " + str(domain_context))
-                print("node_item: " + str(node_item))
+                #NOTE: VLINK and TRANSPARENT will access the previous IF and this else as they have internal NEPs
                 print("owned_nep_item: " + str(owned_nep_item))
                 available_spectrum = owned_nep_item["tapi-photonic-media:media-channel-node-edge-point-spec"]["mc-pool"]["available-spectrum"]
                 print("available_spectrum: " + str(available_spectrum))
