@@ -1,6 +1,9 @@
 import math, sys, threading, time, requests, random, uuid, json
 from time import sleep
 from dataclasses import dataclass
+from threading import Lock
+
+mutex_endpoints = Lock()
 
 @dataclass
 class ConnectivityServiceData:
@@ -31,77 +34,6 @@ class Connectivity:
         
         #list of available NEP/SIPs in the other domains
         self.endpoints = {
-            'available_input':[
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "b1655446-a3e1-5077-8006-0277028b9179"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "5b139e0a-a967-5acf-be83-617c8586840f"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "00672024-10f1-5dbe-95a6-265d60889a86"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "f9dc5177-f923-5873-a8eb-c40a8b90312a"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "e258f1cf-b870-5edf-bd6f-cbe86989bdcd"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "e21b5b3e-5bd4-567c-b819-f5e6ac689c68"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "9853c355-5d3a-5f46-b4bd-e94de00e902f"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "1b7dbfae-2ef5-5d7c-b4ff-be8fba395f6d"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "e9f2cd83-622f-5693-a3ea-edda0238f675"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "fc7d3da3-31c2-5f7a-868c-fe824919a2e4"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "edb7c0b6-0a87-5ecd-84a2-0fb5ed015550"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "50296d99-58cc-5ce7-82f5-fc8ee4eec2ec"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "0e047118-5aee-5721-979e-2fece9b45fb2"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "589c2048-0b7f-59c7-b893-514949faea32"},
-                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "075a2ea8-c642-5b8b-9d32-8f97218af55c"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "ce525139-c58a-5ee7-a527-94e344d8fa5e"}
-            ],
-            'available_output':[
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "fbdd154e-659e-54df-8d75-23575711978b"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
-                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
-                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "30d9323e-b916-51ce-a9a8-cf88f62eb77f"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "b10c4b7d-1c2f-5f25-a239-de4daaa622ac"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "68ac012e-54d4-5846-b5dc-6ec356404f90"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
-                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "bd512c4b-834e-5551-bbc5-0f6de0f262db"}
-            ],
-            'occupied_input': [], #[{"cs_uuid": "uuid", "endpoint_info": {}}]
-            'occupied_output': [] #[{"cs_uuid": "uuid", "endpoint_info": {}}]
-        }
-
-        """
             'available_output':[
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "79516f5e-55a0-5671-977a-1f5cc934e700"},
                 {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "0d29c715-fa35-5eaf-8be8-20cc73d8a4e6"},
@@ -146,7 +78,58 @@ class Connectivity:
                 {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "a6e6da0a-c2ea-5a2e-b901-fcac4abed95a"},
                 {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "bd512c4b-834e-5551-bbc5-0f6de0f262db"}
             ],
-        """
+            'available_input':[
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
+                {"context_uuid": "0bd7908e-c22b-574d-8bba-396d060e2611", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "291796d9-a492-5837-9ccb-24389339d18a"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "b1655446-a3e1-5077-8006-0277028b9179"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "5b139e0a-a967-5acf-be83-617c8586840f"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "00672024-10f1-5dbe-95a6-265d60889a86"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "f9dc5177-f923-5873-a8eb-c40a8b90312a"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "e258f1cf-b870-5edf-bd6f-cbe86989bdcd"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "e21b5b3e-5bd4-567c-b819-f5e6ac689c68"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "9853c355-5d3a-5f46-b4bd-e94de00e902f"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "1b7dbfae-2ef5-5d7c-b4ff-be8fba395f6d"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "e9f2cd83-622f-5693-a3ea-edda0238f675"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "fc7d3da3-31c2-5f7a-868c-fe824919a2e4"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "edb7c0b6-0a87-5ecd-84a2-0fb5ed015550"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "50296d99-58cc-5ce7-82f5-fc8ee4eec2ec"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"5c9809bc-33a9-5214-ab03-b256457b4b46", "sip_uuid": "0e047118-5aee-5721-979e-2fece9b45fb2"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "589c2048-0b7f-59c7-b893-514949faea32"},
+                {"context_uuid": "226b9166-974e-57ff-821d-2f24e5a71b00", "node_uuid":"f8fa6c3a-1840-5d2d-939d-d231cd9c50f1", "sip_uuid": "075a2ea8-c642-5b8b-9d32-8f97218af55c"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
+                {"context_uuid": "3d89bd76-e54d-5fab-9787-eb609f291ee0", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "aade6001-f00b-5e2f-a357-6a0a9d3de870"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"589df6c1-90e1-51f5-bda4-b4cd6b2d01e4", "sip_uuid": "a9b6a9a3-99c5-5b37-bc83-d087abf94ceb"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "eb287d83-f05e-53ec-ab5a-adf6bd2b5418"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"69c1ef5e-0d4a-5fb7-b729-b494313d3dc5", "sip_uuid": "9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "0ef74f99-1acc-57bd-ab9d-4b958b06c513"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "92bc2016-ae6d-530d-ba08-b2637c3eabce"},
+                {"context_uuid": "627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3", "node_uuid":"bc1cfe05-af20-59e7-85b8-eb096253c769", "sip_uuid": "ce525139-c58a-5ee7-a527-94e344d8fa5e"}
+            ],
+            'occupied_output': [], #[{"cs_uuid": "uuid", "endpoint_info": {}}]
+            'occupied_input': [] #[{"cs_uuid": "uuid", "endpoint_info": {}}]
+            
+        }
+        print("Available source SIPs: " + str(len(self.endpoints["available_output"])))
+        print("Available destination SIPs: " + str(len(self.endpoints["available_input"])))
+        print("Occupied source SIPs: " + str(len(self.endpoints["occupied_output"])))
+        print("Occupied destination SIPs: " + str(len(self.endpoints["occupied_input"])))
 
         # context and port relationship (domain)
         self.ports = [
@@ -185,6 +168,7 @@ class Connectivity:
             s_next = poisson_wait_time(lmb)
             print("Wait " + str(s_next) + "seconds for the next E2E CS request.")
             time.sleep(s_next)
+            print("Connection Nº: " +str(n_connections))
             connection = ConnectivityServiceData(inter_arrival_time=s_next)
             next_thread = threading.Thread(target=self.connectivity, args=(connection, ))
             next_thread.start()
@@ -196,33 +180,39 @@ class Connectivity:
         connection.start_TS = millis()
         self.n_threads = self.n_threads + 1
         
-        print("NEW E2E CS between the following Nodes/SIPs (Source & Destination):")
         try:
             cs_uuid = str(uuid.uuid4())
-            #cs_uuid, endpoint = random.choice(list(self.endpoints['available'].items()))
+            print("NEW E2E CS with ID: " + str(cs_uuid))
+            print(str(self.endpoints['occupied_output']))
+            print(str(self.endpoints['occupied_input']))
+            
+            mutex_endpoints.acquire()
             dst = random.choice(self.endpoints['available_input'])
             src = random.choice(self.endpoints['available_output'])
             
-            #del self.endpoints['available'][cs_uuid]
-            for idx, endpoint_item in enumerate(self.endpoints['available_input']):
-                if endpoint_item['sip_uuid'] == src['sip_uuid']:
-                    del self.endpoints['available_input'][idx]
-                    break
             for idx, endpoint_item in enumerate(self.endpoints['available_output']):
                 if endpoint_item['sip_uuid'] == dst['sip_uuid']:
-                    del self.endpoints['available_output'][idx]
+                    src_idx = idx
                     break
+            del self.endpoints['available_output'][src_idx]
+            
+            for idx, endpoint_item in enumerate(self.endpoints['available_input']):
+                if endpoint_item['sip_uuid'] == src['sip_uuid']:
+                    dst_idx = idx
+                    break
+            del self.endpoints['available_input'][dst_idx]
 
-            cs_json = {}
-            cs_json["cs_uuid"] = cs_uuid
-            cs_json["endpoint_info"] = src
-            print("cs_json: " + str(cs_json))
-            self.endpoints['occupied_output'].append(cs_json)
-            cs_json = {}
-            cs_json["cs_uuid"] = cs_uuid
-            cs_json["endpoint_info"] = dst
-            print("cs_json: "+ str(cs_json))
-            self.endpoints['occupied_input'].append(cs_json)
+            src_json = {}
+            src_json["cs_uuid"] = cs_uuid
+            src_json["endpoint_info"] = src
+            #print("SRC: " + str(cs_json))
+            self.endpoints['occupied_output'].append(src_json)
+            dst_json = {}
+            dst_json["cs_uuid"] = cs_uuid
+            dst_json["endpoint_info"] = dst
+            #print("DST: "+ str(cs_json))
+            self.endpoints['occupied_input'].append(dst_json)
+            mutex_endpoints.release()
 
             # select port based on the src context.
             for port_item in self.ports:
@@ -236,6 +226,8 @@ class Connectivity:
             endpoint_dst = {'context_uuid': 'c', 'nep_uuid': 'd', 'sip_uuid': 'e'}
             print('No SIPs available: {}'.format(cs_uuid))
 
+        print(str(self.endpoints['occupied_output']))
+        print(str(self.endpoints['occupied_input']))
         #print(str(src))
         #print(str(dst))
         connection.uuid = cs_uuid
@@ -243,7 +235,7 @@ class Connectivity:
 
         #url = "http://" + ip + "/restconf/config/context/connectivity-service/" + cs_uuid
         url = "http://" + ip + selected_port +  "/pdl-transport/connectivity_service"
-        print("Selected port domaain (last number = domain): " + str(selected_port))
+        print("Selected port domain (last number = domain): " + str(selected_port))
         
         # print(url)
         print('SEND cs: {}'.format(cs_uuid))
@@ -252,7 +244,30 @@ class Connectivity:
         print('CS JSON Request: ' + str(cs_json))
         #print("URL: " + str(url))
         response = requests.post(url, json=cs_json)
-        #print("POST response: "+str(response.text) + "with status: " + str(response.status_code))
+        print("POST response: "+str(response.text) + "with status: " + str(response.status_code))
+        if response.status_code != 200:
+            response_json = json.loads(response.text)
+            print('Error cs: {} -> {}'.format(cs_uuid, response_json['msg']))
+            connection.result = response_json['msg']
+            self.log.append(connection)
+            mutex_endpoints.acquire()
+            for idx, occupied_item in enumerate(self.endpoints['occupied_output']):
+                if occupied_item["cs_uuid"] == connection.uuid:
+                    del self.endpoints['occupied_output'][idx]
+                    temp_list = self.endpoints['available_output']
+                    temp_list.append(occupied_item["endpoint_info"])
+                    self.endpoints['available_output'] = temp_list
+                    break
+            for idx, occupied_item in enumerate(self.endpoints['occupied_input']):
+                if occupied_item["cs_uuid"] == connection.uuid:
+                    del self.endpoints['occupied_input'][idx]
+                    temp_list = self.endpoints['available_input']
+                    temp_list.append(occupied_item["endpoint_info"])
+                    self.endpoints['available_input'] = temp_list
+                    break
+            mutex_endpoints.release()
+            self.n_threads = self.n_threads - 1
+            return 0
         connection.end_TS = millis()
 
         #response["description"] = [OK, No Spectrum, No route]
@@ -277,6 +292,7 @@ class Connectivity:
             print('Error cs: {} -> {}'.format(cs_uuid, response_json['description']))
             connection.result = response_json['description']
             self.log.append(connection)
+            mutex_endpoints.acquire()
             for idx, occupied_item in enumerate(self.endpoints['occupied_output']):
                 if occupied_item["cs_uuid"] == connection.uuid:
                     del self.endpoints['occupied_output'][idx]
@@ -291,6 +307,7 @@ class Connectivity:
                     temp_list.append(occupied_item["endpoint_info"])
                     self.endpoints['available_input'] = temp_list
                     break
+            mutex_endpoints.release()
             self.n_threads = self.n_threads - 1
             return 0
         else:                                  # SUCCESSFUL CASE
@@ -319,6 +336,7 @@ class Connectivity:
         
         #print("Request to terminate E2E CS with ID: "+ str(connection.uuid))
         connection.start_TS = millis()
+        """
         try:
             for idx, occupied_item in enumerate(self.endpoints['occupied_output']):
                 if occupied_item["cs_uuid"] == connection.uuid:
@@ -329,14 +347,14 @@ class Connectivity:
                     endpoint_input = occupied_item["endpoint_info"]
                     break
             
-            print("Source CS: " + str(endpoint_output))
-            print("Destination CS: " + str(endpoint_input))
-
+            #print("Source CS: " + str(endpoint_output))
+            #print("Destination CS: " + str(endpoint_input))
         except Exception as e:
             print(str(e))
             #print(self.endpoints['occupied'])
             print(self.endpoints['occupied_output'])
             print(self.endpoints['occupied_input'])
+        """
 
         url = "http://" + ip + selected_port + "/pdl-transport/connectivity_service/terminate/" + connection.uuid
         print('SEND delete cs: {}'.format(connection.uuid))
@@ -362,7 +380,8 @@ class Connectivity:
             print('Successful delete cs: {}'.format(connection.uuid))
             connection.result = response_json['description']
             #del self.endpoints['occupied'][connection.uuid]
-            #self.endpoints['available'][connection.uuid] = endpoints            
+            #self.endpoints['available'][connection.uuid] = endpoints 
+            mutex_endpoints.acquire()           
             for idx, occupied_item in enumerate(self.endpoints['occupied_input']):
                 if occupied_item["cs_uuid"] == connection.uuid:
                     temp_list = self.endpoints['available_input']
@@ -377,6 +396,7 @@ class Connectivity:
                     self.endpoints['available_output'] = temp_list
                     del self.endpoints['occupied_output'][idx]
                     break
+            mutex_endpoints.release()
 
         self.log.append(connection)
         self.n_threads = self.n_threads - 1

@@ -457,7 +457,8 @@ def request_e2e_cs():
   sip_json = response["sip_info"]
   check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
   if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
-      return '{"msg": Not possible to create this CS. The SOUREC SIP is already used.}', 200
+      settings.logger.info('SOURCE SIP being used.')
+      return '{"msg": "SOURCE SIP is already used."}', 406
   
   sip_uuid = request_json["destination"]["context_uuid"]+":"+request_json["destination"]["sip_uuid"]
   #sip_info_string = bl_mapper.get_sip(sip_uuid)
@@ -466,7 +467,8 @@ def request_e2e_cs():
   sip_json = response["sip_info"]
   check_occupied = sip_json["tapi-photonic-media:media-channel-service-interface-point-spec"]["mc-pool"]
   if "occupied-spectrum" in check_occupied.keys() and check_occupied["occupied-spectrum"] != []:
-      return '{"msg": Not possible to create this CS. The DESTINATION SIP is already used.}', 200
+      settings.logger.info('DESTINATION SIP being used.')
+      return '{"msg": "DESTINATION SIP is already used."}', 406
   
   settings.logger.info('Selected SIPs available to be used. Starting the deployment.') 
   settings.executor.submit(orch.instantiate_e2e_connectivity_service, request_json)
