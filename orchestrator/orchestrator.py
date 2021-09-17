@@ -105,9 +105,10 @@ def idl_to_bl(idl_json):
         e2e_topo["interdomain-links"] = []
         temp_idls = []
         
-        for node_item in idl_json["e2e-topology"]["nodes-list"]:
-            e2e_nodes_list.append(node_item)
-        e2e_topo["nodes-list"] = e2e_nodes_list
+        #for node_item in idl_json["e2e-topology"]["nodes-list"]:
+        #    e2e_nodes_list.append(node_item)
+        #e2e_topo["nodes-list"] = e2e_nodes_list
+        e2e_topo["nodes-list"] = idl_json["e2e-topology"]["nodes-list"]
         
         # decomposing the IDLs info to not surpass the characters limit/transaction (it implies many more transactions)
         for idl_item in idl_json["e2e-topology"]["interdomain-links"]:
@@ -269,10 +270,11 @@ def add_context_info(context_json):
         nodes.append(node_item_json)
     topology_element["node"] = nodes
     links = []
-    for link_item_string in response_json["link_topo"]:
-        link_item_json = json.loads(link_item_string)
-        links.append(link_item_json)
-    topology_element["link"] = links
+    if response_json["link_topo"] != []:
+        for link_item_string in response_json["link_topo"]:
+            link_item_json = json.loads(link_item_string)
+            links.append(link_item_json)
+        topology_element["link"] = links
     topology.append(topology_element)
     tapi_topology_context["nw-topology-service"] = json.loads(response_json["nw_topo_serv"])
     tapi_topology_context["topology"] = topology

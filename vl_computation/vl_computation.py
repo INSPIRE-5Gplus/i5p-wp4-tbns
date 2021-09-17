@@ -60,7 +60,7 @@ def vnode_abstraction(local_context):
 
     return abstracted_context
 
-# Virtual Link abstraction procedure
+# TODO: TO CHECK Virtual Link abstraction procedure
 def vlink_abstraction(local_context):
   abstracted_context = {}
   tapi_common_context = {}
@@ -79,7 +79,9 @@ def vlink_abstraction(local_context):
     node_list = []
     nodes_sips_list = []
     link_list = []
-    G = nx.MultiDiGraph()       #graph used to define the virtual links
+    
+    #TEMPORAL graph used to define the virtual links
+    G = nx.MultiDiGraph()
 
     for node_item in topology_item["node"]:
       G.add_node(node_item["uuid"])
@@ -461,6 +463,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
                     route_node_item["nep_uuid"] = nep_item["nep_uuid"]
                     route_node_item["sip_uuid"] = sip_item["uuid"]
                     route_node_item["nep_direction"] = nep_item["direction"]
+                    route_node_item["link"] = nep_item["link_uuid"]
                     route_nodes_info.append(route_node_item)
                     break
                 if found_sip:
@@ -474,6 +477,7 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
               route_node_item["nep_uuid"] = nep_item["nep_uuid"]
               route_node_item["sip_uuid"] = ""
               route_node_item["nep_direction"] = nep_item["direction"]
+              route_node_item["link"] = nep_item["link_uuid"]
               route_nodes_info.append(route_node_item)
               # only the transmitter neps are interesting for the spectrum continuity
               if nep_item["direction"] == "OUTPUT":

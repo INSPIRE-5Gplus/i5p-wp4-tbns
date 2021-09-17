@@ -13,14 +13,14 @@ def init_logging():
     
     # Create a custom logger
     logger = logging.getLogger('PDL-Slicing/Transport')
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
     
 
     # Create handlers
     date = datetime.datetime.now()
     c_handler = logging.StreamHandler()
     f_handler = logging.FileHandler('log_file_'+str(date)+'.log')
-    c_handler.setLevel(logging.INFO)
+    c_handler.setLevel(logging.DEBUG)
     f_handler.setLevel(logging.INFO)
 
     # Create formatters and add it to handlers
