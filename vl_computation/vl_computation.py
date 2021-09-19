@@ -529,19 +529,13 @@ def nep2sip_route_mapping(route_neps, e2e_cs_request, capacity):
   # adds the FIRST SIP in the route_sips, the info to the nodes_route and the spectrum info
   settings.logger.debug("Adding first SIP element.")
   sip_uuid = e2e_cs_request["source"]["context_uuid"]+":"+e2e_cs_request["source"]["sip_uuid"]
-  print("sip_uuid: " + str(sip_uuid))
   response_json = bl_mapper.get_sip(sip_uuid)
-  print("response_json: " + str(response_json))
   sip_item = response_json["sip_info"]
-  print("sip_item: " + str(sip_item))
   sip_item["context_uuid"] = e2e_cs_request["source"]["context_uuid"]
-  print("sip_item: " + str(sip_item))
   sip_item["blockchain_owner"] = response_json["owner"]
-  print("sip_item: " + str(sip_item))
   route_sips.insert(0, sip_item)
   
   response_json = bl_mapper.get_node(e2e_cs_request["source"]["context_uuid"], e2e_cs_request["source"]["node_uuid"])
-  print("response_json: " + str(response_json))
   found_nep = False
   for nep_item in response_json["owned-node-edge-point"]:
     settings.logger.debug("nep_item: "+str(nep_item))
