@@ -233,7 +233,7 @@ def update_link_option(linkoption_json):
     tx_hash = settings.transport_contract.functions.updateLinkOption(id, av).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST LinkOption Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(linkoption_json))))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST_LinkOption_Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(linkoption_json))))
     
     msg = {}
     msg["msg"] = "Everything OK"
@@ -248,7 +248,7 @@ def update_physical_option(phyopt_uuid, phyopt_json):
     tx_hash = settings.transport_contract.functions.updatePhyOption(phyopt_uuid, phyopt).transact()
     # Wait for transaction to be mined and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST PhysicalOption Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(phyopt_json))))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST_PhysicalOption_Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(phyopt_json))))
     
     msg = {}
     msg["msg"] = "Everything OK"
@@ -458,7 +458,7 @@ def update_sip(sip_id, sip_json):
     sip_string = json.dumps(sip_json)
     tx_hash = settings.transport_contract.functions.updateSip(sip_id, sip_string).transact()
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST SIP Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(sip_json))))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST_SIP_Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(sip_json))))
     return sip_id, 200
 
 # gets a complete NODe info
@@ -489,7 +489,7 @@ def update_nep(nep_id, nep_json):
     nep_string = json.dumps(nep_json)
     tx_hash = settings.transport_contract.functions.updateNep(nep_id, nep_string).transact()
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST NEP Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(nep_json))))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST_NEP_Update - ' + str(tx_receipt['gasUsed']) + " - " + str(len(str(nep_json))))
     return nep_id, 200
 
 # requests the deployment of a CS between domains
@@ -546,7 +546,7 @@ def terminate_blockchain_cs(address, cs_ref):
     tx_hash = settings.transport_contract.functions.terminateConnectivityService(address, cs_ref).transact()
     # Wait for transaction to be added and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS Update - ' + str(tx_receipt['gasUsed']) + " - " + str(cs_ref))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS - ' + str(tx_receipt['gasUsed']) + " - " + str(cs_ref))
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
