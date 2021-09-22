@@ -17,7 +17,7 @@ def init_logging():
     
 
     # Create handlers
-    date = datetime.datetime.now()
+    date = datetime.date.today()
     c_handler = logging.StreamHandler()
     f_handler = logging.FileHandler('log_file_'+str(date)+'.log')
     c_handler.setLevel(logging.DEBUG)

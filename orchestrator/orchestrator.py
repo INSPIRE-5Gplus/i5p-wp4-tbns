@@ -960,8 +960,11 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     
     #NOTE: next group of lines to gather logs for the results (remove once done)
     settings.logger.info("TIME INSTANTIATE E2E - " + str(e2e_cs_request["cs_uuid"]) + " - " + str(datetime.now()))
-    #for cs_item in cs_list:
-    #    settings.logger.info("TIME LINKS CAPACITY - " + str(cs_item["internal-links"]) + " - " + str(e2e_cs_request["capacity"]["value"]) + str(e2e_cs_request["capacity"]["unit"]))
+    log_links = []
+    for cs_item in cs_list:
+        for int_link in cs_item["internal-links"]:
+            log_links.append(int_link)
+    settings.logger.info("TIME LINKS CAPACITY - " + str(log_links) + " - " + str(e2e_cs_request["capacity"]["value"]) + str(e2e_cs_request["capacity"]["unit"]))
     settings.logger.info("ORCH: E2E CS request processed.")
     settings.logger.info("ORCH: e2e_cs_json: " + str(e2e_cs_json))
         
