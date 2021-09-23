@@ -534,7 +534,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             idl_item["link-options"] = linkoptions_list
     
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
-    settings.logger.debug("ORCH: e2e_topology_json: " +str(e2e_topology_json))
+    #settings.logger.debug("ORCH: e2e_topology_json: " +str(e2e_topology_json))
     settings.logger.info("ORCH: Looks for the TAPI elements information involved in the route.")
     for route_item in route_nodes_list:
         settings.logger.debug("ROUTE ITEM: " + str(route_item))
@@ -1086,7 +1086,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
     
-    settings.logger.debug("ORCH: e2e_topology_json: " + str(e2e_topology_json))
+    #settings.logger.debug("ORCH: e2e_topology_json: " + str(e2e_topology_json))
     settings.logger.debug("ORCH: e2e_cs_json: " + str(e2e_cs_json))
     settings.logger.info("ORCH: Updating resources information in DDBBs.")
     # update the spectrum information for each internal NEP (transmitter) or IDL used in the route
