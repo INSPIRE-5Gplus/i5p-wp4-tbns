@@ -547,9 +547,7 @@ def terminate_blockchain_cs(address, cs_ref):
     tx_hash = settings.transport_contract.functions.terminateConnectivityService(address, cs_ref).transact()
     # Wait for transaction to be added and check it's in the blockchain (get)
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
-    print("tx_receipt: " + str(tx_receipt))
-    receipt_json = json.dumps(tx_receipt)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS - ' + str(receipt_json['gasUsed']) + " - " + len(str(cs_ref)))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS - ' + str(tx_receipt['gasUsed']) + " - " + str(len(cs_ref)))
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
@@ -573,8 +571,7 @@ def update_blockchain_terminate_cs(cs_json):
     tx_receipt = settings.web3.eth.waitForTransactionReceipt(tx_hash)
     print("tx_receipt: " + str(tx_receipt))
     length_info = len(str(cs_uuid)) + len(str(cs_status))
-    receipt_json = json.loads(tx_receipt)
-    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS Update - ' + str(receipt_json['gasUsed']) + " - " + len(str(length_info)))
+    settings.logger.info('BLOCKCHAIN_MAPPER: COST TERMINATE_CS Update - ' + str(tx_receipt['gasUsed']) + " - " + str(length_info))
     
     #listen the event associated to the transaction receipt
     rich_logs = settings.transport_contract.events.topology_response().processReceipt(tx_receipt)
