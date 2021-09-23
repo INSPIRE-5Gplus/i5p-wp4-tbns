@@ -81,7 +81,6 @@ def handle_transport_event(event):
         event_json["blockchain_owner"] = event['args']['owner']
         event_json["cs_info"] = json.loads(event['args']['sdn_info'])
         event_json["status"] = event['args']['status']
-        settings.logger.info("TIME INSTANTIATE BLOCKCHAIN - " + str(event_json["uuid"]) + " - " + str(datetime.now()))  
         settings.executor.submit(orch.update_connectivity_service_from_blockchain, event_json)
     elif (event['args']['status'] == "TERMINATING" and event['args']['owner'] == str(settings.web3.eth.defaultAccount)):
         settings.logger.info("TRANSPORT_EVENT_MNGR: EVENT TO TERMINATE A CS")
@@ -95,7 +94,6 @@ def handle_transport_event(event):
         event_json["uuid"] = event['args']['id']
         event_json["owner"] = event['args']['owner']
         event_json["status"] = event['args']['status']
-        settings.logger.info("TIME TERMINATE BLOCKCHAIN - " + str(event_json["uuid"]) + " - " + str(datetime.now()))
         settings.executor.submit(orch.update_terminate_from_blockchain, event_json)
     elif (event['args']['status'] == "ERROR"):
         print("An error has occurred in another domain!!")
