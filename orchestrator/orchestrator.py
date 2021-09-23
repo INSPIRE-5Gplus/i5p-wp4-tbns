@@ -1039,7 +1039,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
         settings.logger.debug("ORCH: e2e_cs: " + str(e2e_cs))
         for domainCS_item in e2e_cs["domain-cs"]:
             settings.logger.debug("ORCH: domainCS_item[status]: " + str(domainCS_item["status"]))
-            if domainCS_item["status"] != "TERMINATED" or domainCS_item["status"] != "ERROR":
+            if domainCS_item["status"] != "TERMINATED" and domainCS_item["status"] != "ERROR":
                 e2e_cs_terminated = False
                 break
         mutex_e2e_csdb_access.release()
