@@ -1032,12 +1032,12 @@ def terminate_e2e_connectivity_service(cs_uuid):
     # deployment management to validate all domain CSs composing the E2E CS are READY
     settings.logger.info("ORCH: Waiting all the domains CS from other domains to be terminated.")
     e2e_cs_terminated = False
-    while  e2e_cs_terminated == False:
+    while e2e_cs_terminated == False:
         e2e_cs_terminated = True
         mutex_e2e_csdb_access.acquire()
         e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
         for domainCS_item in e2e_cs["domain-cs"]:
-            if domainCS_item["status"] != "TERMINATED" and domainCS_item["status"] != "ERROR":
+            if domainCS_item["status"] != "TERMINATED" or domainCS_item["status"] != "ERROR":
                 e2e_cs_terminated = False
                 break
         mutex_e2e_csdb_access.release()

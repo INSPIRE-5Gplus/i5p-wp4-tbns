@@ -183,21 +183,26 @@ class Connectivity:
         try:
             cs_uuid = str(uuid.uuid4())
             print("NEW E2E CS with ID: " + str(cs_uuid))
-            print(str(self.endpoints['occupied_output']))
-            print(str(self.endpoints['occupied_input']))
+            #print(str(self.endpoints['occupied_output']))
+            #print(str(self.endpoints['occupied_input']))
             
             mutex_endpoints.acquire()
-            dst = random.choice(self.endpoints['available_input'])
             src = random.choice(self.endpoints['available_output'])
-            
+            dst = random.choice(self.endpoints['available_input'])
+
+            while dst["context_uuid"] == src["context_uuid"]:
+                dst = random.choice(self.endpoints['available_input'])
+            print(str(src))
+            print(str(dst))
+
             for idx, endpoint_item in enumerate(self.endpoints['available_output']):
-                if endpoint_item['sip_uuid'] == dst['sip_uuid']:
+                if endpoint_item['sip_uuid'] == src['sip_uuid']:
                     src_idx = idx
                     break
             del self.endpoints['available_output'][src_idx]
             
             for idx, endpoint_item in enumerate(self.endpoints['available_input']):
-                if endpoint_item['sip_uuid'] == src['sip_uuid']:
+                if endpoint_item['sip_uuid'] == dst['sip_uuid']:
                     dst_idx = idx
                     break
             del self.endpoints['available_input'][dst_idx]
@@ -226,10 +231,14 @@ class Connectivity:
             endpoint_dst = {'context_uuid': 'c', 'nep_uuid': 'd', 'sip_uuid': 'e'}
             print('No SIPs available: {}'.format(cs_uuid))
 
-        print(str(self.endpoints['occupied_output']))
-        print(str(self.endpoints['occupied_input']))
+        #print(str(self.endpoints['occupied_output']))
+        #print(str(self.endpoints['occupied_input']))
         #print(str(src))
         #print(str(dst))
+        print("Available source SIPs: " + str(len(self.endpoints["available_output"])))
+        print("Available destination SIPs: " + str(len(self.endpoints["available_input"])))
+        print("Occupied source SIPs: " + str(len(self.endpoints["occupied_output"])))
+        print("Occupied destination SIPs: " + str(len(self.endpoints["occupied_input"])))
         connection.uuid = cs_uuid
         capacity = random.choice([75, 150, 225, 300, 375, 450, 525, 600])
 
@@ -428,6 +437,8 @@ class Connectivity:
                     deleted = deleted + 1
                 elif connection.result != 'OK' and connection.type == 'DELETE':
                     delete_error = delete_error + 1
+                elif connection.result == 'SOURCE SIP is already used.' or connection.result == 'DESTINATION SIP is already used.':
+                    pass
                 else:
                     print('Should not enter here')
                     print(connection)

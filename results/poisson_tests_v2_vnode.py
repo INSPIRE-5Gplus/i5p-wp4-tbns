@@ -189,6 +189,11 @@ class Connectivity:
             mutex_endpoints.acquire()
             src = random.choice(self.endpoints['available_output'])
             dst = random.choice(self.endpoints['available_input'])
+
+            while dst["context_uuid"] == src["context_uuid"]:
+                dst = random.choice(self.endpoints['available_input'])
+            print(str(src))
+            print(str(dst))
             
             for idx, endpoint_item in enumerate(self.endpoints['available_output']):
                 if endpoint_item['sip_uuid'] == src['sip_uuid']:
