@@ -1,0 +1,1933 @@
+127.0.0.1 - - [25/Sep/2021 04:10:24] "GET /pdl-transport/connectivity_service/c3712642-2449-4a80-b07b-46950e568de5 HTTP/1.1" 200 - 1467
+127.0.0.1 - - [25/Sep/2021 04:10:24] "GET /pdl-transport/connectivity_service/175c28ba-fa97-4b37-9d10-a1a30caa670a HTTP/1.1" 200 - 1102
+127.0.0.1 - - [25/Sep/2021 04:10:25] "GET /pdl-transport/connectivity_service/3bb1b35f-d25d-4be1-ace0-8702783c077a HTTP/1.1" 200 - 1152
+127.0.0.1 - - [25/Sep/2021 04:10:28] "GET /pdl-transport/connectivity_service/937a8b05-3883-4120-aaf4-d85f4f22578c HTTP/1.1" 200 - 1070
+127.0.0.1 - - [25/Sep/2021 04:10:29] "GET /pdl-transport/connectivity_service/f4bcbfe3-8456-46f5-b3e5-5c16fa967c4e HTTP/1.1" 200 - 1318
+127.0.0.1 - - [25/Sep/2021 04:10:29] "GET /pdl-transport/connectivity_service/68429145-da19-4bfd-9503-32ca43c27c94 HTTP/1.1" 200 - 1554
+127.0.0.1 - - [25/Sep/2021 04:10:32] "GET /pdl-transport/connectivity_service/15f3235f-77d1-4d9e-ba59-cf53e4587cc1 HTTP/1.1" 200 - 1518
+127.0.0.1 - - [25/Sep/2021 04:10:32] "GET /pdl-transport/connectivity_service/1ec2426d-67fe-4605-a4ab-f7deded547f3 HTTP/1.1" 200 - 1881
+127.0.0.1 - - [25/Sep/2021 04:10:33] "GET /pdl-transport/connectivity_service/64f9232c-f4b1-47d0-8e11-169d699255f6 HTTP/1.1" 200 - 1646
+127.0.0.1 - - [25/Sep/2021 04:10:33] "GET /pdl-transport/connectivity_service/87a6a0fc-d3e8-4fea-b63e-58cb8c40b081 HTTP/1.1" 200 - 1035
+
+
+Wait 566.2045651628122seconds for the next E2E CS request.
+Connection Nº: 0
+Wait 444.59512072689137seconds for the next E2E CS request.
+NEW E2E CS with ID: 10c45c2f-9012-44b4-90a4-e9bbbddf7a1c
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a53e9d1e-8045-591a-8ed8-8b8164ae9d6b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: 10c45c2f-9012-44b4-90a4-e9bbbddf7a1c
+CS JSON Request: {'cs_uuid': '10c45c2f-9012-44b4-90a4-e9bbbddf7a1c', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a53e9d1e-8045-591a-8ed8-8b8164ae9d6b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 10c45c2f-9012-44b4-90a4-e9bbbddf7a1c
+Successful cs: 10c45c2f-9012-44b4-90a4-e9bbbddf7a1c
+Wait 141.50644956500602seconds for the next E2E CS request terminate.
+SEND delete cs: 10c45c2f-9012-44b4-90a4-e9bbbddf7a1c
+Waiting the E2E CS termination with id: 10c45c2f-9012-44b4-90a4-e9bbbddf7a1c
+Successful delete cs: 10c45c2f-9012-44b4-90a4-e9bbbddf7a1c
+Connection Nº: 1
+Wait 16.648119636531117seconds for the next E2E CS request.
+NEW E2E CS with ID: 7797297f-9913-4868-a8fe-284d50fd214f
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: 7797297f-9913-4868-a8fe-284d50fd214f
+CS JSON Request: {'cs_uuid': '7797297f-9913-4868-a8fe-284d50fd214f', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 2
+Wait 3197.0982766865945seconds for the next E2E CS request.
+NEW E2E CS with ID: 3de7d21a-1a17-41de-a36a-2e73312d2767
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9853c355-5d3a-5f46-b4bd-e94de00e902f'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: 3de7d21a-1a17-41de-a36a-2e73312d2767
+CS JSON Request: {'cs_uuid': '3de7d21a-1a17-41de-a36a-2e73312d2767', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9853c355-5d3a-5f46-b4bd-e94de00e902f'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 7797297f-9913-4868-a8fe-284d50fd214f
+Waiting the E2E CS deployment with id: 3de7d21a-1a17-41de-a36a-2e73312d2767
+Successful cs: 7797297f-9913-4868-a8fe-284d50fd214f
+Wait 748.0923683742085seconds for the next E2E CS request terminate.
+Successful cs: 3de7d21a-1a17-41de-a36a-2e73312d2767
+Wait 599.4595822634228seconds for the next E2E CS request terminate.
+SEND delete cs: 3de7d21a-1a17-41de-a36a-2e73312d2767
+Waiting the E2E CS termination with id: 3de7d21a-1a17-41de-a36a-2e73312d2767
+Successful delete cs: 3de7d21a-1a17-41de-a36a-2e73312d2767
+SEND delete cs: 7797297f-9913-4868-a8fe-284d50fd214f
+Waiting the E2E CS termination with id: 7797297f-9913-4868-a8fe-284d50fd214f
+Successful delete cs: 7797297f-9913-4868-a8fe-284d50fd214f
+Connection Nº: 3
+Wait 592.9905618590838seconds for the next E2E CS request.
+NEW E2E CS with ID: f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d
+{'context_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'node_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4441
+SEND cs: f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d
+CS JSON Request: {'cs_uuid': 'f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d', 'source': {'context_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'node_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d
+Successful cs: f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d
+Wait 1251.9190334422547seconds for the next E2E CS request terminate.
+Connection Nº: 4
+Wait 27.525326052369184seconds for the next E2E CS request.
+NEW E2E CS with ID: 2d98a7c7-edb3-4f15-ad33-1041d0351717
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: 2d98a7c7-edb3-4f15-ad33-1041d0351717
+CS JSON Request: {'cs_uuid': '2d98a7c7-edb3-4f15-ad33-1041d0351717', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 5
+Wait 505.07156485213835seconds for the next E2E CS request.
+NEW E2E CS with ID: 9fe887e4-eece-4ef9-9e19-17a9d1eec594
+{'context_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'node_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4441
+SEND cs: 9fe887e4-eece-4ef9-9e19-17a9d1eec594
+CS JSON Request: {'cs_uuid': '9fe887e4-eece-4ef9-9e19-17a9d1eec594', 'source': {'context_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'node_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 2d98a7c7-edb3-4f15-ad33-1041d0351717
+Waiting the E2E CS deployment with id: 9fe887e4-eece-4ef9-9e19-17a9d1eec594
+Successful cs: 2d98a7c7-edb3-4f15-ad33-1041d0351717
+Wait 148.10396705889238seconds for the next E2E CS request terminate.
+Successful cs: 9fe887e4-eece-4ef9-9e19-17a9d1eec594
+Wait 228.39429449902016seconds for the next E2E CS request terminate.
+SEND delete cs: 2d98a7c7-edb3-4f15-ad33-1041d0351717
+Waiting the E2E CS termination with id: 2d98a7c7-edb3-4f15-ad33-1041d0351717
+Connection Nº: 6
+Wait 1096.0941909273033seconds for the next E2E CS request.
+NEW E2E CS with ID: 1f82ab58-fbb8-4437-9cd2-31fe08baad4f
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4442
+SEND cs: 1f82ab58-fbb8-4437-9cd2-31fe08baad4f
+CS JSON Request: {'cs_uuid': '1f82ab58-fbb8-4437-9cd2-31fe08baad4f', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 1f82ab58-fbb8-4437-9cd2-31fe08baad4f
+Successful delete cs: 2d98a7c7-edb3-4f15-ad33-1041d0351717
+SEND delete cs: 9fe887e4-eece-4ef9-9e19-17a9d1eec594
+Waiting the E2E CS termination with id: 9fe887e4-eece-4ef9-9e19-17a9d1eec594
+Successful delete cs: 9fe887e4-eece-4ef9-9e19-17a9d1eec594
+SEND delete cs: f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d
+Waiting the E2E CS termination with id: f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d
+Successful cs: 1f82ab58-fbb8-4437-9cd2-31fe08baad4f
+Wait 248.6019577154545seconds for the next E2E CS request terminate.
+Successful delete cs: f8c90ecb-5e2f-4cd4-a120-d1ef77dc6d0d
+SEND delete cs: 1f82ab58-fbb8-4437-9cd2-31fe08baad4f
+Waiting the E2E CS termination with id: 1f82ab58-fbb8-4437-9cd2-31fe08baad4f
+Successful delete cs: 1f82ab58-fbb8-4437-9cd2-31fe08baad4f
+Connection Nº: 7
+Wait 729.9036849612161seconds for the next E2E CS request.
+NEW E2E CS with ID: d6d2440a-0154-42a0-af74-81cdb8075439
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a53e9d1e-8045-591a-8ed8-8b8164ae9d6b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: d6d2440a-0154-42a0-af74-81cdb8075439
+CS JSON Request: {'cs_uuid': 'd6d2440a-0154-42a0-af74-81cdb8075439', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a53e9d1e-8045-591a-8ed8-8b8164ae9d6b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: d6d2440a-0154-42a0-af74-81cdb8075439
+Successful cs: d6d2440a-0154-42a0-af74-81cdb8075439
+Wait 553.8615460511777seconds for the next E2E CS request terminate.
+Connection Nº: 8
+Wait 905.84449105109seconds for the next E2E CS request.
+NEW E2E CS with ID: 9d1fd6d8-797f-4e15-a154-af6626e533ee
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4444
+SEND cs: 9d1fd6d8-797f-4e15-a154-af6626e533ee
+CS JSON Request: {'cs_uuid': '9d1fd6d8-797f-4e15-a154-af6626e533ee', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 9d1fd6d8-797f-4e15-a154-af6626e533ee
+SEND delete cs: d6d2440a-0154-42a0-af74-81cdb8075439
+Waiting the E2E CS termination with id: d6d2440a-0154-42a0-af74-81cdb8075439
+Successful delete cs: d6d2440a-0154-42a0-af74-81cdb8075439
+Successful cs: 9d1fd6d8-797f-4e15-a154-af6626e533ee
+Wait 140.3123482959638seconds for the next E2E CS request terminate.
+SEND delete cs: 9d1fd6d8-797f-4e15-a154-af6626e533ee
+Waiting the E2E CS termination with id: 9d1fd6d8-797f-4e15-a154-af6626e533ee
+Successful delete cs: 9d1fd6d8-797f-4e15-a154-af6626e533ee
+Connection Nº: 9
+Wait 35.00511090455872seconds for the next E2E CS request.
+NEW E2E CS with ID: 049f18ea-69b1-4fde-aa1d-1de99e6f424f
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '223421ea-579e-5020-9924-0027c91e12a2'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: 049f18ea-69b1-4fde-aa1d-1de99e6f424f
+CS JSON Request: {'cs_uuid': '049f18ea-69b1-4fde-aa1d-1de99e6f424f', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '223421ea-579e-5020-9924-0027c91e12a2'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 10
+Wait 596.1597419733334seconds for the next E2E CS request.
+NEW E2E CS with ID: c93cd187-98fc-4e22-b3e0-fbfd12c64864
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: c93cd187-98fc-4e22-b3e0-fbfd12c64864
+CS JSON Request: {'cs_uuid': 'c93cd187-98fc-4e22-b3e0-fbfd12c64864', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 049f18ea-69b1-4fde-aa1d-1de99e6f424f
+Waiting the E2E CS deployment with id: c93cd187-98fc-4e22-b3e0-fbfd12c64864
+Successful cs: 049f18ea-69b1-4fde-aa1d-1de99e6f424f
+Wait 283.5747935549204seconds for the next E2E CS request terminate.
+Successful cs: c93cd187-98fc-4e22-b3e0-fbfd12c64864
+Wait 371.45745555312277seconds for the next E2E CS request terminate.
+SEND delete cs: 049f18ea-69b1-4fde-aa1d-1de99e6f424f
+Waiting the E2E CS termination with id: 049f18ea-69b1-4fde-aa1d-1de99e6f424f
+Successful delete cs: 049f18ea-69b1-4fde-aa1d-1de99e6f424f
+Connection Nº: 11
+Wait 463.7517459876084seconds for the next E2E CS request.
+NEW E2E CS with ID: f4799547-fcaf-47b6-9b89-5fa97643e614
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: f4799547-fcaf-47b6-9b89-5fa97643e614
+CS JSON Request: {'cs_uuid': 'f4799547-fcaf-47b6-9b89-5fa97643e614', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: f4799547-fcaf-47b6-9b89-5fa97643e614
+SEND delete cs: c93cd187-98fc-4e22-b3e0-fbfd12c64864
+Waiting the E2E CS termination with id: c93cd187-98fc-4e22-b3e0-fbfd12c64864
+Successful cs: f4799547-fcaf-47b6-9b89-5fa97643e614
+Wait 403.06219574669535seconds for the next E2E CS request terminate.
+Successful delete cs: c93cd187-98fc-4e22-b3e0-fbfd12c64864
+Connection Nº: 12
+Wait 815.8706570366577seconds for the next E2E CS request.
+NEW E2E CS with ID: 00a926f7-64bc-4989-be8c-023426e684e7
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '367b19b1-3172-54d8-bdd4-12d3ac5604f6'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: 00a926f7-64bc-4989-be8c-023426e684e7
+CS JSON Request: {'cs_uuid': '00a926f7-64bc-4989-be8c-023426e684e7', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '367b19b1-3172-54d8-bdd4-12d3ac5604f6'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"msg": "DESTINATION SIP is already used."}with status: 406
+Error cs: 00a926f7-64bc-4989-be8c-023426e684e7 -> DESTINATION SIP is already used.
+SEND delete cs: f4799547-fcaf-47b6-9b89-5fa97643e614
+Waiting the E2E CS termination with id: f4799547-fcaf-47b6-9b89-5fa97643e614
+Successful delete cs: f4799547-fcaf-47b6-9b89-5fa97643e614
+Connection Nº: 13
+Wait 518.2708213388709seconds for the next E2E CS request.
+NEW E2E CS with ID: 052c3f59-639e-4116-aaad-e446cfdb38cb
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4443
+SEND cs: 052c3f59-639e-4116-aaad-e446cfdb38cb
+CS JSON Request: {'cs_uuid': '052c3f59-639e-4116-aaad-e446cfdb38cb', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 052c3f59-639e-4116-aaad-e446cfdb38cb
+Successful cs: 052c3f59-639e-4116-aaad-e446cfdb38cb
+Wait 138.5056172930911seconds for the next E2E CS request terminate.
+SEND delete cs: 052c3f59-639e-4116-aaad-e446cfdb38cb
+Waiting the E2E CS termination with id: 052c3f59-639e-4116-aaad-e446cfdb38cb
+Successful delete cs: 052c3f59-639e-4116-aaad-e446cfdb38cb
+Connection Nº: 14
+Wait 1184.009830395869seconds for the next E2E CS request.
+NEW E2E CS with ID: 8d64e3f6-aa1a-4f3f-b3eb-6e611a447254
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: 8d64e3f6-aa1a-4f3f-b3eb-6e611a447254
+CS JSON Request: {'cs_uuid': '8d64e3f6-aa1a-4f3f-b3eb-6e611a447254', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 8d64e3f6-aa1a-4f3f-b3eb-6e611a447254
+Successful cs: 8d64e3f6-aa1a-4f3f-b3eb-6e611a447254
+Wait 77.0701301263531seconds for the next E2E CS request terminate.
+SEND delete cs: 8d64e3f6-aa1a-4f3f-b3eb-6e611a447254
+Waiting the E2E CS termination with id: 8d64e3f6-aa1a-4f3f-b3eb-6e611a447254
+Successful delete cs: 8d64e3f6-aa1a-4f3f-b3eb-6e611a447254
+Connection Nº: 15
+Wait 167.55118852392064seconds for the next E2E CS request.
+NEW E2E CS with ID: 1cab0f06-cd52-4749-95c3-8d02e6bb61dd
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f15278a8-8d93-5594-af08-18e9c4104af8'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: 1cab0f06-cd52-4749-95c3-8d02e6bb61dd
+CS JSON Request: {'cs_uuid': '1cab0f06-cd52-4749-95c3-8d02e6bb61dd', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f15278a8-8d93-5594-af08-18e9c4104af8'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 150, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 1cab0f06-cd52-4749-95c3-8d02e6bb61dd
+Connection Nº: 16
+Wait 264.8343011145251seconds for the next E2E CS request.
+NEW E2E CS with ID: 7e945d37-d3b6-44f6-a3b8-60f40e9b19ef
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '291796d9-a492-5837-9ccb-24389339d18a'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: 7e945d37-d3b6-44f6-a3b8-60f40e9b19ef
+CS JSON Request: {'cs_uuid': '7e945d37-d3b6-44f6-a3b8-60f40e9b19ef', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '291796d9-a492-5837-9ccb-24389339d18a'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 7e945d37-d3b6-44f6-a3b8-60f40e9b19ef
+Successful cs: 1cab0f06-cd52-4749-95c3-8d02e6bb61dd
+Wait 1783.1930935391188seconds for the next E2E CS request terminate.
+Connection Nº: 17
+Wait 504.47831794867915seconds for the next E2E CS request.
+NEW E2E CS with ID: 14dd76fb-fa97-4c69-9e62-cf9d34b19133
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '0e047118-5aee-5721-979e-2fece9b45fb2'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4443
+SEND cs: 14dd76fb-fa97-4c69-9e62-cf9d34b19133
+CS JSON Request: {'cs_uuid': '14dd76fb-fa97-4c69-9e62-cf9d34b19133', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '0e047118-5aee-5721-979e-2fece9b45fb2'}, 'capacity': {'value': 150, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Successful cs: 7e945d37-d3b6-44f6-a3b8-60f40e9b19ef
+Wait 200.76442788421699seconds for the next E2E CS request terminate.
+Waiting the E2E CS deployment with id: 14dd76fb-fa97-4c69-9e62-cf9d34b19133
+SEND delete cs: 7e945d37-d3b6-44f6-a3b8-60f40e9b19ef
+Waiting the E2E CS termination with id: 7e945d37-d3b6-44f6-a3b8-60f40e9b19ef
+Successful cs: 14dd76fb-fa97-4c69-9e62-cf9d34b19133
+Wait 410.7756724308907seconds for the next E2E CS request terminate.
+Successful delete cs: 7e945d37-d3b6-44f6-a3b8-60f40e9b19ef
+Connection Nº: 18
+Wait 149.70947588308752seconds for the next E2E CS request.
+NEW E2E CS with ID: c78ed3e5-34b3-4ee2-bcad-36cacd58f043
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '1b7dbfae-2ef5-5d7c-b4ff-be8fba395f6d'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4444
+SEND cs: c78ed3e5-34b3-4ee2-bcad-36cacd58f043
+CS JSON Request: {'cs_uuid': 'c78ed3e5-34b3-4ee2-bcad-36cacd58f043', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '1b7dbfae-2ef5-5d7c-b4ff-be8fba395f6d'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: c78ed3e5-34b3-4ee2-bcad-36cacd58f043
+Connection Nº: 19
+Wait 15.895183858621804seconds for the next E2E CS request.
+NEW E2E CS with ID: f67530dd-29b2-4634-bf0d-ce09d2550e3d
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'b2c55979-0f9b-52e3-a767-deedebe12547'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4442
+SEND cs: f67530dd-29b2-4634-bf0d-ce09d2550e3d
+CS JSON Request: {'cs_uuid': 'f67530dd-29b2-4634-bf0d-ce09d2550e3d', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'b2c55979-0f9b-52e3-a767-deedebe12547'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: 14dd76fb-fa97-4c69-9e62-cf9d34b19133
+Waiting the E2E CS termination with id: 14dd76fb-fa97-4c69-9e62-cf9d34b19133
+Connection Nº: 20
+Wait 18.867898499702278seconds for the next E2E CS request.
+NEW E2E CS with ID: 4ba85d25-c8d5-44a8-843a-43c4f3877810
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f9dc5177-f923-5873-a8eb-c40a8b90312a'}
+Available source SIPs: 37
+Available destination SIPs: 37
+Occupied source SIPs: 5
+Occupied destination SIPs: 5
+Selected port domain (last number = domain): 4444
+SEND cs: 4ba85d25-c8d5-44a8-843a-43c4f3877810
+CS JSON Request: {'cs_uuid': '4ba85d25-c8d5-44a8-843a-43c4f3877810', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f9dc5177-f923-5873-a8eb-c40a8b90312a'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 21
+Wait 1013.4558793500391seconds for the next E2E CS request.
+NEW E2E CS with ID: b9f6d8bd-0938-47b7-88db-8e052f550cd8
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '00672024-10f1-5dbe-95a6-265d60889a86'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4443
+SEND cs: b9f6d8bd-0938-47b7-88db-8e052f550cd8
+CS JSON Request: {'cs_uuid': 'b9f6d8bd-0938-47b7-88db-8e052f550cd8', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '00672024-10f1-5dbe-95a6-265d60889a86'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: f67530dd-29b2-4634-bf0d-ce09d2550e3d
+Waiting the E2E CS deployment with id: 4ba85d25-c8d5-44a8-843a-43c4f3877810
+Waiting the E2E CS deployment with id: b9f6d8bd-0938-47b7-88db-8e052f550cd8
+Successful cs: c78ed3e5-34b3-4ee2-bcad-36cacd58f043
+Wait 378.3101367783982seconds for the next E2E CS request terminate.
+Successful delete cs: 14dd76fb-fa97-4c69-9e62-cf9d34b19133
+SEND delete cs: c78ed3e5-34b3-4ee2-bcad-36cacd58f043
+Waiting the E2E CS termination with id: c78ed3e5-34b3-4ee2-bcad-36cacd58f043
+Successful cs: f67530dd-29b2-4634-bf0d-ce09d2550e3d
+Wait 1083.891277974497seconds for the next E2E CS request terminate.
+Successful cs: 4ba85d25-c8d5-44a8-843a-43c4f3877810
+Wait 1710.0286228556558seconds for the next E2E CS request terminate.
+Successful delete cs: c78ed3e5-34b3-4ee2-bcad-36cacd58f043
+Successful cs: b9f6d8bd-0938-47b7-88db-8e052f550cd8
+Wait 487.3190857189987seconds for the next E2E CS request terminate.
+SEND delete cs: 1cab0f06-cd52-4749-95c3-8d02e6bb61dd
+Waiting the E2E CS termination with id: 1cab0f06-cd52-4749-95c3-8d02e6bb61dd
+Successful delete cs: 1cab0f06-cd52-4749-95c3-8d02e6bb61dd
+Connection Nº: 22
+Wait 544.207154762297seconds for the next E2E CS request.
+NEW E2E CS with ID: fbfadee1-e97b-4b9f-9be4-c8277f0ef060
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4443
+SEND cs: fbfadee1-e97b-4b9f-9be4-c8277f0ef060
+CS JSON Request: {'cs_uuid': 'fbfadee1-e97b-4b9f-9be4-c8277f0ef060', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: fbfadee1-e97b-4b9f-9be4-c8277f0ef060
+Successful cs: fbfadee1-e97b-4b9f-9be4-c8277f0ef060
+Wait 355.65941434969596seconds for the next E2E CS request terminate.
+SEND delete cs: b9f6d8bd-0938-47b7-88db-8e052f550cd8
+Waiting the E2E CS termination with id: b9f6d8bd-0938-47b7-88db-8e052f550cd8
+Successful delete cs: b9f6d8bd-0938-47b7-88db-8e052f550cd8
+Connection Nº: 23
+Wait 250.07103292628318seconds for the next E2E CS request.
+NEW E2E CS with ID: db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4443
+SEND cs: db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c
+CS JSON Request: {'cs_uuid': 'db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: fbfadee1-e97b-4b9f-9be4-c8277f0ef060
+Waiting the E2E CS termination with id: fbfadee1-e97b-4b9f-9be4-c8277f0ef060
+Waiting the E2E CS deployment with id: db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c
+SEND delete cs: f67530dd-29b2-4634-bf0d-ce09d2550e3d
+Waiting the E2E CS termination with id: f67530dd-29b2-4634-bf0d-ce09d2550e3d
+Connection Nº: 24
+Wait 619.5581367894531seconds for the next E2E CS request.
+NEW E2E CS with ID: 318186f9-c317-43b0-96ac-962cb17438ad
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 37
+Available destination SIPs: 37
+Occupied source SIPs: 5
+Occupied destination SIPs: 5
+Selected port domain (last number = domain): 4444
+SEND cs: 318186f9-c317-43b0-96ac-962cb17438ad
+CS JSON Request: {'cs_uuid': '318186f9-c317-43b0-96ac-962cb17438ad', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 318186f9-c317-43b0-96ac-962cb17438ad
+Successful delete cs: f67530dd-29b2-4634-bf0d-ce09d2550e3d
+Successful cs: db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c
+Wait 770.3024845721985seconds for the next E2E CS request terminate.
+Successful delete cs: fbfadee1-e97b-4b9f-9be4-c8277f0ef060
+Successful cs: 318186f9-c317-43b0-96ac-962cb17438ad
+Wait 550.5993117493268seconds for the next E2E CS request terminate.
+SEND delete cs: 4ba85d25-c8d5-44a8-843a-43c4f3877810
+Waiting the E2E CS termination with id: 4ba85d25-c8d5-44a8-843a-43c4f3877810
+Connection Nº: 25
+Wait 719.8960798895166seconds for the next E2E CS request.
+NEW E2E CS with ID: 8400f82f-4ebe-4d15-afc9-addfc9087148
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4442
+SEND cs: 8400f82f-4ebe-4d15-afc9-addfc9087148
+CS JSON Request: {'cs_uuid': '8400f82f-4ebe-4d15-afc9-addfc9087148', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"msg": "DESTINATION SIP is already used."}with status: 406
+Error cs: 8400f82f-4ebe-4d15-afc9-addfc9087148 -> DESTINATION SIP is already used.
+Successful delete cs: 4ba85d25-c8d5-44a8-843a-43c4f3877810
+SEND delete cs: db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c
+Waiting the E2E CS termination with id: db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c
+SEND delete cs: 318186f9-c317-43b0-96ac-962cb17438ad
+Waiting the E2E CS termination with id: 318186f9-c317-43b0-96ac-962cb17438ad
+Successful delete cs: 318186f9-c317-43b0-96ac-962cb17438ad
+Successful delete cs: db3ed1f1-6cb8-4c7d-bceb-2ddfd93df04c
+Connection Nº: 26
+Wait 212.443737817954seconds for the next E2E CS request.
+NEW E2E CS with ID: d6cb7398-7757-4352-9f71-621855377e4b
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: d6cb7398-7757-4352-9f71-621855377e4b
+CS JSON Request: {'cs_uuid': 'd6cb7398-7757-4352-9f71-621855377e4b', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: d6cb7398-7757-4352-9f71-621855377e4b
+Connection Nº: 27
+Wait 477.5435199323706seconds for the next E2E CS request.
+NEW E2E CS with ID: b8c0bcae-fed7-4842-b998-5f059d6035ea
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9853c355-5d3a-5f46-b4bd-e94de00e902f'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: b8c0bcae-fed7-4842-b998-5f059d6035ea
+CS JSON Request: {'cs_uuid': 'b8c0bcae-fed7-4842-b998-5f059d6035ea', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9853c355-5d3a-5f46-b4bd-e94de00e902f'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Successful cs: d6cb7398-7757-4352-9f71-621855377e4b
+Wait 401.2833601551171seconds for the next E2E CS request terminate.
+Waiting the E2E CS deployment with id: b8c0bcae-fed7-4842-b998-5f059d6035ea
+Successful cs: b8c0bcae-fed7-4842-b998-5f059d6035ea
+Wait 908.4755643981337seconds for the next E2E CS request terminate.
+SEND delete cs: d6cb7398-7757-4352-9f71-621855377e4b
+Waiting the E2E CS termination with id: d6cb7398-7757-4352-9f71-621855377e4b
+Connection Nº: 28
+Wait 201.3046287814485seconds for the next E2E CS request.
+NEW E2E CS with ID: a5ef79a0-db82-4fb7-b902-59079044b153
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4444
+SEND cs: a5ef79a0-db82-4fb7-b902-59079044b153
+CS JSON Request: {'cs_uuid': 'a5ef79a0-db82-4fb7-b902-59079044b153', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: a5ef79a0-db82-4fb7-b902-59079044b153
+Successful delete cs: d6cb7398-7757-4352-9f71-621855377e4b
+Connection Nº: 29
+Wait 2093.836681935759seconds for the next E2E CS request.
+NEW E2E CS with ID: 3d512ac4-e44c-40ce-a9fc-a3fbe6405b95
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4443
+SEND cs: 3d512ac4-e44c-40ce-a9fc-a3fbe6405b95
+CS JSON Request: {'cs_uuid': '3d512ac4-e44c-40ce-a9fc-a3fbe6405b95', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 3d512ac4-e44c-40ce-a9fc-a3fbe6405b95
+Successful cs: a5ef79a0-db82-4fb7-b902-59079044b153
+Wait 688.8799911179309seconds for the next E2E CS request terminate.
+Successful cs: 3d512ac4-e44c-40ce-a9fc-a3fbe6405b95
+Wait 879.2917502216159seconds for the next E2E CS request terminate.
+SEND delete cs: b8c0bcae-fed7-4842-b998-5f059d6035ea
+Waiting the E2E CS termination with id: b8c0bcae-fed7-4842-b998-5f059d6035ea
+Successful delete cs: b8c0bcae-fed7-4842-b998-5f059d6035ea
+SEND delete cs: a5ef79a0-db82-4fb7-b902-59079044b153
+Waiting the E2E CS termination with id: a5ef79a0-db82-4fb7-b902-59079044b153
+Successful delete cs: a5ef79a0-db82-4fb7-b902-59079044b153
+SEND delete cs: 3d512ac4-e44c-40ce-a9fc-a3fbe6405b95
+Waiting the E2E CS termination with id: 3d512ac4-e44c-40ce-a9fc-a3fbe6405b95
+Successful delete cs: 3d512ac4-e44c-40ce-a9fc-a3fbe6405b95
+Connection Nº: 30
+Wait 597.5093849862145seconds for the next E2E CS request.
+NEW E2E CS with ID: 088f1128-4ff0-4e7f-a519-6108b52c868c
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4444
+SEND cs: 088f1128-4ff0-4e7f-a519-6108b52c868c
+CS JSON Request: {'cs_uuid': '088f1128-4ff0-4e7f-a519-6108b52c868c', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 088f1128-4ff0-4e7f-a519-6108b52c868c
+Successful cs: 088f1128-4ff0-4e7f-a519-6108b52c868c
+Wait 15.338872505835548seconds for the next E2E CS request terminate.
+SEND delete cs: 088f1128-4ff0-4e7f-a519-6108b52c868c
+Waiting the E2E CS termination with id: 088f1128-4ff0-4e7f-a519-6108b52c868c
+Successful delete cs: 088f1128-4ff0-4e7f-a519-6108b52c868c
+Connection Nº: 31
+Wait 119.29318359691537seconds for the next E2E CS request.
+NEW E2E CS with ID: 9f433444-d4d2-4b9c-802d-36ebf322d7ca
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4444
+SEND cs: 9f433444-d4d2-4b9c-802d-36ebf322d7ca
+CS JSON Request: {'cs_uuid': '9f433444-d4d2-4b9c-802d-36ebf322d7ca', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 9f433444-d4d2-4b9c-802d-36ebf322d7ca
+Connection Nº: 32
+Wait 983.6241638714374seconds for the next E2E CS request.
+NEW E2E CS with ID: dbb5d23e-4262-4f18-9acb-09f5615cd362
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '291796d9-a492-5837-9ccb-24389339d18a'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: dbb5d23e-4262-4f18-9acb-09f5615cd362
+CS JSON Request: {'cs_uuid': 'dbb5d23e-4262-4f18-9acb-09f5615cd362', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '291796d9-a492-5837-9ccb-24389339d18a'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: dbb5d23e-4262-4f18-9acb-09f5615cd362
+Successful cs: 9f433444-d4d2-4b9c-802d-36ebf322d7ca
+Wait 427.1644620857834seconds for the next E2E CS request terminate.
+Successful cs: dbb5d23e-4262-4f18-9acb-09f5615cd362
+Wait 671.0433547942399seconds for the next E2E CS request terminate.
+SEND delete cs: 9f433444-d4d2-4b9c-802d-36ebf322d7ca
+Waiting the E2E CS termination with id: 9f433444-d4d2-4b9c-802d-36ebf322d7ca
+Successful delete cs: 9f433444-d4d2-4b9c-802d-36ebf322d7ca
+Connection Nº: 33
+Wait 346.24302329539177seconds for the next E2E CS request.
+NEW E2E CS with ID: beabcb27-4c45-412f-9f7b-a2c7a0d9015a
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'ce525139-c58a-5ee7-a527-94e344d8fa5e'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: beabcb27-4c45-412f-9f7b-a2c7a0d9015a
+CS JSON Request: {'cs_uuid': 'beabcb27-4c45-412f-9f7b-a2c7a0d9015a', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'ce525139-c58a-5ee7-a527-94e344d8fa5e'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: dbb5d23e-4262-4f18-9acb-09f5615cd362
+Waiting the E2E CS termination with id: dbb5d23e-4262-4f18-9acb-09f5615cd362
+Waiting the E2E CS deployment with id: beabcb27-4c45-412f-9f7b-a2c7a0d9015a
+Successful delete cs: dbb5d23e-4262-4f18-9acb-09f5615cd362
+Successful cs: beabcb27-4c45-412f-9f7b-a2c7a0d9015a
+Wait 22.877598238760186seconds for the next E2E CS request terminate.
+SEND delete cs: beabcb27-4c45-412f-9f7b-a2c7a0d9015a
+Waiting the E2E CS termination with id: beabcb27-4c45-412f-9f7b-a2c7a0d9015a
+Connection Nº: 34
+Wait 160.1963376943733seconds for the next E2E CS request.
+NEW E2E CS with ID: 71511e6f-d5c6-4143-9839-89bbc182d7ef
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4444
+SEND cs: 71511e6f-d5c6-4143-9839-89bbc182d7ef
+CS JSON Request: {'cs_uuid': '71511e6f-d5c6-4143-9839-89bbc182d7ef', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 71511e6f-d5c6-4143-9839-89bbc182d7ef
+Successful delete cs: beabcb27-4c45-412f-9f7b-a2c7a0d9015a
+Connection Nº: 35
+Wait 470.77103526542066seconds for the next E2E CS request.
+NEW E2E CS with ID: 20ff67fb-1f3c-4379-9a34-b66616ce335c
+{'context_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'node_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e9f2cd83-622f-5693-a3ea-edda0238f675'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4441
+SEND cs: 20ff67fb-1f3c-4379-9a34-b66616ce335c
+CS JSON Request: {'cs_uuid': '20ff67fb-1f3c-4379-9a34-b66616ce335c', 'source': {'context_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'node_uuid': '0bd7908e-c22b-574d-8bba-396d060e2611', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e9f2cd83-622f-5693-a3ea-edda0238f675'}, 'capacity': {'value': 150, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 20ff67fb-1f3c-4379-9a34-b66616ce335c
+Successful cs: 71511e6f-d5c6-4143-9839-89bbc182d7ef
+Wait 403.8850087572598seconds for the next E2E CS request terminate.
+Successful cs: 20ff67fb-1f3c-4379-9a34-b66616ce335c
+Wait 222.80580224490248seconds for the next E2E CS request terminate.
+Connection Nº: 36
+Wait 1688.2561916147222seconds for the next E2E CS request.
+NEW E2E CS with ID: c1751e15-6e29-4dc3-a8ff-d50ea36a89a1
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f15278a8-8d93-5594-af08-18e9c4104af8'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4442
+SEND cs: c1751e15-6e29-4dc3-a8ff-d50ea36a89a1
+CS JSON Request: {'cs_uuid': 'c1751e15-6e29-4dc3-a8ff-d50ea36a89a1', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f15278a8-8d93-5594-af08-18e9c4104af8'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: 20ff67fb-1f3c-4379-9a34-b66616ce335c
+Waiting the E2E CS termination with id: 20ff67fb-1f3c-4379-9a34-b66616ce335c
+Waiting the E2E CS deployment with id: c1751e15-6e29-4dc3-a8ff-d50ea36a89a1
+SEND delete cs: 71511e6f-d5c6-4143-9839-89bbc182d7ef
+Waiting the E2E CS termination with id: 71511e6f-d5c6-4143-9839-89bbc182d7ef
+Successful delete cs: 71511e6f-d5c6-4143-9839-89bbc182d7ef
+Successful delete cs: 20ff67fb-1f3c-4379-9a34-b66616ce335c
+Successful cs: c1751e15-6e29-4dc3-a8ff-d50ea36a89a1
+Wait 107.70480316200721seconds for the next E2E CS request terminate.
+SEND delete cs: c1751e15-6e29-4dc3-a8ff-d50ea36a89a1
+Waiting the E2E CS termination with id: c1751e15-6e29-4dc3-a8ff-d50ea36a89a1
+Successful delete cs: c1751e15-6e29-4dc3-a8ff-d50ea36a89a1
+Connection Nº: 37
+Wait 1612.5959332506707seconds for the next E2E CS request.
+NEW E2E CS with ID: 7b88b309-b166-412d-bd4c-054c61ac6a8a
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4444
+SEND cs: 7b88b309-b166-412d-bd4c-054c61ac6a8a
+CS JSON Request: {'cs_uuid': '7b88b309-b166-412d-bd4c-054c61ac6a8a', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 7b88b309-b166-412d-bd4c-054c61ac6a8a
+Successful cs: 7b88b309-b166-412d-bd4c-054c61ac6a8a
+Wait 28.030026172302446seconds for the next E2E CS request terminate.
+SEND delete cs: 7b88b309-b166-412d-bd4c-054c61ac6a8a
+Waiting the E2E CS termination with id: 7b88b309-b166-412d-bd4c-054c61ac6a8a
+Successful delete cs: 7b88b309-b166-412d-bd4c-054c61ac6a8a
+Connection Nº: 38
+Wait 178.91325014637326seconds for the next E2E CS request.
+NEW E2E CS with ID: a97a9706-9e00-4475-8c7e-64ba35e5713e
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '367b19b1-3172-54d8-bdd4-12d3ac5604f6'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: a97a9706-9e00-4475-8c7e-64ba35e5713e
+CS JSON Request: {'cs_uuid': 'a97a9706-9e00-4475-8c7e-64ba35e5713e', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '367b19b1-3172-54d8-bdd4-12d3ac5604f6'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: a97a9706-9e00-4475-8c7e-64ba35e5713e
+Connection Nº: 39
+Wait 249.6473442231615seconds for the next E2E CS request.
+NEW E2E CS with ID: a0fa6308-bd49-4945-b1c0-8d86d32c6309
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e21b5b3e-5bd4-567c-b819-f5e6ac689c68'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: a0fa6308-bd49-4945-b1c0-8d86d32c6309
+CS JSON Request: {'cs_uuid': 'a0fa6308-bd49-4945-b1c0-8d86d32c6309', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e21b5b3e-5bd4-567c-b819-f5e6ac689c68'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: a0fa6308-bd49-4945-b1c0-8d86d32c6309
+Successful cs: a97a9706-9e00-4475-8c7e-64ba35e5713e
+Wait 134.37400795574197seconds for the next E2E CS request terminate.
+SEND delete cs: a97a9706-9e00-4475-8c7e-64ba35e5713e
+Waiting the E2E CS termination with id: a97a9706-9e00-4475-8c7e-64ba35e5713e
+Connection Nº: 40
+Wait 433.16193574546526seconds for the next E2E CS request.
+NEW E2E CS with ID: a90b56f4-83b1-4579-8d79-3e43009bc29a
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '42d64587-8763-5917-bbd6-8f6a8b8d2700'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4442
+SEND cs: a90b56f4-83b1-4579-8d79-3e43009bc29a
+CS JSON Request: {'cs_uuid': 'a90b56f4-83b1-4579-8d79-3e43009bc29a', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '42d64587-8763-5917-bbd6-8f6a8b8d2700'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: a90b56f4-83b1-4579-8d79-3e43009bc29a
+Successful cs: a0fa6308-bd49-4945-b1c0-8d86d32c6309
+Wait 111.76898460711956seconds for the next E2E CS request terminate.
+Successful delete cs: a97a9706-9e00-4475-8c7e-64ba35e5713e
+SEND delete cs: a0fa6308-bd49-4945-b1c0-8d86d32c6309
+Waiting the E2E CS termination with id: a0fa6308-bd49-4945-b1c0-8d86d32c6309
+Successful delete cs: a0fa6308-bd49-4945-b1c0-8d86d32c6309
+Successful cs: a90b56f4-83b1-4579-8d79-3e43009bc29a
+Wait 220.9969775568773seconds for the next E2E CS request terminate.
+Connection Nº: 41
+Wait 822.1224573048747seconds for the next E2E CS request.
+NEW E2E CS with ID: f26da925-f234-4129-9e56-b350fc2b8559
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: f26da925-f234-4129-9e56-b350fc2b8559
+CS JSON Request: {'cs_uuid': 'f26da925-f234-4129-9e56-b350fc2b8559', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: f26da925-f234-4129-9e56-b350fc2b8559
+SEND delete cs: a90b56f4-83b1-4579-8d79-3e43009bc29a
+Waiting the E2E CS termination with id: a90b56f4-83b1-4579-8d79-3e43009bc29a
+Successful cs: f26da925-f234-4129-9e56-b350fc2b8559
+Wait 117.98135005193124seconds for the next E2E CS request terminate.
+Successful delete cs: a90b56f4-83b1-4579-8d79-3e43009bc29a
+SEND delete cs: f26da925-f234-4129-9e56-b350fc2b8559
+Waiting the E2E CS termination with id: f26da925-f234-4129-9e56-b350fc2b8559
+Successful delete cs: f26da925-f234-4129-9e56-b350fc2b8559
+Connection Nº: 42
+Wait 926.9484873229113seconds for the next E2E CS request.
+NEW E2E CS with ID: ba825944-35e4-4269-bd19-bd5aa802a2ae
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4442
+SEND cs: ba825944-35e4-4269-bd19-bd5aa802a2ae
+CS JSON Request: {'cs_uuid': 'ba825944-35e4-4269-bd19-bd5aa802a2ae', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fbdd154e-659e-54df-8d75-23575711978b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: ba825944-35e4-4269-bd19-bd5aa802a2ae
+Successful cs: ba825944-35e4-4269-bd19-bd5aa802a2ae
+Wait 1023.8316879526047seconds for the next E2E CS request terminate.
+Connection Nº: 43
+Wait 50.71439026320275seconds for the next E2E CS request.
+NEW E2E CS with ID: 4b39893a-5e72-4a63-9641-11c311705cd0
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '50296d99-58cc-5ce7-82f5-fc8ee4eec2ec'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: 4b39893a-5e72-4a63-9641-11c311705cd0
+CS JSON Request: {'cs_uuid': '4b39893a-5e72-4a63-9641-11c311705cd0', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '50296d99-58cc-5ce7-82f5-fc8ee4eec2ec'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 4b39893a-5e72-4a63-9641-11c311705cd0
+Connection Nº: 44
+Wait 59.67804867925282seconds for the next E2E CS request.
+NEW E2E CS with ID: abac40c1-249e-405c-8210-4af954c7bf8f
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4442
+SEND cs: abac40c1-249e-405c-8210-4af954c7bf8f
+CS JSON Request: {'cs_uuid': 'abac40c1-249e-405c-8210-4af954c7bf8f', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: abac40c1-249e-405c-8210-4af954c7bf8f
+Connection Nº: 45
+Wait 230.73732621967133seconds for the next E2E CS request.
+NEW E2E CS with ID: 7fad55e4-a99f-456e-9df9-82155e47aea2
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4443
+SEND cs: 7fad55e4-a99f-456e-9df9-82155e47aea2
+CS JSON Request: {'cs_uuid': '7fad55e4-a99f-456e-9df9-82155e47aea2', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 7fad55e4-a99f-456e-9df9-82155e47aea2
+Connection Nº: 46
+Wait 274.2252395998705seconds for the next E2E CS request.
+NEW E2E CS with ID: 3035eab2-02d3-418f-902e-d95eadc90f73
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 37
+Available destination SIPs: 37
+Occupied source SIPs: 5
+Occupied destination SIPs: 5
+Selected port domain (last number = domain): 4442
+SEND cs: 3035eab2-02d3-418f-902e-d95eadc90f73
+CS JSON Request: {'cs_uuid': '3035eab2-02d3-418f-902e-d95eadc90f73', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 150, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: ba825944-35e4-4269-bd19-bd5aa802a2ae
+Waiting the E2E CS termination with id: ba825944-35e4-4269-bd19-bd5aa802a2ae
+Waiting the E2E CS deployment with id: 3035eab2-02d3-418f-902e-d95eadc90f73
+Successful cs: 4b39893a-5e72-4a63-9641-11c311705cd0
+Wait 313.0159127924234seconds for the next E2E CS request terminate.
+Successful cs: abac40c1-249e-405c-8210-4af954c7bf8f
+Wait 357.64081414764667seconds for the next E2E CS request terminate.
+Connection Nº: 47
+Wait 1324.294134153888seconds for the next E2E CS request.
+NEW E2E CS with ID: 918e70a4-4632-499c-81f9-dc49a4700b97
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '589c2048-0b7f-59c7-b893-514949faea32'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4443
+SEND cs: 918e70a4-4632-499c-81f9-dc49a4700b97
+CS JSON Request: {'cs_uuid': '918e70a4-4632-499c-81f9-dc49a4700b97', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '589c2048-0b7f-59c7-b893-514949faea32'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 918e70a4-4632-499c-81f9-dc49a4700b97
+SEND delete cs: 4b39893a-5e72-4a63-9641-11c311705cd0
+Waiting the E2E CS termination with id: 4b39893a-5e72-4a63-9641-11c311705cd0
+Successful cs: 7fad55e4-a99f-456e-9df9-82155e47aea2
+Wait 497.02232477530225seconds for the next E2E CS request terminate.
+SEND delete cs: abac40c1-249e-405c-8210-4af954c7bf8f
+Waiting the E2E CS termination with id: abac40c1-249e-405c-8210-4af954c7bf8f
+Successful cs: 3035eab2-02d3-418f-902e-d95eadc90f73
+Wait 427.638616681464seconds for the next E2E CS request terminate.
+Successful delete cs: ba825944-35e4-4269-bd19-bd5aa802a2ae
+Successful delete cs: abac40c1-249e-405c-8210-4af954c7bf8f
+Successful cs: 918e70a4-4632-499c-81f9-dc49a4700b97
+Wait 139.2709980275745seconds for the next E2E CS request terminate.
+Successful delete cs: 4b39893a-5e72-4a63-9641-11c311705cd0
+SEND delete cs: 7fad55e4-a99f-456e-9df9-82155e47aea2
+Waiting the E2E CS termination with id: 7fad55e4-a99f-456e-9df9-82155e47aea2
+Successful delete cs: 7fad55e4-a99f-456e-9df9-82155e47aea2
+SEND delete cs: 918e70a4-4632-499c-81f9-dc49a4700b97
+Waiting the E2E CS termination with id: 918e70a4-4632-499c-81f9-dc49a4700b97
+SEND delete cs: 3035eab2-02d3-418f-902e-d95eadc90f73
+Waiting the E2E CS termination with id: 3035eab2-02d3-418f-902e-d95eadc90f73
+Successful delete cs: 918e70a4-4632-499c-81f9-dc49a4700b97
+Successful delete cs: 3035eab2-02d3-418f-902e-d95eadc90f73
+Connection Nº: 48
+Wait 379.70508896344984seconds for the next E2E CS request.
+NEW E2E CS with ID: 70d253b4-19f8-478d-ae1d-ecd73b79fed4
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 41
+Available destination SIPs: 41
+Occupied source SIPs: 1
+Occupied destination SIPs: 1
+Selected port domain (last number = domain): 4443
+SEND cs: 70d253b4-19f8-478d-ae1d-ecd73b79fed4
+CS JSON Request: {'cs_uuid': '70d253b4-19f8-478d-ae1d-ecd73b79fed4', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 70d253b4-19f8-478d-ae1d-ecd73b79fed4
+Successful cs: 70d253b4-19f8-478d-ae1d-ecd73b79fed4
+Wait 1412.5471671145278seconds for the next E2E CS request terminate.
+Connection Nº: 49
+Wait 1194.8541153960393seconds for the next E2E CS request.
+NEW E2E CS with ID: d45a9123-3fda-4dbb-9cb5-d0ffa52aaf21
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: d45a9123-3fda-4dbb-9cb5-d0ffa52aaf21
+CS JSON Request: {'cs_uuid': 'd45a9123-3fda-4dbb-9cb5-d0ffa52aaf21', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"msg": "DESTINATION SIP is already used."}with status: 406
+Error cs: d45a9123-3fda-4dbb-9cb5-d0ffa52aaf21 -> DESTINATION SIP is already used.
+Connection Nº: 50
+Wait 33.855350263642734seconds for the next E2E CS request.
+NEW E2E CS with ID: 22bb4a30-de61-402a-95e4-5aff89f914ce
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'd7ee402b-7f9e-5468-86ec-113c5ec22707'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: 22bb4a30-de61-402a-95e4-5aff89f914ce
+CS JSON Request: {'cs_uuid': '22bb4a30-de61-402a-95e4-5aff89f914ce', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'd7ee402b-7f9e-5468-86ec-113c5ec22707'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 51
+Wait 716.7865458465948seconds for the next E2E CS request.
+NEW E2E CS with ID: eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '42d64587-8763-5917-bbd6-8f6a8b8d2700'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4442
+SEND cs: eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8
+CS JSON Request: {'cs_uuid': 'eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '42d64587-8763-5917-bbd6-8f6a8b8d2700'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 22bb4a30-de61-402a-95e4-5aff89f914ce
+SEND delete cs: 70d253b4-19f8-478d-ae1d-ecd73b79fed4
+Waiting the E2E CS termination with id: 70d253b4-19f8-478d-ae1d-ecd73b79fed4
+Waiting the E2E CS deployment with id: eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8
+Successful delete cs: 70d253b4-19f8-478d-ae1d-ecd73b79fed4
+Successful cs: 22bb4a30-de61-402a-95e4-5aff89f914ce
+Wait 168.8679401230133seconds for the next E2E CS request terminate.
+SEND delete cs: 22bb4a30-de61-402a-95e4-5aff89f914ce
+Waiting the E2E CS termination with id: 22bb4a30-de61-402a-95e4-5aff89f914ce
+Successful cs: eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8
+Wait 237.26350517129364seconds for the next E2E CS request terminate.
+Successful delete cs: 22bb4a30-de61-402a-95e4-5aff89f914ce
+Connection Nº: 52
+Wait 676.8542630891391seconds for the next E2E CS request.
+NEW E2E CS with ID: 87a6a0fc-d3e8-4fea-b63e-58cb8c40b081
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e21b5b3e-5bd4-567c-b819-f5e6ac689c68'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4443
+SEND cs: 87a6a0fc-d3e8-4fea-b63e-58cb8c40b081
+CS JSON Request: {'cs_uuid': '87a6a0fc-d3e8-4fea-b63e-58cb8c40b081', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e21b5b3e-5bd4-567c-b819-f5e6ac689c68'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8
+Waiting the E2E CS termination with id: eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8
+Waiting the E2E CS deployment with id: 87a6a0fc-d3e8-4fea-b63e-58cb8c40b081
+Successful delete cs: eeaf5ca6-c99b-4ae3-a63b-88745e5c5ea8
+Connection Nº: 53
+Wait 471.376585032325seconds for the next E2E CS request.
+NEW E2E CS with ID: bbf312ff-eb6a-4b14-880b-d8efc3c0ef36
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 40
+Available destination SIPs: 40
+Occupied source SIPs: 2
+Occupied destination SIPs: 2
+Selected port domain (last number = domain): 4442
+SEND cs: bbf312ff-eb6a-4b14-880b-d8efc3c0ef36
+CS JSON Request: {'cs_uuid': 'bbf312ff-eb6a-4b14-880b-d8efc3c0ef36', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: bbf312ff-eb6a-4b14-880b-d8efc3c0ef36
+Successful cs: bbf312ff-eb6a-4b14-880b-d8efc3c0ef36
+Wait 900.403274076098seconds for the next E2E CS request terminate.
+Connection Nº: 54
+Wait 107.78446780489806seconds for the next E2E CS request.
+NEW E2E CS with ID: 937a8b05-3883-4120-aaf4-d85f4f22578c
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}
+Available source SIPs: 39
+Available destination SIPs: 39
+Occupied source SIPs: 3
+Occupied destination SIPs: 3
+Selected port domain (last number = domain): 4443
+SEND cs: 937a8b05-3883-4120-aaf4-d85f4f22578c
+CS JSON Request: {'cs_uuid': '937a8b05-3883-4120-aaf4-d85f4f22578c', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 937a8b05-3883-4120-aaf4-d85f4f22578c
+Connection Nº: 55
+Wait 558.959199214665seconds for the next E2E CS request.
+NEW E2E CS with ID: bad49093-c0d0-4416-8d3e-7dce5f2cfed3
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'bd512c4b-834e-5551-bbc5-0f6de0f262db'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4444
+SEND cs: bad49093-c0d0-4416-8d3e-7dce5f2cfed3
+CS JSON Request: {'cs_uuid': 'bad49093-c0d0-4416-8d3e-7dce5f2cfed3', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'bd512c4b-834e-5551-bbc5-0f6de0f262db'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: bad49093-c0d0-4416-8d3e-7dce5f2cfed3
+Successful cs: bad49093-c0d0-4416-8d3e-7dce5f2cfed3
+Wait 407.54746024648153seconds for the next E2E CS request terminate.
+Connection Nº: 56
+Wait 480.6834351106184seconds for the next E2E CS request.
+NEW E2E CS with ID: 175c28ba-fa97-4b37-9d10-a1a30caa670a
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5b139e0a-a967-5acf-be83-617c8586840f'}
+Available source SIPs: 37
+Available destination SIPs: 37
+Occupied source SIPs: 5
+Occupied destination SIPs: 5
+Selected port domain (last number = domain): 4443
+SEND cs: 175c28ba-fa97-4b37-9d10-a1a30caa670a
+CS JSON Request: {'cs_uuid': '175c28ba-fa97-4b37-9d10-a1a30caa670a', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5b139e0a-a967-5acf-be83-617c8586840f'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: bbf312ff-eb6a-4b14-880b-d8efc3c0ef36
+Waiting the E2E CS termination with id: bbf312ff-eb6a-4b14-880b-d8efc3c0ef36
+Waiting the E2E CS deployment with id: 175c28ba-fa97-4b37-9d10-a1a30caa670a
+SEND delete cs: bad49093-c0d0-4416-8d3e-7dce5f2cfed3
+Waiting the E2E CS termination with id: bad49093-c0d0-4416-8d3e-7dce5f2cfed3
+Successful delete cs: bbf312ff-eb6a-4b14-880b-d8efc3c0ef36
+Successful delete cs: bad49093-c0d0-4416-8d3e-7dce5f2cfed3
+Connection Nº: 57
+Wait 225.12040977660436seconds for the next E2E CS request.
+NEW E2E CS with ID: 50e191ba-711e-4f22-8eda-a61cdc27b65c
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 38
+Available destination SIPs: 38
+Occupied source SIPs: 4
+Occupied destination SIPs: 4
+Selected port domain (last number = domain): 4442
+SEND cs: 50e191ba-711e-4f22-8eda-a61cdc27b65c
+CS JSON Request: {'cs_uuid': '50e191ba-711e-4f22-8eda-a61cdc27b65c', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 50e191ba-711e-4f22-8eda-a61cdc27b65c
+Connection Nº: 58
+Wait 26.932707031124046seconds for the next E2E CS request.
+NEW E2E CS with ID: 4017eca1-e8cc-4880-94f5-7909a6184dc0
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 37
+Available destination SIPs: 37
+Occupied source SIPs: 5
+Occupied destination SIPs: 5
+Selected port domain (last number = domain): 4444
+SEND cs: 4017eca1-e8cc-4880-94f5-7909a6184dc0
+CS JSON Request: {'cs_uuid': '4017eca1-e8cc-4880-94f5-7909a6184dc0', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 59
+Wait 146.37842875493808seconds for the next E2E CS request.
+NEW E2E CS with ID: 3bb1b35f-d25d-4be1-ace0-8702783c077a
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '1b7dbfae-2ef5-5d7c-b4ff-be8fba395f6d'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4443
+SEND cs: 3bb1b35f-d25d-4be1-ace0-8702783c077a
+CS JSON Request: {'cs_uuid': '3bb1b35f-d25d-4be1-ace0-8702783c077a', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '1b7dbfae-2ef5-5d7c-b4ff-be8fba395f6d'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Successful cs: 50e191ba-711e-4f22-8eda-a61cdc27b65c
+Wait 122.22817537963087seconds for the next E2E CS request terminate.
+Waiting the E2E CS deployment with id: 4017eca1-e8cc-4880-94f5-7909a6184dc0
+Waiting the E2E CS deployment with id: 3bb1b35f-d25d-4be1-ace0-8702783c077a
+SEND delete cs: 50e191ba-711e-4f22-8eda-a61cdc27b65c
+Waiting the E2E CS termination with id: 50e191ba-711e-4f22-8eda-a61cdc27b65c
+Connection Nº: 60
+Wait 13.53756839615367seconds for the next E2E CS request.
+NEW E2E CS with ID: 55f91337-7b94-44a0-abe9-aa3002d01792
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '50296d99-58cc-5ce7-82f5-fc8ee4eec2ec'}
+Available source SIPs: 35
+Available destination SIPs: 35
+Occupied source SIPs: 7
+Occupied destination SIPs: 7
+Selected port domain (last number = domain): 4444
+SEND cs: 55f91337-7b94-44a0-abe9-aa3002d01792
+CS JSON Request: {'cs_uuid': '55f91337-7b94-44a0-abe9-aa3002d01792', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '50296d99-58cc-5ce7-82f5-fc8ee4eec2ec'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 61
+Wait 286.1876996062158seconds for the next E2E CS request.
+NEW E2E CS with ID: 7f874d69-1d44-4df5-8e0a-104c8564c6b7
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9ce4373d-acca-5edd-b5b0-533057776a2f'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 34
+Available destination SIPs: 34
+Occupied source SIPs: 8
+Occupied destination SIPs: 8
+Selected port domain (last number = domain): 4442
+SEND cs: 7f874d69-1d44-4df5-8e0a-104c8564c6b7
+CS JSON Request: {'cs_uuid': '7f874d69-1d44-4df5-8e0a-104c8564c6b7', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9ce4373d-acca-5edd-b5b0-533057776a2f'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 55f91337-7b94-44a0-abe9-aa3002d01792
+Waiting the E2E CS deployment with id: 7f874d69-1d44-4df5-8e0a-104c8564c6b7
+Successful cs: 4017eca1-e8cc-4880-94f5-7909a6184dc0
+Wait 102.70384995313657seconds for the next E2E CS request terminate.
+Successful delete cs: 50e191ba-711e-4f22-8eda-a61cdc27b65c
+SEND delete cs: 4017eca1-e8cc-4880-94f5-7909a6184dc0
+Waiting the E2E CS termination with id: 4017eca1-e8cc-4880-94f5-7909a6184dc0
+Connection Nº: 62
+Wait 498.6669514032657seconds for the next E2E CS request.
+NEW E2E CS with ID: c2744ead-068c-4d5e-84ca-71c955a7b537
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '075a2ea8-c642-5b8b-9d32-8f97218af55c'}
+Available source SIPs: 34
+Available destination SIPs: 34
+Occupied source SIPs: 8
+Occupied destination SIPs: 8
+Selected port domain (last number = domain): 4444
+SEND cs: c2744ead-068c-4d5e-84ca-71c955a7b537
+CS JSON Request: {'cs_uuid': 'c2744ead-068c-4d5e-84ca-71c955a7b537', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '075a2ea8-c642-5b8b-9d32-8f97218af55c'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: c2744ead-068c-4d5e-84ca-71c955a7b537
+Successful cs: 55f91337-7b94-44a0-abe9-aa3002d01792
+Wait 140.74552380258461seconds for the next E2E CS request terminate.
+Successful delete cs: 4017eca1-e8cc-4880-94f5-7909a6184dc0
+Successful cs: 7f874d69-1d44-4df5-8e0a-104c8564c6b7
+Wait 337.9187597184487seconds for the next E2E CS request terminate.
+SEND delete cs: 55f91337-7b94-44a0-abe9-aa3002d01792
+Waiting the E2E CS termination with id: 55f91337-7b94-44a0-abe9-aa3002d01792
+Successful cs: c2744ead-068c-4d5e-84ca-71c955a7b537
+Wait 585.963307822753seconds for the next E2E CS request terminate.
+Successful delete cs: 55f91337-7b94-44a0-abe9-aa3002d01792
+Connection Nº: 63
+Wait 204.46790368298002seconds for the next E2E CS request.
+NEW E2E CS with ID: 5f96c572-9d89-4cfc-9760-8d2977f048a4
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9853c355-5d3a-5f46-b4bd-e94de00e902f'}
+Available source SIPs: 35
+Available destination SIPs: 35
+Occupied source SIPs: 7
+Occupied destination SIPs: 7
+Selected port domain (last number = domain): 4444
+SEND cs: 5f96c572-9d89-4cfc-9760-8d2977f048a4
+CS JSON Request: {'cs_uuid': '5f96c572-9d89-4cfc-9760-8d2977f048a4', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9853c355-5d3a-5f46-b4bd-e94de00e902f'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 5f96c572-9d89-4cfc-9760-8d2977f048a4
+SEND delete cs: 7f874d69-1d44-4df5-8e0a-104c8564c6b7
+Waiting the E2E CS termination with id: 7f874d69-1d44-4df5-8e0a-104c8564c6b7
+Connection Nº: 64
+Wait 972.1069643365413seconds for the next E2E CS request.
+NEW E2E CS with ID: b8323d02-8c73-4497-ab99-842d9f884bf1
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 34
+Available destination SIPs: 34
+Occupied source SIPs: 8
+Occupied destination SIPs: 8
+Selected port domain (last number = domain): 4442
+SEND cs: b8323d02-8c73-4497-ab99-842d9f884bf1
+CS JSON Request: {'cs_uuid': 'b8323d02-8c73-4497-ab99-842d9f884bf1', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Successful delete cs: 7f874d69-1d44-4df5-8e0a-104c8564c6b7
+Waiting the E2E CS deployment with id: b8323d02-8c73-4497-ab99-842d9f884bf1
+Successful cs: 5f96c572-9d89-4cfc-9760-8d2977f048a4
+Wait 142.90465174962367seconds for the next E2E CS request terminate.
+SEND delete cs: 5f96c572-9d89-4cfc-9760-8d2977f048a4
+Waiting the E2E CS termination with id: 5f96c572-9d89-4cfc-9760-8d2977f048a4
+SEND delete cs: c2744ead-068c-4d5e-84ca-71c955a7b537
+Waiting the E2E CS termination with id: c2744ead-068c-4d5e-84ca-71c955a7b537
+Successful delete cs: 5f96c572-9d89-4cfc-9760-8d2977f048a4
+Successful cs: b8323d02-8c73-4497-ab99-842d9f884bf1
+Wait 54.60813207683004seconds for the next E2E CS request terminate.
+SEND delete cs: b8323d02-8c73-4497-ab99-842d9f884bf1
+Waiting the E2E CS termination with id: b8323d02-8c73-4497-ab99-842d9f884bf1
+Successful delete cs: c2744ead-068c-4d5e-84ca-71c955a7b537
+Successful delete cs: b8323d02-8c73-4497-ab99-842d9f884bf1
+Connection Nº: 65
+Wait 293.6171631211921seconds for the next E2E CS request.
+NEW E2E CS with ID: 82eb6f82-7f09-4fae-b3d5-5f11d02c87ae
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '075a2ea8-c642-5b8b-9d32-8f97218af55c'}
+Available source SIPs: 37
+Available destination SIPs: 37
+Occupied source SIPs: 5
+Occupied destination SIPs: 5
+Selected port domain (last number = domain): 4444
+SEND cs: 82eb6f82-7f09-4fae-b3d5-5f11d02c87ae
+CS JSON Request: {'cs_uuid': '82eb6f82-7f09-4fae-b3d5-5f11d02c87ae', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '075a2ea8-c642-5b8b-9d32-8f97218af55c'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 82eb6f82-7f09-4fae-b3d5-5f11d02c87ae
+Successful cs: 82eb6f82-7f09-4fae-b3d5-5f11d02c87ae
+Wait 279.5925322195832seconds for the next E2E CS request terminate.
+Connection Nº: 66
+Wait 462.76379441894545seconds for the next E2E CS request.
+NEW E2E CS with ID: 13aa3d09-b517-4708-9b85-43e2fd4bbdbd
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4442
+SEND cs: 13aa3d09-b517-4708-9b85-43e2fd4bbdbd
+CS JSON Request: {'cs_uuid': '13aa3d09-b517-4708-9b85-43e2fd4bbdbd', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 13aa3d09-b517-4708-9b85-43e2fd4bbdbd
+SEND delete cs: 82eb6f82-7f09-4fae-b3d5-5f11d02c87ae
+Waiting the E2E CS termination with id: 82eb6f82-7f09-4fae-b3d5-5f11d02c87ae
+Successful cs: 13aa3d09-b517-4708-9b85-43e2fd4bbdbd
+Wait 25.83195341035776seconds for the next E2E CS request terminate.
+SEND delete cs: 13aa3d09-b517-4708-9b85-43e2fd4bbdbd
+Waiting the E2E CS termination with id: 13aa3d09-b517-4708-9b85-43e2fd4bbdbd
+Successful delete cs: 82eb6f82-7f09-4fae-b3d5-5f11d02c87ae
+Successful delete cs: 13aa3d09-b517-4708-9b85-43e2fd4bbdbd
+Connection Nº: 67
+Wait 220.58390760326165seconds for the next E2E CS request.
+NEW E2E CS with ID: f4bcbfe3-8456-46f5-b3e5-5c16fa967c4e
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}
+Available source SIPs: 37
+Available destination SIPs: 37
+Occupied source SIPs: 5
+Occupied destination SIPs: 5
+Selected port domain (last number = domain): 4443
+SEND cs: f4bcbfe3-8456-46f5-b3e5-5c16fa967c4e
+CS JSON Request: {'cs_uuid': 'f4bcbfe3-8456-46f5-b3e5-5c16fa967c4e', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '30d9323e-b916-51ce-a9a8-cf88f62eb77f'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a9b6a9a3-99c5-5b37-bc83-d087abf94ceb'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: f4bcbfe3-8456-46f5-b3e5-5c16fa967c4e
+Connection Nº: 68
+Wait 1051.9252297813196seconds for the next E2E CS request.
+NEW E2E CS with ID: 6667fb9b-b766-4171-aee6-581fe04a8504
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4442
+SEND cs: 6667fb9b-b766-4171-aee6-581fe04a8504
+CS JSON Request: {'cs_uuid': '6667fb9b-b766-4171-aee6-581fe04a8504', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '5e34d63c-b23f-5fbb-909e-5c6ed6b13f4f'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 6667fb9b-b766-4171-aee6-581fe04a8504
+Successful cs: 6667fb9b-b766-4171-aee6-581fe04a8504
+Wait 136.55029207315067seconds for the next E2E CS request terminate.
+SEND delete cs: 6667fb9b-b766-4171-aee6-581fe04a8504
+Waiting the E2E CS termination with id: 6667fb9b-b766-4171-aee6-581fe04a8504
+Successful delete cs: 6667fb9b-b766-4171-aee6-581fe04a8504
+Connection Nº: 69
+Wait 817.4850343612632seconds for the next E2E CS request.
+NEW E2E CS with ID: d7fbdfd7-9d23-4a1f-b87e-abaebddc1804
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4444
+SEND cs: d7fbdfd7-9d23-4a1f-b87e-abaebddc1804
+CS JSON Request: {'cs_uuid': 'd7fbdfd7-9d23-4a1f-b87e-abaebddc1804', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'fc7d3da3-31c2-5f7a-868c-fe824919a2e4'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: d7fbdfd7-9d23-4a1f-b87e-abaebddc1804
+Successful cs: d7fbdfd7-9d23-4a1f-b87e-abaebddc1804
+Wait 1272.2248303891909seconds for the next E2E CS request terminate.
+Connection Nº: 70
+Wait 1195.8638564248058seconds for the next E2E CS request.
+NEW E2E CS with ID: dd609c89-b3cb-4436-826d-c138ed544166
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a53e9d1e-8045-591a-8ed8-8b8164ae9d6b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 35
+Available destination SIPs: 35
+Occupied source SIPs: 7
+Occupied destination SIPs: 7
+Selected port domain (last number = domain): 4442
+SEND cs: dd609c89-b3cb-4436-826d-c138ed544166
+CS JSON Request: {'cs_uuid': 'dd609c89-b3cb-4436-826d-c138ed544166', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'a53e9d1e-8045-591a-8ed8-8b8164ae9d6b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: dd609c89-b3cb-4436-826d-c138ed544166
+Successful cs: dd609c89-b3cb-4436-826d-c138ed544166
+Wait 147.68706917027822seconds for the next E2E CS request terminate.
+SEND delete cs: dd609c89-b3cb-4436-826d-c138ed544166
+Waiting the E2E CS termination with id: dd609c89-b3cb-4436-826d-c138ed544166
+Successful delete cs: dd609c89-b3cb-4436-826d-c138ed544166
+SEND delete cs: d7fbdfd7-9d23-4a1f-b87e-abaebddc1804
+Waiting the E2E CS termination with id: d7fbdfd7-9d23-4a1f-b87e-abaebddc1804
+Successful delete cs: d7fbdfd7-9d23-4a1f-b87e-abaebddc1804
+Connection Nº: 71
+Wait 636.1977715277568seconds for the next E2E CS request.
+NEW E2E CS with ID: 1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4442
+SEND cs: 1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9
+CS JSON Request: {'cs_uuid': '1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f1737854-81ef-5a98-9a27-0ae89619ba1e'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9
+Successful cs: 1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9
+Wait 724.6183107978042seconds for the next E2E CS request terminate.
+Connection Nº: 72
+Wait 1060.4112476212115seconds for the next E2E CS request.
+NEW E2E CS with ID: 85482568-5ebd-4685-a829-49dd434850a9
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 35
+Available destination SIPs: 35
+Occupied source SIPs: 7
+Occupied destination SIPs: 7
+Selected port domain (last number = domain): 4444
+SEND cs: 85482568-5ebd-4685-a829-49dd434850a9
+CS JSON Request: {'cs_uuid': '85482568-5ebd-4685-a829-49dd434850a9', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 85482568-5ebd-4685-a829-49dd434850a9
+Successful cs: 85482568-5ebd-4685-a829-49dd434850a9
+Wait 583.4494830161723seconds for the next E2E CS request terminate.
+SEND delete cs: 1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9
+Waiting the E2E CS termination with id: 1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9
+Successful delete cs: 1adfdc6f-aa2d-4ca0-ae0c-ea4dff5e95b9
+SEND delete cs: 85482568-5ebd-4685-a829-49dd434850a9
+Waiting the E2E CS termination with id: 85482568-5ebd-4685-a829-49dd434850a9
+Successful delete cs: 85482568-5ebd-4685-a829-49dd434850a9
+Connection Nº: 73
+Wait 262.64641632180485seconds for the next E2E CS request.
+NEW E2E CS with ID: 71067130-a694-4c70-80b9-c2a8de2d99a0
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'd7ee402b-7f9e-5468-86ec-113c5ec22707'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 36
+Available destination SIPs: 36
+Occupied source SIPs: 6
+Occupied destination SIPs: 6
+Selected port domain (last number = domain): 4442
+SEND cs: 71067130-a694-4c70-80b9-c2a8de2d99a0
+CS JSON Request: {'cs_uuid': '71067130-a694-4c70-80b9-c2a8de2d99a0', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'd7ee402b-7f9e-5468-86ec-113c5ec22707'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 71067130-a694-4c70-80b9-c2a8de2d99a0
+Successful cs: 71067130-a694-4c70-80b9-c2a8de2d99a0
+Wait 447.6520838043639seconds for the next E2E CS request terminate.
+Connection Nº: 74
+Wait 299.8512809671689seconds for the next E2E CS request.
+NEW E2E CS with ID: 39e00971-8534-44b7-94e5-190c36c32b9d
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 35
+Available destination SIPs: 35
+Occupied source SIPs: 7
+Occupied destination SIPs: 7
+Selected port domain (last number = domain): 4444
+SEND cs: 39e00971-8534-44b7-94e5-190c36c32b9d
+CS JSON Request: {'cs_uuid': '39e00971-8534-44b7-94e5-190c36c32b9d', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 39e00971-8534-44b7-94e5-190c36c32b9d
+Successful cs: 39e00971-8534-44b7-94e5-190c36c32b9d
+Wait 398.9392530049724seconds for the next E2E CS request terminate.
+Connection Nº: 75
+Wait 1426.5112338007423seconds for the next E2E CS request.
+NEW E2E CS with ID: c3712642-2449-4a80-b07b-46950e568de5
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e9f2cd83-622f-5693-a3ea-edda0238f675'}
+Available source SIPs: 34
+Available destination SIPs: 34
+Occupied source SIPs: 8
+Occupied destination SIPs: 8
+Selected port domain (last number = domain): 4443
+SEND cs: c3712642-2449-4a80-b07b-46950e568de5
+CS JSON Request: {'cs_uuid': 'c3712642-2449-4a80-b07b-46950e568de5', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e9f2cd83-622f-5693-a3ea-edda0238f675'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: c3712642-2449-4a80-b07b-46950e568de5
+SEND delete cs: 71067130-a694-4c70-80b9-c2a8de2d99a0
+Waiting the E2E CS termination with id: 71067130-a694-4c70-80b9-c2a8de2d99a0
+Successful delete cs: 71067130-a694-4c70-80b9-c2a8de2d99a0
+SEND delete cs: 39e00971-8534-44b7-94e5-190c36c32b9d
+Waiting the E2E CS termination with id: 39e00971-8534-44b7-94e5-190c36c32b9d
+Successful delete cs: 39e00971-8534-44b7-94e5-190c36c32b9d
+Connection Nº: 76
+Wait 73.49914192280299seconds for the next E2E CS request.
+NEW E2E CS with ID: a56a77cf-1f0b-4077-9594-ae41f6ef7c96
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 35
+Available destination SIPs: 35
+Occupied source SIPs: 7
+Occupied destination SIPs: 7
+Selected port domain (last number = domain): 4442
+SEND cs: a56a77cf-1f0b-4077-9594-ae41f6ef7c96
+CS JSON Request: {'cs_uuid': 'a56a77cf-1f0b-4077-9594-ae41f6ef7c96', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 600, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: a56a77cf-1f0b-4077-9594-ae41f6ef7c96
+Connection Nº: 77
+Wait 51.678174213482144seconds for the next E2E CS request.
+NEW E2E CS with ID: 53fdd372-533e-4ced-9969-4f4f4f27278a
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'bd512c4b-834e-5551-bbc5-0f6de0f262db'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 34
+Available destination SIPs: 34
+Occupied source SIPs: 8
+Occupied destination SIPs: 8
+Selected port domain (last number = domain): 4444
+SEND cs: 53fdd372-533e-4ced-9969-4f4f4f27278a
+CS JSON Request: {'cs_uuid': '53fdd372-533e-4ced-9969-4f4f4f27278a', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'bd512c4b-834e-5551-bbc5-0f6de0f262db'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 53fdd372-533e-4ced-9969-4f4f4f27278a
+Connection Nº: 78
+Wait 398.70463373250686seconds for the next E2E CS request.
+NEW E2E CS with ID: 15f3235f-77d1-4d9e-ba59-cf53e4587cc1
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e258f1cf-b870-5edf-bd6f-cbe86989bdcd'}
+Available source SIPs: 33
+Available destination SIPs: 33
+Occupied source SIPs: 9
+Occupied destination SIPs: 9
+Selected port domain (last number = domain): 4443
+SEND cs: 15f3235f-77d1-4d9e-ba59-cf53e4587cc1
+CS JSON Request: {'cs_uuid': '15f3235f-77d1-4d9e-ba59-cf53e4587cc1', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'e258f1cf-b870-5edf-bd6f-cbe86989bdcd'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 15f3235f-77d1-4d9e-ba59-cf53e4587cc1
+Successful cs: a56a77cf-1f0b-4077-9594-ae41f6ef7c96
+Wait 460.8477510896792seconds for the next E2E CS request terminate.
+Successful cs: 53fdd372-533e-4ced-9969-4f4f4f27278a
+Wait 1183.073233913303seconds for the next E2E CS request terminate.
+Connection Nº: 79
+Wait 750.0813876928565seconds for the next E2E CS request.
+NEW E2E CS with ID: 6eb7fc04-0052-44ca-9c1e-803892d6d236
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f15278a8-8d93-5594-af08-18e9c4104af8'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 32
+Available destination SIPs: 32
+Occupied source SIPs: 10
+Occupied destination SIPs: 10
+Selected port domain (last number = domain): 4442
+SEND cs: 6eb7fc04-0052-44ca-9c1e-803892d6d236
+CS JSON Request: {'cs_uuid': '6eb7fc04-0052-44ca-9c1e-803892d6d236', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'f15278a8-8d93-5594-af08-18e9c4104af8'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"msg": "DESTINATION SIP is already used."}with status: 406
+Error cs: 6eb7fc04-0052-44ca-9c1e-803892d6d236 -> DESTINATION SIP is already used.
+SEND delete cs: a56a77cf-1f0b-4077-9594-ae41f6ef7c96
+Waiting the E2E CS termination with id: a56a77cf-1f0b-4077-9594-ae41f6ef7c96
+Successful delete cs: a56a77cf-1f0b-4077-9594-ae41f6ef7c96
+Connection Nº: 80
+Wait 541.377661678264seconds for the next E2E CS request.
+NEW E2E CS with ID: 68429145-da19-4bfd-9503-32ca43c27c94
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '589c2048-0b7f-59c7-b893-514949faea32'}
+Available source SIPs: 33
+Available destination SIPs: 33
+Occupied source SIPs: 9
+Occupied destination SIPs: 9
+Selected port domain (last number = domain): 4443
+SEND cs: 68429145-da19-4bfd-9503-32ca43c27c94
+CS JSON Request: {'cs_uuid': '68429145-da19-4bfd-9503-32ca43c27c94', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '589c2048-0b7f-59c7-b893-514949faea32'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 68429145-da19-4bfd-9503-32ca43c27c94
+SEND delete cs: 53fdd372-533e-4ced-9969-4f4f4f27278a
+Waiting the E2E CS termination with id: 53fdd372-533e-4ced-9969-4f4f4f27278a
+Successful delete cs: 53fdd372-533e-4ced-9969-4f4f4f27278a
+Connection Nº: 81
+Wait 25.19012892025457seconds for the next E2E CS request.
+NEW E2E CS with ID: b6269592-477e-4a60-b445-fd850d7764d1
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 33
+Available destination SIPs: 33
+Occupied source SIPs: 9
+Occupied destination SIPs: 9
+Selected port domain (last number = domain): 4444
+SEND cs: b6269592-477e-4a60-b445-fd850d7764d1
+CS JSON Request: {'cs_uuid': 'b6269592-477e-4a60-b445-fd850d7764d1', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 82
+Wait 313.58856227391897seconds for the next E2E CS request.
+NEW E2E CS with ID: de9d9dbf-a937-48f1-8804-0411493b9541
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '0e047118-5aee-5721-979e-2fece9b45fb2'}
+Available source SIPs: 32
+Available destination SIPs: 32
+Occupied source SIPs: 10
+Occupied destination SIPs: 10
+Selected port domain (last number = domain): 4444
+SEND cs: de9d9dbf-a937-48f1-8804-0411493b9541
+CS JSON Request: {'cs_uuid': 'de9d9dbf-a937-48f1-8804-0411493b9541', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '68ac012e-54d4-5846-b5dc-6ec356404f90'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '0e047118-5aee-5721-979e-2fece9b45fb2'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: b6269592-477e-4a60-b445-fd850d7764d1
+Waiting the E2E CS deployment with id: de9d9dbf-a937-48f1-8804-0411493b9541
+Successful cs: b6269592-477e-4a60-b445-fd850d7764d1
+Wait 278.8286042729448seconds for the next E2E CS request terminate.
+Connection Nº: 83
+Wait 1040.0455544878173seconds for the next E2E CS request.
+NEW E2E CS with ID: c873f831-be8a-4249-9a8d-39a20032014f
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9ce4373d-acca-5edd-b5b0-533057776a2f'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4442
+SEND cs: c873f831-be8a-4249-9a8d-39a20032014f
+CS JSON Request: {'cs_uuid': 'c873f831-be8a-4249-9a8d-39a20032014f', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9ce4373d-acca-5edd-b5b0-533057776a2f'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"msg": "DESTINATION SIP is already used."}with status: 406
+Error cs: c873f831-be8a-4249-9a8d-39a20032014f -> DESTINATION SIP is already used.
+Successful cs: de9d9dbf-a937-48f1-8804-0411493b9541
+Wait 698.8616959670592seconds for the next E2E CS request terminate.
+SEND delete cs: b6269592-477e-4a60-b445-fd850d7764d1
+Waiting the E2E CS termination with id: b6269592-477e-4a60-b445-fd850d7764d1
+Successful delete cs: b6269592-477e-4a60-b445-fd850d7764d1
+SEND delete cs: de9d9dbf-a937-48f1-8804-0411493b9541
+Waiting the E2E CS termination with id: de9d9dbf-a937-48f1-8804-0411493b9541
+Successful delete cs: de9d9dbf-a937-48f1-8804-0411493b9541
+Connection Nº: 84
+Wait 1068.7811336357008seconds for the next E2E CS request.
+NEW E2E CS with ID: c91e8d46-fdfa-4356-8f3c-ecdc306adcd4
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '71941e6f-0f69-53d4-820e-f4efc5d3364b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 33
+Available destination SIPs: 33
+Occupied source SIPs: 9
+Occupied destination SIPs: 9
+Selected port domain (last number = domain): 4442
+SEND cs: c91e8d46-fdfa-4356-8f3c-ecdc306adcd4
+CS JSON Request: {'cs_uuid': 'c91e8d46-fdfa-4356-8f3c-ecdc306adcd4', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '71941e6f-0f69-53d4-820e-f4efc5d3364b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: c91e8d46-fdfa-4356-8f3c-ecdc306adcd4
+Successful cs: c91e8d46-fdfa-4356-8f3c-ecdc306adcd4
+Wait 418.1740494058859seconds for the next E2E CS request terminate.
+SEND delete cs: c91e8d46-fdfa-4356-8f3c-ecdc306adcd4
+Waiting the E2E CS termination with id: c91e8d46-fdfa-4356-8f3c-ecdc306adcd4
+Successful delete cs: c91e8d46-fdfa-4356-8f3c-ecdc306adcd4
+Connection Nº: 85
+Wait 159.64910442325487seconds for the next E2E CS request.
+NEW E2E CS with ID: 64f9232c-f4b1-47d0-8e11-169d699255f6
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}
+Available source SIPs: 33
+Available destination SIPs: 33
+Occupied source SIPs: 9
+Occupied destination SIPs: 9
+Selected port domain (last number = domain): 4443
+SEND cs: 64f9232c-f4b1-47d0-8e11-169d699255f6
+CS JSON Request: {'cs_uuid': '64f9232c-f4b1-47d0-8e11-169d699255f6', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'b10c4b7d-1c2f-5f25-a239-de4daaa622ac'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 64f9232c-f4b1-47d0-8e11-169d699255f6
+Connection Nº: 86
+Wait 80.3429557183719seconds for the next E2E CS request.
+NEW E2E CS with ID: 6f108b8a-7b23-42eb-85ab-e9c96cdb39c7
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 32
+Available destination SIPs: 32
+Occupied source SIPs: 10
+Occupied destination SIPs: 10
+Selected port domain (last number = domain): 4444
+SEND cs: 6f108b8a-7b23-42eb-85ab-e9c96cdb39c7
+CS JSON Request: {'cs_uuid': '6f108b8a-7b23-42eb-85ab-e9c96cdb39c7', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 6f108b8a-7b23-42eb-85ab-e9c96cdb39c7
+Connection Nº: 87
+Wait 1287.383885337942seconds for the next E2E CS request.
+NEW E2E CS with ID: ec02896c-e80e-4bdd-ada6-1b099ea5c0fd
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4442
+SEND cs: ec02896c-e80e-4bdd-ada6-1b099ea5c0fd
+CS JSON Request: {'cs_uuid': 'ec02896c-e80e-4bdd-ada6-1b099ea5c0fd', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 150, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: ec02896c-e80e-4bdd-ada6-1b099ea5c0fd
+Successful cs: 6f108b8a-7b23-42eb-85ab-e9c96cdb39c7
+Wait 1041.5814152048174seconds for the next E2E CS request terminate.
+Successful cs: ec02896c-e80e-4bdd-ada6-1b099ea5c0fd
+Wait 254.18640195006262seconds for the next E2E CS request terminate.
+SEND delete cs: ec02896c-e80e-4bdd-ada6-1b099ea5c0fd
+Waiting the E2E CS termination with id: ec02896c-e80e-4bdd-ada6-1b099ea5c0fd
+Successful delete cs: ec02896c-e80e-4bdd-ada6-1b099ea5c0fd
+SEND delete cs: 6f108b8a-7b23-42eb-85ab-e9c96cdb39c7
+Waiting the E2E CS termination with id: 6f108b8a-7b23-42eb-85ab-e9c96cdb39c7
+Connection Nº: 88
+Wait 234.7539906472539seconds for the next E2E CS request.
+NEW E2E CS with ID: 44dc340a-4326-4338-8d4a-16a039105ad6
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '367b19b1-3172-54d8-bdd4-12d3ac5604f6'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4442
+SEND cs: 44dc340a-4326-4338-8d4a-16a039105ad6
+CS JSON Request: {'cs_uuid': '44dc340a-4326-4338-8d4a-16a039105ad6', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '367b19b1-3172-54d8-bdd4-12d3ac5604f6'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 44dc340a-4326-4338-8d4a-16a039105ad6
+Successful delete cs: 6f108b8a-7b23-42eb-85ab-e9c96cdb39c7
+Connection Nº: 89
+Wait 137.82435899746088seconds for the next E2E CS request.
+NEW E2E CS with ID: 1ed1428b-11d7-4ba4-803e-22f54ce90088
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4442
+SEND cs: 1ed1428b-11d7-4ba4-803e-22f54ce90088
+CS JSON Request: {'cs_uuid': '1ed1428b-11d7-4ba4-803e-22f54ce90088', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '9f65970c-24ae-5e17-b86e-d5cf25df589e'}, 'destination': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0ef74f99-1acc-57bd-ab9d-4b958b06c513'}, 'capacity': {'value': 225, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Successful cs: 44dc340a-4326-4338-8d4a-16a039105ad6
+Wait 377.6883729568617seconds for the next E2E CS request terminate.
+Waiting the E2E CS deployment with id: 1ed1428b-11d7-4ba4-803e-22f54ce90088
+Connection Nº: 90
+Wait 263.5992123460698seconds for the next E2E CS request.
+NEW E2E CS with ID: c85986a5-fda5-456e-9521-7a83df2f5443
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '71941e6f-0f69-53d4-820e-f4efc5d3364b'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 30
+Available destination SIPs: 30
+Occupied source SIPs: 12
+Occupied destination SIPs: 12
+Selected port domain (last number = domain): 4442
+SEND cs: c85986a5-fda5-456e-9521-7a83df2f5443
+CS JSON Request: {'cs_uuid': 'c85986a5-fda5-456e-9521-7a83df2f5443', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '71941e6f-0f69-53d4-820e-f4efc5d3364b'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 75, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: c85986a5-fda5-456e-9521-7a83df2f5443
+Successful cs: 1ed1428b-11d7-4ba4-803e-22f54ce90088
+Wait 231.79466138733554seconds for the next E2E CS request terminate.
+Connection Nº: 91
+Wait 1141.1855658904935seconds for the next E2E CS request.
+NEW E2E CS with ID: 58822e5d-2adf-48c2-91bd-6a8a8b055484
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'b1655446-a3e1-5077-8006-0277028b9179'}
+Available source SIPs: 29
+Available destination SIPs: 29
+Occupied source SIPs: 13
+Occupied destination SIPs: 13
+Selected port domain (last number = domain): 4444
+SEND cs: 58822e5d-2adf-48c2-91bd-6a8a8b055484
+CS JSON Request: {'cs_uuid': '58822e5d-2adf-48c2-91bd-6a8a8b055484', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'b1655446-a3e1-5077-8006-0277028b9179'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+SEND delete cs: 44dc340a-4326-4338-8d4a-16a039105ad6
+Waiting the E2E CS termination with id: 44dc340a-4326-4338-8d4a-16a039105ad6
+Waiting the E2E CS deployment with id: 58822e5d-2adf-48c2-91bd-6a8a8b055484
+SEND delete cs: 1ed1428b-11d7-4ba4-803e-22f54ce90088
+Waiting the E2E CS termination with id: 1ed1428b-11d7-4ba4-803e-22f54ce90088
+Successful cs: c85986a5-fda5-456e-9521-7a83df2f5443
+Wait 135.66450102752316seconds for the next E2E CS request terminate.
+Successful delete cs: 44dc340a-4326-4338-8d4a-16a039105ad6
+SEND delete cs: c85986a5-fda5-456e-9521-7a83df2f5443
+Waiting the E2E CS termination with id: c85986a5-fda5-456e-9521-7a83df2f5443
+Successful delete cs: 1ed1428b-11d7-4ba4-803e-22f54ce90088
+Successful cs: 58822e5d-2adf-48c2-91bd-6a8a8b055484
+Wait 141.96991882597482seconds for the next E2E CS request terminate.
+Successful delete cs: c85986a5-fda5-456e-9521-7a83df2f5443
+SEND delete cs: 58822e5d-2adf-48c2-91bd-6a8a8b055484
+Waiting the E2E CS termination with id: 58822e5d-2adf-48c2-91bd-6a8a8b055484
+Successful delete cs: 58822e5d-2adf-48c2-91bd-6a8a8b055484
+Connection Nº: 92
+Wait 23.5467918070837seconds for the next E2E CS request.
+NEW E2E CS with ID: 1ef4b954-72c3-49c3-bd9f-d667550e528d
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}
+Available source SIPs: 32
+Available destination SIPs: 32
+Occupied source SIPs: 10
+Occupied destination SIPs: 10
+Selected port domain (last number = domain): 4442
+SEND cs: 1ef4b954-72c3-49c3-bd9f-d667550e528d
+CS JSON Request: {'cs_uuid': '1ef4b954-72c3-49c3-bd9f-d667550e528d', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '84e9eef3-11c2-5710-89f1-bf355cacb7c3'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Connection Nº: 93
+Wait 1565.1784727605602seconds for the next E2E CS request.
+NEW E2E CS with ID: a3745b5f-b7e0-4708-ac29-b1265c611bbe
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'edb7c0b6-0a87-5ecd-84a2-0fb5ed015550'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4444
+SEND cs: a3745b5f-b7e0-4708-ac29-b1265c611bbe
+CS JSON Request: {'cs_uuid': 'a3745b5f-b7e0-4708-ac29-b1265c611bbe', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '79516f5e-55a0-5671-977a-1f5cc934e700'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'edb7c0b6-0a87-5ecd-84a2-0fb5ed015550'}, 'capacity': {'value': 525, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 1ef4b954-72c3-49c3-bd9f-d667550e528d
+Waiting the E2E CS deployment with id: a3745b5f-b7e0-4708-ac29-b1265c611bbe
+Successful cs: a3745b5f-b7e0-4708-ac29-b1265c611bbe
+Wait 31.17411195977793seconds for the next E2E CS request terminate.
+Successful cs: 1ef4b954-72c3-49c3-bd9f-d667550e528d
+Wait 39.44434521679124seconds for the next E2E CS request terminate.
+SEND delete cs: a3745b5f-b7e0-4708-ac29-b1265c611bbe
+Waiting the E2E CS termination with id: a3745b5f-b7e0-4708-ac29-b1265c611bbe
+SEND delete cs: 1ef4b954-72c3-49c3-bd9f-d667550e528d
+Waiting the E2E CS termination with id: 1ef4b954-72c3-49c3-bd9f-d667550e528d
+Successful delete cs: a3745b5f-b7e0-4708-ac29-b1265c611bbe
+Successful delete cs: 1ef4b954-72c3-49c3-bd9f-d667550e528d
+Connection Nº: 94
+Wait 480.3482426524386seconds for the next E2E CS request.
+NEW E2E CS with ID: 37f44c01-cb6a-4326-a811-571838311792
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'df71fece-6979-5f50-88cb-a88e94dc684e'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 32
+Available destination SIPs: 32
+Occupied source SIPs: 10
+Occupied destination SIPs: 10
+Selected port domain (last number = domain): 4442
+SEND cs: 37f44c01-cb6a-4326-a811-571838311792
+CS JSON Request: {'cs_uuid': '37f44c01-cb6a-4326-a811-571838311792', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'df71fece-6979-5f50-88cb-a88e94dc684e'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 37f44c01-cb6a-4326-a811-571838311792
+Successful cs: 37f44c01-cb6a-4326-a811-571838311792
+Wait 377.2691377955659seconds for the next E2E CS request terminate.
+Connection Nº: 95
+Wait 1217.4068055525242seconds for the next E2E CS request.
+NEW E2E CS with ID: 687a487d-8466-4adf-ad99-ef66f29a04eb
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '223421ea-579e-5020-9924-0027c91e12a2'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4442
+SEND cs: 687a487d-8466-4adf-ad99-ef66f29a04eb
+CS JSON Request: {'cs_uuid': '687a487d-8466-4adf-ad99-ef66f29a04eb', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '223421ea-579e-5020-9924-0027c91e12a2'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'eb287d83-f05e-53ec-ab5a-adf6bd2b5418'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 687a487d-8466-4adf-ad99-ef66f29a04eb
+SEND delete cs: 37f44c01-cb6a-4326-a811-571838311792
+Waiting the E2E CS termination with id: 37f44c01-cb6a-4326-a811-571838311792
+Successful cs: 687a487d-8466-4adf-ad99-ef66f29a04eb
+Wait 343.92352739501877seconds for the next E2E CS request terminate.
+Successful delete cs: 37f44c01-cb6a-4326-a811-571838311792
+SEND delete cs: 687a487d-8466-4adf-ad99-ef66f29a04eb
+Waiting the E2E CS termination with id: 687a487d-8466-4adf-ad99-ef66f29a04eb
+Successful delete cs: 687a487d-8466-4adf-ad99-ef66f29a04eb
+Connection Nº: 96
+Wait 690.7025319655901seconds for the next E2E CS request.
+NEW E2E CS with ID: f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6
+{'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}
+Available source SIPs: 32
+Available destination SIPs: 32
+Occupied source SIPs: 10
+Occupied destination SIPs: 10
+Selected port domain (last number = domain): 4444
+SEND cs: f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6
+CS JSON Request: {'cs_uuid': 'f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6', 'source': {'context_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'node_uuid': '627ea8a3-f3cf-578b-b0dd-9e65a5a0e0a3', 'sip_uuid': '0d29c715-fa35-5eaf-8be8-20cc73d8a4e6'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '92bc2016-ae6d-530d-ba08-b2637c3eabce'}, 'capacity': {'value': 375, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6
+Successful cs: f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6
+Wait 7.011666739673647seconds for the next E2E CS request terminate.
+SEND delete cs: f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6
+Waiting the E2E CS termination with id: f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6
+Successful delete cs: f5b79b02-d7ca-4c2c-a0b9-d8596656b0c6
+Connection Nº: 97
+Wait 113.128963872105seconds for the next E2E CS request.
+NEW E2E CS with ID: 1ec2426d-67fe-4605-a4ab-f7deded547f3
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '291796d9-a492-5837-9ccb-24389339d18a'}
+Available source SIPs: 32
+Available destination SIPs: 32
+Occupied source SIPs: 10
+Occupied destination SIPs: 10
+Selected port domain (last number = domain): 4443
+SEND cs: 1ec2426d-67fe-4605-a4ab-f7deded547f3
+CS JSON Request: {'cs_uuid': '1ec2426d-67fe-4605-a4ab-f7deded547f3', 'source': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'a6e6da0a-c2ea-5a2e-b901-fcac4abed95a'}, 'destination': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': '291796d9-a492-5837-9ccb-24389339d18a'}, 'capacity': {'value': 150, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 1ec2426d-67fe-4605-a4ab-f7deded547f3
+Connection Nº: 98
+Wait 587.820662101134seconds for the next E2E CS request.
+NEW E2E CS with ID: aca97281-490b-4cd8-b065-0152fe92c393
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'd7ee402b-7f9e-5468-86ec-113c5ec22707'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4442
+SEND cs: aca97281-490b-4cd8-b065-0152fe92c393
+CS JSON Request: {'cs_uuid': 'aca97281-490b-4cd8-b065-0152fe92c393', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'd7ee402b-7f9e-5468-86ec-113c5ec22707'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': 'aade6001-f00b-5e2f-a357-6a0a9d3de870'}, 'capacity': {'value': 300, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: aca97281-490b-4cd8-b065-0152fe92c393
+Successful cs: aca97281-490b-4cd8-b065-0152fe92c393
+Wait 207.28862851427468seconds for the next E2E CS request terminate.
+SEND delete cs: aca97281-490b-4cd8-b065-0152fe92c393
+Waiting the E2E CS termination with id: aca97281-490b-4cd8-b065-0152fe92c393
+Successful delete cs: aca97281-490b-4cd8-b065-0152fe92c393
+Connection Nº: 99
+exit_function
+NEW E2E CS with ID: 56f627f0-9db5-483f-9ee6-e11e6804404f
+{'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'b2c55979-0f9b-52e3-a767-deedebe12547'}
+{'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}
+Available source SIPs: 31
+Available destination SIPs: 31
+Occupied source SIPs: 11
+Occupied destination SIPs: 11
+Selected port domain (last number = domain): 4442
+SEND cs: 56f627f0-9db5-483f-9ee6-e11e6804404f
+CS JSON Request: {'cs_uuid': '56f627f0-9db5-483f-9ee6-e11e6804404f', 'source': {'context_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'node_uuid': '226b9166-974e-57ff-821d-2f24e5a71b00', 'sip_uuid': 'b2c55979-0f9b-52e3-a767-deedebe12547'}, 'destination': {'context_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'node_uuid': '3d89bd76-e54d-5fab-9787-eb609f291ee0', 'sip_uuid': '9180bfbf-9ad7-5145-8bb8-9fd8d6b2db9a'}, 'capacity': {'value': 450, 'unit': 'GHz'}}
+POST response: {"log":"Request accepted, creating the E2E CS."}
+with status: 200
+Waiting the E2E CS deployment with id: 56f627f0-9db5-483f-9ee6-e11e6804404f
+Successful cs: 56f627f0-9db5-483f-9ee6-e11e6804404f
+Wait 565.5963835332979seconds for the next E2E CS request terminate.
+SEND delete cs: 56f627f0-9db5-483f-9ee6-e11e6804404f
+Waiting the E2E CS termination with id: 56f627f0-9db5-483f-9ee6-e11e6804404f
+Successful delete cs: 56f627f0-9db5-483f-9ee6-e11e6804404f
