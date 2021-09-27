@@ -418,6 +418,7 @@ class Connectivity:
         print('Ending test')
         spect_error = 0
         path_error = 0
+        sip_error = 0
         created = 0
         deleted = 0
         delete_error = 0
@@ -438,7 +439,7 @@ class Connectivity:
                 elif connection.result != 'OK' and connection.type == 'DELETE':
                     delete_error = delete_error + 1
                 elif connection.result == 'SOURCE SIP is already used.' or connection.result == 'DESTINATION SIP is already used.':
-                    pass
+                    sip_error = sip_error + 1
                 else:
                     print('Should not enter here')
                     print(connection)
@@ -455,7 +456,7 @@ class Connectivity:
             filehandle.write("Path errors: %s\n" % path_error)
             filehandle.write("Error deleting: %s\n" % delete_error)
             filehandle.write("Error no BER: %s\n" % no_ber)
-            assert created+spect_error+path_error == self.max_connections
+            assert created+spect_error+path_error+sip_error == self.max_connections
             filehandle.write("Blocking probability: %s\n" % float((spect_error+path_error)/(created+spect_error+path_error)))
             running_time = float(self.end_time-self.start_time)/1000
             filehandle.write("%s connections in %s seconds\n" % (self.max_connections, running_time))
