@@ -453,7 +453,7 @@ Example E2E_CS data object
 # manages the creation of an E2E CS
 def instantiate_e2e_connectivity_service(e2e_cs_request):
     settings.logger.info("ORCH: Received E2E request info. Let's process it.")
-    settings.logger.info("TIME INSTANTIATE E2E - " + str(e2e_cs_request["cs_uuid"]) + " - " + str(datetime.now()))
+    settings.logger.info("TIME INSTANTIATE E2E_1 - " + str(e2e_cs_request["cs_uuid"]))
     # defines e2e CS data object parameters
     e2e_cs_json = {}
     selected_spectrum = []
@@ -504,11 +504,13 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
         route_nodes_list = vl_computation.find_path(src, dst)
         settings.logger.debug("ORCH: The best 20 routes are: " + str(route_nodes_list))
 
+    settings.logger.info("TIME INSTANTIATE E2E_2 - " + str(e2e_cs_request["cs_uuid"]))
     #takes the access to modify info in the Blockchain
     mutex_transport2blockchaindb_access.acquire()
     
     # GETS & PREPARES E2E TOPOLOGY (the set of IDLs definning how the SDN domains are linked)
     settings.logger.info("ORCH: Prepares E2E topology information.")
+    settings.logger.info("TIME INSTANTIATE E2E_3 - " + str(e2e_cs_request["cs_uuid"]))
     response = bl_mapper.get_e2etopology_from_blockchain()
     e2e_topology_json = response[0]
     if e2e_topology_json == "empty":
@@ -532,7 +534,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 response[0]["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
-    
+    settings.logger.info("TIME INSTANTIATE E2E_4 - " + str(e2e_cs_request["cs_uuid"]))
     # SPECTRUM ASSIGNMENT procedure (first a SIPs route is created. Then, it checks their spectrum availability)
     #settings.logger.debug("ORCH: e2e_topology_json: " +str(e2e_topology_json))
     settings.logger.info("ORCH: Looks for the TAPI elements information involved in the route.")
@@ -594,6 +596,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
             selected_route = complete_route_nodes
             break
     
+    settings.logger.info("TIME INSTANTIATE E2E_5 - " + str(e2e_cs_request["cs_uuid"]))
     # if no route is found, returns to inform
     settings.logger.debug("ORCH: selected_route: " + str(selected_route))
     if selected_route == []:
@@ -782,7 +785,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 
     # release the access to modify info in the Blockchain
     mutex_transport2blockchaindb_access.release()
-    
+    settings.logger.info("TIME INSTANTIATE E2E_6 - " + str(e2e_cs_request["cs_uuid"]))
     # creates a list of domain-CSs and adds thir information in the e2e_cs data object
     cs_list = []
     for idx, sip_item in enumerate(sips_route):
@@ -870,6 +873,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
                 break
         time.sleep(10)  # awaits 10 seconds before it checks again
     
+    settings.logger.info("TIME INSTANTIATE E2E_7 - " + str(e2e_cs_request["cs_uuid"]))
     # DOMAIN CS VALIDATION, otherwise terminates deployed domain CS to release resources.
     mutex_e2e_csdb_access.acquire()
     e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
@@ -959,7 +963,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
     mutex_e2e_csdb_access.release()
     
     #NOTE: next group of lines to gather logs for the results (remove once done)
-    settings.logger.info("TIME INSTANTIATE E2E - " + str(e2e_cs_request["cs_uuid"]) + " - " + str(datetime.now()))
+    settings.logger.info("TIME INSTANTIATE E2E_8 - " + str(e2e_cs_request["cs_uuid"]) + " - " + str(datetime.now()))
     log_links = []
     for cs_item in cs_list:
         for int_link in cs_item["internal-links"]:
@@ -973,7 +977,7 @@ def instantiate_e2e_connectivity_service(e2e_cs_request):
 # manages the termination of an E2E CS
 def terminate_e2e_connectivity_service(cs_uuid):
     settings.logger.info("ORCH: Received E2E request info to terminate CS. Let's process it.")   
-    settings.logger.info("TIME TERMINATE E2E - " + str(cs_uuid) + " - " + str(datetime.now()))
+    settings.logger.info("TIME TERMINATE E2E_1 - " + str(cs_uuid))
     # gets the e2e CS to terminate
     e2e_cs_json = db.get_element(cs_uuid, "e2e_cs")
                 
@@ -1044,7 +1048,8 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 break
         mutex_e2e_csdb_access.release()
         time.sleep(10)  # awaits 10 seconds before it checks again
-
+    
+    settings.logger.info("TIME TERMINATE E2E_2 - " + str(cs_uuid))
     #checks if any domain-CS had an error, and updates the E2E CS.
     found_error = False
     e2e_cs = db.get_element(e2e_cs_json["uuid"], "e2e_cs")
@@ -1085,6 +1090,7 @@ def terminate_e2e_connectivity_service(cs_uuid):
                 response[0]["physical-options"] = phyoptions_list
                 linkoptions_list.append(response[0])
             idl_item["link-options"] = linkoptions_list
+    settings.logger.info("TIME TERMINATE E2E_3 - " + str(cs_uuid))
     
     #settings.logger.debug("ORCH: e2e_topology_json: " + str(e2e_topology_json))
     settings.logger.debug("ORCH: e2e_cs_json: " + str(e2e_cs_json))
@@ -1271,14 +1277,14 @@ def terminate_e2e_connectivity_service(cs_uuid):
 
     # release the access to modify info in the Blockchain
     mutex_transport2blockchaindb_access.release()
-
+    settings.logger.info("TIME TERMINATE E2E_4 - " + str(cs_uuid))
     # saves the e2e_cs data object to confirm full deployment.
     e2e_cs_json["status"]  = "TERMINATED"
     e2e_cs_json["description"] = "OK"
     mutex_e2e_csdb_access.acquire()
     db.update_db(e2e_cs_json["uuid"], e2e_cs_json, "e2e_cs")
     mutex_e2e_csdb_access.release()
-    settings.logger.info("TIME TERMINATE E2E - " + str(cs_uuid) + " - " + str(datetime.now()))
+    settings.logger.info("TIME TERMINATE E2E_5 - " + str(cs_uuid) + " - " + str(datetime.now()))
     settings.logger.info("ORCH: E2E CS request processed.")
     settings.logger.debug("ORCH: e2e_cs_json: " + str(e2e_cs_json))
     

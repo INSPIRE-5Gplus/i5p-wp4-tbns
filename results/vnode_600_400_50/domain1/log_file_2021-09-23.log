@@ -31,7 +31,8 @@
 2021-09-23 16:19:40,290 - PDL-Slicing/Transport - INFO - ORCH: ADDING ANOTHER IDL.
 2021-09-23 16:19:40,291 - PDL-Slicing/Transport - INFO - ORCH: Local E2E graph updated, distributing it and the IDLs.
 2021-09-23 16:19:41,525 - PDL-Slicing/Transport - INFO - TRANSPORT_EVENT_MNGR: NO NEED TO PROCESS THIS EVENT.
-2021-09-23 16:19:41,542 - PDL-Slicing/Transport - INFO - BLOCKCHAIN_MAPPER: COST E2E_TOPOLOGY  - 111818 - 1820
+2021-09-23 16:19:41,542 - PDL-Slicing/Transport - INFO - 111818 - 1820
+2021-09-23 16:19:41,542 - PDL-Slicing/Transport - INFO - BLOCKCHAIN_MAPPER: COST E2E_TOPOLOGY  - 0 - 0
 2021-09-23 16:20:27,557 - PDL-Slicing/Transport - INFO - ORCH: Preparing the context to be distributed.
 2021-09-23 16:20:27,558 - PDL-Slicing/Transport - INFO - Retrieveing an element from the DB context
 2021-09-23 16:20:31,704 - PDL-Slicing/Transport - INFO - BLOCKCHAIN_MAPPER: COST SIP  - 799855 - 991
