@@ -1,2 +1,2 @@
 # i5p-netslice-mgr
-Development of the Secured and Trusted Network Slice Manager enabler
+Development of the WP4 Enabler Trusted Blockchain-based Network Slices
